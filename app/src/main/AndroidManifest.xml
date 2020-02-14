@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yc.emotion.home">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_PERMISSIONS" /> <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".base.YcApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/JK.SwipeBack.Transparent.Theme"
+        tools:targetApi="n">
+        <activity android:name=".index.ui.activity.LoveCaseActivity" />
+        <activity android:name=".pay.ui.activity.ResultActivity" />
+        <activity android:name=".index.ui.activity.ImageCropActivity" />
+        <activity android:name=".index.ui.activity.CreateBeforeActivity" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".base.ui.activity.SpecializedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/fullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <activity
+            android:name=".base.ui.activity.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".index.ui.activity.LoveByStagesActivity" />
+        <activity android:name=".index.ui.activity.LoveUpDownPhotoActivity" />
+        <activity android:name=".index.ui.activity.LoveIntroductionActivity" />
+        <activity android:name=".mine.ui.activity.UserInfoActivity" />
+        <!--
+       //图片选择Activity
+       //去掉Activity的ActionBar。
+       //使用者可以根据自己的项目去配置，不一定要这样写，只要不Activity的ActionBar去掉就可以了。
+       //横竖屏切换处理。
+       //如果要支持横竖屏切换，一定要加上这句，否则在切换横竖屏的时候会发生异常。
+        -->
+        <!--
+        <activity
+            android:name="com.donkingliang.imageselector.ImageSelectorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        &lt;!&ndash; //图片预览Activity &ndash;&gt;
+        <activity
+            android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        &lt;!&ndash; //图片剪切Activity &ndash;&gt;
+        <activity
+            android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.yc.love.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.yc.emotion.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource" />
+        </provider>
+
+        <activity android:name=".mine.ui.activity.FeedbackActivity" />
+        <activity android:name=".mine.ui.activity.SettingActivity" />
+        <activity android:name=".mine.ui.activity.CollectActivity" />
+        <activity android:name=".index.ui.view.imgs.ISListActivity" />
+        <activity android:name=".index.ui.view.imgs.ISCameraActivity" />
+        <!--
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.yc.love.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        -->
+        <activity android:name=".index.ui.activity.LoveArticleDetailsActivity" />
+        <activity android:name=".index.ui.activity.LoveCaseDetailActivity" />
+        <activity android:name=".index.ui.activity.SearchActivity" />
+        <!--
+        <receiver android:name=".receiver.NetWorkChangReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+        -->
+        <receiver android:name=".receiver.InitApkBroadCastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".pay.ui.activity.ProtocolActivity" />
+        <activity android:name=".mine.ui.activity.AboutUsActivity" />
+        <activity android:name=".mine.ui.activity.PrivacyStatementActivity" />
+        <!-- android:theme="@style/ActivityV7Translucent" -->
+
+        <receiver android:name=".receiver.UpdataBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/customTheme" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/customTheme" /> <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1109275009" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".index.ui.activity.LoveHealDetailsActivity" />
+        <!--<activity android:name=".index.ui.activity.ExpressFragment" />-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--<activity android:name=".index.ui.activity.PracticeTeachFragment" />-->
+        <activity android:name=".index.ui.activity.PracticeLoveActivity" />
+        <activity
+            android:name=".index.ui.activity.LoveAudioDetailActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="com.music.player.love.action" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".community.ui.activity.CommunityNoticeDetailActivity" />
+        <activity android:name=".community.ui.activity.CommunityDetailActivity" />
+        <activity android:name=".community.ui.activity.CommunityPublishActivity" />
+        <activity android:name=".index.ui.activity.AudioActivity" />
+        <activity android:name=".index.ui.activity.ConsultAppointActivity" />
+
+        <activity android:name=".index.ui.activity.TipsCourseActivity" />
+        <activity android:name=".message.ui.activity.ServiceChatActivity" />
+        <activity android:name=".index.ui.activity.EfficientCourseActivity" />
+        <activity
+            android:name=".index.ui.activity.TutorCourseDetailActivity"
+            android:configChanges="orientation|screenSize"
+
+            android:screenOrientation="portrait" />
+        <!--在你需要全屏播放的Activity中加上这个属性，告诉系统Activity在横竖屏切换时不要销毁Activity-->
+        <activity android:name=".index.ui.activity.TutorListActivity" />
+        <activity android:name=".index.ui.activity.EmotionTestMainActivity" />
+        <activity android:name=".index.ui.activity.EmotionTestDescActivity" />
+        <activity android:name=".index.ui.activity.EmotionTestDetailActivity" />
+        <activity android:name=".index.ui.activity.TutorDetailActivity" />
+        <activity android:name=".index.ui.activity.TutorAptitudeActivity" />
+        <activity android:name=".index.ui.activity.TutorServiceListActivity" />
+        <activity
+            android:name=".index.ui.activity.TutorServiceDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".index.ui.activity.TutorServiceCommentDetailActivity" />
+        <activity android:name=".index.ui.activity.EmotionTestResultActivity" />
+        <activity android:name=".index.ui.activity.EmotionSearchActivity" />
+        <activity android:name=".pay.ui.activity.VipActivity" />
+        <activity android:name=".mine.ui.activity.OrderActivity" />
+        <activity android:name=".mine.ui.activity.MyTestReportActivity" />
+        <activity android:name=".mine.ui.activity.EditSignatureActivity" />
+        <activity android:name=".mine.ui.activity.ShareActivity" />
+        <activity android:name=".mine.ui.activity.LoginMainActivity">
+
+        </activity>
+
+        <activity android:name=".mine.ui.activity.LoginActivity" />
+        <activity android:name=".mine.ui.activity.RegisterMainActivity" />
+        <activity android:name=".mine.ui.activity.PublishEvaluateActivity" />
+        <activity android:name=".mine.ui.activity.OnceEvaluateActivity" />
+        <activity android:name=".index.ui.activity.MoreArticleActivity" />
+        <activity android:name=".index.ui.activity.ArticleDetailActivity" />
+        <activity android:name=".mine.ui.activity.OrderActivityNew" />
+        <activity android:name=".index.ui.activity.EmotionTestSkipDetailActivity" />
+        <activity android:name=".index.ui.activity.SelectSexActivity" />
+        <activity android:name=".mine.ui.activity.EditNicknameActivity" />
+        <activity android:name=".index.ui.activity.TestRecordDetailActivity" />
+        <activity
+            android:name=".base.ui.activity.GuideActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/fullScreen" />
+        <activity android:name=".mine.ui.activity.ResetPwdActivity" />
+        <activity android:name=".message.ui.activity.NotificationDetailActivity" />
+        <activity android:name=".message.ui.activity.NotificationListActivity" />
+        <activity android:name=".message.ui.fragment.MessageActivity" />
+
+
+        <!--android:windowSoftInputMode="adjustPan|stateHidden"-->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>

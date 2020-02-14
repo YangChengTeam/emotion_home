@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".mine.ui.activity.SettingActivity">
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:is_show_arrow="false"
+        app:is_show_more_text="true"
+        app:item_title="清空缓存"
+        app:layout_constraintTop_toTopOf="@id/view_divider" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:is_show_more_text="true"
+        app:item_title="检查更新"
+        app:layout_constraintTop_toBottomOf="@+id/mineItemView_clear_cache" />
+
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_title="欢迎评分"
+        app:layout_constraintTop_toBottomOf="@+id/mineItemView_update" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:is_show_divider="false"
+        app:item_title="关于我们"
+        app:layout_constraintTop_toBottomOf="@+id/mineItemView_score" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_f2f2f2"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/mineItemView_about_us">
+
+        <TextView
+            android:id="@+id/setting_tv_exit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/emotion_test_detail_answer_bg_selected"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="退出登录"
+            android:textColor="@color/red_crimson"
+            android:textSize="@dimen/size_18" />
+    </FrameLayout>
+
+
+</android.support.constraint.ConstraintLayout>

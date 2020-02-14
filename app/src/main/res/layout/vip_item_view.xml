@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_become_vip_tail_cl_con_01"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:layout_marginEnd="10dp"
+    android:background="@mipmap/vip_card_bg"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_expire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@mipmap/vip_exipre_bg"
+        android:gravity="center"
+        android:text="2019.10.16到期"
+        android:textColor="#DCAF76"
+        android:textSize="10sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/item_become_vip_tail_tv_pay_tit_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp"
+        android:text="VIP特权季卡"
+        android:textColor="@color/gray_302d2f"
+        android:textSize="@dimen/size_14"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/item_become_vip_tail_ll_pay_con_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_become_vip_tail_tv_pay_tit_01">
+
+        <TextView
+            android:id="@+id/item_become_vip_tail_tv_pay_unit_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="@color/red_fd3b0e"
+            android:textSize="@dimen/size_12" />
+
+        <TextView
+            android:id="@+id/item_become_vip_tail_tv_pay_mon_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="56"
+            android:textColor="@color/red_fd3b0e"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/item_become_vip_tail_tv_original_price_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:text="555"
+            android:textColor="#755B3E"
+            android:textSize="@dimen/size_10"
+            app:layout_constraintRight_toRightOf="parent" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_become_vip_tail_tv_pay_des_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/vip_button"
+        android:gravity="center"
+        android:text="限时抢购¥38"
+        android:textColor="#F6D4A7"
+
+        android:textSize="@dimen/size_12"
+        app:layout_constraintTop_toBottomOf="@+id/item_become_vip_tail_ll_pay_con_01" />
+
+    <ImageView
+        android:id="@+id/item_become_vip_tail_iv_pay_sel_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/become_vip_icon_pay_s"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</LinearLayout>

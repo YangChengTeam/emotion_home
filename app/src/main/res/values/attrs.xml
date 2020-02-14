@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<declare-styleable name="CoordinatorTabLayout">
+        <attr name="contentScrim" format="color" />
+        <attr name="tabIndicatorColor" format="color" />
+        <attr name="tabTextColor" format="color" />
+    </declare-styleable>-->
+    <declare-styleable name="MainNavigationLin">
+        <attr name="textName" format="string" />
+    </declare-styleable>
+    <declare-styleable name="MainMyItemLin">
+        <attr name="textNameMyItem" format="string" />
+        <attr name="textSubMyItem" format="string" />
+        <attr name="imgSrc" format="reference" />
+        <attr name="isAddIntervalTop" format="boolean" />
+        <attr name="isAddIntervalBom" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="LoginEditTextLin">
+        <attr name="textHintLoginEt" format="string" />
+        <attr name="iconSrcLoginEt" format="reference" />
+        <attr name="isShowCodeLoginEt" format="boolean" />
+        <attr name="maxLengthLoginEt" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="CheckBox_Sample">
+        <attr name="size" format="dimension" />
+        <attr name="color_border" format="color" />
+        <attr name="color_background" format="color" />
+    </declare-styleable>
+    <declare-styleable name="FluidLayout">
+        <attr name="fluid_layout_gravity">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="center" value="0x11" />
+        </attr>
+        <attr name="maxlinecount" format="integer">0</attr>
+    </declare-styleable>
+    <declare-styleable name="FluidLayout_Layout">
+        <attr name="fluid_layout_layout_gravity">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="center" value="0x11" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="PaletteImageView">
+        <attr name="paletteRadius" format="dimension" />
+        <attr name="paletteSrc" format="reference" />
+        <attr name="palettePadding" format="dimension" />
+        <attr name="paletteOffsetX" format="dimension" />
+        <attr name="paletteOffsetY" format="dimension" />
+        <attr name="paletteShadowRadius" format="dimension" />
+
+    </declare-styleable>
+    <declare-styleable name="VerificationCodeInput">
+
+        <attr name="box" format="integer" />
+        <attr name="child_h_padding" format="dimension" />
+        <attr name="child_v_padding" format="dimension" />
+        <attr name="child_width" format="dimension" />
+        <attr name="child_height" format="dimension" />
+        <attr name="padding" format="dimension" />
+        <attr name="box_bg_focus" format="reference" />
+        <attr name="box_bg_normal" format="reference" />
+        <attr name="inputType" format="string" />
+    </declare-styleable>
+
+
+    <declare-styleable name="DragLayout">
+        <attr name="bottomDragVisibleHeight" format="dimension" />
+        <attr name="bototmExtraIndicatorHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="GradientColorTextView">
+        <attr name="startColor" format="color" />
+        <attr name="endColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="MineItemView">
+        <attr name="item_title" format="string" />
+        <attr name="is_show_divider" format="boolean" />
+        <attr name="is_show_more_text" format="boolean" />
+        <attr name="more_text" format="string" />
+        <attr name="is_show_arrow" format="boolean" />
+    </declare-styleable>
+
+</resources>

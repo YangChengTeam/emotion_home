@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/rootView"
+        android:layout_width="150dp"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.yc.emotion.home.base.ui.widget.RoundCornerImg
+            android:id="@+id/screenshot_image"
+            android:layout_width="109dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/tv_tutor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableEnd="@mipmap/index_tutor_dialogue_icon"
+                android:drawablePadding="5dp"
+                android:text="张三李四"
+                android:textColor="@color/gray_222222" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_tutor_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="婚姻家庭咨询师"
+            android:textColor="@color/gray_999999"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <!--购买-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="购买"
+                android:textColor="@color/gray_222222"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="平台是如何实现交易担保的？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+
+                    android:id="@+id/tv_service_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="用户均可在平台中实现退款、投诉、评价等售后保障，且为用户提供了48小时不满意退款保障，针对个性化定制服务平台设定了免费的咨询服务，针对咨询师分析及意见满意可以进行付费交易，并享受平台交易担保。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="私下和咨询师交易有哪些风险？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="私下与咨询师交易的风险主要有以下几个方面：\n
+1、服务售后无保障：由于未在平台上交易，因此未生成交易订单记录，则无法对订单服务发起投诉或退款，平台也难易监督其服务质量。\n
+2、隐私泄露：由于私下交易不受平台保障，您的隐私信息将面临被泄露的风险。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="平台如何确保服务的收费标准是合理的？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="平台的服务均为收费服务，为加强和规范平台管理、优化平台服务价格结构，给予用户优质体验，保障服务质量，在对咨询师劳动成本进行核算后，对所上架的服务制定了价格指导规范，为保障用户权益，平台将有工作人员实时抽查，为平台用户提供合理的收费标准。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="在平台上支付安全吗？有哪些支付方式？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="为保障支付安全，平台使用全新的安全模式交易系统，用户可放心在平台上购买服务。\n
+在App上可使用支付宝和微信的支付方式。\n
+除此之外，我们还提供微信和支付宝的定制收款链接的支付方式。请注意切勿与咨询师私下使用转账或红包方式交易，否则将有可能面临无服务、无法退款和隐私泄露的风险。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/gray_f2f2f2" />
+
+        <!--服务-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务"
+                android:textColor="@color/gray_222222"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="购买服务后，咨询师如何为我提供服务？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="具体的服务流程，根据购买的服务而异，在购买前请咨询咨询师以充分了解。\n
+如果是包含指导类的服务，大致流程为：\n
+1、购买服务后，首先咨询师会根据你的具体情况进行分析，确定问题；\n
+2、然后根据目前的问题，制定匹配的解决方案，学员可提出自己的意见；\n
+3、咨询师按照制定的方案指导实施，并持续跟进；\n
+4、服务期限结束后，针对服务进行总结，并给予后期关系维护的建议。\n
+如果是包含指导类的服务，还会有在线授课、课后作业、作业讲解等环节"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="能给我提供哪些服务？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+
+                    android:id="@+id/tv_service_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="围绕情感相关需求，为用户提供恋爱指导、个人提升、婚姻挽回、情感咨询等增值服务。同时为满足用户多样化需求，针对不同的内容平台为用户设定了免费服务和付费服务两种服务模式，免费服务以开设免费在线咨询、免费音频文章等形式为用户专业解决各类心理情感疑难；付费服务在为用户的个人情感问题做精准分析的前提下，为用户量身定制专业的私人方案，以为用户拨开情感迷雾，提高幸福指数为宗旨，给予一对一，多对一的全程跟踪与指导。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="购买服务后，如何提高成功的概率？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+
+                    android:id="@+id/tv_service_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="1、学员作为咨询师制定计划的执行方，有义务按时按量地完成咨询师安排的任务，以达到最佳的指导和指导效果。\n
+2、如果在执行过程中遇到困难或存在疑惑，务必及时与咨询师沟通、汇报情况，以便咨询师帮您解决问题，不错过最佳时机。\n
+3、执行计划的过程需要循序渐进，请勿心急、焦虑，或在未通知咨询师的情况下擅自行动，以免导致无法顺利执行计划。\n
+4、在咨询师指导的过程中，学员应积极主动地去消化和学习，任何的方案，离开个人的学习都是无效的。\n
+咨询师是督促、指引、解惑的角色，并不是强势带领、强推的角色。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我对咨询师制定的指导方案不满意怎么办？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="建议在制定指导方案的过程中，主动与咨询师进行沟通，保持情绪稳定，理智的思考咨询师提出的问题。如果觉得有不合适的地方，可以将自己的顾虑心平气和地提给咨询师，以便于咨询师及时修改。\n
+制定方案后不要急于行动，这样容易导致反效果，学员应遵循专业咨询师的指导，以达到服务的最佳效果。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="购买服务后有什么需要注意的？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_9"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="1、购买服务后，明确服务的服务期限，和咨询师的工作时间，避免出现无法及时沟通的情况。\n
+2、咨询师为了促进用户的积极性，会给学员预留适当的作业，为了达成预想效果，学员应积极配合咨询师完成作业。\n
+3、在服务过程中，如果有达到未预期的地方，请及时向咨询师反馈，和咨询师沟通自己的想法。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/gray_f2f2f2" />
+
+
+        <!--售后-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="售后"
+                android:textColor="@color/gray_222222"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="如何给服务评价、提建议？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="用户报名服务7天后，可以在App【我-待评价】对咨询师的服务进行评价。\n
+如果对咨询师服务满意，可以给予好评，对咨询师进行鼓励；如果觉得咨询师服务上有可提升的空间，也可以通过评价提出您宝贵的意见和建议，收到反馈后，我们会第一时间与咨询师沟通，并根据您的需求优化服务。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="购买服务后不满意，可以退款吗？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="1、请在购买前查询服务详情的“服务说明”，确认您的服务是否属于48小时不满意退款。如果服务详情标识为“本产品为虚拟内容服务，一经售出概不退款”或未标明支持48小时不满意退款的，不享有要求退款的权利。如服务详情标识为“48小时不满意退款”，则您享有在购课起的48小时内终止服务并申请退款。\n
+2、如果您已购买服务超过48小时，按照平台服务协议，无法为您申请退款，请您理解。但如果您有任何对服务不满意的地方，请联系平台客服，我们将全力保障您的权益。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="平台如何提供售后保障？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+
+                    android:id="@+id/tv_service_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="1、在购买服务后，如果遇到对服务不满意的情况，可先与咨询师积极沟通解决，如需平台协助，可联系平台客服，客服会在第一时间帮助您协调处理，全力保障您的权益。\n
+2、退款保障：请在购买前查询服务详情的“服务说明”，确认您的服务是否属于48小时不满意退款。如果服务详情标识为“本产品为虚拟内容服务，一经售出概不退款”或未标明支持48小时不满意退款的，不享有要求退款的权利。如服务详情标识为“48小时不满意退款”，则您享有在购课起的48小时内终止服务并申请退款。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_edebeb" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_service_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:tag="0"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="什么情况下不予退款？"
+                        android:textColor="@color/gray_222222" />
+
+                    <ImageView
+                        android:id="@+id/iv_service_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_arrow_right" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_service_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="1、必须是通过官方渠道支付才能申请退款，若非官方渠道付款，须由您自行承担责任及风险，平台无退款义务。\n
+2、在购买任务钱，请您仔细查看服务详情标识说明，如果标明为“本产品为虚拟内容，一经售出概不退款”或未标明支持48小时不满意退款的，则不支持申请退款。\n
+3、如果服务详情标识为“48小时不满意退款”，若超过48小时，按照服务平台协议，无法为您申请退款，请您理解。但如果您有任何对服务不满意的地方，请联系平台客服，我们将全力保障您的权益。\n
+4、如果服务不存在质量问题，不予退款。情感咨询与提升的效果取决于情感咨询师与用户的共同努力，如果用户向咨询师陈述的问题与用户的实际情况不相符，导致服务期内没能达到用户的期望，或因用户个人原因无法执行咨询师给予的方案的不予退款。\n
+5、如果在服务期内提前达成了用户期望不予退款。\n
+6、由于情感咨询不对结果做任何承诺，如果在服务结束，未达成用户期望不予退款。\n
+7、如果用户违约则其支付的费用作为违约金不予退还。"
+                    android:textColor="@color/gray_999"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/gray_f2f2f2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="购买须知"
+                android:textColor="@color/gray_222222"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="5dp"
+                android:text="尊敬的用户：\n
+您好！为了帮助您更好的选购的课程，请您在购买前务必要认真、详细阅读并完全理解本告知书的全部内容，一旦购买产品或服务，平台将默认您已知悉并同意本协议全部内容，详情请查看《情感之家三方服务协议》。\n
+（1）购买课程后由平台认证情感咨询师及导师为您提供服务，服务内容仅情感咨询或个人提升在线指导及建议，帮助您走出情感困境，但是无法做出任何效果性承诺或代替您采取行动，请您勿轻信类似承诺，由于情感状况收个人因素不同，不保证可以百分之百解决问题，请及时调整自我预期。\n
+（2）服务期间平台与您共同监督导师服务质量，平台将保证您的个人权益，如服务期间产生问题，请联系平台客服，客服会联系导师进行协调。\n
+（3）请在购买前查看“服务说明”，确认您的课程属于48小时不满意退款或者不支持退款，如48小时不满意退款，您有权在48小时内终止课程，并申请退款，请您在平台申请退款后及时联系您的导师进行沟通，平台将全程保障您的权益，如无法沟通请联系官方客服进行咨询。\n
+为了方便您更多的了解平台服务模式，请您付款前仔细观看《情感之家三方服务协议》，致力于打造国内婚恋情感咨询领先平台，将严格监督每一位认证导师的服务质量，为用户提供专业的情感咨询，感谢您的选择!"
+                android:textColor="@color/gray_666"
+                android:textSize="13sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

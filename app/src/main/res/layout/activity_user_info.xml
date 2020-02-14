@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".mine.ui.activity.UserInfoActivity">
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/user_info_iv_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="25dp"
+        android:src="@mipmap/main_icon_default_head"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_open_camera"
+        app:layout_constraintBottom_toBottomOf="@id/user_info_iv_icon"
+        app:layout_constraintRight_toRightOf="@id/user_info_iv_icon" />
+
+
+    <TextView
+        android:id="@+id/tv_user_datum_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="资料完善度25%，让我们在相互了解一下吧~"
+        android:textColor="@color/gray_999"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_info_iv_icon" />
+
+
+    <View
+        android:id="@+id/view_big_divider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/gray_f2f2f2"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_datum_desc" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_user_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/view_big_divider">
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_arrow="false"
+            app:is_show_more_text="true"
+            app:item_title="用户ID" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_more_text="true"
+            app:item_title="昵称"
+            app:more_text="请设置" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_more_text="true"
+            app:item_title="个性签名"
+            app:more_text="介绍一下你自己" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_more_text="true"
+            app:item_title="性别" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_more_text="true"
+            app:item_title="年龄" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_income"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_more_text="true"
+            app:item_title="职业" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:id="@+id/mineItemView_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:is_show_divider="false"
+            app:is_show_more_text="true"
+            app:item_title="关注问题" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:is_show_more_text="true"
+            app:item_title="绑定手机" />
+
+        <com.yc.emotion.home.mine.ui.widget.MineItemView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:is_show_divider="false"
+            app:is_show_more_text="true"
+            app:item_title="绑定微信" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/gray_f2f2f2" />
+    </LinearLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>

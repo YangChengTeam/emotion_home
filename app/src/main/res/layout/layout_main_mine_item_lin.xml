@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp">
+
+
+        <TextView
+            android:id="@+id/main_mine_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="中文"
+            android:textColor="@color/gray_222222"
+            android:textSize="@dimen/size_14"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/iv_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/main_icon_arr_rig_gray" />
+
+        <TextView
+            android:id="@+id/tv_more_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/main_mine_item_title"
+            android:layout_toStartOf="@id/iv_right_arrow"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="请选择"
+            android:textColor="@color/gray_999"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/main_mine_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_edebeb" />
+
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_face"
+        android:layout_marginTop="-24dp"
+        android:background="@drawable/community_info_out_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+
+        <TextView
+            android:id="@+id/tv_face_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="李华云"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_signature"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/community_info_signature_bg"
+            android:paddingLeft="8dp"
+            android:paddingTop="9dp"
+            android:text="咦，这里空空如也呢~"
+            android:textColor="@color/gray_bebdbd" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_face"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/community_face_bg"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/iv_face"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/head_bomb" />
+    </LinearLayout>
+
+
+</RelativeLayout>

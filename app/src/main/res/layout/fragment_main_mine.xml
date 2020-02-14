@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/main_t5_view_bar"
+        layout="@layout/layout_view_bar"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/personal_bg"
+
+        android:orientation="vertical"
+        android:paddingTop="@dimen/statusbar_view_height">
+        <!--android:gravity="center_horizontal"-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/mine"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/rl_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_person_face"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/iv_person_face"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/tutor_head" />
+
+                <ImageView
+                    android:id="@+id/iv_vip_tips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@mipmap/personal_vip"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/rl_person_face"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/main_t5_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="普通用户"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/main_t5_tv_btn_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/person_data_bg_normal"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="信息未完善"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_arrow_white" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-30dp"
+        android:background="@mipmap/personal_bg_two">
+
+        <LinearLayout
+            android:id="@+id/ll_vip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableStart="@mipmap/personal_icon_vip"
+                android:gravity="center"
+                android:text="VIP特权卡"
+                android:textColor="@color/gray_222222"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray_edebeb" />
+
+        <LinearLayout
+            android:id="@+id/ll_free_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableStart="@mipmap/personal_icon_reserve"
+                android:gravity="center"
+                android:text="免费预约"
+                android:textColor="@color/gray_222222"
+
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:drawableTop="@mipmap/personal_icon_attention"
+                android:text="我的关注"
+                android:textColor="@color/gray_222222" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mine_collect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:drawableTop="@mipmap/personal_icon_collect"
+                android:text="我的收藏"
+                android:textColor="@color/gray_222222"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mine_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:drawableTop="@mipmap/personal_icon_order"
+                android:text="我的订单"
+                android:textColor="@color/gray_222222"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_mine_test_report"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="9dp"
+                android:drawableTop="@mipmap/personal_icon_report"
+                android:text="测试报告"
+                android:textColor="@color/gray_222222"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_f2f2f2" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_title="消息" />
+
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_invite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_title="邀请好友" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_title="意见反馈" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:item_title="使用帮助" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_privacy_policy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:item_title="隐私政策" />
+
+    <com.yc.emotion.home.mine.ui.widget.MineItemView
+        android:id="@+id/mineItemView_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:is_show_divider="false"
+        app:item_title="系统设置" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_f2f2f2" />
+
+
+</LinearLayout>

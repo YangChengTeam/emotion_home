@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="15dp">
+
+    <com.yc.emotion.home.base.ui.widget.RoundCornerImg
+        android:id="@+id/roundCornerImg_emotion"
+        android:layout_width="104dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/index_example_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_emotion_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:lineSpacingExtra="3dp"
+        android:text="你在爱情里的情感特质是什么"
+        android:textColor="@color/gray_222222"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@id/roundCornerImg_emotion"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_emotion_test_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="998人已通过测试"
+        android:textColor="@color/gray_999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/roundCornerImg_emotion"
+        app:layout_constraintLeft_toLeftOf="@id/tv_emotion_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roundCornerImg_emotion" />
+
+
+</android.support.constraint.ConstraintLayout>

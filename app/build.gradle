@@ -1,0 +1,133 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'emotion'
+            keyPassword '123456'
+            storeFile file('emotion.jks')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'emotion'
+            keyPassword '123456'
+            storeFile file('emotion.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 28
+    /* packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }*/
+    defaultConfig {
+        applicationId "com.yc.emotion.home"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 11//21
+        versionName "2.0.0"//2.0.0
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+        multiDexEnabled true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //    implementation project(':http')
+    api project(':model')
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.github.open-android:ViewPager:0.1.0'
+    implementation 'com.contrarywind:Android-PickerView:4.1.8'
+    implementation 'top.zibin:Luban:1.1.3'
+    //    implementation 'com.yuyh.imgsel:library:2.0.6'
+    //    implementation 'com.kk:securityhttp:1.1.3'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation(name: 'alipaySdk-15.6.2-20190416165036', ext: 'aar')
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //    implementation 'cn.trinea.android.common:trinea-android-common:4.2.15'
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    implementation 'com.umeng.umsdk:analytics:8.0.0'
+    implementation 'com.umeng.umsdk:common:2.0.0'
+    implementation 'com.qw:soulpermission:1.1.6'
+    implementation 'com.zhy:okhttputils:2.6.2'
+    //    implementation 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
+    implementation 'com.isseiaoki:simplecropview:1.1.4'
+    implementation files('libs/open_sdk_r6019_lite.jar')
+    implementation project(':share')
+    implementation project(':music-player-lib')
+    implementation 'com.google.android:flexbox:1.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.wl.tencent-adv:tencent-adv:7.0'
+    implementation 'com.android.support:palette-v7:28.0.0'
+    implementation 'com.youth.banner:banner:1.4.10'
+    //最新版本
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.github.chenBingX:SuperTextView:v3.2.1'
+    implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
+
+    implementation project(':ultraviewpager')
+    implementation(name: 'BotKit', ext: 'aar')
+    implementation(name: 'BotLib', ext: 'aar')
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
+    implementation project(':video-player-lib')
+    //    implementation files('libs/umeng-common-2.1.0.jar')
+    //    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+    compile('com.github.hotchemi:permissionsdispatcher:3.1.0') { exclude module: 'support-v13' }
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+    implementation 'com.github.huburt-Hu:NewbieGuide:v2.4.0'
+    implementation 'com.sunfusheng:MarqueeView:1.4.1'
+    implementation project(':PhotoPicker')
+}

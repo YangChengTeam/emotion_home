@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="资质背景"
+                android:textColor="@color/gray_222222"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="5dp"
+                android:text="情感之家实操类导师，擅长婚恋关系维护、分手挽回。心理咨询成长联盟会员"
+                android:textColor="@color/gray_666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="导师介绍"
+                android:textColor="@color/gray_222222"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="主攻方向："
+                    android:textColor="@color/gray_222222"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="情感挽回、婚姻救急"
+                    android:textColor="@color/gray_666" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="擅长类型："
+                    android:textColor="@color/gray_222222"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="婚恋关系维护，分手挽回"
+                    android:textColor="@color/gray_666" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="适合人群："
+                android:textColor="@color/gray_222222"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="8dp"
+                android:text="1、情感挽回、婚姻救急、想要洞悉两性思维\n2、情感挽回、婚姻救急、想要洞悉两性思维\n3、情感挽回、婚姻救急、想要洞悉两性思维\n4、情感挽回、婚姻救急、想要洞悉两性思维"
+                android:textColor="@color/gray_666" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="你将获得："
+                android:textColor="@color/gray_222222"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:lineSpacingExtra="8dp"
+                android:text="1、情感挽回、婚姻救急、想要洞悉两性思维\n2、情感挽回、婚姻救急、想要洞悉两性思维\n3、情感挽回、婚姻救急、想要洞悉两性思维\n4、情感挽回、婚姻救急、想要洞悉两性思维"
+                android:textColor="@color/gray_666" />
+        </LinearLayout>
+
+        <com.yc.emotion.home.base.ui.widget.CommonWebView
+            android:id="@+id/webview_tutor_desc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

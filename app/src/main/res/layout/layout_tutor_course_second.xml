@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_tutor_course_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="情感修复专家挽回服务课程名称"
+            android:textColor="@color/gray_222222"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_tutor_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="主讲导师：慧慧"
+                android:textColor="@color/gray_999"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_tutor_course_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="166人已购"
+                android:textColor="@color/gray_999" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_tutor_extend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableBottom="@mipmap/icon_arrow_down_red"
+                android:drawablePadding="8dp"
+                android:text="点击展开课程详情"
+                android:textColor="@color/app_color" />
+
+            <LinearLayout
+                android:id="@+id/ll_tutor_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <com.yc.emotion.home.base.ui.widget.CommonWebView
+                    android:id="@+id/webview_course_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:id="@+id/tv_tutor_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@mipmap/icon_arrow_up_red"
+                    android:drawablePadding="3dp"
+                    android:text="点击收起"
+                    android:textColor="@color/app_color" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/gray_f2f2f2" />
+
+</LinearLayout>

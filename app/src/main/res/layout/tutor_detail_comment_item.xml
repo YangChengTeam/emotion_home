@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingTop="15dp">
+
+    <ImageView
+        android:id="@+id/iv_tutor_detail_comment_face"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/head_user_two"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tutor_detail_comment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:text="李丽"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_tutor_detail_comment_face"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tutor_detail_comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="5dp"
+        android:text="老师很专业，这段时间耐心指导我，教我如何提高，感谢老师！"
+        android:textColor="@color/gray_666"
+        app:layout_constraintLeft_toLeftOf="@id/tv_tutor_detail_comment_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_tutor_detail_comment_name" />
+
+    <!--android:drawableRight="@mipmap/icon_arrow_right_red"-->
+    <TextView
+        android:id="@+id/tv_tutor_detail_comment_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="来自：婚姻挽回私人定制"
+        android:textColor="@color/app_color"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_tutor_detail_comment_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_tutor_detail_comment_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tutor_detail_comment_from" />
+
+</android.support.constraint.ConstraintLayout>

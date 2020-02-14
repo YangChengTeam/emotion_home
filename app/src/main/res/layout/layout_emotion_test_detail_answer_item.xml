@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/emotion_test_detail_answer_bg_selector"
+    android:paddingStart="15dp"
+    tools:ignore="RtlSymmetry">
+
+    <TextView
+        android:id="@+id/tv_emotion_test_answer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A、是的"
+        android:textColor="@color/emotion_test_detail_answer_color_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/love_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.yc.emotion.home.base.ui.widget.ControlScrollViewPager
+            android:id="@+id/comp_main_vp_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="100"
+            app:layout_constraintBottom_toTopOf="@+id/comp_main_ll_con" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_f6f6f6" />
+
+        <LinearLayout
+            android:id="@+id/comp_main_ll_con"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <TextView
+                android:id="@+id/comp_main_index"
+                style="@style/tv_main_icon_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@mipmap/main_icon_tab_01"
+                android:text="@string/index"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/comp_main_inVerbal"
+                style="@style/tv_main_icon_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@mipmap/home_speech_sel"
+                android:text="@string/inVerbal"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/comp_main_community"
+                style="@style/tv_main_icon_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@mipmap/home_community_default"
+                android:text="@string/community"
+                android:textColor="@color/text_gray" />
+
+            <TextView
+                android:id="@+id/comp_main_message"
+                style="@style/tv_main_icon_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@mipmap/home_love_default"
+                android:text="@string/skill"
+                android:textColor="@color/text_gray" />
+
+
+            <TextView
+                android:id="@+id/comp_main_my"
+                style="@style/tv_main_icon_bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:drawableTop="@mipmap/main_icon_tab_05"
+                android:text="@string/mine"
+                android:textColor="@color/text_gray" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/comp_main_iv_to_wx"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="62dp"
+        android:layout_marginEnd="15dp"
+        android:src="@mipmap/icon_floating_weixin" />
+
+    <!--<android.support.design.widget.FloatingActionButton
+        android:visibility="gone"
+        android:love_id="@+love_id/comp_main_floating_action_button_to_wx"
+        android:src="@mipmap/icon_pay_wx"
+       android:background="@mipmap/icon_floating_weixin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="62dp" />-->
+
+
+</FrameLayout>

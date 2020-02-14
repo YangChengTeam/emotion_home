@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_view"
+        layout="@layout/common_topbar_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+
+        android:id="@+id/pd_char_fragment"
+        android:name="com.yc.emotion.home.message.ui.fragment.ServiceChatFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top_view" />
+
+</LinearLayout>

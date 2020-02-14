@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".index.ui.activity.LoveArticleDetailsActivity">
+
+    <ProgressBar
+        android:id="@+id/love_by_stages_details_pb_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentTop="true"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/process_bg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yc.emotion.home.base.ui.widget.NewsScrollView
+        android:id="@+id/love_by_stages_details_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintBottom_toBottomOf="@+id/love_by_stages_details_pb_progress">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/love_background" />
+
+            <LinearLayout
+                android:id="@+id/love_by_stages_details_ll_title_con"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="15dp"
+                android:paddingTop="16dp">
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/shape_icon_red_crimson" />
+
+                <TextView
+                    android:id="@+id/love_by_stages_details_tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="10dp"
+                    android:text="55555"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_18"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/love_background" />
+
+            <com.yc.emotion.home.base.ui.widget.CommonWebView
+                android:id="@+id/love_by_stages_details_webview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="14dp"
+                android:paddingTop="18dp" />
+
+            <LinearLayout
+                android:id="@+id/love_by_stages_details_cl_like_con"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                android:paddingBottom="65dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="25dp"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/web_liability_exemption"
+                    android:textColor="@color/text_gray_dark"
+                    android:textSize="@dimen/size_14" />
+
+                <LinearLayout
+                    android:id="@+id/ll_bottom_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawablePadding="8dp"
+                            android:drawableTop="@mipmap/icon_line_stages"
+                            android:gravity="center_horizontal"
+                            android:text="觉得有用"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/size_14" />
+                    </FrameLayout>
+
+                    <ImageView
+                        android:id="@+id/love_by_stages_details_iv_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_like_gray" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:drawablePadding="8dp"
+                            android:drawableTop="@mipmap/icon_line_stages"
+                            android:gravity="center_horizontal"
+                            android:text="不妨点个赞"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/size_14" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.yc.emotion.home.base.ui.widget.NewsScrollView>
+
+    <include
+        android:id="@+id/rlBottom"
+        layout="@layout/layout_bottom_wechat" />
+
+</android.support.constraint.ConstraintLayout>
