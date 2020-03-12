@@ -175,7 +175,10 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
     public void onCreate() {
         super.onCreate();
         startForeground(SERVICE_ID, createNotification());
+
+
     }
+
 
 
     private Notification createNotification() {
@@ -238,6 +241,7 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
             mManager.cancelAll();
         }
         mOnPlayerEventListener = null;
+
         super.onDestroy();
     }
 
@@ -1028,6 +1032,7 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
                     //开始,暂停
                     case Constant.NOTIFY_PLAY_PAUSE:
                         Logger.d(TAG, "收到播放、暂停广播");
+
                         MusicPlayerManager.getInstance().playPause();
                         if (null != mMusicInfos && mMusicInfos.size() > 0) {
 //                            NotificationUtil.showNotify(MusicPlayerService.this, mMusicInfos.get(mPlayPosition).getTitle(), mMediaPlayer.isPlaying(), Notification.FLAG_AUTO_CANCEL);

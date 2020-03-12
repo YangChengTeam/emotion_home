@@ -16,5 +16,6 @@
             android:name=".service.MusicPlayerService"
             android:exported="true" />
 
+
     </application>
 </manifest>

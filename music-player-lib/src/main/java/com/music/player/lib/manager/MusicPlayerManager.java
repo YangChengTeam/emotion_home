@@ -582,6 +582,7 @@ public class MusicPlayerManager implements OnPlayerEventListener {
 
             context.stopService(new Intent(context, MusicPlayerService.class));
 
+
         }
         mConnectionCallback = null;
     }
