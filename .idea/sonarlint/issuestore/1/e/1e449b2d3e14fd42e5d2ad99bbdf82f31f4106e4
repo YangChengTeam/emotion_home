@@ -1,0 +1,36 @@
+
+N
+java:S1874G"3Remove this use of "TYPE_MOBILE"; it is deprecated.(˜ùà÷şÿÿÿÿ
+G
+java:S1874'"1Remove this use of "TYPE_WIFI"; it is deprecated.(óÀğğ
+<	java:S1316""Add a default case to this switch.(î™Œúÿÿÿÿ
+V	java:S125O"<This block of commented-out lines of code should be removed.(‹Êõüÿÿÿÿ
+J
+java:S1874G"/Remove this use of "getType"; it is deprecated.(˜ùà÷şÿÿÿÿ
+J
+java:S1874I"/Remove this use of "getType"; it is deprecated.(©Ö“îüÿÿÿÿ
+J
+java:S1874L"/Remove this use of "getType"; it is deprecated.(û³êóûÿÿÿÿ
+m
+java:S3776."RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(š³ÿÿÿÿÿÿ
+L
+java:S1874G"1Remove this use of "TYPE_WIFI"; it is deprecated.(˜ùà÷şÿÿÿÿ
+f
+java:S13016"KReplace this "switch" statement by "if" statements to increase readability.(î™Œúÿÿÿÿ
+I
+java:S1874%"3Remove this use of "TYPE_MOBILE"; it is deprecated.(¬é¿ş
+Q
+java:S1874>";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(óì¹
+D
+java:S1874H"/Remove this use of "getType"; it is deprecated.(ãù ;
+J
+java:S1874M"/Remove this use of "getType"; it is deprecated.(¯ò«ÿÿÿÿÿ
+J
+java:S1874G"/Remove this use of "getType"; it is deprecated.(˜ùà÷şÿÿÿÿ
+H
+java:S1874F"3Remove this use of "isAvailable"; it is deprecated.(ü™½<
+V	java:S125B"<This block of commented-out lines of code should be removed.(â¡–¦üÿÿÿÿ
+^
+java:S18719"HThis case's code block is the same as the block for the case on line 55.(–óĞà
+E
+java:S1874F"0Remove this use of "getState"; it is deprecated.(ü™½<

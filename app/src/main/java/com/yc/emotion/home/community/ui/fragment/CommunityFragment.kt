@@ -2,6 +2,7 @@ package com.yc.emotion.home.community.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Message
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -15,6 +16,7 @@ import com.yc.emotion.home.community.view.CommunityView
 import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.event.EventCommunityTag
 import com.yc.emotion.home.utils.ItemDecorationHelper
+import com.yc.emotion.home.utils.WeakHandler
 import kotlinx.android.synthetic.main.fragment_community.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,6 +33,7 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     private var page = 1
     private val PAGE_SIZE = 10
+
 
     private var mMainActivity: MainActivity? = null
 
@@ -108,8 +111,8 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     private fun initData() {
 
-
-        mPresenter.getCommunityNewsCache()
+//        mHandler = WeakHandler(this)
+//        mPresenter.getCommunityNewsCache()
 
         getData()
     }
@@ -122,33 +125,6 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
     fun getData() {
 
         mPresenter.getCommunityNewstInfos(page, PAGE_SIZE)
-
-//        val userId = UserInfoHelper.instance.getUid()
-//        if (page == 1) {
-//            loadingDialog = LoadDialog(mMainActivity)
-//            loadingDialog?.showLoadingDialog()
-//        }
-//
-//        loveEngin?.getCommunityNewstInfos("$userId", page, PAGE_SIZE)?.subscribe(object : Subscriber<ResultInfo<CommunityInfoWrapper>>() {
-//            override fun onCompleted() {
-//                if (loadingDialog != null) loadingDialog?.dismissLoadingDialog()
-//                if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
-//            }
-//
-//            override fun onError(e: Throwable) {
-//
-//            }
-//
-//            override fun onNext(communityInfoWrapperResultInfo: ResultInfo<CommunityInfoWrapper>?) {
-//                if (communityInfoWrapperResultInfo != null && communityInfoWrapperResultInfo.code == HttpConfig.STATUS_OK
-//                        && communityInfoWrapperResultInfo.data != null) {
-//                    val list = communityInfoWrapperResultInfo.data.list
-//                    createNewData(list)
-//
-//                }
-//
-//            }
-//        })
 
     }
 
@@ -200,9 +176,7 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     }
 
-    override fun onClick(v: View) {
-
-    }
+    override fun onClick(v: View) = Unit
 
     override fun showLoadingDialog() {
         mMainActivity?.showLoadingDialog()
@@ -212,8 +186,14 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
         mMainActivity?.hideLoadingDialog()
     }
 
+    private var isFromNet = false//是否从网络中获取了数据
     override fun shoCommunityNewestInfos(datas: List<CommunityInfo>?) {
+        isFromNet = true
         createNewData(datas)
+    }
+
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+        if (!isFromNet) createNewData(datas)
     }
 
     override fun onComplete() {

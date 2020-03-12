@@ -4,20 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'emotion'
-            keyPassword '123456'
-            storeFile file('emotion.jks')
-            storePassword '123456'
-        }
-        debug {
-            keyAlias 'emotion'
-            keyPassword '123456'
-            storeFile file('emotion.jks')
-            storePassword '123456'
-        }
-    }
+
     compileSdkVersion 28
     /* packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -41,6 +28,20 @@ android {
         multiDexEnabled true
 
     }
+    signingConfigs {
+        config {
+            keyAlias 'emotion'
+            keyPassword '123456'
+            storeFile file('emotion.jks')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'emotion'
+            keyPassword '123456'
+            storeFile file('emotion.jks')
+            storePassword '123456'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -48,6 +49,9 @@ android {
             signingConfig signingConfigs.config
         }
         debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     sourceSets {

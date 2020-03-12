@@ -44,12 +44,9 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
                 }
             }
 
-            override fun onCompleted() {
+            override fun onCompleted() = Unit
 
-            }
-
-            override fun onError(e: Throwable?) {
-            }
+            override fun onError(e: Throwable?) = Unit
 
         })
 
@@ -61,7 +58,7 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
         }.type, CommonInfoHelper.onParseListener<List<CommunityInfo>> { datas ->
             if (datas != null && datas.isNotEmpty()) {
-                mView.shoCommunityNewestInfos(datas)
+                mView.shoCommunityNewestCacheInfos(datas)
             }
         })
 

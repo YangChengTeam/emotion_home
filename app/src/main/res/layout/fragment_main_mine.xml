@@ -54,8 +54,8 @@
                     android:id="@+id/iv_vip_tips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
                     android:src="@mipmap/personal_vip"
                     android:visibility="gone" />
             </RelativeLayout>
@@ -111,8 +111,8 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="-30dp"
+        android:layout_marginRight="15dp"
         android:background="@mipmap/personal_bg_two">
 
         <LinearLayout
@@ -126,8 +126,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
                 android:drawableStart="@mipmap/personal_icon_vip"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="VIP特权卡"
                 android:textColor="@color/gray_222222"
@@ -138,8 +138,8 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/gray_edebeb" />
 
         <LinearLayout
@@ -153,8 +153,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
                 android:drawableStart="@mipmap/personal_icon_reserve"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="免费预约"
                 android:textColor="@color/gray_222222"
@@ -175,15 +175,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingBottom="15dp"
             android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/personal_icon_attention"
+                android:drawablePadding="9dp"
                 android:text="我的关注"
                 android:textColor="@color/gray_222222" />
         </LinearLayout>
@@ -195,14 +195,14 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/personal_icon_collect"
+                android:drawablePadding="9dp"
                 android:text="我的收藏"
                 android:textColor="@color/gray_222222"
                 android:textSize="12sp" />
@@ -215,14 +215,14 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/personal_icon_order"
+                android:drawablePadding="9dp"
                 android:text="我的订单"
                 android:textColor="@color/gray_222222"
                 android:textSize="12sp" />
@@ -235,14 +235,14 @@
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="9dp"
                 android:drawableTop="@mipmap/personal_icon_report"
+                android:drawablePadding="9dp"
                 android:text="测试报告"
                 android:textColor="@color/gray_222222"
                 android:textSize="12sp" />
@@ -255,44 +255,57 @@
         android:layout_height="10dp"
         android:background="@color/gray_f2f2f2" />
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_message"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:item_title="消息" />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_title="消息" />
 
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_invite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:item_title="邀请好友" />
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_title="邀请好友" />
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_feedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:item_title="意见反馈" />
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_title="意见反馈" />
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:item_title="使用帮助" />
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:item_title="使用帮助" />
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_privacy_policy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:item_title="隐私政策" />
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:item_title="隐私政策" />
 
-    <com.yc.emotion.home.mine.ui.widget.MineItemView
-        android:id="@+id/mineItemView_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:is_show_divider="false"
-        app:item_title="系统设置" />
+            <com.yc.emotion.home.mine.ui.widget.MineItemView
+                android:id="@+id/mineItemView_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:is_show_divider="false"
+                app:item_title="系统设置" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 
     <View
         android:layout_width="match_parent"

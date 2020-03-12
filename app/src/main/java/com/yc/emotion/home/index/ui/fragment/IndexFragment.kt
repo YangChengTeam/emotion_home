@@ -7,11 +7,14 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.alibaba.fastjson.JSON
 import com.app.hubert.guide.NewbieGuide
 import com.app.hubert.guide.model.GuidePage
 import com.bumptech.glide.Glide
@@ -28,6 +31,7 @@ import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.adapter.IndexCourseAdapter
+import com.yc.emotion.home.index.adapter.IndexLiveAdapter
 import com.yc.emotion.home.index.adapter.IndexTestAdapter
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.presenter.IndexPresenter
@@ -37,16 +41,16 @@ import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.GlideImageLoader
-import com.yc.emotion.home.utils.ItemDecorationHelper
-import com.yc.emotion.home.utils.Preference
-import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.utils.*
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
+import kotlinx.android.synthetic.main.fragment_main_community.*
 import kotlinx.android.synthetic.main.fragment_main_index.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 /**
  * Created by mayn on 2019/4/23.
@@ -55,10 +59,13 @@ import org.greenrobot.eventbus.ThreadMode
 class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 
+
     private var indexChoicenessAdapter: IndexChoicenessAdapter? = null
 
 
     private var indexCourseAdapter: IndexCourseAdapter? = null
+
+    private var indexLiveAdapter: IndexLiveAdapter? = null
 
     private var sex by Preference(ConstantKey.SEX, 1)
 
@@ -97,6 +104,12 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         indexCourseAdapter = IndexCourseAdapter(null)
         index_course_recyclerView.adapter = indexCourseAdapter
         index_course_recyclerView.addItemDecoration(ItemDecorationHelper(mMainActivity, 15, 0))
+
+        recyclerView_live.layoutManager = GridLayoutManager(mMainActivity, 2)
+        indexLiveAdapter = IndexLiveAdapter(null)
+        recyclerView_live.adapter = indexLiveAdapter
+        recyclerView_live.addItemDecoration(ItemDecorationHelper(mMainActivity, 15, 10))
+
 
         initData()
         initListener()
@@ -145,6 +158,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         iv_index_search.setOnClickListener { startActivity(Intent(mMainActivity, EmotionSearchActivity::class.java)) }
         iv_index_vip.setOnClickListener { startActivity(Intent(mMainActivity, VipActivity::class.java)) }
 
+
         indexCourseAdapter?.setOnItemClickListener { adapter, view, position ->
             val courseInfo = indexCourseAdapter?.getItem(position)
             courseInfo?.let {
@@ -154,6 +168,16 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         }
         marqueeView.setOnItemClickListener { position, textView ->
             switchSearch()
+        }
+
+        indexLiveAdapter?.setOnItemClickListener { adapter, view, position ->
+            val liveInfo = indexLiveAdapter?.getItem(position)
+            liveInfo?.let {
+                if (liveInfo.state == 1) {
+                    LiveWebActivity.startActivity(mMainActivity,liveInfo.liveUrl)
+//                    startActivity(Intent(mMainActivity, LiveWebActivity::class.java))
+                }
+            }
         }
 
     }
@@ -201,6 +225,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 //        mPresenter.getCache()
         getSexData()
+//        initLiveData()
 
     }
 
@@ -269,6 +294,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
             //banner设置方法全部调用完毕时最后调用
             index_banner.setOnBannerListener {
                 //todo banner点击事件
+
             }
             index_banner.start()
         }
@@ -313,11 +339,11 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun initCourseData(lesson_chapter: List<CourseInfo>?) {
-        lesson_chapter?.let {
-            var newLesson = lesson_chapter
-            if (lesson_chapter.size > 4) {
-                newLesson = lesson_chapter.subList(0, 4)
+    private fun initCourseData(lessonChapter: List<CourseInfo>?) {
+        lessonChapter?.let {
+            var newLesson = lessonChapter
+            if (lessonChapter.size > 4) {
+                newLesson = lessonChapter.subList(0, 4)
             }
             indexCourseAdapter?.setNewData(newLesson)
         }
@@ -329,11 +355,11 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun initViewPager(psych_test: List<EmotionTestInfo>?) {
+    private fun initViewPager(psychtTest: List<EmotionTestInfo>?) {
 
         index_ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
-        psych_test?.let {
-            val adapter = IndexTestAdapter(mMainActivity, psych_test)
+        psychtTest?.let {
+            val adapter = IndexTestAdapter(mMainActivity, psychtTest)
             index_ultraViewPager.adapter = adapter
             index_ultraViewPager.setMultiScreen(0.45f)
 //        index_ultraViewPager.setItemRatio(1.0)
@@ -384,6 +410,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
     private fun getIndexData() {
         mPresenter.getIndexData()
+        mPresenter.getIndexLiveList()
 
     }
 
@@ -452,4 +479,20 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         setData(detailInfos)
     }
 
+    override fun showIndexLiveInfos(liveInfos: List<LiveInfo>) {
+        indexLiveAdapter?.setNewData(liveInfos)
+    }
+
+    private fun initLiveData() {
+
+
+        val json = AssetUtils.getAssetData(context)
+
+        Log.e("TAG", json)
+        val infoWrapper = JSON.parseObject(json, LiveInfoWrapper::class.java)
+        val liveInfos = infoWrapper.data
+
+
+
+    }
 }

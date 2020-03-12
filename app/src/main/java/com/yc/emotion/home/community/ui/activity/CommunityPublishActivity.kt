@@ -12,6 +12,7 @@ import com.yc.emotion.home.community.adapter.PublishTagAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.view.CommunityView
 import com.yc.emotion.home.mine.ui.fragment.ExitPublishFragment
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfoWrapper
 import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
@@ -27,6 +28,9 @@ import rx.Subscriber
  * Created by suns  on 2019/8/30 18:12.
  */
 class CommunityPublishActivity : BaseSameActivity(), CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var tagAdapter: PublishTagAdapter? = null

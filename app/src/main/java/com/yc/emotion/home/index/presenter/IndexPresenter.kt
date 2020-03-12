@@ -12,9 +12,11 @@ import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.domain.model.IndexModel
 import com.yc.emotion.home.index.view.IndexView
 import com.yc.emotion.home.model.bean.IndexInfo
+import com.yc.emotion.home.model.bean.LiveInfoWrapper
 import com.yc.emotion.home.utils.CommonInfoHelper
 import rx.Observable
 import rx.Subscriber
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 
 /**
@@ -31,8 +33,8 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
 
     override fun loadData(isForceUI: Boolean, isLoading: Boolean) {
         if (!isForceUI) return
+        getIndexLiveList()
     }
-
 
 
     /**
@@ -101,6 +103,29 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
 
             }
 
+        })
+        subScriptions?.add(subscription)
+    }
+
+    fun getIndexLiveList() {
+        val subscription = mModel?.getLiveListInfo()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
+                t?.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.data != null) {
+                        val liveInfos = t.data.data
+                        mView.showIndexLiveInfos(liveInfos)
+                    }
+                }
+            }
+
+
+            override fun onCompleted() {
+
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
         })
         subScriptions?.add(subscription)
     }

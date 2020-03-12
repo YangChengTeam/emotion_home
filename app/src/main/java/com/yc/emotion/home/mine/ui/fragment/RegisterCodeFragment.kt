@@ -91,7 +91,7 @@ class RegisterCodeFragment : BaseLazyFragment<UserInfoPresenter>(), UserInfoView
         verificationCodeInput.setOnCompleteListener {
             inputCode = it
 
-            if (it.length == 6) {
+            if (it.length == 4) {
 //                YcSingle.getInstance().
                 val uId = UserInfoHelper.instance.getUid() as Int
 

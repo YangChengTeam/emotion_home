@@ -257,6 +257,9 @@ public class URLConfig {
     //秘技主页
     public static final String SKILL_MAIN_URL = getBaseUrl().concat("article.example/ts_category");
 
+    //直播列表
+    public static final String INDEX_LIVE_LIST_URL = getBaseUrl().concat("video.video/video_list");
+
 
 //    public static String download_apk_url = "http://toppic-mszs.oss-cn-hangzhou.aliyuncs.com/";
 

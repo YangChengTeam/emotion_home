@@ -1,4 +1,4 @@
-package com.yc.emotion.model.bean.confession;
+package com.yc.emotion.home.model.bean;
 
 /**
  * Created by mayn on 2019/6/5.

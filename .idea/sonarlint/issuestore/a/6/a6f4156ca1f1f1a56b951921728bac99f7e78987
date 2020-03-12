@@ -1,0 +1,22 @@
+
+F
+java:S1066×"/Merge this if statement with the enclosing one.(ïùÆ÷
+`
+java:S1124'"EReorder the modifiers to comply with the Java Language Specification.(¢áÊºøÿÿÿÿ
+`
+java:S1124&"EReorder the modifiers to comply with the Java Language Specification.(’¿™Éûÿÿÿÿ
+>
+java:S1604o"(Make this anonymous inner class a lambda(óù¸ğ
+=	java:S108d")Either remove or fill this block of code.(²’Ê0
+`
+java:S1124$"EReorder the modifiers to comply with the Java Language Specification.(´ÿ´½ûÿÿÿÿ
+>
+java:S1185N"(Remove this method to simply inherit it.(¸“¤ê
+—
+java:S1186X"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
+C
+java:S1185H"(Remove this method to simply inherit it.(Îè¨ùÿÿÿÿ
+`
+java:S1124%"EReorder the modifiers to comply with the Java Language Specification.(ÓĞòÆùÿÿÿÿ
+œ
+java:S1186]"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ê¥¾àûÿÿÿÿ

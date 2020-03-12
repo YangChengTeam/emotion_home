@@ -208,7 +208,7 @@
             android:name=".index.ui.activity.TutorCourseDetailActivity"
             android:configChanges="orientation|screenSize"
 
-            android:screenOrientation="portrait" />
+            />
         <!--在你需要全屏播放的Activity中加上这个属性，告诉系统Activity在横竖屏切换时不要销毁Activity-->
         <activity android:name=".index.ui.activity.TutorListActivity" />
         <activity android:name=".index.ui.activity.EmotionTestMainActivity" />
@@ -252,6 +252,7 @@
         <activity android:name=".message.ui.activity.NotificationDetailActivity" />
         <activity android:name=".message.ui.activity.NotificationListActivity" />
         <activity android:name=".message.ui.fragment.MessageActivity" />
+        <activity android:name=".index.ui.activity.LiveWebActivity" />
 
 
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->

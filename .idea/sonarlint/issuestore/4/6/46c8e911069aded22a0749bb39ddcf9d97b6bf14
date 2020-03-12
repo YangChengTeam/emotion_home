@@ -1,0 +1,10 @@
+
+>
+java:S11480"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+c
+java:S1128	"MRemove this unused import 'com.yc.emotion.home.base.presenter.BasePresenter'.(Õ¹ğ
+Q	java:S125"<This block of commented-out lines of code should be removed.(ÅŞßâ
+e
+java:S1128
+"ORemove this unused import 'com.yc.emotion.home.index.presenter.IndexPresenter'.(êìí³
+f	java:S117+"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠäšÈ

@@ -195,8 +195,55 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp" />
 
+                        <!--热门直播-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="vertical">
 
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                               >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="热门直播"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_more_live"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:drawableRight="@mipmap/more_right_arrow_icon"
+                                    android:drawablePadding="3dp"
+                                    android:text="更多直播"
+                                    android:visibility="gone"
+                                    android:textColor="@color/gray_bebdbd" />
+                            </RelativeLayout>
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerView_live"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="15dp" />
+
+                        </LinearLayout>
                         <!--根据性别显示不同图标-->
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/gray_f2f2f2" />
 
                         <com.yc.emotion.home.base.ui.widget.BouncyHScrollView
                             android:layout_width="match_parent"

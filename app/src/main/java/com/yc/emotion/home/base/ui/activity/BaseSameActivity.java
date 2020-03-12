@@ -27,6 +27,7 @@ public abstract class BaseSameActivity extends BaseSlidingActivity implements Vi
         super.onCreate(savedInstanceState);
         initIntentData();
 
+
         super.setContentView(R.layout.activity_base_same);
         if (!isTaskRoot()) {
             /* If this is not the root activity,finish it.*/

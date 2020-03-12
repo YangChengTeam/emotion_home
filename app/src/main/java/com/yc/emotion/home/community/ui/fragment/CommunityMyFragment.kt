@@ -28,7 +28,9 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by suns  on 2019/8/28 09:17.
  */
 class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
 
+    }
 
 
     private var communityAdapter: CommunityAdapter? = null

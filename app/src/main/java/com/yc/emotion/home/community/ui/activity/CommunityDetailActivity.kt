@@ -41,6 +41,9 @@ import java.util.*
  * Created by suns  on 2019/8/29 11:23.
  */
 class CommunityDetailActivity : BaseSlidingActivity(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var communityMainAdapter: CommunityFollowAdapter? = null

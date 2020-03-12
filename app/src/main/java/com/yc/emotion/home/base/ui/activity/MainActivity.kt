@@ -8,13 +8,13 @@ import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-
 import com.music.player.lib.manager.MusicPlayerManager
 import com.umeng.analytics.MobclickAgent
 import com.umeng.socialize.UMShareAPI
@@ -171,9 +171,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         comp_main_index.postDelayed({ this.initNetWorkChangReceiver() }, 200)
 
         comp_main_vp_fragment.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+                    Unit
 
             override fun onPageSelected(position: Int) {
                 if (position == MainFragmentFactory.MAIN_FRAGMENT_2) {
@@ -187,9 +186,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 }
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) = Unit
         })
     }
 
@@ -249,18 +246,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         //        setCompoundDrawablesTop(mTvTab4, R.mipmap.main_icon_tab_04);
         setCompoundDrawablesTop(comp_main_my, R.mipmap.main_icon_tab_05)
 
-        comp_main_index.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_inVerbal.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_community.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_message.setTextColor(resources.getColor(R.color.text_gray))
+        comp_main_index.setTextColor(ContextCompat.getColor(this,R.color.text_gray))
+        comp_main_inVerbal.setTextColor(ContextCompat.getColor(this,R.color.text_gray))
+        comp_main_community.setTextColor(ContextCompat.getColor(this,R.color.text_gray))
+        comp_main_message.setTextColor(ContextCompat.getColor(this,R.color.text_gray))
         //        mTvTab4.setTextColor(getResources().getColor(R.color.text_gray));
-        comp_main_my.setTextColor(resources.getColor(R.color.text_gray))
+        comp_main_my.setTextColor(ContextCompat.getColor(this,R.color.text_gray))
     }
 
     private fun setCompoundDrawablesTop(tv_icon: TextView?, id: Int) {
-        val top22 = resources.getDrawable(id)
+        val top22 = ContextCompat.getDrawable(this, id)
         tv_icon?.setCompoundDrawablesWithIntrinsicBounds(null, top22, null, null)
-        tv_icon?.setTextColor(resources.getColor(R.color.black))
+        tv_icon?.setTextColor(ContextCompat.getColor(this, R.color.black))
 
     }
 

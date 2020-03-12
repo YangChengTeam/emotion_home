@@ -20,6 +20,7 @@ import com.yc.emotion.home.community.ui.activity.CommunityNoticeDetailActivity
 import com.yc.emotion.home.community.ui.activity.CommunityPublishActivity
 import com.yc.emotion.home.community.ui.widget.CommunityTagPopwindow
 import com.yc.emotion.home.community.view.CommunityView
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
@@ -39,7 +40,9 @@ import java.util.*
  * Created by suns  on 2019/8/29 09:51.
  */
 class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
 
+    }
 
 
     private var tagPos by Preference(ConstantKey.TAG_POSTION, 0)

@@ -230,6 +230,8 @@
     <string name="skill">秘技</string>
     <string name="mine">我的</string>
     <string name="inVerbal">话术</string>
+    <string name="live_online">%1$d人在线</string>
+    <string name="live_time">%1$s开播</string>
 
     <string name="invitate_friend">邀请好友加入%1$s</string>
     <string-array name="love_practice">

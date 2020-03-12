@@ -8,6 +8,7 @@ import com.yc.emotion.home.base.ui.popwindow.BasePopwindow
 import com.yc.emotion.home.community.adapter.PublishTagAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.view.CommunityView
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.bean.event.EventCommunityTag
 import com.yc.emotion.home.model.constant.ConstantKey
@@ -19,6 +20,9 @@ import org.greenrobot.eventbus.EventBus
  * 标签popwindow
  */
 class CommunityTagPopwindow(context: Activity?) : BasePopwindow(context), CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var publishTagAdapter: PublishTagAdapter? = null

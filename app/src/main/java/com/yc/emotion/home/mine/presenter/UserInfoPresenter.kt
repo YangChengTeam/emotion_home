@@ -100,7 +100,10 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
                         if (!TextUtils.isEmpty(msg) && msg.contains("已经注册")) {
                             phoneLogin(mobile, "", code)
 //
+                        }else{
+                            ToastUtils.showCenterToast(t.message)
                         }
+
                     }
                 }
             }
