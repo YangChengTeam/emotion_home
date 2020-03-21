@@ -59,7 +59,6 @@ import java.io.InputStreamReader
 class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 
-
     private var indexChoicenessAdapter: IndexChoicenessAdapter? = null
 
 
@@ -174,7 +173,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
             val liveInfo = indexLiveAdapter?.getItem(position)
             liveInfo?.let {
                 if (liveInfo.state == 1) {
-                    LiveWebActivity.startActivity(mMainActivity,liveInfo.liveUrl)
+                    LiveWebActivity.startActivity(mMainActivity, liveInfo.liveUrl)
 //                    startActivity(Intent(mMainActivity, LiveWebActivity::class.java))
                 }
             }
@@ -419,12 +418,17 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         mPresenter.getSexData(sex)
     }
 
-
+    private var mPsychtTest: List<EmotionTestInfo>? = null
     private fun setData(indexInfo: IndexInfo) {
         initTutorData(indexInfo.tutors)//初始化导师数据
         initArticleData(indexInfo.article)//初始化文章数据
         initBanner(indexInfo.banners)//初始化banner数据
-        initViewPager(indexInfo.psych_test)//初始化测试数据
+        val psychtTest = indexInfo.psych_test
+        if (mPsychtTest == null) {
+            mPsychtTest = psychtTest
+            initViewPager(psychtTest)//初始化测试数据
+        }
+
 
     }
 
@@ -460,6 +464,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
     override fun showIndexInfo(indexInfo: IndexInfo) {
         setData(indexInfo)
+
         initCourseData(indexInfo.lesson_chapter)//初始化课程数据
     }
 
@@ -491,7 +496,6 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         Log.e("TAG", json)
         val infoWrapper = JSON.parseObject(json, LiveInfoWrapper::class.java)
         val liveInfos = infoWrapper.data
-
 
 
     }
