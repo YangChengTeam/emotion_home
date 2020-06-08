@@ -32,11 +32,14 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
 
         CommonInfoHelper.getO(mContext, "main2_example_lists", object : TypeReference<List<MainT2Bean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<MainT2Bean>> { o ->
-
-            if (o != null && o.isNotEmpty()) {
-                mView.showPracticeInfoList(o)
+        }.type, object : CommonInfoHelper.OnParseListener<List<MainT2Bean>> {
+            override fun onParse(o: List<MainT2Bean>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showPracticeInfoList(o)
+                }
             }
+
+
         })
         getPracticeInfos(1, 10, false)
 

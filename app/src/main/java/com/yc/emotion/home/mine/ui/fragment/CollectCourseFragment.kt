@@ -1,11 +1,11 @@
 package com.yc.emotion.home.mine.ui.fragment
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.EfficientCourseAdapter
 import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
 import com.yc.emotion.home.mine.presenter.CollectPresenter
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_collect_view.*
  *
  * Created by suns  on 2019/10/17 15:32.
  */
-class CollectCourseFragment : BaseLazyFragment<CollectPresenter>(), CollectView {
+class CollectCourseFragment : BaseFragment<CollectPresenter>(), CollectView {
 
 
 
@@ -31,7 +31,7 @@ class CollectCourseFragment : BaseLazyFragment<CollectPresenter>(), CollectView 
 
     private var mCollectActivity: CollectActivity? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CollectActivity) {
             mCollectActivity = context
@@ -79,7 +79,7 @@ class CollectCourseFragment : BaseLazyFragment<CollectPresenter>(), CollectView 
 
     private fun getData() {
 
-        mPresenter.getCourseCollectList(page, PAGE_SIZE)
+        mPresenter?.getCourseCollectList(page, PAGE_SIZE)
 
     }
 

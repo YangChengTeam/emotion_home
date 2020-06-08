@@ -2,15 +2,12 @@ package com.yc.emotion.home.mine.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.text.*
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
 import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.bean.UserInfo
@@ -18,11 +15,9 @@ import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.RegexUtils
-import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_login.*
 
 import org.greenrobot.eventbus.EventBus
-import rx.Subscriber
 
 /**
  *

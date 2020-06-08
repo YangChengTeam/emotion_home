@@ -6,18 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.music.player.lib.R;
 import com.music.player.lib.bean.MusicInfo;
+
+import androidx.core.app.NotificationCompat;
 
 
 /**

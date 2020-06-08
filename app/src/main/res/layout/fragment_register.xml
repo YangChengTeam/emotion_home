@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/tv_login_tint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/login_top_distance"
+        android:text="欢迎注册"
+        android:textColor="@color/gray_222222"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/icon_phone"
+        app:layout_constraintLeft_toLeftOf="@id/tv_login_tint"
+        app:layout_constraintRight_toLeftOf="@id/tv_phone_country_code"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_tint" />
+
+    <TextView
+        android:id="@+id/tv_phone_country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:drawableEnd="@mipmap/icon_phone_arrow"
+        android:drawablePadding="5dp"
+        android:text="+86"
+        android:textColor="@color/gray_222222"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+        app:layout_constraintLeft_toRightOf="@id/iv_phone"
+        app:layout_constraintTop_toTopOf="@id/iv_phone" />
+
+    <View
+        android:id="@+id/phone_small_divider"
+        android:layout_width="0.5dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="9dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+        app:layout_constraintLeft_toRightOf="@id/tv_phone_country_code"
+        app:layout_constraintTop_toTopOf="@id/iv_phone" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="25dp"
+        android:background="@null"
+        android:hint="请输入手机号"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:textColor="@color/gray_bebdbd"
+        android:textColorHint="@color/gray_bebdbd"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+        app:layout_constraintLeft_toRightOf="@id/phone_small_divider"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_phone" />
+
+    <View
+        android:id="@+id/divider_phone"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="@id/iv_phone"
+        app:layout_constraintRight_toRightOf="@id/et_phone"
+        app:layout_constraintTop_toBottomOf="@id/iv_phone" />
+
+    <LinearLayout
+        android:id="@+id/ll_login_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@id/tv_login_tint"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_phone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_code" />
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="9dp"-->
+        <!--            android:drawableEnd="@mipmap/icon_phone_arrow"-->
+        <!--            android:drawablePadding="5dp"-->
+        <!--            android:text="+86"-->
+        <!--            android:textColor="@color/gray_222222"-->
+        <!--            android:textSize="13sp" />-->
+
+        <!--        <View-->
+        <!--            android:layout_width="0.5dp"-->
+        <!--            android:layout_height="20dp"-->
+        <!--            android:layout_marginStart="9dp"-->
+        <!--            android:background="@color/gray_edebeb" />-->
+
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:textColor="@color/gray_bebdbd"
+            android:textColorHint="@color/gray_bebdbd"
+            android:textSize="13dp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp">
+
+            <TextView
+                android:id="@+id/tv_get_code"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:background="@drawable/get_code_bg"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="获取验证码"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_code_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fe5c50"
+                android:textSize="@dimen/sp_12"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/divider_code"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="@id/ll_login_code"
+        app:layout_constraintRight_toRightOf="@id/ll_login_code"
+        app:layout_constraintTop_toBottomOf="@id/ll_login_code" />
+
+
+    <ImageView
+        android:id="@+id/iv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:src="@mipmap/icon_password"
+        app:layout_constraintLeft_toLeftOf="@id/tv_login_tint"
+        app:layout_constraintTop_toBottomOf="@id/divider_code" />
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="25dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:textColor="@color/gray_bebdbd"
+        android:textColorHint="@color/gray_bebdbd"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_password"
+        app:layout_constraintLeft_toRightOf="@id/iv_password"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_password" />
+
+
+    <View
+        android:id="@+id/divider_pwd"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="17dp"
+        android:background="@color/gray_edebeb"
+        app:layout_constraintLeft_toLeftOf="@id/iv_password"
+        app:layout_constraintRight_toRightOf="@id/et_pwd"
+        app:layout_constraintTop_toBottomOf="@id/iv_password" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/pwd_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="iv_password,et_pwd,divider_pwd" />
+
+    <TextView
+        android:id="@+id/tv_register_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_40"
+        android:background="@mipmap/login_button"
+        android:gravity="center"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_pwd" />
+
+    <TextView
+        android:id="@+id/tv_user_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="注册即代表同意《用户协议》"
+        android:textColor="@color/gray_666"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_register_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,10 @@ package com.yc.emotion.home.mine.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.alibaba.fastjson.JSON
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener
@@ -13,16 +13,16 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.domain.engine.UploadPhotoEngin
 import com.yc.emotion.home.base.ui.activity.BasePushPhotoActivity
+import com.yc.emotion.home.mine.presenter.MinePresenter
 import com.yc.emotion.home.mine.ui.fragment.ExitPublishFragment
+import com.yc.emotion.home.mine.view.MineView
 import com.yc.emotion.home.model.bean.UploadPhotoBean
+import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.UserInterInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
-import com.yc.emotion.home.base.domain.engine.UploadPhotoEngin
-import com.yc.emotion.home.mine.presenter.MinePresenter
-import com.yc.emotion.home.mine.view.MineView
-import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_user_info.*
@@ -71,7 +71,21 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
 
         val tvSub = offerActivitySubTitleView()
         tvSub.setTextColor(resources.getColor(R.color.gray_666))
+
         tvSub.text = "保存"
+
+        val userInfo = UserInfoHelper.instance.getUserInfo()
+        userInfo?.let {
+            val mobile = it.mobile
+            val pwd = it.pwd
+            if (!TextUtils.isEmpty(mobile)) {
+                mineItemView_phone.setMoreText(mobile?.replace(mobile.substring(3, 7), "****"))
+            }
+            mineItemView_pwd.setTitle(if (TextUtils.isEmpty(pwd)) "设置密码" else "修改密码")
+
+        }
+
+
         tvSub.setOnClickListener(this)
         initListener()
         initData()
@@ -87,6 +101,7 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
         mineItemView_income.setOnClickListener(this)
         mineItemView_question.setOnClickListener(this)
         mineItemView_nickname.setOnClickListener(this)
+        mineItemView_pwd.setOnClickListener(this)
         ivBack.setOnClickListener { exit() }
     }
 
@@ -233,6 +248,9 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
             R.id.mineItemView_question -> {
                 getUserInterInfo()
             }
+            R.id.mineItemView_pwd -> {
+                startActivity(Intent(this, PwdSetActivity::class.java))
+            }
         }
     }
 
@@ -265,10 +283,12 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
             inters?.let {
                 if (inters.isNotEmpty()) userInfo?.inters = inters
             }
+
+
             UserInfoHelper.instance.saveUserInfo(userInfo)
         }
         EventBus.getDefault().post(EventLoginState(EventLoginState.STATE_UPDATE_INFO, userInfo))
-        showToastShort("完善信息成功")
+        showToast("完善信息成功")
         finish()
 
     }
@@ -396,7 +416,18 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
         val exitFragment = ExitPublishFragment.newInstance("保存资料并返回吗?")
 
         exitFragment.show(supportFragmentManager, "")
-        exitFragment.setOnConfirmListener { finish() }
+        exitFragment.setOnConfirmListener (object :ExitPublishFragment.OnConfirmListener{
+            override fun onConfirm() {
+                finish()
+            }
+        })
+    }
+
+
+    private fun isModify(): Boolean {
+
+
+        return false
     }
 
     override fun showUserInfo(data: UserInfo?) {

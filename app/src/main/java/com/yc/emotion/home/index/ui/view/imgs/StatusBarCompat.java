@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.utils.AndroidRomUtil;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by mayn on 2019/5/7.

@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
-import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 
@@ -21,19 +21,19 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
 
     private var mContext: BaseActivity? = null
-    private var dialog: BottomSheetDialog? = null
+    private lateinit var dialog: BottomSheetDialog
     protected var rootView: View? = null
     private var mBehavior: BottomSheetBehavior<View>? = null
 
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mContext = context as BaseActivity
     }
 
     override fun onStart() {
         super.onStart()
-        val window = getDialog().window
+        val window = getDialog()?.window
 
         window?.let {
             val windowParams = window.attributes
@@ -56,18 +56,20 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         mContext?.let {
-            dialog = BottomSheetDialog(mContext!!, theme)
+            dialog = BottomSheetDialog(it, theme)
             if (rootView == null) {
                 //缓存下来的 View 当为空时才需要初始化 并缓存
                 rootView = LayoutInflater.from(mContext).inflate(getLayoutId(), null)
 
             }
-            dialog?.setContentView(rootView)
+            dialog.setContentView(rootView)
 
             mBehavior = BottomSheetBehavior.from(rootView?.parent as View)
             (rootView?.parent as View).setBackgroundColor(Color.TRANSPARENT)
             rootView?.post {
+
                 /**
+                 *
                  * PeekHeight 默认高度 256dp 会在该高度上悬浮
                  * 设置等于 view 的高 就不会卡住
                  */
@@ -75,13 +77,16 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
                  * PeekHeight 默认高度 256dp 会在该高度上悬浮
                  * 设置等于 view 的高 就不会卡住
                  */
-                mBehavior?.peekHeight = rootView!!.height
+                rootView?.let { v ->
+
+                    mBehavior?.peekHeight = v.height
+                }
             }
         }
 
 
 
-        return dialog!!
+        return dialog
     }
 
     abstract fun getLayoutId(): Int

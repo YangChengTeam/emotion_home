@@ -6,7 +6,7 @@ import android.webkit.WebViewClient
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.view.IView
 import kotlinx.android.synthetic.main.fragment_tutor_service_detail_desc.*
 
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_tutor_service_detail_desc.*
  *
  * Created by suns  on 2019/10/14 09:32.
  */
-class TutorServiceDetailDescFragment : BaseLazyFragment<BasePresenter<IModel,IView>>() {
+class TutorServiceDetailDescFragment : BaseFragment<BasePresenter<IModel,IView>>() {
 
 
     override fun getLayoutId(): Int {

@@ -1,20 +1,19 @@
 package com.yc.emotion.home.index.adapter
 
-import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
-import com.yc.emotion.home.model.bean.CourseInfo
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
+import com.yc.emotion.home.model.bean.CourseInfo
 
 /**
  *
  * Created by suns  on 2019/9/27 17:19.
  */
-class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : BaseQuickAdapter<CourseInfo, BaseViewHolder>(R.layout.index_course_item, courseInfos) {
+class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : CommonMoreAdapter<CourseInfo, BaseViewHolder>(R.layout.index_course_item, courseInfos) {
     override fun convert(helper: BaseViewHolder?, item: CourseInfo?) {
         helper?.let {
             item?.let {

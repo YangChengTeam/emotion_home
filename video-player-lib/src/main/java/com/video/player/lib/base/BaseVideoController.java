@@ -1,11 +1,13 @@
 package com.video.player.lib.base;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+
 import com.video.player.lib.constants.VideoConstants;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * TinyHung@Outlook.com

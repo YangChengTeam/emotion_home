@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.kk.utils.ScreenUtil
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.model.bean.LessonInfo
 import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
@@ -41,7 +42,8 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
         addItemType(TutorCourseDetailInfo.ITEM_TYPE_SECOND, R.layout.layout_tutor_course_second)
         addItemType(TutorCourseDetailInfo.ITEM_TYPE_THIRD, R.layout.layout_tutor_course_third)
         addItemType(TutorCourseDetailInfo.ITEM_TYPE_FOUR, R.layout.layout_tutor_course_four)
-        userId = UserInfoHelper.instance.getUid() as Int
+        userId = UserInfoHelper.instance.getUid()
+        setLoadMoreView(CustomLoadMoreView())
     }
 
     override fun convert(helper: BaseViewHolder?, item: TutorCourseDetailInfo?) {

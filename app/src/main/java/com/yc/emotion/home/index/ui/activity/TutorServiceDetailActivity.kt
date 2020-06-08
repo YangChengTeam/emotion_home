@@ -6,34 +6,32 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.AppBarLayout
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.appbar.AppBarLayout
 import com.kk.utils.ScreenUtil
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.MySubscriber
 import com.yc.emotion.home.base.domain.engine.OrderEngine
 import com.yc.emotion.home.base.ui.activity.PayActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.presenter.TutorPresenter
 import com.yc.emotion.home.index.ui.fragment.TutorServiceDetailDescFragment
 import com.yc.emotion.home.index.ui.fragment.TutorServiceDetailQuestionFragment
 import com.yc.emotion.home.index.ui.fragment.VipPayWayFragment
 import com.yc.emotion.home.index.view.TutorView
 import com.yc.emotion.home.mine.ui.activity.ShareActivity
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.model.bean.TutorServiceDetailInfo
@@ -219,7 +217,8 @@ class TutorServiceDetailActivity : PayActivity(), TutorView {
             }
         }
 
-        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, titleList, fragments)
+        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_tutor_service_detail.adapter = efficientCourseMainAdapter
 //        mViewPager.setOffscreenPageLimit(2)
         viewPager_tutor_service_detail.currentItem = 0

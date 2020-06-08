@@ -4,24 +4,23 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
 import android.view.animation.ScaleAnimation
 import android.widget.TextView
-
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kk.utils.ScreenUtil
 import com.music.player.lib.bean.MusicInfo
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.AudioMainAdapter
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.index.ui.widget.AudioFilterPopwindow
+import com.yc.emotion.home.index.adapter.AudioMainAdapter
 import com.yc.emotion.home.index.presenter.LoveAudioPresenter
+import com.yc.emotion.home.index.ui.widget.AudioFilterPopWindow
 import com.yc.emotion.home.index.view.LoveAudioView
 import com.yc.emotion.home.model.bean.AudioDataInfo
 import kotlinx.android.synthetic.main.activity_main_audio.*
@@ -177,9 +176,9 @@ open class AudioActivity : BaseSameActivity(), View.OnClickListener, LoveAudioVi
                 getData()
             }
             R.id.tv_select_filter -> {
-                val filterPopwindow = AudioFilterPopwindow(this)
+                val filterPopwindow = AudioFilterPopWindow(this)
                 filterPopwindow.showAsDropDown(rl_select_container)
-                filterPopwindow.setOnItemClickListener(object :AudioFilterPopwindow.onItemClickListener{
+                filterPopwindow.setOnItemClickListener(object : AudioFilterPopWindow.onItemClickListener {
                     override fun onItemClick(audioDataInfo: AudioDataInfo?) {
                         if (audioDataInfo != null) {
                             cateId = audioDataInfo.id

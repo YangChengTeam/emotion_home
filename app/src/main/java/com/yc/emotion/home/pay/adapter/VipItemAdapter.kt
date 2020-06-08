@@ -2,22 +2,20 @@ package com.yc.emotion.home.pay.adapter
 
 import android.app.Activity
 import android.graphics.Paint
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.hubert.guide.NewbieGuide
-import com.app.hubert.guide.core.Controller
-import com.app.hubert.guide.listener.OnLayoutInflatedListener
 import com.app.hubert.guide.model.GuidePage
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.util.DoubleToStringUtils
@@ -27,7 +25,7 @@ import com.yc.emotion.home.utils.UserInfoHelper
 /**
  * Created by wanglin  on 2019/7/2 10:06.
  */
-class VipItemAdapter(data: List<GoodsInfo>?) : BaseQuickAdapter<GoodsInfo, BaseViewHolder>(R.layout.vip_item_view, data) {
+class VipItemAdapter(data: List<GoodsInfo>?) : CommonMoreAdapter<GoodsInfo, BaseViewHolder>(R.layout.vip_item_view, data) {
 
 
     private val constraintLayoutSparseArray: SparseArray<LinearLayout> = SparseArray()

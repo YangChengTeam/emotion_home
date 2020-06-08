@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
@@ -12,6 +11,8 @@ import com.yc.emotion.home.BuildConfig;
 import com.yc.emotion.home.model.constant.ConstantKey;
 
 import java.io.File;
+
+import androidx.core.content.FileProvider;
 
 /**
  * Created by mayn on 2019/5/20.

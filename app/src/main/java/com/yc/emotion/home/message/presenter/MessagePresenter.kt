@@ -33,13 +33,16 @@ class MessagePresenter(context: Context?, view: MessageView) : BasePresenter<Mes
     }
 
     fun getMessageCache() {
-        CommonInfoHelper.getO<List<MessageInfo>>(mContext, "main_message_info", object : TypeReference<List<MessageInfo>>() {}.type) { messageInfos ->
-            messageInfos?.let {
-                if (it.isNotEmpty()) {
-                    mView.showMessageInfos(it)
+        CommonInfoHelper.getO(mContext, "main_message_info", object : TypeReference<List<MessageInfo>>() {}.type,
+        object :CommonInfoHelper.OnParseListener<List<MessageInfo>>{
+            override fun onParse(o: List<MessageInfo>?) {
+                o?.let {
+                    if (it.isNotEmpty()) {
+                        mView.showMessageInfos(it)
+                    }
                 }
             }
-        }
+        })
         getMessageInfoList()
     }
 

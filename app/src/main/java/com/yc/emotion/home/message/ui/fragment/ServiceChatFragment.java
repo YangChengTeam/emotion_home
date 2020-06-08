@@ -1,6 +1,7 @@
 package com.yc.emotion.home.message.ui.fragment;
 
 
+import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.app.Fragment;
-import android.support.v4.content.PermissionChecker;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -60,6 +58,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.PermissionChecker;
 
 /**
  * Created by suns  on 2019/9/29 15:08.

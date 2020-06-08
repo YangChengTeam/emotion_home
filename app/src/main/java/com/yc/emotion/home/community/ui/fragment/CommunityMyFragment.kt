@@ -2,13 +2,13 @@ package com.yc.emotion.home.community.ui.fragment
 
 import android.content.Context
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.fragment.common.SuccessFragment
 import com.yc.emotion.home.community.adapter.CommunityAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
@@ -27,8 +27,10 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Created by suns  on 2019/8/28 09:17.
  */
-class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+class CommunityMyFragment : BaseFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
 
+    }
 
 
     private var communityAdapter: CommunityAdapter? = null
@@ -40,7 +42,7 @@ class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClick
 
     var mMainActivity: MainActivity? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -115,7 +117,11 @@ class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClick
     private fun deleteConfirm(communityInfo: CommunityInfo?, position: Int) {
 
         val exitPublishFragment = ExitPublishFragment.newInstance("确定要删除吗")
-        exitPublishFragment.setOnConfirmListener { deleteTopic(communityInfo, position) }
+        exitPublishFragment.setOnConfirmListener (object :ExitPublishFragment.OnConfirmListener{
+            override fun onConfirm() {
+                deleteTopic(communityInfo, position)
+            }
+        })
         exitPublishFragment.show(childFragmentManager, "")
 
     }
@@ -171,7 +177,7 @@ class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClick
 
     private fun deleteTopic(communityInfo: CommunityInfo?, position: Int) {
 
-        mPresenter.deleteTopic(communityInfo,position)
+        mPresenter?.deleteTopic(communityInfo, position)
 
 
     }
@@ -198,7 +204,7 @@ class CommunityMyFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClick
 
     private fun like(communityInfo: CommunityInfo, position: Int) {
 
-        mPresenter.likeTopic(communityInfo,position)
+        mPresenter?.likeTopic(communityInfo, position)
 
     }
 

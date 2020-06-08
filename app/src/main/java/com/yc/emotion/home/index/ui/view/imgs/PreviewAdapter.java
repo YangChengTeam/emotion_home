@@ -1,7 +1,6 @@
 package com.yc.emotion.home.index.ui.view.imgs;
 
 import android.app.Activity;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +9,8 @@ import com.yc.emotion.home.R;
 import com.yc.emotion.home.constant.Constant;
 
 import java.util.List;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 /**
  * Created by mayn on 2019/5/7.
@@ -47,9 +48,9 @@ public class PreviewAdapter  extends PagerAdapter {
             ivChecked.setVisibility(View.VISIBLE);
             final Image image = images.get(config.needCamera ? position + 1 : position);
             if (Constant.imageList.contains(image.path)) {
-                ivChecked.setImageResource(R.drawable.ic_checked);
+                ivChecked.setImageResource(R.mipmap.ic_checked);
             } else {
-                ivChecked.setImageResource(R.drawable.ic_uncheck);
+                ivChecked.setImageResource(R.mipmap.ic_uncheck);
             }
 
             ivChecked.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +60,9 @@ public class PreviewAdapter  extends PagerAdapter {
                         int ret = listener.onCheckedClick(position, image);
                         if (ret == 1) { // 局部刷新
                             if (Constant.imageList.contains(image.path)) {
-                                ivChecked.setImageResource(R.drawable.ic_checked);
+                                ivChecked.setImageResource(R.mipmap.ic_checked);
                             } else {
-                                ivChecked.setImageResource(R.drawable.ic_uncheck);
+                                ivChecked.setImageResource(R.mipmap.ic_uncheck);
                             }
                         }
                     }

@@ -8,11 +8,8 @@ import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.community.domain.model.CommunityModel
 import com.yc.emotion.home.community.view.CommunityView
 import com.yc.emotion.home.model.bean.*
-import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
 import com.yc.emotion.home.utils.CommonInfoHelper
-import com.yc.emotion.home.utils.SnackBarUtils
 import com.yc.emotion.home.utils.UserInfoHelper
-import org.greenrobot.eventbus.EventBus
 import rx.Subscriber
 
 /**
@@ -44,12 +41,9 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
                 }
             }
 
-            override fun onCompleted() {
+            override fun onCompleted() = Unit
 
-            }
-
-            override fun onError(e: Throwable?) {
-            }
+            override fun onError(e: Throwable?) = Unit
 
         })
 
@@ -59,10 +53,15 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
     fun getCommunityNewsCache() {
         CommonInfoHelper.getO(mContext, "emotion_community_newst_data", object : TypeReference<List<CommunityInfo>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<CommunityInfo>> { datas ->
-            if (datas != null && datas.isNotEmpty()) {
-                mView.shoCommunityNewestInfos(datas)
+        }.type,object :CommonInfoHelper.OnParseListener<List<CommunityInfo>> {
+
+            override fun onParse(o: List<CommunityInfo>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.shoCommunityNewestCacheInfos(o)
+                }
             }
+
+
         })
 
     }
@@ -163,9 +162,13 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
     fun getCommunityHotCache() {
         CommonInfoHelper.getO(mContext, "emotion_community_hot_info", object : TypeReference<List<CommunityInfo>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<CommunityInfo>> { datas ->
-            if (datas != null && datas.isNotEmpty()) {
-                mView.showCommunityHotList(datas)
+        }.type,object :CommonInfoHelper.OnParseListener<List<CommunityInfo>> {
+
+
+            override fun onParse(o: List<CommunityInfo>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showCommunityHotList(o)
+                }
             }
         })
     }
@@ -208,9 +211,13 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
         CommonInfoHelper.getO(mContext, "${userId}_emotion_community_my_info", object : TypeReference<List<CommunityInfo>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<CommunityInfo>> { datas ->
-            if (datas != null && datas.isNotEmpty()) {
-                mView.showCommunityMyList(datas)
+        }.type, object :CommonInfoHelper.OnParseListener<List<CommunityInfo>> {
+
+
+            override fun onParse(o: List<CommunityInfo>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showCommunityMyList(o)
+                }
             }
         })
     }

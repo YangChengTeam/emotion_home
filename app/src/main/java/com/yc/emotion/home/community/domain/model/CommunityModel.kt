@@ -54,13 +54,13 @@ class CommunityModel(override var context: Context?) : IModel {
     /**
      * 帖子点赞
      *
-     * @param uesr_id
+     * @param user_id
      * @param topic_id
      * @return
      */
-    fun likeTopic(uesr_id: String, topic_id: String): Observable<ResultInfo<String>> {
+    fun likeTopic(user_id: String, topic_id: String): Observable<ResultInfo<String>> {
         val params = HashMap<String, String>()
-        params["user_id"] = uesr_id
+        params["user_id"] = user_id
         params["topic_id"] = topic_id
 
         return HttpCoreEngin.get(context).rxpost(URLConfig.TOPIC_LIKE_URL, object : TypeReference<ResultInfo<String>>() {

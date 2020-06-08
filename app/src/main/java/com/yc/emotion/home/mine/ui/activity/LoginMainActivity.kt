@@ -4,15 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import com.kk.utils.LogUtil
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.listener.ThirdLoginListener
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.index.ui.activity.SelectSexActivity
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.view.UserInfoView
+import com.yc.emotion.home.model.bean.UserAccreditInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
@@ -41,7 +45,7 @@ class LoginMainActivity : BaseActivity(), UserInfoView {
     override fun initViews() {
         invadeStatusBar() //侵入状态栏
         setAndroidNativeLightStatusBar() //状态栏字体颜色改变
-        mPresenter = UserInfoPresenter(this,this)
+        mPresenter = UserInfoPresenter(this, this)
         initView()
     }
 
@@ -54,7 +58,7 @@ class LoginMainActivity : BaseActivity(), UserInfoView {
     private fun initView() {
         val finish = intent?.getBooleanExtra("direct_finish", false)//是否直接关闭
 
-        tv_login_protocal.text = Html.fromHtml("登录即代表同意" + "<font color='#FF2D55'>《用户协议》</font>")
+        tv_login_protocal.text = HtmlCompat.fromHtml("登录即代表同意" + "<font color='#FF2D55'>《用户协议》</font>", FROM_HTML_MODE_LEGACY)
         manager = UserLoginManager.get()
         initListener(finish)
     }
@@ -85,14 +89,14 @@ class LoginMainActivity : BaseActivity(), UserInfoView {
         }
 
         tv_register.setOnClickListener {
-            val intent = Intent(this, RegisterMainActivity::class.java)
+            val intent = Intent(this, RegisterMainActivityNew::class.java)
             intent.putExtra("direct_finish", finish)
             startActivity(intent)
             finish()
         }
 
         ll_pwd_login.setOnClickListener {
-            val intent =Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("direct_finish", finish)
 
             startActivity(intent)
@@ -101,19 +105,22 @@ class LoginMainActivity : BaseActivity(), UserInfoView {
 
         ll_wx_login.setOnClickListener {
             //todo 微信登录
-            manager?.setCallBack(this) {
-
-                Log.e("TAG", it.toString())
-                thirdLogin(it.openid, 2, it.iconUrl, it.gender, it.nickname, finish)
-            }?.oauthAndLogin(SHARE_MEDIA.WEIXIN)
+            manager?.setCallBack(this, object : ThirdLoginListener {
+                override fun onLoginResult(it: UserAccreditInfo) {
+                    Log.e("TAG", it.toString())
+                    thirdLogin(it.openid, 2, it.iconUrl, it.gender, it.nickname, finish)
+                }
+            })?.oauthAndLogin(SHARE_MEDIA.WEIXIN)
         }
 
         ll_qq_login.setOnClickListener {
-            manager?.setCallBack(this) {
-                LogUtil.msg("userinfo:  ${it.accessToken}--${it.openid}")
+            manager?.setCallBack(this, object : ThirdLoginListener {
+                override fun onLoginResult(it: UserAccreditInfo) {
+                    LogUtil.msg("userinfo:  ${it.accessToken}--${it.openid}")
 
-                thirdLogin(it.openid, 1, it.iconUrl, it.gender, it.nickname, finish)
-            }?.oauthAndLogin(SHARE_MEDIA.QQ)
+                    thirdLogin(it.openid, 1, it.iconUrl, it.gender, it.nickname, finish)
+                }
+            })?.oauthAndLogin(SHARE_MEDIA.QQ)
         }
 
         tv_login_protocal.setOnClickListener {
@@ -124,12 +131,12 @@ class LoginMainActivity : BaseActivity(), UserInfoView {
 
     private fun thirdLogin(access_token: String?, account_type: Int, face: String?, sex: String?, nick_name: String?, finish: Boolean?) {
 
-        (mPresenter as? UserInfoPresenter)?.thirdLogin(access_token,account_type,face,sex,nick_name,finish)
+        (mPresenter as? UserInfoPresenter)?.thirdLogin(access_token, account_type, face, sex, nick_name, finish)
 
     }
 
     override fun thirdLoginSuccess(data: UserInfo?, finish: Boolean?) {
-        EventBus.getDefault().post(EventLoginState(EventLoginState.STATE_LOGINED,data))
+        EventBus.getDefault().post(EventLoginState(EventLoginState.STATE_LOGINED, data))
 
         if (null != finish && finish) {
             finish()

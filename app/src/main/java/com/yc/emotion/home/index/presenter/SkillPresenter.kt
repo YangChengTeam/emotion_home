@@ -34,10 +34,13 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     fun getExampleTsCache() {
         CommonInfoHelper.getO(mContext, "main3_example_ts_category", object : TypeReference<List<MainT3Bean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<MainT3Bean>> { o ->
+        }.type, object : CommonInfoHelper.OnParseListener<List<MainT3Bean>> {
 
-            if (o != null && o.isNotEmpty()) {
-                mView.showSkillInfos(o)
+
+            override fun onParse(o: List<MainT3Bean>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showSkillInfos(o)
+                }
             }
         })
         exampleTsCategory()
@@ -45,7 +48,7 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
         getArticleCache()
     }
 
-    fun exampleTsCategory() {
+    private fun exampleTsCategory() {
         mView.showLoadingDialog()
         val subscription = mModel?.exampleTsCategory()?.subscribe(object : Subscriber<AResultInfo<ExampleTsCategory>>() {
             override fun onNext(t: AResultInfo<ExampleTsCategory>?) {
@@ -71,9 +74,11 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     fun getArticleCache() {
         CommonInfoHelper.getO(mContext, "main1_Article_category", object : TypeReference<List<CategoryArticleBean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<CategoryArticleBean>>()
-
-        { o -> mView.showCategoryArticleInfos(o) })
+        }.type, object : CommonInfoHelper.OnParseListener<List<CategoryArticleBean>> {
+            override fun onParse(o: List<CategoryArticleBean>?) {
+                mView.showCategoryArticleInfos(o)
+            }
+        })
 
         categoryArticle()
     }
@@ -230,7 +235,7 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
                         ToastUtils.showCenterToast(msg)
                         val isCollectArticle = !isCollectArticle
 
-                        mView.showSkillArticleCollectResult(-1,isCollectArticle)
+                        mView.showSkillArticleCollectResult(-1, isCollectArticle)
 
                     }
                 }

@@ -3,8 +3,6 @@ package com.yc.emotion.home.community.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
@@ -13,6 +11,8 @@ import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kk.securityhttp.domain.ResultInfo
@@ -20,27 +20,28 @@ import com.kk.securityhttp.net.contains.HttpConfig
 import com.kk.utils.ToastUtil
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.community.adapter.CommunityFollowAdapter
-import com.yc.emotion.home.model.bean.CommunityDetailInfo
-import com.yc.emotion.home.model.bean.CommunityInfo
-import com.yc.emotion.home.mine.ui.activity.UserInfoActivity
 import com.yc.emotion.home.base.ui.activity.BaseSlidingActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
+import com.yc.emotion.home.community.adapter.CommunityFollowAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.view.CommunityView
+import com.yc.emotion.home.mine.ui.activity.UserInfoActivity
+import com.yc.emotion.home.model.bean.CommunityDetailInfo
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.util.SizeUtils
 import com.yc.emotion.home.utils.DateUtils
 import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_community_detail.*
 import kotlinx.android.synthetic.main.common_topbar_view.*
-import rx.Subscriber
 import java.util.*
 
 /**
  * Created by suns  on 2019/8/29 11:23.
  */
 class CommunityDetailActivity : BaseSlidingActivity(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var communityMainAdapter: CommunityFollowAdapter? = null

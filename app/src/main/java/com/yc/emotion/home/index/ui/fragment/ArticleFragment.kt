@@ -1,10 +1,10 @@
 package com.yc.emotion.home.index.ui.fragment
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.presenter.ArticlePresenter
 import com.yc.emotion.home.index.ui.activity.ArticleDetailActivity
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_efficient_course.*
  *
  * Created by suns  on 2019/10/23 17:04.
  */
-class ArticleFragment : BaseLazyFragment<ArticlePresenter>(), ArticleView {
+class ArticleFragment : BaseFragment<ArticlePresenter>(), ArticleView {
 
 
     var indexChoicenessAdapter: IndexChoicenessAdapter? = null
@@ -83,7 +83,7 @@ class ArticleFragment : BaseLazyFragment<ArticlePresenter>(), ArticleView {
 
     fun getData() {
 
-        mPresenter.getArticleInfoList(catId, page, pageSize)
+        mPresenter?.getArticleInfoList(catId, page, pageSize)
 
     }
 

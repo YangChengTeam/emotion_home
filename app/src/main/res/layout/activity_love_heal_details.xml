@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".index.ui.activity.LoveHealDetailsActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/love_heal_details_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/love_heal_details_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/love_heal_details_iv_to_wx"

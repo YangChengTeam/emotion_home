@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                     android:id="@+id/verificationCodeInput"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
-                    app:box="6"
+                    app:box="4"
                     app:child_width="30dp"
                     app:inputType="number" />
 
@@ -209,4 +209,4 @@
 
 
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

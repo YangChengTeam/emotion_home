@@ -2,14 +2,14 @@ package com.yc.emotion.home.index.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.TutorServiceCommentDetailAdapter
-import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.mine.ui.activity.OnceEvaluateActivity
 import com.yc.emotion.home.base.ui.widget.LoadDialog
+import com.yc.emotion.home.index.adapter.TutorServiceCommentDetailAdapter
+import com.yc.emotion.home.mine.ui.activity.OnceEvaluateActivity
+import com.yc.emotion.home.model.bean.CommunityInfo
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 
 /**

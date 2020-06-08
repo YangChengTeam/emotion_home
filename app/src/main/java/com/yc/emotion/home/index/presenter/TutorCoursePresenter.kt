@@ -170,21 +170,28 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
 
 
     fun getTutorCourseInfos(tutor_id: String?, page: Int, pageSize: Int) {
-        if (page==1)
+        if (page == 1)
             mView.showLoadingDialog()
         val subscription = mModel?.getTutorCourseInfos(tutor_id, page, pageSize)?.subscribe(object : Subscriber<ResultInfo<CourseInfoWrapper>>() {
             override fun onNext(t: ResultInfo<CourseInfoWrapper>?) {
                 t?.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.lessons != null && t.data.lessons!!.isNotEmpty()) {
-                        mView.showTutorCourseInfos(t.data.lessons)
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                        val data = t.data.lessons
+                        data?.let { datas ->
+                            if (datas.isNotEmpty()) {
+                                mView.showTutorCourseInfos(datas)
+                            }
+                        }
                     } else {
                         if (page == 1) mView.onNoData()
+                        else {
+                        }
                     }
                 }
             }
 
             override fun onCompleted() {
-                if (page==1) mView.hideLoadingDialog()
+                if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 

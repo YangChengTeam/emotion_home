@@ -8,12 +8,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
 
 /**
  * Created by wanglin  on 2019/7/1 09:06.
  */
-class LoveIntroduceAdapter(data: List<ArticleDetailInfo>?) : BaseQuickAdapter<ArticleDetailInfo, BaseViewHolder>(R.layout.recycler_view_item_love_intro, data) {
+class LoveIntroduceAdapter(data: List<ArticleDetailInfo>?) : CommonMoreAdapter<ArticleDetailInfo, BaseViewHolder>(R.layout.recycler_view_item_love_intro, data) {
 
     override fun convert(helper: BaseViewHolder, item: ArticleDetailInfo?) {
 

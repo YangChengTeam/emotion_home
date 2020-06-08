@@ -4,8 +4,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.music.player.lib.util.ToastUtils
 import com.tencent.bugly.beta.Beta
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -13,7 +13,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA
 import com.yc.emotion.home.R
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.util.DataCleanManagerUtils
-import com.yc.emotion.home.model.util.SPUtils
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.utils.UserInfoHelper
@@ -99,8 +98,8 @@ class SettingActivity : BaseSameActivity() {
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "退出") { dialogInterface, i ->
             //                SPUtils.put(SettingActivity.this, SPUtils.LOGIN_PWD, "");
             UserInfoHelper.instance.clearData()
-            UserLoginManager.get().deleteOauth(SHARE_MEDIA.WEIXIN)
-            UserLoginManager.get().deleteOauth(SHARE_MEDIA.QQ)
+            UserLoginManager.get()?.deleteOauth(SHARE_MEDIA.WEIXIN)
+            UserLoginManager.get()?.deleteOauth(SHARE_MEDIA.QQ)
             EventBus.getDefault().post(EventLoginState(EventLoginState.STATE_EXIT))
             //                showToastShort("退出登录成功");
             finish()
@@ -126,7 +125,7 @@ class SettingActivity : BaseSameActivity() {
                 }
 
                 loadingView.dismissLoadingDialog()
-                showToastShort("清除成功")
+                showToast("清除成功")
             }, 600)
         }
         alertDialog.show()

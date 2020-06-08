@@ -2,57 +2,63 @@ package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Context
 import android.content.Intent
-import android.support.design.widget.AppBarLayout
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.fastjson.JSON
 import com.app.hubert.guide.NewbieGuide
 import com.app.hubert.guide.model.GuidePage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.appbar.AppBarLayout
 import com.kk.utils.ScreenUtil
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.transformer.UltraScaleTransformer
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.adapter.IndexCourseAdapter
+import com.yc.emotion.home.index.adapter.IndexLiveAdapter
 import com.yc.emotion.home.index.adapter.IndexTestAdapter
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.presenter.IndexPresenter
+import com.yc.emotion.home.index.presenter.MonagraphPresenter
 import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.index.view.IndexView
+import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
 import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.GlideImageLoader
-import com.yc.emotion.home.utils.ItemDecorationHelper
-import com.yc.emotion.home.utils.Preference
-import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.utils.*
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_main_index.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.math.abs
 
 /**
  * Created by mayn on 2019/4/23.
  */
 
-class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
+class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
 
     private var indexChoicenessAdapter: IndexChoicenessAdapter? = null
@@ -60,12 +66,14 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
     private var indexCourseAdapter: IndexCourseAdapter? = null
 
+    private var indexLiveAdapter: IndexLiveAdapter? = null
+
     private var sex by Preference(ConstantKey.SEX, 1)
 
 
-    var mMainActivity: MainActivity? = null
+    private lateinit var mMainActivity: MainActivity
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -82,6 +90,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 
         mPresenter = IndexPresenter(activity, this)
+        tv_live_title.text = HtmlCompat.fromHtml("热门直播 <font color='#fa4a65'>LIVE</font>", FROM_HTML_MODE_LEGACY)
 
 
         val linearLayoutManager = LinearLayoutManager(mMainActivity)
@@ -97,6 +106,14 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         indexCourseAdapter = IndexCourseAdapter(null)
         index_course_recyclerView.adapter = indexCourseAdapter
         index_course_recyclerView.addItemDecoration(ItemDecorationHelper(mMainActivity, 15, 0))
+
+        recyclerView_live.layoutManager = LinearLayoutManager(mMainActivity)
+        indexLiveAdapter = IndexLiveAdapter(null)
+        recyclerView_live.adapter = indexLiveAdapter
+        recyclerView_live.addItemDecoration(ItemDecorationHelper(mMainActivity, 10))
+
+//        indexCourseAdapter.setLoadMoreView()
+//        indexCourseAdapter.setAutoLoadMoreSize()
 
         initData()
         initListener()
@@ -115,7 +132,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     private fun initListener() {
 
 
-        mMainActivity?.let { ContextCompat.getColor(it, R.color.app_color) }?.let { swipeRefreshLayout.setColorSchemeColors(it) }
+        mMainActivity.let { ContextCompat.getColor(it, R.color.app_color) }.let { swipeRefreshLayout.setColorSchemeColors(it) }
         swipeRefreshLayout.setOnRefreshListener {
             getIndexData()
         }
@@ -129,7 +146,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         indexChoicenessAdapter?.setOnItemClickListener { adapter, view, position ->
             val articleDetailInfo = indexChoicenessAdapter?.getItem(position)
             articleDetailInfo?.let {
-                mMainActivity?.let { ArticleDetailActivity.startExampleDetailActivity(it, articleDetailInfo.id, articleDetailInfo.post_title, false) }
+                mMainActivity.let { ArticleDetailActivity.startExampleDetailActivity(it, articleDetailInfo.id, articleDetailInfo.post_title, false) }
             }
         }
 
@@ -144,16 +161,34 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
         tv_more_article.setOnClickListener { startActivity(Intent(mMainActivity, MoreArticleActivity::class.java)) }
         iv_index_search.setOnClickListener { startActivity(Intent(mMainActivity, EmotionSearchActivity::class.java)) }
         iv_index_vip.setOnClickListener { startActivity(Intent(mMainActivity, VipActivity::class.java)) }
+        iv_repel.setOnClickListener {
+            MonographActivity.startActivity(mMainActivity, "击退小三", "jituixiaosan")
+
+        }
+        iv_save.setOnClickListener {
+            MonographActivity.startActivity(mMainActivity, title = "挽救婚姻", series = "wanjiuhunyin")
+        }
 
         indexCourseAdapter?.setOnItemClickListener { adapter, view, position ->
             val courseInfo = indexCourseAdapter?.getItem(position)
             courseInfo?.let {
-                mMainActivity?.let { it1 -> TutorCourseDetailActivity.startActivity(it1, courseInfo.id) }
+                mMainActivity.let { it1 -> TutorCourseDetailActivity.startActivity(it1, courseInfo.id) }
             }
 
         }
         marqueeView.setOnItemClickListener { position, textView ->
             switchSearch()
+        }
+
+        indexLiveAdapter?.setOnItemClickListener { adapter, view, position ->
+            val liveInfo = indexLiveAdapter?.getItem(position)
+            liveInfo?.let {
+//                if (liveInfo.state == 1) {
+//                    LiveWebActivity.startActivity(mMainActivity, liveInfo.liveUrl)
+////                    startActivity(Intent(mMainActivity, LiveWebActivity::class.java))
+//                }
+                LiveLookActivity.startActivity(mMainActivity, liveInfo)
+            }
         }
 
     }
@@ -168,18 +203,21 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, verticalOffset ->
             //verticalOffset  当前偏移量 appBarLayout.getTotalScrollRange() 最大高度 便宜值
-            val offset = Math.abs(verticalOffset) //目的是将负数转换为绝对正数；
+            val offset = abs(verticalOffset) //目的是将负数转换为绝对正数；
             //标题栏的渐变
-            mMainActivity?.changeAlpha(resources.getColor(R.color.white)
-                    , Math.abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)?.let { toolbar.setBackgroundColor(it) }
+            mMainActivity.changeAlpha(resources.getColor(R.color.white)
+                    , abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange).let { rl_index_toolbar_container.setBackgroundColor(it) }
 
+//            Log.e("tag", "offset=$offset")
+//            Log.e("tag", "totalScrollRange=${appBarLayout.totalScrollRange / 2}")
             /**
              * 当前最大高度偏移值除以2 在减去已偏移值 获取浮动 先显示在隐藏
              */
             if (offset <= appBarLayout.totalScrollRange / 2) {
                 toolbar.title = ""
                 toolbar.alpha = (appBarLayout.totalScrollRange / 2 - offset * 1.0f) / (appBarLayout.totalScrollRange / 2)
-                toolbar.visibility = View.GONE
+//                toolbar.visibility = View.GONE
+//                toolbar1.visibility = View.VISIBLE
 
                 /**
                  * 从最低浮动开始渐显 当前 Offset就是  appBarLayout.getTotalScrollRange() / 2
@@ -188,8 +226,8 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
             } else if (offset > appBarLayout.totalScrollRange / 2) {
                 val floate = (offset - appBarLayout.totalScrollRange / 2) * 1.0f / (appBarLayout.totalScrollRange / 2)
                 toolbar.alpha = floate
-                toolbar.visibility = View.VISIBLE
-
+//                toolbar.visibility = View.VISIBLE
+//                toolbar1.visibility = View.GONE
             }
 
 
@@ -201,6 +239,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 //        mPresenter.getCache()
         getSexData()
+//        initLiveData()
 
     }
 
@@ -222,7 +261,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
                 childView.setOnClickListener {
                     if (item.aClass == MainActivity::class.java) {
-                        mMainActivity?.setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3)
+                        mMainActivity.setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3)
 
                     } else {
                         val intent = Intent(mMainActivity, item.aClass)
@@ -269,6 +308,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
             //banner设置方法全部调用完毕时最后调用
             index_banner.setOnBannerListener {
                 //todo banner点击事件
+
             }
             index_banner.start()
         }
@@ -292,7 +332,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
                 layoutParams.width = ScreenUtil.getWidth(mMainActivity) / 3
                 rootView.layoutParams = layoutParams
 
-                mMainActivity?.let {
+                mMainActivity.let {
                     if (!it.isDestroyed)
 
                         Glide.with(it).load(item.img).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)).into(ivTutorPic)
@@ -302,7 +342,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 
                 childView.setOnClickListener {
-                    mMainActivity?.let { it1 -> TutorDetailActivity.startActivity(it1, item.tutorId) }
+                    mMainActivity.let { it1 -> TutorDetailActivity.startActivity(it1, item.tutorId) }
                 }
 
                 ll_scroll_container?.addView(childView)
@@ -313,11 +353,11 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun initCourseData(lesson_chapter: List<CourseInfo>?) {
-        lesson_chapter?.let {
-            var newLesson = lesson_chapter
-            if (lesson_chapter.size > 4) {
-                newLesson = lesson_chapter.subList(0, 4)
+    private fun initCourseData(lessonChapter: List<CourseInfo>?) {
+        lessonChapter?.let {
+            var newLesson = lessonChapter
+            if (lessonChapter.size > 4) {
+                newLesson = lessonChapter.subList(0, 4)
             }
             indexCourseAdapter?.setNewData(newLesson)
         }
@@ -329,11 +369,11 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun initViewPager(psych_test: List<EmotionTestInfo>?) {
+    private fun initViewPager(psychtTest: List<EmotionTestInfo>?) {
 
         index_ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
-        psych_test?.let {
-            val adapter = IndexTestAdapter(mMainActivity, psych_test)
+        psychtTest?.let {
+            val adapter = IndexTestAdapter(mMainActivity, psychtTest)
             index_ultraViewPager.adapter = adapter
             index_ultraViewPager.setMultiScreen(0.45f)
 //        index_ultraViewPager.setItemRatio(1.0)
@@ -378,26 +418,33 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
 
     override fun lazyLoad() {
-        showGuide2()
+//        showGuide2()
     }
 
 
     private fun getIndexData() {
-        mPresenter.getIndexData()
+        mPresenter?.getIndexData()
+//        mPresenter?.getIndexLiveList()
 
+        mPresenter?.getOnlineLiveList()
     }
 
 
     private fun getSexData() {
-        mPresenter.getSexData(sex)
+        mPresenter?.getSexData(sex)
     }
 
-
+    private var mPsychtTest: List<EmotionTestInfo>? = null
     private fun setData(indexInfo: IndexInfo) {
         initTutorData(indexInfo.tutors)//初始化导师数据
         initArticleData(indexInfo.article)//初始化文章数据
         initBanner(indexInfo.banners)//初始化banner数据
-        initViewPager(indexInfo.psych_test)//初始化测试数据
+        val psychtTest = indexInfo.psych_test
+        if (mPsychtTest == null) {
+            mPsychtTest = psychtTest
+            initViewPager(psychtTest)//初始化测试数据
+        }
+
 
     }
 
@@ -433,6 +480,7 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
 
     override fun showIndexInfo(indexInfo: IndexInfo) {
         setData(indexInfo)
+
         initCourseData(indexInfo.lesson_chapter)//初始化课程数据
     }
 
@@ -451,5 +499,14 @@ class IndexFragment : BaseLazyFragment<IndexPresenter>(), IndexView {
     override fun showIndexCaches(detailInfos: IndexInfo) {
         setData(detailInfos)
     }
+
+    override fun showIndexLiveInfos(data: List<LiveInfo>) {
+        var liveInfos = data
+        if (data.size > 2) {
+            liveInfos = data.subList(0, 2)
+        }
+        indexLiveAdapter?.setNewData(liveInfos)
+    }
+
 
 }

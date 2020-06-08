@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_login"
+    app:startDestination="@id/registerPhoneFragment">
+
+    <fragment
+        android:id="@+id/registerPhoneFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.RegisterPhoneFragmentNew"
+        android:label="RegisterPhoneFragment"
+        tools:layout="@layout/fragment_register_phone">
+        <action
+            android:id="@+id/action_to_registerCode"
+            app:destination="@id/registerCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerCodeFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.RegisterCodeFragmentNew"
+        android:label="RegisterCodeFragment"
+        tools:layout="@layout/fragment_register_code">
+        <action
+            android:id="@+id/action_to_registerPwd"
+            app:destination="@id/registerPwdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPwdFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.RegisterPwdFragmentNew"
+        android:label="RegisterPwdFragment"
+        tools:layout="@layout/fragment_register_pwd">
+        <action
+            android:id="@+id/action_registerPwdFragment_to_registerCodeFragment"
+            app:popUpTo="@id/registerCodeFragment" />
+    </fragment>
+
+
+</navigation>

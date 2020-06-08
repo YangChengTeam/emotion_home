@@ -61,7 +61,7 @@
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:drawableTop="@mipmap/home_love_default"
-                android:text="@string/skill"
+                android:text="@string/study"
                 android:textColor="@color/text_gray" />
 
 

@@ -11,14 +11,11 @@ import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
 import com.yc.emotion.home.index.ui.fragment.EmotionSearchHistoryFragment
 import com.yc.emotion.home.index.ui.fragment.EmotionSearchResultFragment
-import com.yc.emotion.home.model.bean.event.EventSearch
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import kotlinx.android.synthetic.main.activity_emotion_search.*
-import org.greenrobot.eventbus.EventBus
 
 /**
  *
@@ -63,7 +60,7 @@ class EmotionSearchActivity : BaseActivity() {
     }
 
 
-    private fun switchFragment(fragment: BaseFragment, tag: String) {
+    private fun switchFragment(fragment: BaseFragment<*>, tag: String) {
         val bt = supportFragmentManager.beginTransaction()
 
         bt.add(R.id.fl_search_container, fragment, fragment.fragmentTag)

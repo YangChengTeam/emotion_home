@@ -3,7 +3,9 @@ package com.yc.emotion.home.message.adapter
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.model.bean.MessageInfo
+import kotlinx.coroutines.newFixedThreadPoolContext
 
 /**
  *
@@ -15,6 +17,7 @@ class MessageMainAdapter(mDatas: List<MessageInfo>?) : BaseMultiItemQuickAdapter
         addItemType(MessageInfo.TYPE_MESSAGE, R.layout.message_item_view)
         addItemType(MessageInfo.TYPE_NOTIFICATION, R.layout.message_item_view)
         addItemType(MessageInfo.TYPE_COMMUNITY, R.layout.message_item_view)
+        setLoadMoreView(CustomLoadMoreView())
     }
 
     override fun convert(helper: BaseViewHolder?, item: MessageInfo?) {

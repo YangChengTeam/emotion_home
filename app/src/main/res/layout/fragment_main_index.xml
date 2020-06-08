@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,87 +10,95 @@
     android:focusableInTouchMode="true"
     android:paddingTop="@dimen/statusbar_view_height">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="0dp">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-            <RelativeLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                app:layout_collapseMode="pin">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
-                <ImageView
-                    android:id="@+id/iv_vip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/index_vip_icon" />
-
-                <LinearLayout
-                    android:id="@+id/ll_index_search"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_toStartOf="@id/iv_vip"
-                    android:background="@drawable/index_search_bg"
-                    android:gravity="center_vertical"
-                    android:paddingStart="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    tools:ignore="RtlSymmetry">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingEnd="15dp"
+                    app:layout_collapseMode="pin">
 
                     <ImageView
+                        android:id="@+id/iv_vip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/index_search_icon" />
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/index_vip_icon" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="如何挽回那个人的心"
-                        android:textColor="@color/gray_767676"
-                        android:textSize="16sp"
-                        android:visibility="gone" />
-
-                    <com.sunfusheng.marqueeview.MarqueeView
-                        android:id="@+id/marqueeView"
+                    <LinearLayout
+                        android:id="@+id/ll_index_search"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        app:mvAnimDuration="1000"
-                        app:mvDirection="bottom_to_top"
-                        app:mvInterval="2000"
-                        app:mvSingleLine="true"
-                        app:mvTextColor="@color/gray_767676"
-                        app:mvTextSize="16sp" />
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toStartOf="@id/iv_vip"
+                        android:background="@drawable/index_search_bg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        tools:ignore="RtlSymmetry">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/index_search_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="如何挽回那个人的心"
+                            android:textColor="@color/gray_767676"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
+
+                        <com.sunfusheng.marqueeview.MarqueeView
+                            android:id="@+id/marqueeView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            app:mvAnimDuration="1000"
+                            app:mvDirection="bottom_to_top"
+                            app:mvInterval="2000"
+                            app:mvSingleLine="true"
+                            app:mvTextColor="@color/gray_767676"
+                            app:mvTextSize="16sp" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
 
-            </RelativeLayout>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar1"
             android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
+            android:layout_height="?attr/actionBarSize"
             android:background="@android:color/transparent"
             android:visibility="gone"
             app:layout_collapseMode="pin"
@@ -133,17 +141,16 @@
 
 
             </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
@@ -176,15 +183,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/top_view"
                     android:background="@drawable/index_content_bg"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="15dp">
+                        android:orientation="vertical">
 
 
                         <!--首页banner-->
@@ -193,10 +198,92 @@
                             android:layout_width="match_parent"
                             android:layout_height="135dp"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp" />
+                            android:layout_marginRight="15dp"
+                            android:visibility="gone" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp">
 
+                            <ImageView
+                                android:id="@+id/iv_repel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="7.5dp"
+                                android:layout_weight="1"
+                                android:src="@mipmap/repel_bg_text" />
+
+                            <ImageView
+                                android:id="@+id/iv_save"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7.5dp"
+                                android:layout_weight="1"
+                                android:src="@mipmap/save_bg_text" />
+
+                        </LinearLayout>
+                        <!--热门直播-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp">
+
+                                <TextView
+                                    android:id="@+id/tv_live_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="热门直播LIVE"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_more_live"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:drawableRight="@mipmap/more_right_arrow_icon"
+                                    android:drawablePadding="3dp"
+                                    android:text="更多直播"
+                                    android:textColor="@color/gray_bebdbd"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerView_live"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="15dp" />
+
+                            <!--预约咨询-->
+
+                            <ImageView
+                                android:id="@+id/ll_advise"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
+                                android:layout_marginBottom="18dp"
+                                android:src="@mipmap/index_reservation" />
+
+                        </LinearLayout>
                         <!--根据性别显示不同图标-->
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/gray_f2f2f2" />
 
                         <com.yc.emotion.home.base.ui.widget.BouncyHScrollView
                             android:layout_width="match_parent"
@@ -204,7 +291,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="5dp"
-                            android:scrollbars="none">
+                            android:scrollbars="none"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:id="@+id/ll_top_scroll_container"
@@ -212,14 +300,6 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" />
                         </com.yc.emotion.home.base.ui.widget.BouncyHScrollView>
-
-                        <!--预约咨询-->
-
-                        <ImageView
-                            android:id="@+id/ll_advise"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/index_reservation" />
 
 
                         <RelativeLayout
@@ -306,7 +386,7 @@
                                 android:textColor="@color/gray_bebdbd" />
                         </RelativeLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/index_course_recyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -349,7 +429,7 @@
                                 android:textColor="@color/gray_bebdbd" />
                         </RelativeLayout>
 
-                        <android.support.v4.view.ViewPager
+                        <androidx.viewpager.widget.ViewPager
                             android:id="@+id/index_viewPager"
                             android:layout_width="match_parent"
                             android:layout_height="188dp"
@@ -390,7 +470,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="优选文章"
+                                android:text="优选案例"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -403,11 +483,11 @@
                                 android:layout_alignParentBottom="true"
                                 android:drawableRight="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
-                                android:text="更多文章"
+                                android:text="更多案例"
                                 android:textColor="@color/gray_bebdbd" />
                         </RelativeLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcv_choiceness"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -422,8 +502,8 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

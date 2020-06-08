@@ -18,4 +18,5 @@ interface UserInfoView : IView, IDialog {
     fun thirdLoginSuccess(data: UserInfo?, finish: Boolean?) {}
     fun getUserInfoSuccess(userInfo: UserInfo, listener: OnUserInfoListener?) {}
     fun getWechatInfoSuccess(wx: String, listener: BaseActivity.OnWxListener?) {}
+    fun setPwdSuccess(){}
 }

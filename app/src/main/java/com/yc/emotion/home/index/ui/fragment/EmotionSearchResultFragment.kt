@@ -3,11 +3,12 @@ package com.yc.emotion.home.index.ui.fragment
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
@@ -28,7 +29,6 @@ import java.util.*
  * Created by suns  on 2019/10/28 11:23.
  */
 class EmotionSearchResultFragment : BaseEmotionSearchFragment() {
-
 
 
     companion object {
@@ -85,18 +85,19 @@ class EmotionSearchResultFragment : BaseEmotionSearchFragment() {
                 emotionSearchContentFragment.arguments = bundle
                 fragments.add(emotionSearchContentFragment)
             } else if (it == 1) {
-             val emotionSearchTutorFragment=   EmotionSearchTutorFragment()
+                val emotionSearchTutorFragment = EmotionSearchTutorFragment()
 
-                val bundle =Bundle()
-                bundle.putString("keyword",keyword)
-                emotionSearchTutorFragment.arguments= bundle
+                val bundle = Bundle()
+                bundle.putString("keyword", keyword)
+                emotionSearchTutorFragment.arguments = bundle
 
                 fragments.add(emotionSearchTutorFragment)
 
             }
         }
 
-        val efficientCourseMainAdapter = CommonMainPageAdapter(childFragmentManager, titleList, fragments)
+        val efficientCourseMainAdapter = CommonMainPageAdapter(childFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewpager_emotion_search.adapter = efficientCourseMainAdapter
 //        mViewPager.setOffscreenPageLimit(2)
         viewpager_emotion_search.currentItem = 0
@@ -174,11 +175,11 @@ class EmotionSearchResultFragment : BaseEmotionSearchFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("TAG","onDestroyView")
+        Log.e("TAG", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("TAG","onDestroy")
+        Log.e("TAG", "onDestroy")
     }
 }

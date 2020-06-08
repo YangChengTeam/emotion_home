@@ -3,23 +3,22 @@ package com.yc.emotion.home.index.adapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
-import android.support.v7.widget.RecyclerView
-
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
+import com.yc.emotion.home.base.ui.widget.OpenAkpDialog
 import com.yc.emotion.home.model.bean.LoveHealDetBean
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.bean.OpenApkPkgInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.model.util.PackageUtils
-import com.yc.emotion.home.base.ui.widget.OpenAkpDialog
-
-import java.util.ArrayList
+import java.util.*
 
 
 /**
@@ -40,6 +39,7 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
     init {
         addItemType(LoveHealDetBean.VIEW_ITEM, R.layout.recycler_view_item_love_heal_det)
         addItemType(LoveHealDetBean.VIEW_VIP, R.layout.recycler_view_item_love_heal_det_vip)
+        setLoadMoreView(CustomLoadMoreView())
     }
 
 
@@ -51,7 +51,7 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
                 val recyclerView = helper.getView<RecyclerView>(R.id.item_love_heal_rv)
                 val layoutManager = LinearLayoutManager(mContext)
                 recyclerView.layoutManager = layoutManager
-                layoutManager.orientation = OrientationHelper.VERTICAL
+                layoutManager.orientation = LinearLayoutManager.VERTICAL
 
 
                 if (details == null || details.isEmpty()) {
@@ -118,8 +118,7 @@ private fun showOpenAkpDialog(context: Context, content: LoveHealDetDetailsBean)
 
     val apkList = PackageUtils.getApkList(context)
     for (i in apkList.indices) {
-        val apkPkgName = apkList[i]
-        when (apkPkgName) {
+        when (val apkPkgName = apkList[i]) {
             "com.tencent.mobileqq" -> qq.pkg = apkPkgName
             "com.tencent.mm" -> wx.pkg = apkPkgName
             "com.immomo.momo" -> mm.pkg = apkPkgName

@@ -1,23 +1,17 @@
 package com.yc.emotion.home.message.ui.activity
 
+
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.message.adapter.NotificationAdapter
 import com.yc.emotion.home.message.presenter.MessagePresenter
 import com.yc.emotion.home.message.view.MessageView
 import com.yc.emotion.home.model.bean.MessageInfo
-import com.yc.emotion.home.utils.CommonInfoHelper
 import kotlinx.android.synthetic.main.fragment_collect_view.*
-
-
-import rx.Subscriber
 
 /**
  *

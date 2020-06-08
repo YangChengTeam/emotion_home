@@ -1,13 +1,15 @@
 package com.yc.emotion.home.community.adapter
 
-import android.support.v4.content.ContextCompat
+
 import android.util.SparseArray
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
@@ -17,7 +19,7 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil
 /**
  * Created by suns  on 2019/8/31 09:30.
  */
-class PublishTagAdapter(data: List<CommunityTagInfo>?) : BaseQuickAdapter<CommunityTagInfo, BaseViewHolder>(R.layout.item_community_tag, data) {
+class PublishTagAdapter(data: List<CommunityTagInfo>?) : CommonMoreAdapter<CommunityTagInfo, BaseViewHolder>(R.layout.item_community_tag, data) {
     private val itemSparseArray: SparseArray<View> = SparseArray()
     private val viewSparseArray: SparseArray<View> = SparseArray()
 
@@ -46,15 +48,19 @@ class PublishTagAdapter(data: List<CommunityTagInfo>?) : BaseQuickAdapter<Commun
             layoutParams.topMargin = UIUtil.dip2px(mContext, 10.0)
         }
 
-        if (position % 3 == 0) {
-            layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
-            layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
-        } else if (position % 3 == 1) {
-            layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
-            layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
-        } else {
-            layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
-            layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
+        when {
+            position % 3 == 0 -> {
+                layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
+                layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
+            }
+            position % 3 == 1 -> {
+                layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
+                layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
+            }
+            else -> {
+                layoutParams.leftMargin = UIUtil.dip2px(mContext, 5.0)
+                layoutParams.rightMargin = UIUtil.dip2px(mContext, 5.0)
+            }
         }
         helper.itemView.layoutParams = layoutParams
     }

@@ -24,13 +24,16 @@ class EmotionSearchModel(override var context: Context?) : IModel {
      * @return
      */
     fun searchIndexInfo(keyword: String?, type: Int): Observable<ResultInfo<IndexSearchInfo>> {
-        val params = HashMap<String, String?>()
-
-        params["keyword"] = keyword
-        params["type"] = type.toString() + ""
+//        val params = HashMap<String, String?>()
+//
+//        params["keyword"] = keyword
+//        params["type"] = type.toString() + ""
 
         return HttpCoreEngin.get(context).rxpost(URLConfig.INDEX_SEARCH_URL, object : TypeReference<ResultInfo<IndexSearchInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<IndexSearchInfo>>
+        }.type, mutableMapOf(
+                "keyword" to keyword,
+                "type" to "$type"
+        ), true, true, true) as Observable<ResultInfo<IndexSearchInfo>>
     }
 }

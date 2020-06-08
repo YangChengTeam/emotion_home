@@ -47,9 +47,8 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
 
     abstract fun loadData(isForceUI: Boolean, isLoading: Boolean)
 
-    open fun isLoadingCache(): Boolean {
-        return true
-    }
+    open fun isLoadingCache() = true
+
 
     abstract fun getCache()
 
@@ -61,5 +60,6 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
     override fun unSubscribe() {
         subScriptions?.clear()
     }
+
 
 }

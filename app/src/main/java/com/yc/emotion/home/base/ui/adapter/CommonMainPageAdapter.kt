@@ -1,9 +1,11 @@
 package com.yc.emotion.home.base.ui.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+
+import android.annotation.SuppressLint
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import com.yc.emotion.home.factory.CommonPagerFactory
 
 /**
@@ -11,7 +13,8 @@ import com.yc.emotion.home.factory.CommonPagerFactory
  * Created by suns  on 2019/10/9 14:15.
  * 通用的fragmentPagerAdapter
  */
-class CommonMainPageAdapter(ft: FragmentManager, titles: List<String>?, fragments: List<Fragment>) : FragmentPagerAdapter(ft) {
+
+class CommonMainPageAdapter(ft: FragmentManager, behavior: Int, titles: List<String>?, fragments: List<Fragment>) : FragmentPagerAdapter(ft, behavior) {
 
 
     private var mTitles: List<String>? = titles
@@ -21,7 +24,7 @@ class CommonMainPageAdapter(ft: FragmentManager, titles: List<String>?, fragment
     private var mFt = ft
 
 
-    override fun getItem(position: Int): Fragment? {
+    override fun getItem(position: Int): Fragment {
 
         return CommonPagerFactory.createFragment(position, mFragments)
 

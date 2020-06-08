@@ -3,7 +3,6 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
@@ -11,9 +10,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.kk.securityhttp.domain.ResultInfo
+import androidx.appcompat.widget.SearchView
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.presenter.IndexVerbalPresenter
 import com.yc.emotion.home.index.ui.fragment.SearchFragment
@@ -23,7 +21,6 @@ import com.yc.emotion.home.model.util.TimeUtils
 import com.yc.emotion.home.pay.ui.activity.VipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_search.*
-import rx.Subscriber
 import java.util.*
 
 class SearchActivity : BaseSameActivity(), IndexVerbalView {
@@ -41,7 +38,6 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
-
 
         initViews()
 
@@ -78,8 +74,8 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
         //        editText.setTextColor(ContextCompat.getColor(this,R.color.nb_text_primary));
 
         //监听关闭按钮点击事件
-        val mCloseButton = share_searview.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn)
-        val textView = share_searview.findViewById<TextView>(android.support.v7.appcompat.R.id.search_src_text)
+        val mCloseButton = share_searview.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        val textView = share_searview.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
         if (mCloseButton.isClickable) {
             mCloseButton.setOnClickListener { view ->
                 //清除搜索框并加载默认数据
@@ -101,19 +97,22 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
         replaceFragment(mKeyword)
 
 
-        val instance = UserInfoHelper.instance
-        val vip = instance.getUserInfo()?.is_vip as Int
-        if (vip > 0) {
-            Log.d("mylog", "initViews:  已经购买了vip")
-            share_iv_to_vip.visibility = View.GONE
-        } else {
-            Log.d("mylog", "initViews:  未购买了vip")
+        val userInfo = UserInfoHelper.instance.getUserInfo()
+        userInfo?.let {
+            val vip = it.is_vip
+            if (vip > 0) {
+                Log.d("mylog", "initViews:  已经购买了vip")
+                share_iv_to_vip.visibility = View.GONE
+            } else {
+                Log.d("mylog", "initViews:  未购买了vip")
+            }
         }
+
 
         hindKeyboard(share_searview)
 
         textView.text = mKeyword
-        mKeyword?.let { editText.setSelection(mKeyword!!.length) }
+        mKeyword?.let { editText.setSelection(it.length) }
 
 
     }

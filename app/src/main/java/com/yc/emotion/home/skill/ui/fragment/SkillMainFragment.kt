@@ -4,18 +4,18 @@ package com.yc.emotion.home.skill.ui.fragment
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.message.ui.fragment.ExpressFragment
 import kotlinx.android.synthetic.main.fragment_main_skill.*
-
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -30,7 +30,7 @@ import java.util.*
  * Created by mayn on 2019/6/17.
  */
 
-class SkillMainFragment : BaseLazyFragment<BasePresenter<*, *>>() {
+class SkillMainFragment : BaseFragment<BasePresenter<*, *>>() {
 
 
     override fun getLayoutId(): Int {
@@ -46,7 +46,7 @@ class SkillMainFragment : BaseLazyFragment<BasePresenter<*, *>>() {
 
         val arrays = resources.getStringArray(R.array.love_practice)
 
-        val titleList = Arrays.asList(*arrays)
+        val titleList = listOf(*arrays)
 
         initNavigator(titleList)
         val fragmentList = arrayListOf<Fragment>()
@@ -55,7 +55,8 @@ class SkillMainFragment : BaseLazyFragment<BasePresenter<*, *>>() {
         fragmentList.add(ExpressFragment())
 
 
-        val commonMainPageAdapter = CommonMainPageAdapter(childFragmentManager, titleList, fragmentList)
+        val commonMainPageAdapter = CommonMainPageAdapter(childFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragmentList)
 
 //        val mainT2NewPagerAdapter = MainT2PagerAdapter(childFragmentManager, titleList)
         skill_view_pager.adapter = commonMainPageAdapter

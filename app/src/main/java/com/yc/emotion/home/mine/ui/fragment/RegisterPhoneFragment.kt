@@ -1,9 +1,9 @@
 package com.yc.emotion.home.mine.ui.fragment
 
-import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import androidx.core.content.ContextCompat
 import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.constant.Constant
@@ -28,8 +28,6 @@ class RegisterPhoneFragment : BaseRegisterPhoneFragment() {
             return registerPhoneFragment
         }
     }
-
-
 
 
     override fun initViews() {
@@ -63,9 +61,9 @@ class RegisterPhoneFragment : BaseRegisterPhoneFragment() {
                 val result = s.toString().trim()
                 activity?.let {
                     if (!TextUtils.isEmpty(result)) {
-                        et_input_phone.setTextColor(ContextCompat.getColor(activity!!, R.color.gray_222222))
+                        et_input_phone.setTextColor(ContextCompat.getColor(it, R.color.gray_222222))
                     } else {
-                        et_input_phone.setTextColor(ContextCompat.getColor(activity!!, R.color.gray_999))
+                        et_input_phone.setTextColor(ContextCompat.getColor(it, R.color.gray_999))
                     }
                 }
 

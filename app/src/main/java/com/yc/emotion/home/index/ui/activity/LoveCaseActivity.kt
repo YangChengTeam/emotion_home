@@ -2,10 +2,9 @@ package com.yc.emotion.home.index.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
 import android.view.View
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
@@ -20,8 +19,7 @@ import kotlinx.android.synthetic.main.activity_love_case.*
 class LoveCaseActivity : BaseSameActivity(), LoveCaseView {
 
 
-
-    private var mMainT2Beans: MutableList<MainT2Bean>? = null
+    private var mMainT2Beans: List<MainT2Bean>? = null
 
     private val PAGE_SIZE = 10
     private var PAGE_NUM = 1
@@ -61,7 +59,7 @@ class LoveCaseActivity : BaseSameActivity(), LoveCaseView {
         val layoutManager = LinearLayoutManager(this)
         //        RecyclerViewNoBugLinearLayoutManager layoutManager = new RecyclerViewNoBugLinearLayoutManager(this);
         love_case_rl.layoutManager = layoutManager
-        layoutManager.orientation = OrientationHelper.VERTICAL
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
         //设置增加或删除条目的动画
         love_case_rl.itemAnimator = DefaultItemAnimator()
         mAdapter = PracticeItemAdapter(null)
@@ -104,14 +102,13 @@ class LoveCaseActivity : BaseSameActivity(), LoveCaseView {
 
     }
 
-    override fun showLoveCaseList(data: List<MainT2Bean>) {
+    override fun showLoveCaseList(data: List<MainT2Bean>?) {
         if (PAGE_NUM == 1) {
             mAdapter?.setNewData(mMainT2Beans)
-            CommonInfoHelper.setO<List<MainT2Bean>>(this, mMainT2Beans, "main2_example_lists")
+            CommonInfoHelper.setO(this, mMainT2Beans, "main2_example_lists")
         } else {
             mMainT2Beans?.let {
-
-                mAdapter?.addData(mMainT2Beans!!)
+                mAdapter?.addData(it)
             }
         }
 

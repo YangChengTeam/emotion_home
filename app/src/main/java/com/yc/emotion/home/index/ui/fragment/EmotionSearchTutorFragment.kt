@@ -1,11 +1,11 @@
 package com.yc.emotion.home.index.ui.fragment
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.SearchTutorAdapter
 import com.yc.emotion.home.index.presenter.EmotionSearchPresenter
 import com.yc.emotion.home.index.ui.activity.TutorDetailActivity
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.ThreadMode
  *
  * Created by suns  on 2019/10/15 10:57.
  */
-class EmotionSearchTutorFragment : BaseLazyFragment<EmotionSearchPresenter>(), EmotionSearchView {
+class EmotionSearchTutorFragment : BaseFragment<EmotionSearchPresenter>(), EmotionSearchView {
 
 
 
@@ -108,7 +108,7 @@ class EmotionSearchTutorFragment : BaseLazyFragment<EmotionSearchPresenter>(), E
 
     fun getData() {
 
-        mPresenter.searchIndexInfo(keyWord,2)
+        mPresenter?.searchIndexInfo(keyWord,2)
 
 
     }

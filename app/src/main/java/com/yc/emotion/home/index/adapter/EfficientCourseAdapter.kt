@@ -7,8 +7,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
+import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.DateUtils
 import java.math.BigDecimal
 
@@ -16,7 +18,7 @@ import java.math.BigDecimal
  *
  * Created by suns  on 2019/10/9 14:02.
  */
-class EfficientCourseAdapter(mDatas: List<CourseInfo>?) : BaseQuickAdapter<CourseInfo, BaseViewHolder>(R.layout.item_course_efficient, mDatas) {
+class EfficientCourseAdapter(mDatas: List<CourseInfo>?) : CommonMoreAdapter<CourseInfo, BaseViewHolder>(R.layout.item_course_efficient, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: CourseInfo?) {
         helper?.let {
             item?.let {

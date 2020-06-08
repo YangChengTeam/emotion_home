@@ -1,15 +1,17 @@
 package com.video.player.lib.controller;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.video.player.lib.R;
 import com.video.player.lib.base.BaseCoverController;
 import com.video.player.lib.utils.Logger;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * TinyHung@Outlook.com

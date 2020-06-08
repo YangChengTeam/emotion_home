@@ -4,19 +4,20 @@ import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.index.ui.fragment.ArticleFragment
-import com.yc.emotion.home.index.ui.widget.EfficientCoursePopwindow
-import com.yc.emotion.home.model.bean.AticleTagInfo
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.index.presenter.ArticlePresenter
+import com.yc.emotion.home.index.ui.fragment.ArticleFragment
+import com.yc.emotion.home.index.ui.widget.EfficientCoursePopWindow
 import com.yc.emotion.home.index.view.ArticleView
+import com.yc.emotion.home.model.bean.AticleTagInfo
 import kotlinx.android.synthetic.main.activity_course_efficient.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -26,7 +27,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import kotlin.collections.ArrayList
 
 /**
  *
@@ -61,12 +61,12 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
         tv_efficient.setOnClickListener {
             setTagArrow(true)
             titleList?.let {
-                val efficientCoursePopwindow = EfficientCoursePopwindow(this)
+                val efficientCoursePopwindow = EfficientCoursePopWindow(this)
                 efficientCoursePopwindow.setData(titleList)
                 efficientCoursePopwindow.showAsDropDown(view_divider)
 //                efficientCoursePopwindow.show(window.decorView.rootView,Gravity.TOP)
                 efficientCoursePopwindow.setOnDismissListener { setTagArrow(false) }
-                efficientCoursePopwindow.setOnTagSelectListener(object : EfficientCoursePopwindow.OnTagSelectListener {
+                efficientCoursePopwindow.setOnTagSelectListener(object : EfficientCoursePopWindow.OnTagSelectListener {
                     override fun onTagSelect(position: Int) {
                         viewPager_efficient.currentItem = position
                     }
@@ -109,7 +109,8 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
         }
 
 
-        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, titleList, fragments)
+        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_efficient.adapter = efficientCourseMainAdapter
 //        viewPager_efficient.offscreenPageLimit = catIds.size - 1
         viewPager_efficient.currentItem = 0
@@ -185,8 +186,6 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
     }
 
 
-
-
     private var titleList: ArrayList<String>? = null
     private fun createNewData(list: List<AticleTagInfo>?) {
         list?.let {
@@ -206,7 +205,7 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
             }
             titleList?.let {
 
-                netSwitchPagerData(catIds, titleList!!)
+                netSwitchPagerData(catIds, it)
             }
 
         }

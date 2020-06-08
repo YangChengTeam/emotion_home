@@ -3,21 +3,16 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.TutorServiceListAdapter
-import com.yc.emotion.home.model.bean.TutorServiceInfo
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
+import com.yc.emotion.home.index.adapter.TutorServiceListAdapter
 import com.yc.emotion.home.index.presenter.TutorPresenter
 import com.yc.emotion.home.index.view.TutorView
+import com.yc.emotion.home.model.bean.TutorServiceInfo
 import kotlinx.android.synthetic.main.fragment_collect_view.*
-
-import rx.Subscriber
 
 /**
  *

@@ -14,7 +14,7 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.ui.activity.ConsultAppointActivity
 import com.yc.emotion.home.message.ui.fragment.MessageActivity
 import com.yc.emotion.home.mine.ui.activity.*
@@ -33,10 +33,10 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by mayn on 2019/4/23.
  */
 
-class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListener {
+class MineFragment : BaseFragment<BasePresenter<*, *>>(), View.OnClickListener {
 
     private var mMainActivity: MainActivity? = null
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -77,6 +77,7 @@ class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListen
         ll_free_order.setOnClickListener(this)
         rl_user_info.setOnClickListener(this)
         mineItemView_message.setOnClickListener(this)
+        mineItemView_live.setOnClickListener(this)
     }
 
     override fun lazyLoad() {
@@ -86,7 +87,7 @@ class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListen
 
 
     private fun initData() {
-        val id = UserInfoHelper.instance.getUid() as Int
+        val id = UserInfoHelper.instance.getUid()
         if (id <= 0) {
 
             fillNoLoginData()
@@ -113,7 +114,6 @@ class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListen
         mMainActivity?.getUserInfo(listener = object : OnUserInfoListener {
             override fun onUserInfo(userInfo: UserInfo) {
                 fillData(userInfo)
-
             }
 
         })
@@ -145,8 +145,7 @@ class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListen
             count += 1
         }
 
-        val vipTips = userInfo?.vip_tips
-        when (vipTips) {
+        when (userInfo?.vip_tips) {
             0, 2 -> {//0 未开通
                 if (TextUtils.isEmpty(nickName))
                     nickName = "普通用户"
@@ -274,6 +273,10 @@ class MineFragment : BaseLazyFragment<BasePresenter<*, *>>(), View.OnClickListen
             }
             R.id.mineItemView_message -> {
                 startActivity(Intent(mMainActivity, MessageActivity::class.java))
+            }
+            R.id.mineItemView_live -> {
+                val livePermissonFragment = LivePermissonFragment()
+                livePermissonFragment.show(childFragmentManager, "")
             }
         }
     }

@@ -6,7 +6,6 @@ import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
 import com.music.player.lib.bean.MusicInfo
 import com.music.player.lib.bean.MusicInfoWrapper
-import com.tencent.connect.UserInfo
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.LoveAudioModel
 import com.yc.emotion.home.index.view.LoveAudioView
@@ -38,9 +37,12 @@ class LoveAudioPresenter(context: Context?, view: LoveAudioView) : BasePresenter
     fun getAudioListCache() {
         CommonInfoHelper.getO(mContext, "audio_main_data", object : TypeReference<List<MusicInfo>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<MusicInfo>> { datas ->
-            if (datas != null) {
-                mView.showAudioListInfo(datas, true)
+        }.type, object : CommonInfoHelper.OnParseListener<List<MusicInfo>> {
+
+            override fun onParse(o: List<MusicInfo>?) {
+                if (o != null) {
+                    mView.showAudioListInfo(o, true)
+                }
             }
         })
     }
@@ -160,9 +162,13 @@ class LoveAudioPresenter(context: Context?, view: LoveAudioView) : BasePresenter
     fun getAudioCategoryCache() {
         CommonInfoHelper.getO(mContext, "audio_filter_data", object : TypeReference<List<AudioDataInfo>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<AudioDataInfo>> { filterInfos ->
-            if (filterInfos != null) {
-                mView.showAudioCategoryList(filterInfos)
+        }.type, object : CommonInfoHelper.OnParseListener<List<AudioDataInfo>> {
+
+
+            override fun onParse(o: List<AudioDataInfo>?) {
+                if (o != null) {
+                    mView.showAudioCategoryList(o)
+                }
             }
         })
         getAudioDataInfo()

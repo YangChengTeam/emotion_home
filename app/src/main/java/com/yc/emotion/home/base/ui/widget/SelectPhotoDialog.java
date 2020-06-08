@@ -1,13 +1,14 @@
 package com.yc.emotion.home.base.ui.widget;
 
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.yc.emotion.home.R;
+
+import androidx.appcompat.app.AlertDialog;
 
 
 /**

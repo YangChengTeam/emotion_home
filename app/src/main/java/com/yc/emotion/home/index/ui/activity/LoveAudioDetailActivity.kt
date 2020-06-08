@@ -2,8 +2,6 @@ package com.yc.emotion.home.index.ui.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -14,11 +12,9 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.music.player.lib.bean.MusicInfo
-import com.music.player.lib.bean.MusicInfoWrapper
 import com.music.player.lib.constants.Constants
 import com.music.player.lib.listener.OnUserPlayerEventListener
 import com.music.player.lib.manager.MusicPlayerManager
@@ -26,17 +22,13 @@ import com.music.player.lib.mode.PlayerStatus
 import com.music.player.lib.view.MusicPlayerController
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
-import com.yc.emotion.home.model.util.SizeUtils
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.presenter.LoveAudioPresenter
 import com.yc.emotion.home.index.view.LoveAudioView
+import com.yc.emotion.home.model.util.SizeUtils
 import com.yc.emotion.home.utils.StatusBarUtil
-import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_audio_detail.*
 import kotlinx.android.synthetic.main.layout_bottom_wechat.*
-
-import rx.Subscriber
 
 
 /**

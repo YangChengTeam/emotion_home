@@ -3,13 +3,14 @@ package com.yc.emotion.home.mine.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.OrderInfo
 
 /**
  *
  * Created by suns  on 2019/10/17 10:34.
  */
-class ServiceOrderAdapter(mDatas: List<OrderInfo>?) : BaseQuickAdapter<OrderInfo, BaseViewHolder>(R.layout.layout_service_order_item, mDatas) {
+class ServiceOrderAdapter(mDatas: List<OrderInfo>?) : CommonMoreAdapter<OrderInfo, BaseViewHolder>(R.layout.layout_service_order_item, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: OrderInfo?) {
         helper?.let {
             item?.let {

@@ -4,10 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
@@ -29,7 +30,6 @@ import java.util.*
  */
 
 class LoveByStagesActivity : BaseSameActivity() {
-
 
 
     private var mActivityTitle: String? = null
@@ -64,7 +64,7 @@ class LoveByStagesActivity : BaseSameActivity() {
             titleLists.add(it.name)
             idLists.add(it.id)
 
-            val fragment= LoveArticleListFragment.newInstance(it.id)
+            val fragment = LoveArticleListFragment.newInstance(it.id)
             fragmentList.add(fragment)
             Log.d("mylog", "netSwitchPagerData: categoryArticleChildrenBean.name " + it.name
                     + " categoryArticleChildrenBean.id " + it.id)
@@ -74,12 +74,18 @@ class LoveByStagesActivity : BaseSameActivity() {
         initNavigator(titleLists)
 
 
-        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager, titleLists, fragmentList)
+        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleLists, fragmentList)
 
 
         love_by_stages_view_pager.adapter = commonMainPageAdapter
-        if (mCategoryArticleChildrenBeans != null && mCategoryArticleChildrenBeans!!.isNotEmpty())
-            love_by_stages_view_pager.offscreenPageLimit = mCategoryArticleChildrenBeans!!.size - 1
+        mCategoryArticleChildrenBeans?.let {
+            if (it.isNotEmpty()) {
+                love_by_stages_view_pager.offscreenPageLimit = it.size - 1
+            }
+        }
+
+
     }
 
     private fun initNavigator(titleList: List<String>) {

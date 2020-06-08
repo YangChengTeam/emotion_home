@@ -21,11 +21,11 @@ class EditNicknameActivity : BaseSameActivity() {
     }
 
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_edit_signature)
-//        initView()
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(getLayoutId())
+        initViews()
+    }
 
     override fun initViews() {
         et_signature.hint = "给自己取一个好听的签名吧~"
@@ -37,7 +37,6 @@ class EditNicknameActivity : BaseSameActivity() {
                 et_signature.setSelection(signature.length)
             }
         }
-
 
 
         val tvSub = offerActivitySubTitleView()

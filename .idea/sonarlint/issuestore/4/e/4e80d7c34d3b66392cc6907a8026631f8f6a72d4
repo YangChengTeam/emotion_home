@@ -1,0 +1,9 @@
+
+i
+java:S1104"SMake errCode a static final constant or non-public and provide accessors if needed.(½éÈ 
+i
+java:S1104"SMake message a static final constant or non-public and provide accessors if needed.(ÕÃØ·
+f
+java:S1104"PMake data a static final constant or non-public and provide accessors if needed.(¥²š‘
+h
+java:S1104"RMake status a static final constant or non-public and provide accessors if needed.(­ùê‡

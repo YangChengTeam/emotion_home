@@ -3,18 +3,18 @@ package com.yc.emotion.home.mine.ui.activity
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
+import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.mine.ui.fragment.CourseOrderFragment
 import com.yc.emotion.home.mine.ui.fragment.ServiceOrderFragment
-import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import kotlinx.android.synthetic.main.activity_order.*
-
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -66,7 +66,8 @@ class OrderActivity : BaseSameActivity() {
                 fragments.add(ServiceOrderFragment())
         }
 
-        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager, titleList, fragments)
+        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_order.adapter = commonMainPageAdapter
 //        mViewPager.setOffscreenPageLimit(2)
         viewPager_order.currentItem = 0

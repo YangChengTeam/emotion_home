@@ -93,5 +93,17 @@
     <color name="gray_e5e5e5">#E5E5E5</color>
     <color name="gray_777777">#777777</color>
     <color name="gray_fefefe">#FEFEFE</color>
+    <color name="gray_efeeee">#efeeee</color>
+    <color name="fe5c50">#FE5C50</color>
+    <color name="red_ff2d55">#FF2D55</color>
+    <color name="main_theme_color">#ffffa000</color>
+    <color name="masks_layer_60">#99000000</color>
+    <color name="color_bdbcbc">#ffbdbcbc</color>
+    <color name="color_f8f8f8">#fff8f8f8</color>
+    <color name="color_cacaca">#ffcacaca</color>
+    <color name="red_fc443a">#FC443A</color>
+    <color name="gray_373737">#373737</color>
+    <color name="gray_e2e2e2">#E2E2E2</color>
+    <color name="gray_a0a0a0">#A0A0A0</color>
 
 </resources>

@@ -127,7 +127,7 @@ public class VerificationCodeInput extends ViewGroup {
             layoutParams.leftMargin = childHPadding;
             layoutParams.rightMargin = childHPadding;
             layoutParams.gravity = Gravity.CENTER;
-            if (i==0){
+            if (i == 0) {
                 editText.setFocusable(true);
             }
 

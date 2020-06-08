@@ -6,10 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 import android.telephony.TelephonyManager
 import android.text.InputFilter
 import android.text.TextUtils
@@ -19,6 +17,10 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.alibaba.fastjson.JSON
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -49,7 +51,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
-class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
+class CreateBeforeActivity : BaseSameActivity(), ExpressView {
 
 
     private var mConfessionDataBean: ConfessionDataBean? = null
@@ -57,6 +59,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
     private var cHeight: Int = 0
 
     private var createSelectImageView: ImageView? = null
+
     //    private CustomProgress dialog;
     private val timeNum = 0
     private var isChooseImage: Boolean = false
@@ -319,7 +322,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                         //绿色框中的流程
                         //用户第一次拒绝了权限、并且没有勾选"不再提示"这个值为true，此时告诉用户为什么需要这个权限。
                         if (permission.shouldRationale()) {
-                            showToastShort("未获取到相机权限")
+                            showToast("未获取到相机权限")
                         } else {
                             //此时请求权限会直接报未授予，需要用户手动去权限设置页，所以弹框引导用户跳转去设置页
                             val permissionDesc = permission.permissionNameDesc
@@ -356,7 +359,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                         //绿色框中的流程
                         //用户第一次拒绝了权限、并且没有勾选"不再提示"这个值为true，此时告诉用户为什么需要这个权限。
                         if (permission.shouldRationale()) {
-                            showToastShort("未获取到相机权限")
+                            showToast("未获取到相机权限")
                         } else {
                             //此时请求权限会直接报未授予，需要用户手动去权限设置页，所以弹框引导用户跳转去设置页
                             val permissionDesc = permission.permissionNameDesc
@@ -453,7 +456,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                 if (layout_create_type.getChildAt(i) is EditText) {
                     val iEditText = layout_create_type.getChildAt(i) as EditText
                     if (TextUtils.isEmpty(iEditText.text) && iEditText.visibility == View.VISIBLE) {
-                        showToastShort("请输入值")
+                        showToast("请输入值")
                         isValidate = false
                         break
                     } else {
@@ -468,7 +471,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                         if (tempLinearLayout.getChildAt(m) is EditText) {
                             val iEditText = tempLinearLayout.getChildAt(m) as EditText
                             if (TextUtils.isEmpty(iEditText.text) && iEditText.visibility == View.VISIBLE) {
-                                showToastShort("请输入值")
+                                showToast("请输入值")
                                 isValidate = false
                                 break
                             } else {
@@ -482,7 +485,7 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                         if (tempLinearLayout.getChildAt(m) is Spinner) {
                             val iSpinner = tempLinearLayout.getChildAt(m) as Spinner
                             if (TextUtils.isEmpty(iSpinner.contentDescription)) {
-                                showToastShort("请选择值")
+                                showToast("请选择值")
                                 isValidate = false
                                 break
                             } else {
@@ -552,12 +555,14 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getPhoneIMEI(cxt: Context): String {
         val tm = cxt
                 .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             "123456"
-        } else tm.deviceId
+
+        } else tm.meid
     }
 
 
@@ -575,12 +580,13 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
                 })
     }
 
-    override fun offerActivityTitle(): String {
-        var title = mConfessionDataBean?.title
-        if (TextUtils.isEmpty(title)) {
-            title = "合成图片"
+    override fun offerActivityTitle(): String? {
+
+        return if (TextUtils.isEmpty(mConfessionDataBean?.title)) {
+            "合成图片"
+        } else {
+            mConfessionDataBean?.title
         }
-        return title!!
     }
 
     private fun parseInt(s: String): Int {
@@ -594,8 +600,6 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
         }
 
     }
-
-
 
 
     override fun showNormalDataSuccess(data: String?) {
@@ -639,7 +643,6 @@ class CreateBeforeActivity : BaseSameActivity(),  ExpressView {
             Toast.makeText(this@CreateBeforeActivity, "生成失败,请稍后重试!", Toast.LENGTH_SHORT).show()
         }
     }
-
 
 
     companion object {

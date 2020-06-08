@@ -3,8 +3,9 @@ package com.yc.emotion.home.community.ui.fragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+
 import android.view.*
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kk.utils.ScreenUtil
@@ -21,18 +22,18 @@ class CommunityFaceFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        window = dialog.window
+        window = dialog?.window
 
 
         if (rootView == null) {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
             rootView = inflater.inflate(R.layout.frament_community_face, container, false)
 
             //            window.setLayout((int) (RxDeviceTool.getScreenWidth(getActivity()) * getWidth()), getHeight());//这2行,和上面的一样,注意顺序就行;
             window?.setWindowAnimations(getAnimationId())
         }
-        dialog.setCancelable(true)
-        dialog.setCanceledOnTouchOutside(true)
+        dialog?.setCancelable(true)
+        dialog?.setCanceledOnTouchOutside(true)
 
 
         return rootView
@@ -51,7 +52,7 @@ class CommunityFaceFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val window = dialog.window
+        val window = dialog?.window
         if (window != null) {
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))//注意此处
 

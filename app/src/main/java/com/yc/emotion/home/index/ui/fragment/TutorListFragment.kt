@@ -1,37 +1,25 @@
 package com.yc.emotion.home.index.ui.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.activity.BaseActivity
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.TutorListAdapter
+import com.yc.emotion.home.index.presenter.TutorPresenter
 import com.yc.emotion.home.index.ui.activity.TutorDetailActivity
 import com.yc.emotion.home.index.ui.activity.TutorListActivity
-import com.yc.emotion.home.model.bean.TutorInfo
-import com.yc.emotion.home.base.domain.engine.LoveEngine
-import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
-import com.yc.emotion.home.base.view.IView
-import com.yc.emotion.home.index.presenter.TutorPresenter
 import com.yc.emotion.home.index.view.TutorView
+import com.yc.emotion.home.model.bean.TutorInfo
 import kotlinx.android.synthetic.main.fragment_collect_view.*
-import rx.Subscriber
 
 /**
  *
  * Created by suns  on 2019/10/9 11:33.
  */
-class TutorListFragment : BaseLazyFragment<TutorPresenter>(), TutorView {
+class TutorListFragment : BaseFragment<TutorPresenter>(), TutorView {
 
 
     private var tutorListAdapter: TutorListAdapter? = null
@@ -120,7 +108,7 @@ class TutorListFragment : BaseLazyFragment<TutorPresenter>(), TutorView {
 
     fun getData() {
 
-        mPresenter.getTutorListInfo(catId, page, pageSize)
+        mPresenter?.getTutorListInfo(catId, page, pageSize)
 
     }
 

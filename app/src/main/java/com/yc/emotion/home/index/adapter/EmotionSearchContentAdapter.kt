@@ -1,17 +1,18 @@
 package com.yc.emotion.home.index.adapter
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
+import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.model.bean.SearchContentInfo
 import com.yc.emotion.home.model.util.SizeUtils
-import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 
 /**
  *
@@ -29,6 +30,7 @@ class EmotionSearchContentAdapter(mDatas: List<SearchContentInfo>?) : BaseMultiI
         addItemType(SearchContentInfo.ITEM_TYPE_TUTOR_SERVICE, R.layout.layout_search_content_tutor_service_item)
 
         addItemType(SearchContentInfo.ITEM_TYPE_DIVIDER, R.layout.item_divider_f2)
+        setLoadMoreView(CustomLoadMoreView())
     }
 
     override fun convert(helper: BaseViewHolder?, item: SearchContentInfo?) {

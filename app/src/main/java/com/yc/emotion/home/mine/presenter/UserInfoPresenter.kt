@@ -2,6 +2,7 @@ package com.yc.emotion.home.mine.presenter
 
 import android.content.Context
 import android.text.TextUtils
+import android.view.TextureView
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
 import com.music.player.lib.util.ToastUtils
@@ -12,7 +13,9 @@ import com.yc.emotion.home.mine.domain.model.UserInfoModel
 import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.WetChatInfo
+import com.yc.emotion.home.utils.RegexUtils
 import com.yc.emotion.home.utils.UserInfoHelper
+import org.w3c.dom.Text
 import rx.Subscriber
 
 /**
@@ -35,12 +38,28 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
 
 
     fun phoneLogin(mobile: String?, pwd: String?, code: String?) {
+        if (TextUtils.isEmpty(mobile)) {
+            ToastUtils.showCenterToast("手机号不能为空")
+            return
+        }
+        if (!RegexUtils.isMobileExact(mobile)) {
+            ToastUtils.showCenterToast("手机号格式不正确")
+            return
+        }
+        if (TextUtils.isEmpty(pwd) && TextUtils.isEmpty(code)) {
+            ToastUtils.showCenterToast("密码或验证码不能为空")
+            return
+        }
+
         mView.showLoadingDialog()
         val subscription = mModel?.phoneLogin(mobile, pwd, code)?.subscribe(object : Subscriber<ResultInfo<UserInfo>>() {
             override fun onNext(t: ResultInfo<UserInfo>?) {
                 t?.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val userInfo = t.data
+                        userInfo?.let {
+                            if (!TextUtils.isEmpty(pwd)) it.pwd = pwd
+                        }
 
                         UserInfoHelper.instance.saveUserInfo(userInfo)
 
@@ -67,13 +86,24 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
 
 
     fun sendCode(mobile: String?) {
+        if (TextUtils.isEmpty(mobile)) {
+            ToastUtils.showCenterToast("手机号不能为空")
+            return
+        }
+
+        if (!RegexUtils.isMobileExact(mobile)) {
+            ToastUtils.showCenterToast("手机号格式不正确")
+            return
+        }
+
         val subscription = mModel?.sendCode(mobile)?.subscribe(object : Subscriber<ResultInfo<String>>() {
             override fun onNext(t: ResultInfo<String>?) {
                 t?.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        ToastUtils.showCenterToast(t.message)
+                    if (t.code == HttpConfig.STATUS_OK) {
                         mView.sendCodeSuccess()
                     }
+                    ToastUtils.showCenterToast(t.message)
+
                 }
             }
 
@@ -88,19 +118,41 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
     }
 
 
-    fun phoneRegister(mobile: String?, password: String, code: String?) {
+    fun phoneRegister(mobile: String?, password: String?, code: String?) {
+        if (TextUtils.isEmpty(mobile)) {
+            ToastUtils.showCenterToast("手机号不能为空")
+            return
+        }
+
+        if (!RegexUtils.isMobileExact(mobile)) {
+            ToastUtils.showCenterToast("手机号格式不正确")
+            return
+        }
+        if (TextUtils.isEmpty(code)) {
+            ToastUtils.showCenterToast("验证码不能为空")
+            return
+        }
+
         mView.showLoadingDialog()
         mModel?.phoneRegister(mobile, password, code)?.subscribe(object : Subscriber<ResultInfo<UserInfo>>() {
             override fun onNext(t: ResultInfo<UserInfo>?) {
                 t?.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showPhoneRegisterSuccess(t.data)
+                        val userInfo = t.data
+                        userInfo?.let {
+                            if (!TextUtils.isEmpty(password)) it.pwd = password
+                        }
+                        UserInfoHelper.instance.saveUserInfo(userInfo)
+                        mView.showPhoneRegisterSuccess(userInfo)
                     } else {
                         val msg = t.message
                         if (!TextUtils.isEmpty(msg) && msg.contains("已经注册")) {
                             phoneLogin(mobile, "", code)
 //
+                        } else {
+                            ToastUtils.showCenterToast(t.message)
                         }
+
                     }
                 }
             }
@@ -195,7 +247,7 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
     }
 
     fun userInfo(listener: OnUserInfoListener?) {
-        val userId = UserInfoHelper.instance.getUid() as Int
+        val userId = UserInfoHelper.instance.getUid()
 
         if (userId <= 0) {
             return
@@ -205,6 +257,12 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
                 t?.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val userInfo = t.data
+                        val info = UserInfoHelper.instance.getUserInfo()
+                        userInfo?.let {
+                            info?.let {
+                                if (!TextUtils.isEmpty(info.pwd)) userInfo.pwd = info.pwd
+                            }
+                        }
                         UserInfoHelper.instance.saveUserInfo(userInfo)
                         mView.getUserInfoSuccess(userInfo, listener)
                     }
@@ -223,29 +281,72 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
     }
 
 
-    fun getWechatInfo(tutor_id: String?, article_id: String?, example_id: String?,listener: BaseActivity.OnWxListener?) {
-        var mWechat = "pai201807"
-        val subscription = mModel?.getWechatInfo(tutor_id, article_id, example_id)?.subscribe(object : Subscriber<ResultInfo<WetChatInfo>>() {
-            override fun onNext(t: ResultInfo<WetChatInfo>?) {
+    fun setPwd(pwd: String?) {
+        if (TextUtils.isEmpty(pwd)) {
+            ToastUtils.showCenterToast("密码不能为空")
+            return
+        }
+        mView.showLoadingDialog()
+        val subscription = mModel?.setPwd(pwd)?.subscribe(object : Subscriber<ResultInfo<UserInfo>>() {
+            override fun onNext(t: ResultInfo<UserInfo>?) {
                 t?.let {
                     if (t.code == HttpConfig.STATUS_OK) {
-                        mWechat = t.data.weixin
 
-                        mView.getWechatInfoSuccess(mWechat,listener)
-//
+                        val info = UserInfoHelper.instance.getUserInfo()
+                        info?.pwd = pwd
+
+                        UserInfoHelper.instance.saveUserInfo(info)
+                        mView.setPwdSuccess()
+                    } else {
+                        ToastUtils.showCenterToast(t.message)
                     }
                 }
             }
 
             override fun onCompleted() {
-
+                mView.hideLoadingDialog()
             }
 
             override fun onError(e: Throwable?) {
-                mView.getWechatInfoSuccess(mWechat,listener)
+
+            }
+        })
+        subScriptions?.add(subscription)
+    }
+
+    fun modifyPwd(pwd: String?, new_pwd: String?) {
+        if (TextUtils.isEmpty(pwd)) {
+            ToastUtils.showCenterToast("密码不能为空")
+            return
+        }
+
+        if (TextUtils.isEmpty(new_pwd)) {
+            ToastUtils.showCenterToast("新密码不能为空")
+        }
+
+        mView.showLoadingDialog()
+
+        val subscription = mModel?.modifyPwd(pwd, new_pwd)?.subscribe(object : Subscriber<ResultInfo<UserInfo>>() {
+            override fun onNext(t: ResultInfo<UserInfo>?) {
+                t?.let {
+                    if (t.code == HttpConfig.STATUS_OK) {
+                        val userInfo = UserInfoHelper.instance.getUserInfo()
+                        userInfo?.pwd = new_pwd
+                        UserInfoHelper.instance.saveUserInfo(userInfo)
+                        mView.setPwdSuccess()
+                    }
+                }
             }
 
+            override fun onCompleted() {
+                mView.hideLoadingDialog()
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
         })
+
         subScriptions?.add(subscription)
     }
 

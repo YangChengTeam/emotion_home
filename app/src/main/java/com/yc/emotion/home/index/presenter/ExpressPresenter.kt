@@ -2,16 +2,13 @@ package com.yc.emotion.home.index.presenter
 
 import android.content.Context
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.ExpressModel
 import com.yc.emotion.home.index.view.ExpressView
 import com.yc.emotion.home.model.bean.confession.ConfessionBean
 import com.yc.emotion.home.model.bean.confession.ConfessionDataBean
 import com.yc.emotion.home.utils.CommonInfoHelper
-import com.yc.emotion.model.bean.confession.ImageCreateBean
-import rx.Observable
+import com.yc.emotion.home.model.bean.ImageCreateBean
 import rx.Subscriber
 import java.io.File
 
@@ -37,11 +34,14 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
     fun getExpressCache() {
         CommonInfoHelper.getO(mContext, "main3_new", object : TypeReference<List<ConfessionDataBean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<ConfessionDataBean>> { o ->
-
-            if (o != null && o.isNotEmpty()) {
-                mView.showConfessionInfos(o)
+        }.type, object : CommonInfoHelper.OnParseListener<List<ConfessionDataBean>> {
+            override fun onParse(o: List<ConfessionDataBean>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showConfessionInfos(o)
+                }
             }
+
+//
         })
     }
 

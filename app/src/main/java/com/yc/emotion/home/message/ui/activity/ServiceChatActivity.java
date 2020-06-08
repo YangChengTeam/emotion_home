@@ -2,8 +2,6 @@ package com.yc.emotion.home.message.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,12 +18,15 @@ import com.paradigm.botlib.MessageContentImage;
 import com.paradigm.botlib.MessageContentMenu;
 import com.paradigm.botlib.MessageContentText;
 import com.yc.emotion.home.R;
+import com.yc.emotion.home.base.ui.activity.BaseSlidingActivity;
 import com.yc.emotion.home.message.manager.HistoryDataManager;
 import com.yc.emotion.home.message.ui.fragment.ServiceChatFragment;
-import com.yc.emotion.home.base.ui.activity.BaseSlidingActivity;
 import com.yc.emotion.home.utils.StatusBarUtil;
 
 import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by suns  on 2019/9/30 11:47.

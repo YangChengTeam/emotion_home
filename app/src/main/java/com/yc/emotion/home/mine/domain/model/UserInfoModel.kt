@@ -10,6 +10,7 @@ import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.WetChatInfo
+import com.yc.emotion.home.utils.UserInfoHelper
 import rx.Observable
 import java.util.HashMap
 
@@ -68,10 +69,11 @@ class UserInfoModel(override var context: Context?) : IModel {
      * @param code     验证码
      * @return
      */
-    fun phoneRegister(mobile: String?, password: String, code: String?): Observable<ResultInfo<UserInfo>> {
+    fun phoneRegister(mobile: String?, password: String?, code: String?): Observable<ResultInfo<UserInfo>> {
         val params = HashMap<String, String?>()
         params["mobile"] = mobile
-        params["password"] = password
+        if (!TextUtils.isEmpty(password))
+            params["password"] = password
         params["code"] = code
 
         return HttpCoreEngin.get(context).rxpost(URLConfig.REGISTER_URL, object : TypeReference<ResultInfo<UserInfo>>() {
@@ -161,34 +163,25 @@ class UserInfoModel(override var context: Context?) : IModel {
         val httpCoreEngin = HttpCoreEngin.get(context)
         return httpCoreEngin.rxpost(URLConfig.USER_INFO_URL, object : TypeReference<ResultInfo<UserInfo>>() {
 
-        }.type,  params, true, true, true) as Observable<ResultInfo<UserInfo>>
+        }.type, params, true, true, true) as Observable<ResultInfo<UserInfo>>
     }
 
 
-    /**
-     * 获取微信信息
-     *
-     * @param tutor_id
-     * @param article_id
-     * @param example_id
-     * @return
-     */
-    fun getWechatInfo(tutor_id: String?, article_id: String?, example_id: String?): Observable<ResultInfo<WetChatInfo>> {
-        val params = HashMap<String, String?>()
+    fun setPwd(pwd: String?): Observable<ResultInfo<UserInfo>> {
+        return HttpCoreEngin.get(context).rxpost(URLConfig.SET_PWD_URL, object : TypeReference<ResultInfo<UserInfo>>() {}.type, mutableMapOf(
+                "user_id" to "${UserInfoHelper.instance.getUid()}",
+                "password" to pwd
+        ), true, true, true) as Observable<ResultInfo<UserInfo>>
+    }
 
-        if (!TextUtils.isEmpty(tutor_id))
-            params["tutor_id"] = tutor_id
-        if (!TextUtils.isEmpty(article_id)) {
-            params["article_id"] = article_id
-        }
-        if (!TextUtils.isEmpty(example_id)) {
-            params["example_id"] = example_id
-        }
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.WECHAT_INFO_URL, object : TypeReference<ResultInfo<WetChatInfo>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<WetChatInfo>>
-
+    fun modifyPwd(pwd: String?, new_pwd: String?): Observable<ResultInfo<UserInfo>> {
+        //user_id=52192&password=123456&new_password=123456
+        return HttpCoreEngin.get(context).rxpost(URLConfig.MODIFY_PWD_URL, object : TypeReference<ResultInfo<UserInfo>>() {}.type, mutableMapOf(
+                "user_id" to "${UserInfoHelper.instance.getUid()}",
+                "password" to pwd,
+                "new_password" to new_pwd
+        ), true, true, true) as Observable<ResultInfo<UserInfo>>
     }
 
 }

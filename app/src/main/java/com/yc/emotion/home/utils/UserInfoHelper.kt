@@ -7,6 +7,7 @@ import android.util.Log
 import com.alibaba.fastjson.JSON
 import com.yc.emotion.home.base.YcApplication
 import com.yc.emotion.home.mine.ui.activity.LoginMainActivity
+import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 
@@ -31,8 +32,10 @@ class UserInfoHelper private constructor() {
 
 
     fun getUserInfo(): UserInfo? {
-        if (null != userInfo)
-            return userInfo
+        userInfo?.let {
+            return it
+        }
+
         try {
 
             userInfo = JSON.parseObject(userInfoStr, UserInfo::class.java)
@@ -46,9 +49,13 @@ class UserInfoHelper private constructor() {
     fun saveUserInfo(userInfo: UserInfo?) {
         this.userInfo = userInfo
         userInfo?.let {
-            if (!TextUtils.isEmpty(userInfo.mobile)) {
-                phone = userInfo.mobile!!
+            val mobile = it.mobile
+            mobile?.let {
+                if (!TextUtils.isEmpty(mobile)) {
+                    phone = mobile
+                }
             }
+
         }
         try {
             userInfoStr = JSON.toJSONString(userInfo)
@@ -62,9 +69,9 @@ class UserInfoHelper private constructor() {
 
     fun goToLogin(context: Context?): Boolean {
         var isGoLogin = false
-        val uId = getUid() as Int
+        val uId = getUid()
         if (uId <= 0) {
-            val intent = Intent(context, LoginMainActivity::class.java)
+            val intent = Intent(context, LoginRegisterActivity::class.java)
             intent.putExtra("direct_finish", true)
             context?.startActivity(intent)
             isGoLogin = true
@@ -78,12 +85,7 @@ class UserInfoHelper private constructor() {
         userInfoStr = ""
     }
 
-    fun getUid(): Int? {
-        userInfo?.let {
-            return userInfo?.id
-        }
-        return 0
+    fun getUid() = getUserInfo()?.id ?: 0
 
-    }
 
 }

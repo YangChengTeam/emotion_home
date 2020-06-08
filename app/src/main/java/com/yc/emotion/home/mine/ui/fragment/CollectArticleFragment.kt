@@ -1,11 +1,11 @@
 package com.yc.emotion.home.mine.ui.fragment
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.ui.activity.ArticleDetailActivity
 import com.yc.emotion.home.mine.presenter.CollectPresenter
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_collect_view.*
  * Created by mayn on 2019/5/5.
  */
 
-class CollectArticleFragment : BaseLazyFragment<CollectPresenter>(), CollectView {
+class CollectArticleFragment : BaseFragment<CollectPresenter>(), CollectView {
 
 
 
@@ -31,7 +31,7 @@ class CollectArticleFragment : BaseLazyFragment<CollectPresenter>(), CollectView
 
 
     private var mCollectActivity: CollectActivity? = null
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CollectActivity) {
             mCollectActivity = context
@@ -96,7 +96,7 @@ class CollectArticleFragment : BaseLazyFragment<CollectPresenter>(), CollectView
 
     private fun netData() {
 
-        mPresenter.getArticleCollectList(PAGE_NUM,PAGE_SIZE)
+        mPresenter?.getArticleCollectList(PAGE_NUM,PAGE_SIZE)
 
     }
 

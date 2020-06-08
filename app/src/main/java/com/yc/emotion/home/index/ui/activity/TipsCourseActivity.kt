@@ -2,18 +2,17 @@ package com.yc.emotion.home.index.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-
+import androidx.recyclerview.widget.GridLayoutManager
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.CreateMainT3Adapter
-import com.yc.emotion.home.model.bean.CategoryArticleBean
-import com.yc.emotion.home.model.bean.MainT3Bean
-import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.index.adapter.TipsCourseAdapter
 import com.yc.emotion.home.index.presenter.SkillPresenter
 import com.yc.emotion.home.index.view.SkillView
 import com.yc.emotion.home.message.ui.fragment.ExpressFragment
+import com.yc.emotion.home.model.bean.CategoryArticleBean
+import com.yc.emotion.home.model.bean.MainT3Bean
+import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.skill.ui.fragment.PracticeTeachFragment
 import kotlinx.android.synthetic.main.fragment_main_t3_course.*
 
@@ -32,7 +31,7 @@ class TipsCourseActivity : BaseSameActivity(), SkillView {
     private val ID_ITEM_TITLE_CASE = -1
     private val ID_ITEM_TITLE_CURE = -2
 
-    private var mainT3Adapter: CreateMainT3Adapter? = null
+    private var mainT3Adapter: TipsCourseAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +67,7 @@ class TipsCourseActivity : BaseSameActivity(), SkillView {
         val gridLayoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         main_t3_course_rl.layoutManager = gridLayoutManager
 
-        mainT3Adapter = CreateMainT3Adapter(mDatas)
+        mainT3Adapter = TipsCourseAdapter(mDatas)
         main_t3_course_rl.adapter = mainT3Adapter
     }
 

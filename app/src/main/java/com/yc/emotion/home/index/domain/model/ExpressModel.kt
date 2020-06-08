@@ -7,7 +7,7 @@ import com.kk.securityhttp.net.entry.UpFileInfo
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.confession.ConfessionBean
-import com.yc.emotion.model.bean.confession.ImageCreateBean
+import com.yc.emotion.home.model.bean.ImageCreateBean
 import rx.Observable
 import java.io.File
 import java.util.*

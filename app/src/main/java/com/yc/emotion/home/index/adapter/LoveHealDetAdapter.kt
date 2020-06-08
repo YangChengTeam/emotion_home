@@ -1,11 +1,12 @@
 package com.yc.emotion.home.index.adapter
 
-import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import androidx.core.content.ContextCompat
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 
 /**
@@ -24,6 +25,7 @@ class LoveHealDetAdapter(data: List<LoveHealDetDetailsBean>?) : BaseMultiItemQui
     init {
         addItemType(LoveHealDetDetailsBean.VIEW_TITLE, R.layout.recycler_view_item_details_bean_tit)
         addItemType(LoveHealDetDetailsBean.VIEW_ITEM, R.layout.recycler_view_item_details_bean)
+        setLoadMoreView(CustomLoadMoreView())
     }
 
 

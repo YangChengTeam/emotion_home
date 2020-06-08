@@ -1,32 +1,28 @@
 package com.yc.emotion.home.base.ui.activity
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
 import com.umeng.analytics.MobclickAgent
-import com.yc.emotion.home.base.listener.OnUserInfoListener
-import com.yc.emotion.home.model.bean.WetChatInfo
-import com.yc.emotion.home.model.constant.ConstantKey
+import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.domain.model.IModel
+import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.common.AddWxFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
@@ -34,11 +30,11 @@ import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.view.UserInfoView
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.UserInfo
+import com.yc.emotion.home.model.bean.WetChatInfo
+import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.StatusBarUtil
-import com.yc.emotion.home.utils.UserInfoHelper
-
+import org.jetbrains.annotations.NotNull
 import rx.Subscriber
 
 /**
@@ -68,7 +64,8 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(getLayoutId())
-        Log.d("ClassName", "onCreate: ClassName " + javaClass.name)
+
+//        mLoadingDialog = LoadDialog(this)
         mLoadingDialog = LoadDialog(this)
         mLoveEngine = LoveEngine(this)
         mHandler = Handler()
@@ -83,10 +80,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         mPresenter?.subscribe()
     }
 
-
-    fun showToastShort(des: String) {
-        Toast.makeText(this, des, Toast.LENGTH_SHORT).show()
-    }
 
     /**
      * 侵入状态栏
@@ -255,6 +248,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
 
     }
 
+
     override fun getWechatInfoSuccess(wx: String, listener: OnWxListener?) {
 
         if (null != listener) {
@@ -267,6 +261,26 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         }
     }
 
+    private var centerToast: Toast? = null
+    private lateinit var sMtvText: TextView
+
+    fun showToast(@NotNull mess: String, duration: Int = Toast.LENGTH_SHORT, vararg test: String) = run { //        val toast = Toast.makeText(BaseActivity.this, mess, duration)
+//        toast.gravity=Gravity.CENTER
+        if (null == centerToast) {
+            centerToast = Toast(this@BaseActivity)
+            centerToast?.duration = duration
+            centerToast?.setGravity(Gravity.NO_GRAVITY, 0, 0)
+            val view = View.inflate(this@BaseActivity, R.layout.toast_center_layout, null)
+            sMtvText = view.findViewById<View>(R.id.tv_text) as TextView
+            sMtvText.text = if (TextUtils.isEmpty(mess)) "null" else mess
+            centerToast?.view = view
+        } else {
+            sMtvText.text = if (TextUtils.isEmpty(mess)) "null" else mess
+        }
+        centerToast?.show()
+
+    }
+
 
     private fun showService(wechat: String) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -276,13 +290,12 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         val addWxFragment = AddWxFragment()
         addWxFragment.setWX(wechat)
         addWxFragment.show(supportFragmentManager, "")
-        addWxFragment.setListener {
-            //            copySuccess();
-            openWeiXin()
-
-            addWxFragment.dismiss()
-
-        }
+        addWxFragment.setListener(object : AddWxFragment.OnToWxListener {
+            override fun onToWx() {
+                openWeiXin()
+                addWxFragment.dismiss()
+            }
+        })
     }
 
 
@@ -298,7 +311,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
             intent.component = cmp
             startActivity(intent)
         } catch (exception: Exception) {
-            showToastShort("未安装微信")
+            showToast("未安装微信")
         }
 
     }
@@ -372,11 +385,21 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
 
     override fun onDestroy() {
         super.onDestroy()
+
         if (null != mHandler)
             mHandler = null
-        if (null != mLoadingDialog)
+
+        mLoadingDialog?.let {
+            if (it.isShowing) {
+                it.dismissLoadingDialog()
+            }
             mLoadingDialog = null
+        }
+
+
         mPresenter?.unSubscribe()
+
+//        windowManager
     }
 
     interface OnWxListener {

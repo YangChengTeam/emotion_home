@@ -1,16 +1,15 @@
 package com.yc.emotion.home.community.adapter
 
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.util.SparseArray
-import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.utils.DateUtils
 
@@ -18,7 +17,7 @@ import com.yc.emotion.home.utils.DateUtils
  * Created by suns  on 2019/8/28 15:44.
  * 评论跟帖
  */
-class CommunityFollowAdapter(data: List<CommunityInfo>?) : BaseQuickAdapter<CommunityInfo, BaseViewHolder>(R.layout.item_community_follow_view, data) {
+class CommunityFollowAdapter(data: List<CommunityInfo>?) : CommonMoreAdapter<CommunityInfo, BaseViewHolder>(R.layout.item_community_follow_view, data) {
 
     private val titleArray: SparseArray<TextView> = SparseArray()
 

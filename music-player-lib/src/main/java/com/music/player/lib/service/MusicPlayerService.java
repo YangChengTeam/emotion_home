@@ -3,7 +3,6 @@ package com.music.player.lib.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,17 +15,12 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.music.player.lib.R;
 import com.music.player.lib.bean.MusicInfo;
 import com.music.player.lib.constants.Constants;
 import com.music.player.lib.listener.OnPlayerEventListener;
@@ -48,6 +42,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 /**
  * TinyHung@Outlook.com
@@ -175,7 +173,10 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
     public void onCreate() {
         super.onCreate();
         startForeground(SERVICE_ID, createNotification());
+
+
     }
+
 
 
     private Notification createNotification() {
@@ -238,6 +239,7 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
             mManager.cancelAll();
         }
         mOnPlayerEventListener = null;
+
         super.onDestroy();
     }
 
@@ -1028,6 +1030,7 @@ public class MusicPlayerService extends BaseService implements MediaPlayer.OnPre
                     //开始,暂停
                     case Constant.NOTIFY_PLAY_PAUSE:
                         Logger.d(TAG, "收到播放、暂停广播");
+
                         MusicPlayerManager.getInstance().playPause();
                         if (null != mMusicInfos && mMusicInfos.size() > 0) {
 //                            NotificationUtil.showNotify(MusicPlayerService.this, mMusicInfos.get(mPlayPosition).getTitle(), mMediaPlayer.isPlaying(), Notification.FLAG_AUTO_CANCEL);

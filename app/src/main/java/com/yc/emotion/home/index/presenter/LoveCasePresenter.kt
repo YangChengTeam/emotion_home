@@ -35,12 +35,15 @@ class LoveCasePresenter(context: Context, view: LoveCaseView) : BasePresenter<Lo
     fun getLoveCaseCache() {
         CommonInfoHelper.getO(mContext, "main2_example_lists", object : TypeReference<List<MainT2Bean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<MainT2Bean>> { o ->
-
-            if (o != null && o.isNotEmpty()) {
-                //                initRecyclerViewData();
-                mView.showLoveCaseList(o)
+        }.type, object : CommonInfoHelper.OnParseListener<List<MainT2Bean>> {
+            override fun onParse(o: List<MainT2Bean>?) {
+                if (o != null && o.isNotEmpty()) {
+                    //                initRecyclerViewData();
+                    mView.showLoveCaseList(o)
+                }
             }
+
+//
         })
     }
 

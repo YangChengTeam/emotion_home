@@ -3,14 +3,14 @@ package com.yc.emotion.home.mine.ui.fragment
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.OpenAkpDialog
 import com.yc.emotion.home.index.adapter.CollectLoveHealDetailAdapter
 import com.yc.emotion.home.mine.presenter.CollectPresenter
@@ -30,7 +30,7 @@ import java.util.*
  * 收藏 话术
  */
 
-class CollectVerbalTalkFragment : BaseLazyFragment<CollectPresenter>(), CollectView {
+class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView {
 
 
     //    private var mRecyclerView: RecyclerView? = null
@@ -53,7 +53,7 @@ class CollectVerbalTalkFragment : BaseLazyFragment<CollectPresenter>(), CollectV
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is CollectActivity) {
             mCollectActivity = context
@@ -119,8 +119,8 @@ class CollectVerbalTalkFragment : BaseLazyFragment<CollectPresenter>(), CollectV
         }
         loveHealDetailsAdapter?.setOnLoadMoreListener({ netData() }, fragment_collect_love_healing_rv)
         loveHealDetailsAdapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
-            val item = loveHealDetailsAdapter!!.getItem(position)
-            if (item != null) {
+            val item = loveHealDetailsAdapter?.getItem(position)
+            item?.let {
                 toCopy(item)
             }
         }
@@ -134,7 +134,7 @@ class CollectVerbalTalkFragment : BaseLazyFragment<CollectPresenter>(), CollectV
 
     private fun netData() {
 
-        mPresenter.getCollectLoveHeals(PAGE_SIZE, PAGE_NUM)
+        mPresenter?.getCollectLoveHeals(PAGE_SIZE, PAGE_NUM)
 
     }
 

@@ -5,6 +5,7 @@ import android.view.View
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.model.bean.EmotionTestTopicInfo
 import com.yc.emotion.home.model.bean.QuestionInfo
 
@@ -20,6 +21,7 @@ class EmotionTestDetailAnswerAdapter(mDatas: List<QuestionInfo>?) : BaseMultiIte
         addItemType(QuestionInfo.ITEM_TYPE_TOPIC, R.layout.layout_emotion_test_detail_topic_item)
         addItemType(QuestionInfo.ITEM_TYPE_ANSWER, R.layout.layout_emotion_test_detail_answer_item)
         viewArray = SparseArray()
+        setLoadMoreView(CustomLoadMoreView())
     }
 
     override fun convert(helper: BaseViewHolder?, item: QuestionInfo?) {
@@ -41,9 +43,9 @@ class EmotionTestDetailAnswerAdapter(mDatas: List<QuestionInfo>?) : BaseMultiIte
     }
 
 
-     fun resetState() {
+    fun resetState() {
         viewArray?.let {
-            for (i in 0..viewArray!!.size()) {
+            for (i in 0..it.size()) {
                 viewArray?.get(i)?.isSelected = false
             }
         }

@@ -7,6 +7,7 @@ import com.alibaba.fastjson.annotation.JSONField
  */
 class UserInfo {
 
+
     /**
      * id : 50082
      * name :
@@ -43,6 +44,7 @@ class UserInfo {
     var vip_type: Int = 0
     var vip_start_time: Int = 0
     var vip_end_time: Int = 0
+
     /* "vip_tips": 1 已开通
         "vip_tips":  2     已过期
         "vip_tips": 0 未开通*/
@@ -54,6 +56,7 @@ class UserInfo {
 
     var interested: String? = null
 
+    var pwd: String? = null
 
 
     override fun toString(): String {

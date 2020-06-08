@@ -2,9 +2,9 @@ package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.LoveByStagesAdapter
 import com.yc.emotion.home.index.presenter.SkillPresenter
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_love_by_stages.*
  * 恋爱文章列表页
  */
 
-class LoveArticleListFragment : BaseLazyFragment<SkillPresenter>(), SkillView {
+class LoveArticleListFragment : BaseFragment<SkillPresenter>(), SkillView {
 
 
     private var mCategoryId: Int = 0
@@ -44,7 +44,7 @@ class LoveArticleListFragment : BaseLazyFragment<SkillPresenter>(), SkillView {
     }
 
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is LoveByStagesActivity) {
             mLoveByStagesActivity = context
@@ -94,7 +94,7 @@ class LoveArticleListFragment : BaseLazyFragment<SkillPresenter>(), SkillView {
 
     private fun netData() {
 
-        mPresenter.listsArticle("$mCategoryId", page = PAGE_NUM, pageSize = PAGE_SIZE)
+        mPresenter?.listsArticle("$mCategoryId", page = PAGE_NUM, pageSize = PAGE_SIZE)
 
     }
 

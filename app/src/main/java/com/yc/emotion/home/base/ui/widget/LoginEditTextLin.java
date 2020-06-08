@@ -22,15 +22,15 @@ import com.yc.emotion.home.R;
 public class LoginEditTextLin extends LinearLayout {
 
 
-    private final Context context;
+
     public EditText mEt;
-    private TextView mTvCode,mTvCodeWait;
+    private TextView mTvCode, mTvCodeWait;
 
 
     public LoginEditTextLin(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context, attrs);
-        this.context=context;
+
     }
 
     private void initView(Context context, AttributeSet attrs) {
@@ -45,7 +45,7 @@ public class LoginEditTextLin extends LinearLayout {
         mEt = inflate.findViewById(R.id.login_et_lin_et);
         mTvCode = inflate.findViewById(R.id.login_et_lin_tv_code);
         mTvCodeWait = inflate.findViewById(R.id.login_et_lin_tv_code_await);
-        boolean isWait=true;
+        boolean isWait = true;
 //        waitCode(isWait);
 
         mEt.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)}); //最大输入长度
@@ -55,7 +55,7 @@ public class LoginEditTextLin extends LinearLayout {
 
         if (!isShowCode) {
             mTvCode.setVisibility(GONE);
-        }else {
+        } else {
             mTvCode.setOnClickListener(onClickTvCodeListener);
         }
         if (!TextUtils.isEmpty(textHint)) {
@@ -65,13 +65,15 @@ public class LoginEditTextLin extends LinearLayout {
             ivIcon.setImageDrawable(iconSrc);
         }
 
+        typedArray.recycle();
+
     }
 
     public void waitCode(boolean isWait) {
-        if(isWait){
+        if (isWait) {
             mTvCode.setVisibility(GONE);
             mTvCodeWait.setVisibility(VISIBLE);
-        }else {
+        } else {
             mTvCodeWait.setVisibility(GONE);
             mTvCode.setVisibility(VISIBLE);
         }
@@ -100,7 +102,7 @@ public class LoginEditTextLin extends LinearLayout {
 
     public void setEditText(String text) {
         if (TextUtils.isEmpty(text)) {
-            text="";
+            text = "";
         }
         mEt.setText(text);
         setSelection();
@@ -111,22 +113,22 @@ public class LoginEditTextLin extends LinearLayout {
             mTvCode.setText(text);
         }
     }
+
     public void setEditCodeWaitText(String text) {
         if (!TextUtils.isEmpty(text)) {
             mTvCodeWait.setText(text);
         }
     }
 
-    public void setSelection(){
-        if(mEt!=null){
-            String trim=mEt.getText().toString().trim();
-            if(!TextUtils.isEmpty(trim)){
+    public void setSelection() {
+        if (mEt != null) {
+            String trim = mEt.getText().toString().trim();
+            if (!TextUtils.isEmpty(trim)) {
                 mEt.setSelection(trim.length());
             }
         }
 
     }
-
 
 
     public interface OnClickEtCodeListent {

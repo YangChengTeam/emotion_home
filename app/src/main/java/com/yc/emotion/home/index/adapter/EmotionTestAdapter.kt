@@ -6,13 +6,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.EmotionTestInfo
 
 /**
  *
  * Created by suns  on 2019/10/9 14:02.
  */
-class EmotionTestAdapter(mDatas: List<EmotionTestInfo>?) : BaseQuickAdapter<EmotionTestInfo, BaseViewHolder>(R.layout.layout_emotion_test_item, mDatas) {
+class EmotionTestAdapter(mDatas: List<EmotionTestInfo>?) : CommonMoreAdapter<EmotionTestInfo, BaseViewHolder>(R.layout.layout_emotion_test_item, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: EmotionTestInfo?) {
         helper?.let {
             item?.let {

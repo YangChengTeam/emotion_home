@@ -170,27 +170,30 @@ class EmotionTestPresenter(context: Context?, view: EmotionTestView) : BasePrese
     fun getTestRecordsCache() {
         val userId = UserInfoHelper.instance.getUid()
 
-        CommonInfoHelper.getO<List<EmotionTestInfo>>(mContext, "${userId}test_reports", object : TypeReference<List<EmotionTestInfo>>() {}.type, CommonInfoHelper.onParseListener { emotionInfos ->
-            if (emotionInfos != null && emotionInfos.isNotEmpty()) {
-                mView.showTestRecords(emotionInfos)
-            }
-        })
+        CommonInfoHelper.getO(mContext, "${userId}test_reports", object : TypeReference<List<EmotionTestInfo>>() {}.type,
+                object : CommonInfoHelper.OnParseListener<List<EmotionTestInfo>> {
+                    override fun onParse(o: List<EmotionTestInfo>?) {
+                        if (o != null && o.isNotEmpty()) {
+                            mView.showTestRecords(o)
+                        }
+                    }
+                })
 
     }
 
-    fun getTestRecordDetail(record_id: String?){
+    fun getTestRecordDetail(record_id: String?) {
         mView.showLoadingDialog()
-        mModel?.getTestRecordDetail(record_id)?.subscribe(object :Subscriber<ResultInfo<EmotionTestInfo>>(){
+        mModel?.getTestRecordDetail(record_id)?.subscribe(object : Subscriber<ResultInfo<EmotionTestInfo>>() {
             override fun onNext(t: ResultInfo<EmotionTestInfo>?) {
                 t?.let {
-                    if (t.code== HttpConfig.STATUS_OK &&t.data!=null){
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showTestRecordDetail(t.data)
                     }
                 }
             }
 
             override fun onCompleted() {
-               mView.hideLoadingDialog()
+                mView.hideLoadingDialog()
             }
 
             override fun onError(e: Throwable?) {

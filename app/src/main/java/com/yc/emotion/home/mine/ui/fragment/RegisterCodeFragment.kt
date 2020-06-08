@@ -4,12 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.engine.LoveEngine
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.constant.Constant
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.ui.activity.RegisterMainActivity
@@ -18,17 +15,16 @@ import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.fragment_register_code.*
-import rx.Subscriber
 
 /**
  *
  * Created by suns  on 2019/10/19 10:27.
  */
-class RegisterCodeFragment : BaseLazyFragment<UserInfoPresenter>(), UserInfoView {
+class RegisterCodeFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
 
 
     private var mMainActivity: RegisterMainActivity? = null
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is RegisterMainActivity) {
             mMainActivity = context
@@ -91,7 +87,7 @@ class RegisterCodeFragment : BaseLazyFragment<UserInfoPresenter>(), UserInfoView
         verificationCodeInput.setOnCompleteListener {
             inputCode = it
 
-            if (it.length == 6) {
+            if (it.length == 4) {
 //                YcSingle.getInstance().
                 val uId = UserInfoHelper.instance.getUid() as Int
 
@@ -127,7 +123,7 @@ class RegisterCodeFragment : BaseLazyFragment<UserInfoPresenter>(), UserInfoView
 
 
     private fun getCode() {
-        mPresenter.sendCode(phone)
+        mPresenter?.sendCode(phone)
 
     }
 

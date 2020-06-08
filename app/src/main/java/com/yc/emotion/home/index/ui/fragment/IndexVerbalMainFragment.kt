@@ -6,22 +6,23 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.music.player.lib.util.ToastUtils
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.index.adapter.SearchTintAdapter
 import com.yc.emotion.home.index.presenter.IndexVerbalPresenter
@@ -45,7 +46,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  *
  * Created by suns  on 2019/9/19 14:44.
  */
-class IndexVerbalMainFragment : BaseLazyFragment<IndexVerbalPresenter>(), IndexVerbalView {
+class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
 
 
     private var keyword = ""
@@ -59,7 +60,7 @@ class IndexVerbalMainFragment : BaseLazyFragment<IndexVerbalPresenter>(), IndexV
     private var mHandler: Handler? = null
 
     private var mMainActivity: MainActivity? = null
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -91,7 +92,8 @@ class IndexVerbalMainFragment : BaseLazyFragment<IndexVerbalPresenter>(), IndexV
         fragmentList.add(IndexVerbalFragment.newInstance("2"))
 
 
-        val commonMainPageAdapter = CommonMainPageAdapter(childFragmentManager, mTitles, fragmentList)
+        val commonMainPageAdapter = CommonMainPageAdapter(childFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, mTitles, fragmentList)
 
         collect_view_pager.adapter = commonMainPageAdapter
 
@@ -217,6 +219,7 @@ class IndexVerbalMainFragment : BaseLazyFragment<IndexVerbalPresenter>(), IndexV
             isVisable = !isVisable
             search_down_rv.visibility = if (isVisable) View.VISIBLE else View.GONE
             tv_verbal_search.visibility = if (isVisable) View.VISIBLE else View.GONE
+
         }
 
     }
@@ -252,21 +255,21 @@ class IndexVerbalMainFragment : BaseLazyFragment<IndexVerbalPresenter>(), IndexV
      */
     private fun getRandomWords(keyWord: String) {
 
-
         mPresenter?.getIndexDropInfos(keyWord)
-
 
     }
 
     private fun searchWord(keyword: String) {
 
-        if (!UserInfoHelper.instance.goToLogin(activity)) {
+        MobclickAgent.onEvent(activity, "search_dialogue_id", "搜索话术框")
 
-            MobclickAgent.onEvent(activity, "search_dialogue_id", "搜索话术框")
-
-            mPresenter?.searchVerbalTalk(keyword, page, PAGE_SIZE)
-            searchCount(keyword)
-        }
+//        mPresenter?.searchVerbalTalk(keyword, page, PAGE_SIZE)
+//        searchCount(keyword)
+        SearchActivity.startSearchActivity(activity, keyword)
+//        if (!UserInfoHelper.instance.goToLogin(activity)) {
+//
+//
+//        }
     }
 
     private fun searchCount(keyword: String) {

@@ -24,5 +24,6 @@ interface CommunityView : IView, IDialog, StateDefaultImpl {
     fun showCommunityDetailSuccess(communityInfo: CommunityInfo, position: Int) {}
     fun createCommunityResult(t: ResultInfo<String>, content: String?) {}
     fun showCommunityNoticeInfo(data: TopTopicInfo?) {}
-    fun publishCommunitySuccess(message: String?) {}
+    fun publishCommunitySuccess(message: String) {}
+    fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?)
 }

@@ -1,11 +1,11 @@
 package com.yc.emotion.home.index.ui.fragment
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.EfficientCourseAdapter
 import com.yc.emotion.home.index.presenter.TutorCoursePresenter
 import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_collect_view.*
  *
  * Created by suns  on 2019/10/9 11:33.
  */
-class EfficientCourseFragment : BaseLazyFragment<TutorCoursePresenter>(), TutorCourseView {
+class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseView {
 
 
 

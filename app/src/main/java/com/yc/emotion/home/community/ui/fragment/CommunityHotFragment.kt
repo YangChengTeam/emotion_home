@@ -2,12 +2,12 @@ package com.yc.emotion.home.community.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.community.adapter.CommunityAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.ui.activity.CommunityDetailActivity
@@ -23,7 +23,10 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Created by suns  on 2019/8/28 09:17.
  */
-class CommunityHotFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+class CommunityHotFragment : BaseFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var communityAdapter: CommunityAdapter? = null
@@ -33,7 +36,7 @@ class CommunityHotFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClic
 
 
     private var mMainActivity: MainActivity? = null
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -123,7 +126,7 @@ class CommunityHotFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClic
 
     private fun like(communityInfo: CommunityInfo, position: Int) {
 //        val userId = UserInfoHelper.instance.getUid()
-        mPresenter.likeTopic(communityInfo, position)
+        mPresenter?.likeTopic(communityInfo, position)
 
 
     }
@@ -136,14 +139,14 @@ class CommunityHotFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClic
 
     private fun initData() {
 
-        mPresenter.getCommunityHotCache()
+        mPresenter?.getCommunityHotCache()
         getData()
     }
 
 
     fun getData() {
 
-        mPresenter.getCommunityHotList(page, PAGE_SIZE)
+        mPresenter?.getCommunityHotList(page, PAGE_SIZE)
 
     }
 
@@ -183,7 +186,7 @@ class CommunityHotFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClic
     fun getNewDataByTag(communityTag: EventCommunityTag) {
 
         page = 1
-        mPresenter.getCommunityTagListInfo(communityTag.communityTagInfo.id, page, PAGE_SIZE)
+        mPresenter?.getCommunityTagListInfo(communityTag.communityTagInfo.id, page, PAGE_SIZE)
 
     }
 

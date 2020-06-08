@@ -73,10 +73,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:box="6"
+            app:box="4"
             app:box_bg_focus="@drawable/verify_code_bg_focus"
             app:box_bg_normal="@drawable/verify_code_bg_normal"
-            app:child_width="30dp"
+            app:child_width="40dp"
             app:inputType="number" />
 
         <TextView

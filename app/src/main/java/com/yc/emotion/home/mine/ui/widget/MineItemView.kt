@@ -1,12 +1,13 @@
 package com.yc.emotion.home.mine.ui.widget
 
 import android.content.Context
-import android.support.annotation.Nullable
+
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.Nullable
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.widget.BaseView
 
@@ -16,7 +17,8 @@ import com.yc.emotion.home.base.ui.widget.BaseView
  */
 class MineItemView(@Nullable context: Context, @Nullable attrs: AttributeSet) : BaseView(context, attrs) {
 
-    private var moreTv: TextView? = null
+    private lateinit var moreTv: TextView
+    private lateinit var tvDes: TextView
 
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.MineItemView)
@@ -29,20 +31,19 @@ class MineItemView(@Nullable context: Context, @Nullable attrs: AttributeSet) : 
 
             val moreText = ta.getString(R.styleable.MineItemView_more_text)
 
+            tvDes = getView(R.id.main_mine_item_title) as TextView
 
-            val tvDes = getView(R.id.main_mine_item_title) as TextView
-
-            val divider = getView(R.id.main_mine_divider) as View
+            val divider = getView(R.id.main_mine_divider)
             moreTv = getView(R.id.tv_more_text) as TextView
             val ivArrow = getView(R.id.iv_right_arrow) as ImageView
 
             divider.visibility = if (isAddIntervalBom) View.VISIBLE else View.GONE
-            moreTv?.visibility = if (isShowMoreText) View.VISIBLE else View.GONE
+            moreTv.visibility = if (isShowMoreText) View.VISIBLE else View.GONE
             ivArrow.visibility = if (isShowArrow) View.VISIBLE else View.GONE
 
             tvDes.text = text
             if (!TextUtils.isEmpty(moreText))
-                moreTv?.text = moreText
+                moreTv.text = moreText
 
         } catch (e: Exception) {
         } finally {
@@ -51,13 +52,17 @@ class MineItemView(@Nullable context: Context, @Nullable attrs: AttributeSet) : 
 
     }
 
+    fun setTitle(title: String) {
+        tvDes.text = title
+    }
+
 
     fun setMoreText(text: String?) {
-        moreTv?.text = text
+        moreTv.text = text
     }
 
     fun getMoreText(): CharSequence? {
-        return moreTv?.text
+        return moreTv.text
     }
 
     override fun getLayoutId(): Int {

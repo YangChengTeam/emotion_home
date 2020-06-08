@@ -14,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_guide.*
  */
 class GuideActivity : BaseSameActivity() {
 
-
-//
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
@@ -35,19 +33,12 @@ class GuideActivity : BaseSameActivity() {
         guide_viewpager.adapter = guideAdapter
     }
 
-    override fun isSupportSwipeBack(): Boolean {
-        return false
-    }
+    override fun isSupportSwipeBack() = false
 
-    override fun hindActivityBar(): Boolean {
-        return true
-    }
 
-    override fun hindActivityTitle(): Boolean {
-        return true
-    }
+    override fun hindActivityBar() = true
 
-    override fun offerActivityTitle(): String {
-        return ""
-    }
+    override fun hindActivityTitle() = true
+
+    override fun offerActivityTitle() = ""
 }

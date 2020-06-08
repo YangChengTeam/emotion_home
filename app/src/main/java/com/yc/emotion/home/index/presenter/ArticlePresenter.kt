@@ -37,20 +37,22 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
     }
 
     override fun getCache() {
-        CommonInfoHelper.getO<List<AticleTagInfo>>(mContext, "more_article_infos", object : TypeReference<List<AticleTagInfo>>() {}.type) { infos ->
-            infos?.let {
-                if (infos.isNotEmpty()) {
-                    mView.showArticleCategory(infos)
-                }
-            }
-        }
+        CommonInfoHelper.getO(mContext, "more_article_infos", object : TypeReference<List<AticleTagInfo>>() {}.type,
+                object : CommonInfoHelper.OnParseListener<List<AticleTagInfo>> {
+                    override fun onParse(o: List<AticleTagInfo>?) {
+                        if (o != null && o.isNotEmpty()) {
+                            mView.showArticleCategory(o)
+                        }
+                    }
+                })
+
     }
 
 
     /**
      * 更多文章分类类别
      */
-    fun getArticleTagInfos() {
+    private fun getArticleTagInfos() {
         mModel?.getArticleTagInfos()?.subscribe(object : Subscriber<ResultInfo<List<AticleTagInfo>>>() {
             override fun onNext(t: ResultInfo<List<AticleTagInfo>>?) {
                 t?.let {
@@ -75,8 +77,9 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
     }
 
 
-    fun getArticleInfoList(cat_id: Int,  page: Int, page_size: Int) {
-        mView.showLoadingDialog()
+    fun getArticleInfoList(cat_id: Int, page: Int, page_size: Int) {
+        if (page == 1)
+            mView.showLoadingDialog()
         mModel?.getArticleInfoList(cat_id, 0, page, page_size)?.subscribe(object : Subscriber<ResultInfo<List<ArticleDetailInfo>>>() {
             override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>?) {
                 t?.let {
@@ -93,7 +96,8 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
             }
 
             override fun onCompleted() {
-                mView.hideLoadingDialog()
+                if (page == 1)
+                    mView.hideLoadingDialog()
                 mView.onComplete()
 
 

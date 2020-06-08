@@ -1,10 +1,9 @@
 package me.iwf.photopicker.adapter;
 
-import android.support.v7.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import me.iwf.photopicker.entity.Photo;
 import me.iwf.photopicker.entity.PhotoDirectory;
 import me.iwf.photopicker.event.Selectable;

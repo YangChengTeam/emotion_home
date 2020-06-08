@@ -2,12 +2,12 @@ package com.yc.emotion.home.community.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.community.adapter.CommunityAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.ui.activity.CommunityDetailActivity
@@ -24,7 +24,7 @@ import org.greenrobot.eventbus.ThreadMode
  * Created by suns  on 2019/8/28 09:17.
  * 最新动态
  */
-class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+class CommunityFragment : BaseFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
 
 
     private var communityAdapter: CommunityAdapter? = null
@@ -32,9 +32,10 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
     private var page = 1
     private val PAGE_SIZE = 10
 
+
     private var mMainActivity: MainActivity? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -108,8 +109,8 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     private fun initData() {
 
-
-        mPresenter.getCommunityNewsCache()
+//        mHandler = WeakHandler(this)
+//        mPresenter.getCommunityNewsCache()
 
         getData()
     }
@@ -121,34 +122,7 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     fun getData() {
 
-        mPresenter.getCommunityNewstInfos(page, PAGE_SIZE)
-
-//        val userId = UserInfoHelper.instance.getUid()
-//        if (page == 1) {
-//            loadingDialog = LoadDialog(mMainActivity)
-//            loadingDialog?.showLoadingDialog()
-//        }
-//
-//        loveEngin?.getCommunityNewstInfos("$userId", page, PAGE_SIZE)?.subscribe(object : Subscriber<ResultInfo<CommunityInfoWrapper>>() {
-//            override fun onCompleted() {
-//                if (loadingDialog != null) loadingDialog?.dismissLoadingDialog()
-//                if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
-//            }
-//
-//            override fun onError(e: Throwable) {
-//
-//            }
-//
-//            override fun onNext(communityInfoWrapperResultInfo: ResultInfo<CommunityInfoWrapper>?) {
-//                if (communityInfoWrapperResultInfo != null && communityInfoWrapperResultInfo.code == HttpConfig.STATUS_OK
-//                        && communityInfoWrapperResultInfo.data != null) {
-//                    val list = communityInfoWrapperResultInfo.data.list
-//                    createNewData(list)
-//
-//                }
-//
-//            }
-//        })
+        mPresenter?.getCommunityNewstInfos(page, PAGE_SIZE)
 
     }
 
@@ -174,7 +148,7 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
     private fun like(communityInfo: CommunityInfo, position: Int) {
 
-        mPresenter.likeTopic(communityInfo, position)
+        mPresenter?.likeTopic(communityInfo, position)
 
 
     }
@@ -196,13 +170,11 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
 
         page = 1
 
-        mPresenter.getCommunityTagListInfo(communityTag.communityTagInfo.id, page, PAGE_SIZE)
+        mPresenter?.getCommunityTagListInfo(communityTag.communityTagInfo.id, page, PAGE_SIZE)
 
     }
 
-    override fun onClick(v: View) {
-
-    }
+    override fun onClick(v: View) = Unit
 
     override fun showLoadingDialog() {
         mMainActivity?.showLoadingDialog()
@@ -212,8 +184,14 @@ class CommunityFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickLi
         mMainActivity?.hideLoadingDialog()
     }
 
+    private var isFromNet = false//是否从网络中获取了数据
     override fun shoCommunityNewestInfos(datas: List<CommunityInfo>?) {
+        isFromNet = true
         createNewData(datas)
+    }
+
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+        if (!isFromNet) createNewData(datas)
     }
 
     override fun onComplete() {

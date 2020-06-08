@@ -7,14 +7,16 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
+
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.music.player.lib.manager.MusicPlayerManager
 import com.umeng.analytics.MobclickAgent
 import com.umeng.socialize.UMShareAPI
@@ -22,11 +24,15 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.community.ui.fragment.CommunityMainFragment
 import com.yc.emotion.home.factory.MainFragmentFactory
+import com.yc.emotion.home.index.domain.bean.GetAppIDConfig
 import com.yc.emotion.home.index.ui.fragment.IndexFragment
 import com.yc.emotion.home.index.ui.fragment.IndexVerbalMainFragment
 import com.yc.emotion.home.mine.ui.fragment.MineFragment
 import com.yc.emotion.home.receiver.NetWorkChangReceiver
 import com.yc.emotion.home.skill.ui.fragment.SkillMainFragment
+import com.yc.emotion.home.utils.PreferenceUtil
+import com.yc.emotion.home.utils.PreferenceUtil.KEY_APP_ID
+import com.yc.emotion.home.utils.PreferenceUtil.KEY_APP_SIGN
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -35,7 +41,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private var netWorkChangReceiver: NetWorkChangReceiver? = null
     private var mPackageVersionName: String? = null
-    var mDownloadIdKey = "mDownloadIdKey"
+    private var mDownloadIdKey = "mDownloadIdKey"
     private var onChildDisposeMainKeyDownListent: OnChildDisposeMainKeyDownListent? = null
 
 
@@ -47,17 +53,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    override fun getLayoutId(): Int {
+    override fun getLayoutId() = R.layout.activity_main
 
-        return R.layout.activity_main
-    }
 
     override fun initViews() {
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         invadeStatusBar() //侵入状态栏
         setAndroidNativeLightStatusBar() //状态栏字体颜色改变
-        //        checkPermission();
+//                checkPermission();
         mPackageVersionName = try {
             // 判断当前的版本与服务器上的最版版本是否一致
             val packageInfo = packageManager.getPackageInfo(application.packageName, 0)
@@ -77,6 +81,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         MusicPlayerManager.getInstance().bindService(this)
         initView()
+        if (PreferenceUtil.getInstance().getStringValue(KEY_APP_ID, "") == "") {
+            PreferenceUtil.getInstance()
+                    .setStringValue(KEY_APP_ID, java.lang.String.valueOf(GetAppIDConfig.appID))
+        }
+        if (PreferenceUtil.getInstance().getStringValue(KEY_APP_SIGN, "") == "") {
+            PreferenceUtil.getInstance().setStringValue(KEY_APP_SIGN, GetAppIDConfig.appSign)
+        }
 
         getUserInfo()
     }
@@ -160,20 +171,20 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         fragmentList.add(MineFragment())
 
 
-        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager, null, fragmentList)
+        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, null, fragmentList)
 
 //        val mainPagerAdapter = MainPagerAdapter(supportFragmentManager)
 
         comp_main_vp_fragment.adapter = commonMainPageAdapter
-        comp_main_vp_fragment.offscreenPageLimit = 4
+//        comp_main_vp_fragment.offscreenPageLimit = 4
 
         comp_main_vp_fragment.currentItem = 1
         comp_main_index.postDelayed({ this.initNetWorkChangReceiver() }, 200)
 
         comp_main_vp_fragment.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+                    Unit
 
             override fun onPageSelected(position: Int) {
                 if (position == MainFragmentFactory.MAIN_FRAGMENT_2) {
@@ -187,9 +198,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 }
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
+            override fun onPageScrollStateChanged(state: Int) = Unit
         })
     }
 
@@ -249,23 +258,24 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         //        setCompoundDrawablesTop(mTvTab4, R.mipmap.main_icon_tab_04);
         setCompoundDrawablesTop(comp_main_my, R.mipmap.main_icon_tab_05)
 
-        comp_main_index.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_inVerbal.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_community.setTextColor(resources.getColor(R.color.text_gray))
-        comp_main_message.setTextColor(resources.getColor(R.color.text_gray))
+        comp_main_index.setTextColor(ContextCompat.getColor(this, R.color.text_gray))
+        comp_main_inVerbal.setTextColor(ContextCompat.getColor(this, R.color.text_gray))
+        comp_main_community.setTextColor(ContextCompat.getColor(this, R.color.text_gray))
+        comp_main_message.setTextColor(ContextCompat.getColor(this, R.color.text_gray))
         //        mTvTab4.setTextColor(getResources().getColor(R.color.text_gray));
-        comp_main_my.setTextColor(resources.getColor(R.color.text_gray))
+        comp_main_my.setTextColor(ContextCompat.getColor(this, R.color.text_gray))
     }
 
     private fun setCompoundDrawablesTop(tv_icon: TextView?, id: Int) {
-        val top22 = resources.getDrawable(id)
+        val top22 = ContextCompat.getDrawable(this, id)
         tv_icon?.setCompoundDrawablesWithIntrinsicBounds(null, top22, null, null)
-        tv_icon?.setTextColor(resources.getColor(R.color.black))
+        tv_icon?.setTextColor(ContextCompat.getColor(this, R.color.black))
 
     }
 
 
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
         val pos = intent.getIntExtra("pos", 0)
 
         setCurrentItem(pos)

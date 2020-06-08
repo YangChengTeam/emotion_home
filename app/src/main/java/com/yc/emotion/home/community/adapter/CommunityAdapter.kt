@@ -1,26 +1,24 @@
 package com.yc.emotion.home.community.adapter
 
-import android.support.v4.content.ContextCompat
+
 import android.text.Html
-import android.text.Spanned
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
-import android.widget.ImageView
-
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.utils.DateUtils
 
 /**
  * Created by suns  on 2019/8/28 15:44.
  */
-class CommunityAdapter(data: List<CommunityInfo>?, private val mIsMy: Boolean) : BaseQuickAdapter<CommunityInfo, BaseViewHolder>(R.layout.item_community_view, data) {
+class CommunityAdapter(data: List<CommunityInfo>?, private val mIsMy: Boolean) : CommonMoreAdapter<CommunityInfo, BaseViewHolder>(R.layout.item_community_view, data) {
 
     override fun convert(helper: BaseViewHolder?, item: CommunityInfo?) {
 

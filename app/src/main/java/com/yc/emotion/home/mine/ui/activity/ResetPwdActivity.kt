@@ -2,27 +2,21 @@ package com.yc.emotion.home.mine.ui.activity
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
 import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.RegexUtils
-
 import kotlinx.android.synthetic.main.activity_reset_pwd.*
-
-import rx.Subscriber
 
 /**
  *

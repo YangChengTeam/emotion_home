@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/live_item_line_bg">
+
+    <com.yc.emotion.home.base.ui.widget.RoundCornerImg
+        android:id="@+id/live_roundImg"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/liv_pic_example"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_live"
+        android:layout_width="57dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/live_state_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="@id/live_roundImg"
+        app:layout_constraintTop_toTopOf="@id/live_roundImg">
+
+        <ImageView
+            android:id="@+id/iv_live_anim"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/icon_live" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="直播中"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_live_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/live_roundImg"
+        app:layout_constraintRight_toRightOf="@id/live_roundImg"
+        tools:text="圆弧" />
+
+
+    <TextView
+        android:id="@+id/tv_live_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="13dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/gray_222222"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/live_roundImg"
+        tools:text="读懂男性情绪需求，把话说进对方心坎" />
+
+    <TextView
+        android:id="@+id/tv_live_type"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/live_type_bg"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="关系经营导师"
+        android:textColor="#fa4a65"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_live_title" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintRight_toRightOf="@id/live_roundImg"
+        app:layout_constraintTop_toTopOf="@id/tv_live_type">
+
+<!--        android:background="@drawable/live_online_bg"-->
+        <TextView
+            android:id="@+id/tv_live_num"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="@color/gray_999"
+            android:textSize="@dimen/sp_12"
+            tools:text="1467人在线" />
+
+        <TextView
+            android:id="@+id/tv_live_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_999"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone"
+            tools:text="10:30开播" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

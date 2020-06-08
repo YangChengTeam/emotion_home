@@ -1,9 +1,9 @@
 package com.yc.emotion.home.mine.ui.activity
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.R

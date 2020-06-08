@@ -3,9 +3,9 @@ package com.yc.emotion.home.pay.ui.activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.GridLayoutManager
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.PayActivity
 import com.yc.emotion.home.index.ui.fragment.VipPayWayFragment

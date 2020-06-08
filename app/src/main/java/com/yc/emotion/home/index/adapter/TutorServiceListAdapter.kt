@@ -6,13 +6,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.TutorServiceInfo
 
 /**
  *
  * Created by suns  on 2019/10/12 17:03.
  */
-class TutorServiceListAdapter(mDatas: List<TutorServiceInfo>?) : BaseQuickAdapter<TutorServiceInfo, BaseViewHolder>(R.layout.tutor_service_list_item, mDatas) {
+class TutorServiceListAdapter(mDatas: List<TutorServiceInfo>?) : CommonMoreAdapter<TutorServiceInfo, BaseViewHolder>(R.layout.tutor_service_list_item, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: TutorServiceInfo?) {
 
         helper?.let {

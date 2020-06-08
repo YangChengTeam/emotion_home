@@ -28,11 +28,15 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
     }
 
     override fun getCache() {
-        CommonInfoHelper.getO<List<GoodsInfo>>(mContext, "vip_infos", object : TypeReference<List<GoodsInfo>>() {}.type) { goodInfos ->
-            if (goodInfos != null && goodInfos.isNotEmpty()) {
-                mView.showGoodInfoList(goodInfos)
+        CommonInfoHelper.getO(mContext, "vip_infos", object : TypeReference<List<GoodsInfo>>() {}.type,
+        object :CommonInfoHelper.OnParseListener<List<GoodsInfo>>{
+            override fun onParse(o: List<GoodsInfo>?) {
+                if (o != null && o.isNotEmpty()) {
+                    mView.showGoodInfoList(o)
+                }
             }
-        }
+
+        })
 
         getGoodListInfo()
     }

@@ -2,25 +2,25 @@ package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Intent
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.TutorDetailCommentAdapter
-import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
-import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.index.adapter.TutorDetailCommentAdapter
+import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
+import com.yc.emotion.home.model.bean.CommunityInfo
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 
 /**
  *
  * Created by suns  on 2019/10/12 14:29.
  */
-class TutorDetailCommentFragment : BaseLazyFragment<BasePresenter<IModel, IView>>() {
+class TutorDetailCommentFragment : BaseFragment<BasePresenter<IModel, IView>>() {
 
 
     private var loveEngine: LoveEngine? = null

@@ -2,8 +2,6 @@ package com.music.player.lib.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -16,6 +14,9 @@ import com.music.player.lib.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by suns  on 2019/7/25 09:39.

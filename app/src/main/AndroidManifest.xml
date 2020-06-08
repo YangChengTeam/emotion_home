@@ -89,12 +89,14 @@
         </provider>
         -->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.yc.emotion.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
+            <!--                android.support.FILE_PROVIDER_PATHS-->
             <meta-data
+
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"
                 tools:replace="android:resource" />
@@ -208,7 +210,7 @@
             android:name=".index.ui.activity.TutorCourseDetailActivity"
             android:configChanges="orientation|screenSize"
 
-            android:screenOrientation="portrait" />
+            />
         <!--在你需要全屏播放的Activity中加上这个属性，告诉系统Activity在横竖屏切换时不要销毁Activity-->
         <activity android:name=".index.ui.activity.TutorListActivity" />
         <activity android:name=".index.ui.activity.EmotionTestMainActivity" />
@@ -252,6 +254,20 @@
         <activity android:name=".message.ui.activity.NotificationDetailActivity" />
         <activity android:name=".message.ui.activity.NotificationListActivity" />
         <activity android:name=".message.ui.fragment.MessageActivity" />
+        <activity android:name=".index.ui.activity.LiveWebActivity" />
+        <activity android:name=".mine.ui.activity.RegisterMainActivityNew" />
+        <activity android:name=".mine.ui.activity.LoginRegisterActivity" />
+        <activity android:name=".mine.ui.activity.PwdSetActivity" />
+        <activity android:name=".index.ui.activity.MonographActivity" />
+        <activity android:name=".mine.ui.activity.UserPolicyActivity" />
+        <activity
+            android:name=".index.ui.activity.LiveRoomActivity"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".index.ui.activity.LiveLookActivity"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
 
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->

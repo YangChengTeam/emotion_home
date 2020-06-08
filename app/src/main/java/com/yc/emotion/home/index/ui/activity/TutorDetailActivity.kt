@@ -4,36 +4,32 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
+import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
+import com.yc.emotion.home.index.adapter.TutorTagAdapter
+import com.yc.emotion.home.index.presenter.TutorPresenter
+import com.yc.emotion.home.index.ui.fragment.TutorCourseFragment
 import com.yc.emotion.home.index.ui.fragment.TutorDetailCommentFragment
 import com.yc.emotion.home.index.ui.fragment.TutorDetailDescFragment
-import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.index.adapter.TutorTagAdapter
-import com.yc.emotion.home.index.ui.fragment.TutorCourseFragment
-import com.yc.emotion.home.model.bean.TutorDetailInfo
-import com.yc.emotion.home.model.bean.TutorInfo
-import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
-import com.yc.emotion.home.index.presenter.IndexPresenter
-import com.yc.emotion.home.index.presenter.TutorPresenter
-import com.yc.emotion.home.index.view.IndexView
 import com.yc.emotion.home.index.view.TutorView
 import com.yc.emotion.home.mine.ui.activity.ShareActivity
-
+import com.yc.emotion.home.model.bean.TutorDetailInfo
+import com.yc.emotion.home.model.bean.TutorInfo
 import kotlinx.android.synthetic.main.activity_tutor_detail.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -43,7 +39,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import rx.Subscriber
 import java.util.*
 
 /**
@@ -159,7 +154,7 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
             }
         }
 
-        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, titleList, fragments)
+        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_tutor_detail.adapter = efficientCourseMainAdapter
 //        mViewPager.setOffscreenPageLimit(2)
         viewPager_tutor_detail.currentItem = 0

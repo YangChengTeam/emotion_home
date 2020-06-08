@@ -2,14 +2,14 @@ package com.yc.emotion.home.mine.ui.fragment
 
 import android.content.Intent
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.fragment.BaseCollectFragment
+import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.TutorServiceListAdapter
 import com.yc.emotion.home.index.ui.activity.TutorServiceDetailActivity
 import com.yc.emotion.home.model.bean.TutorServiceInfo
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import kotlinx.android.synthetic.main.fragment_collect_view.*
 
 
@@ -46,7 +46,6 @@ class CollectServiceFragment : BaseCollectFragment() {
         swipeRefreshLayout.setOnRefreshListener {
             getData()
         }
-
 
 
         tutorServiceListAdapter?.setOnItemClickListener { adapter, view, position ->

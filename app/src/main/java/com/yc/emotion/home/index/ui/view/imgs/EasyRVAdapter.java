@@ -1,9 +1,6 @@
 package com.yc.emotion.home.index.ui.view.imgs;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +8,13 @@ import android.view.ViewGroup;
 
 import com.yc.emotion.home.base.listener.DataHelper;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by mayn on 2019/5/7.
@@ -123,7 +126,7 @@ public abstract class EasyRVAdapter<T> extends RecyclerView.Adapter<EasyRVHolder
      * @param holder
      */
     @Override
-    public void onViewAttachedToWindow(EasyRVHolder holder) {
+    public void onViewAttachedToWindow(@NotNull EasyRVHolder holder) {
         super.onViewAttachedToWindow(holder);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         if(lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {

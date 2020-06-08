@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f4f5">
+
+    <View
+        android:id="@+id/top_divider"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_divider">
+
+        <TextView
+            android:id="@+id/tv_pwd_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="原密码"
+            android:textColor="@color/gray_222222"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/view_divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
+            android:background="@null"
+            android:hint="请输入原密码"
+            android:inputType="textPassword"
+            android:textColor="@color/gray_999"
+            android:textColorHint="@color/gray_999"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_pwd_title"
+            app:layout_constraintLeft_toRightOf="@id/tv_pwd_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_pwd_title" />
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="15dp"
+            android:background="#eff2f7"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pwd_title" />
+
+        <TextView
+            android:id="@+id/tv_new_pwd_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="15dp"
+
+            android:text="新密码"
+            android:textColor="@color/gray_222222"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/tv_pwd_title"
+            app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size_20"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:textColor="@color/gray_999"
+            android:textColorHint="@color/gray_999"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_new_pwd_title"
+            app:layout_constraintLeft_toRightOf="@id/tv_new_pwd_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_new_pwd_title" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/new_pwd_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_divider,tv_new_pwd_title,et_new_pwd" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

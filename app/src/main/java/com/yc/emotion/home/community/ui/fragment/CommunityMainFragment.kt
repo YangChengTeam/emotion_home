@@ -3,23 +3,25 @@ package com.yc.emotion.home.community.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.RelativeLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.kk.utils.ScreenUtil
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.ui.activity.CommunityNoticeDetailActivity
 import com.yc.emotion.home.community.ui.activity.CommunityPublishActivity
-import com.yc.emotion.home.community.ui.widget.CommunityTagPopwindow
+import com.yc.emotion.home.community.ui.widget.CommunityTagPopWindow
 import com.yc.emotion.home.community.view.CommunityView
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
@@ -38,8 +40,10 @@ import java.util.*
 /**
  * Created by suns  on 2019/8/29 09:51.
  */
-class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickListener, CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
 
+    }
 
 
     private var tagPos by Preference(ConstantKey.TAG_POSTION, 0)
@@ -50,7 +54,7 @@ class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnCli
         return R.layout.fragment_main_community
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
             mMainActivity = context
@@ -99,7 +103,8 @@ class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnCli
         initNavigator(titleList)
 
 
-        val communityMainAdapter = CommonMainPageAdapter(childFragmentManager, titleList, fragmentList)
+        val communityMainAdapter = CommonMainPageAdapter(childFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragmentList)
         main_community_view_pager.adapter = communityMainAdapter
         main_community_view_pager.offscreenPageLimit = 2
         //        mViewPager.setCurrentItem(1);
@@ -186,11 +191,11 @@ class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnCli
             }
             R.id.tv_community_tag -> {
                 setTagArrow(true)
-                val communityTagPopwindow = CommunityTagPopwindow(mMainActivity)
+                val communityTagPopwindow = CommunityTagPopWindow(mMainActivity)
                 communityTagPopwindow.createNewData(tagList)//
                 communityTagPopwindow.showAsDropDown(view_divider)
                 communityTagPopwindow.setOnDismissListener { setTagArrow(false) }
-                communityTagPopwindow.setOnTagSelectListener(object : CommunityTagPopwindow.onTagSelectListener {
+                communityTagPopwindow.setOnTagSelectListener(object : CommunityTagPopWindow.onTagSelectListener {
                     override fun onTagSelect(communityTagInfo: CommunityTagInfo) {
                         tv_community_tag.text = communityTagInfo.title
                     }
@@ -216,7 +221,7 @@ class CommunityMainFragment : BaseLazyFragment<CommunityPresenter>(), View.OnCli
 
     private fun getData() {
 
-        mPresenter.getCommunityTagInfos()
+        mPresenter?.getCommunityTagInfos()
 
     }
 

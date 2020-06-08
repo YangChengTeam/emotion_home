@@ -1,25 +1,19 @@
 package com.yc.emotion.home.mine.ui.activity
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.index.ui.activity.TestRecordDetailActivity
-import com.yc.emotion.home.mine.adapter.EmotionTestReportAdapter
-import com.yc.emotion.home.model.bean.EmotionTestInfo
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.presenter.EmotionTestPresenter
+import com.yc.emotion.home.index.ui.activity.TestRecordDetailActivity
 import com.yc.emotion.home.index.view.EmotionTestView
-import com.yc.emotion.home.utils.CommonInfoHelper
+import com.yc.emotion.home.mine.adapter.EmotionTestReportAdapter
+import com.yc.emotion.home.model.bean.EmotionTestInfo
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.fragment_collect_view.*
-
-import rx.Subscriber
 
 /**
  *

@@ -3,22 +3,20 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.index.ui.fragment.TutorListFragment
-import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.index.presenter.TutorPresenter
+import com.yc.emotion.home.index.ui.fragment.TutorListFragment
 import com.yc.emotion.home.index.view.TutorView
-import com.yc.emotion.home.utils.CommonInfoHelper
+import com.yc.emotion.home.model.bean.CourseInfo
 import kotlinx.android.synthetic.main.activity_course_efficient.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -28,7 +26,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import rx.Subscriber
 
 /**
  *
@@ -75,7 +72,8 @@ class TutorListActivity : BaseSameActivity(), TutorView {
 
         initNavigator(titleList)
 
-        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, titleList, fragments)
+        val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_efficient.adapter = efficientCourseMainAdapter
 
 //        viewPager_efficient.setOffscreenPageLimit(2)

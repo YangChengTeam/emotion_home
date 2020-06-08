@@ -9,7 +9,7 @@
 
     <!--android:background="@drawable/community_tag_normal"-->
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
 
             app:layout_constraintTop_toBottomOf="@id/ll_wx" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/iv_close"

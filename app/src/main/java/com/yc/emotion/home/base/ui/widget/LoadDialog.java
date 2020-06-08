@@ -10,66 +10,69 @@ import android.widget.TextView;
 
 import com.yc.emotion.home.R;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+/**
+ * Created by suns  on 2020/5/15 11:27.
+ */
 public class LoadDialog extends AlertDialog {
-
-
-    private Context context;
-    private String text;
+    private Context ctx;
     private TextView textView;
+    private String text;
 
     public LoadDialog(Context context) {
-        super(context, R.style.LoadingDialogTheme);//设置样式
-        this.context = context;
+        super(context, R.style.LoadingDialogTheme);
+        this.ctx = context;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@NotNull Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading_view);
-        textView = findViewById(R.id.loading_view_tv);
-        setCancelable(true);
-        initView();
+        this.textView = findViewById(R.id.loading_view_tv);
+        this.setCancelable(true);
+        this.initView();
     }
 
     private void initView() {
-
     }
 
     public void showLoadingDialog() {
         try {
-            Activity activity = (Activity) context;
 
-            if (activity != null && !activity.isFinishing()) {
-                dismiss();
-                if (!isShowing()) {
-                    show();
+            if (ctx != null) {
+                Activity activity = (Activity) ctx;
+                if (!activity.isFinishing()) {
+                    dismiss();
+                    if (!isShowing()) {
+                        show();
+                    }
                 }
             }
-        } catch (Exception e) {
-            Log.d("mylog", "LoadDialog --showLoadingDialog: " + e.toString());
+        } catch (Exception var2) {
+            Log.d("mylog", "LoadDialog --showLoadingDialog: " + var2);
         }
+
     }
 
     public void dismissLoadingDialog() {
         try {
-            Activity activity = (Activity) context;
-            if (activity != null && !activity.isFinishing()) {
-                dismiss();
-                if (isShowing()) {
-                    hide();
-                }
-            }
-        } catch (Exception e) {
-            Log.d("mylog", "LoadDialog --dismissDialog: " + e.toString());
+            dismiss();
+        } catch (Exception var2) {
+            Log.d("mylog", "LoadDialog --dismissDialog: " + var2);
         }
+
     }
 
-    public void setText(String text) {
+    public void setText(@Nullable String text) {
         this.text = text;
+
         if (textView != null) {
+
             textView.setVisibility(View.VISIBLE);
             textView.setText(text);
         }
+
     }
 }

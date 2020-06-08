@@ -3,13 +3,14 @@ package com.yc.emotion.home.index.adapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.TutorInfo
 
 /**
  *
  * Created by suns  on 2019/10/9 14:02.
  */
-class SearchTutorAdapter(mDatas: List<TutorInfo>?) : BaseQuickAdapter<TutorInfo, BaseViewHolder>(R.layout.layout_tutor_search_item, mDatas) {
+class SearchTutorAdapter(mDatas: List<TutorInfo>?) : CommonMoreAdapter<TutorInfo, BaseViewHolder>(R.layout.layout_tutor_search_item, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: TutorInfo?) {
         helper?.let {
             item?.let {

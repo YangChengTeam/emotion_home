@@ -1,11 +1,9 @@
 package com.yc.emotion.home.index.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.adapter.EmotionTestDetailAnswerAdapter
@@ -28,7 +26,6 @@ import java.util.concurrent.TimeUnit
  * 情感测试正式测试类
  */
 class EmotionTestSkipDetailActivity : BaseSameActivity() {
-
 
 
     private var finish_total = mutableSetOf<String>()//存储完成题目id //记录进度
@@ -147,7 +144,6 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
         setData(testTopicInfo.re_qid - 1)
 
 
-
     }
 
 
@@ -204,7 +200,11 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
         val exitFragment = ExitPublishFragment.newInstance("确定退出测试吗?")
 
         exitFragment.show(supportFragmentManager, "")
-        exitFragment.setOnConfirmListener { finish() }
+        exitFragment.setOnConfirmListener(object :ExitPublishFragment.OnConfirmListener{
+            override fun onConfirm() {
+                finish()
+            }
+        })
     }
 
     override fun onBackPressed() {

@@ -1,32 +1,31 @@
 package com.yc.emotion.home.community.ui.activity
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+
 import android.text.TextUtils
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.recyclerview.widget.GridLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.community.adapter.PublishTagAdapter
 import com.yc.emotion.home.community.presenter.CommunityPresenter
 import com.yc.emotion.home.community.view.CommunityView
 import com.yc.emotion.home.mine.ui.fragment.ExitPublishFragment
+import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
-import com.yc.emotion.home.model.bean.CommunityTagInfoWrapper
 import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.SnackBarUtils
-import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_community_publish.*
 import org.greenrobot.eventbus.EventBus
-import rx.Subscriber
 
 /**
  * Created by suns  on 2019/8/30 18:12.
  */
 class CommunityPublishActivity : BaseSameActivity(), CommunityView {
+    override fun shoCommunityNewestCacheInfos(datas: List<CommunityInfo>?) {
+
+    }
 
 
     private var tagAdapter: PublishTagAdapter? = null
@@ -116,7 +115,11 @@ class CommunityPublishActivity : BaseSameActivity(), CommunityView {
     private fun showExitFragment() {
         val exitPublishFragment = ExitPublishFragment()
         exitPublishFragment.show(supportFragmentManager, "")
-        exitPublishFragment.setOnConfirmListener { this.finish() }
+        exitPublishFragment.setOnConfirmListener (object :ExitPublishFragment.OnConfirmListener{
+            override fun onConfirm() {
+               finish()
+            }
+        })
     }
 
 
@@ -128,7 +131,7 @@ class CommunityPublishActivity : BaseSameActivity(), CommunityView {
         tagAdapter?.setNewData(list)
     }
 
-    override fun publishCommunitySuccess(message: String?) {
+    override fun publishCommunitySuccess(message: String) {
         SnackBarUtils.tips(this@CommunityPublishActivity, message)
         mLoadingDialog?.dismissLoadingDialog()
         EventBus.getDefault().post(CommunityPublishSuccess())

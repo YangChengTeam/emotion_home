@@ -1,14 +1,16 @@
 package com.video.player.lib.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
 import com.video.player.lib.R;
 import com.video.player.lib.base.BaseVideoPlayer;
 import com.video.player.lib.controller.DefaultGestureController;
 import com.video.player.lib.controller.DefaultVideoController;
 import com.video.player.lib.controller.DetailsCoverController;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * TinyHung@Outlook.com

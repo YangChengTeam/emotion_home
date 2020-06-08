@@ -43,7 +43,7 @@
             android:progress="0"
             android:progressDrawable="@drawable/process_bg" />
 
-        <!--<android.support.v4.widget.NestedScrollView-->
+        <!--<androidx.core.widget.NestedScrollView-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:scrollbars="vertical">-->
@@ -54,6 +54,6 @@
             android:layout_height="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true" />
-        <!--</android.support.v4.widget.NestedScrollView>-->
+        <!--</androidx.core.widget.NestedScrollView>-->
     </LinearLayout>
 </RelativeLayout>

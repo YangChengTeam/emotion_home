@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_login_register"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_to_register"
+            app:destination="@id/registerFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_to_setPwd"
+            app:destination="@id/setPwdFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/setPwdFragment"
+        android:name="com.yc.emotion.home.mine.ui.fragment.SetPwdFragment"
+        android:label="SetPwdFragment"
+        tools:layout="@layout/fragment_set_pwd" />
+</navigation>

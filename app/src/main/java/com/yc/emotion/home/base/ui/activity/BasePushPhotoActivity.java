@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -20,6 +21,8 @@ import com.yc.emotion.home.base.ui.widget.SelectPhotoDialog;
 import com.yc.emotion.home.index.ui.view.imgs.ISListConfig;
 import com.yc.emotion.home.index.ui.view.imgs.ISNav;
 import com.yc.emotion.home.index.ui.view.imgs.ImageLoader;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -136,8 +139,8 @@ public abstract class BasePushPhotoActivity extends BaseSameActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int permsRequestCode, @NotNull String[] permissions,
+                                           @NotNull int[] grantResults) {
         Log.d("mylog", "onRequestPermissionsResult: permsRequestCode " + permsRequestCode);
         switch (permsRequestCode) {
             case CAMERA_REQUEST_CODE:
@@ -145,7 +148,7 @@ public abstract class BasePushPhotoActivity extends BaseSameActivity {
                 if (storageAccepted) {
                     openCamera();
                 } else {
-                    showToastShort("没有获取到拍照的权限");
+                    showToast("没有获取到拍照的权限",Toast.LENGTH_SHORT);
                     Log.d("ssss", "没有权限操作这个请求");
                     selectPhotoDialog.dialogDismiss();
                 }
@@ -204,7 +207,7 @@ public abstract class BasePushPhotoActivity extends BaseSameActivity {
                 break;
         }
         if (file == null) {
-            showToastShort("获取图片失败--file");
+            showToast("获取图片失败--file", Toast.LENGTH_SHORT);
             return;
         }
         Luban.with(this)

@@ -1,33 +1,26 @@
 package com.yc.emotion.home.index.ui.fragment
 
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
-import com.yc.emotion.home.index.adapter.EfficientCourseAdapter
-import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
-import com.yc.emotion.home.model.bean.CourseInfo
-import com.yc.emotion.home.model.bean.CourseInfoWrapper
 import com.yc.emotion.home.base.domain.engine.LoveEngine
-import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.BaseActivity
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
-import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.index.adapter.EfficientCourseAdapter
 import com.yc.emotion.home.index.presenter.TutorCoursePresenter
+import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
 import com.yc.emotion.home.index.view.TutorCourseView
+import com.yc.emotion.home.model.bean.CourseInfo
 import kotlinx.android.synthetic.main.fragment_collect_view.*
-import rx.Subscriber
 
 /**
  *
  * Created by suns  on 2019/10/9 11:33.
  */
-class TutorCourseFragment : BaseLazyFragment<TutorCoursePresenter>(), TutorCourseView {
+class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseView {
 
 
     var loveEngine: LoveEngine? = null
@@ -101,7 +94,7 @@ class TutorCourseFragment : BaseLazyFragment<TutorCoursePresenter>(), TutorCours
     fun getData() {
 
 
-        mPresenter.getTutorCourseInfos(tutorId, page, PAGE_SIZE)
+        mPresenter?.getTutorCourseInfos(tutorId, page, PAGE_SIZE)
 
 //        loadDialog?.showLoadingDialog()
 //

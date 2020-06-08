@@ -10,12 +10,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.MySubscriber
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.mine.presenter.MinePresenter
 import com.yc.emotion.home.mine.view.MineView
-import com.yc.emotion.home.model.bean.AResultInfo
-import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_feedback.*
 
 class FeedbackActivity : BaseSameActivity(), MineView {
@@ -70,25 +67,25 @@ class FeedbackActivity : BaseSameActivity(), MineView {
     private fun checkInput(): Boolean {
         mTrimEtWorkContent = feedback_et_work_content.text.toString().trim { it <= ' ' }
         if (TextUtils.isEmpty(mTrimEtWorkContent)) {
-            showToastShort("内容不能为空")
+            showToast("内容不能为空")
             return false
         }
         mTrimEtQq = feedback_et_qq.text.toString().trim { it <= ' ' }
         if (TextUtils.isEmpty(mTrimEtQq)) {
-            showToastShort("QQ号不能为空")
+            showToast("QQ号不能为空")
             return false
         }
         mTrimEtQq?.let {
 
             if (it.length < 6) {
-                showToastShort("QQ号格式错误")
+                showToast("QQ号格式错误")
                 return false
             }
         }
 
         mTrimEtWorkContent?.let {
             if (it.length < 6) {
-                showToastShort("最少输入一句话反馈")
+                showToast("最少输入一句话反馈")
                 return false
             }
         }
@@ -97,7 +94,7 @@ class FeedbackActivity : BaseSameActivity(), MineView {
         if (!TextUtils.isEmpty(mMTrimEtWx)) {
             mTrimEtQq?.let {
                 if (it.length < 2) {
-                    showToastShort("微信号格式错误")
+                    showToast("微信号格式错误")
                     return false
                 }
             }
@@ -114,7 +111,7 @@ class FeedbackActivity : BaseSameActivity(), MineView {
                 val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val myClip = ClipData.newPlainText("text", trimQqNum)
                 myClipboard.primaryClip = myClip
-                showToastShort("复制客服QQ号成功")
+                showToast("复制客服QQ号成功")
             }
             R.id.feedback_tv_next -> if (checkInput()) {
                 Log.d("mylog", "onClick: mTrimEtQq qq号$mTrimEtQq mTrimEtWorkContent 输入内容$mTrimEtWorkContent")

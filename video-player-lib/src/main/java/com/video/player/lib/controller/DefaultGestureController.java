@@ -4,8 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,10 +11,14 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.video.player.lib.R;
 import com.video.player.lib.base.BaseGestureController;
 import com.video.player.lib.utils.Logger;
 import com.video.player.lib.utils.VideoUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * TinyHung@Outlook.com

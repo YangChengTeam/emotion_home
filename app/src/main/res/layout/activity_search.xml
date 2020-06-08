@@ -19,7 +19,7 @@
         android:focusableInTouchMode="true"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/share_searview"
             android:layout_width="0dp"
             android:layout_height="38dp"
@@ -48,7 +48,7 @@
             android:textSize="@dimen/size_18" />
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/share_cons_lay_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
             android:src="@mipmap/main_item_vip"
             app:layout_constraintTop_toBottomOf="@+id/share_fluid_layout" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/share_frame_layout"
@@ -174,7 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/share_cons_lay_item_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -190,12 +190,12 @@
             tools:ignore="MissingConstraints" />
 
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/share_view_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

@@ -228,13 +228,28 @@
     <string name="community">社区</string>
     <string name="message">消息</string>
     <string name="skill">秘技</string>
+    <string name="study">教学</string>
     <string name="mine">我的</string>
     <string name="inVerbal">话术</string>
+    <string name="live_online">%1$d人在线</string>
+    <string name="live_time">%1$s开播</string>
 
     <string name="invitate_friend">邀请好友加入%1$s</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="set_pwd">设置密码</string>
+    <string name="privacy_desc">欢 迎 使 用 %1$s A P P ! 在 您 使 用 %1$s 产 品 或 服 务 前 ， 请 您 仔 细 阅 读 并   充 分 理 解 《 服 务 条 款 》 及 《 隐 私 政   策 》 ； 当 您 点 击 \" 我 知 道 了 ” 并 开   始 使 用 产 品 服 务 时 ， 即 表 示 您 已 阅   读 并 同 意 条 款 内 容 ， 如 果 您 不 同 意   条 款 内 容 ， 将 可 能 导 致 无 法 继 续 使   用 我 们 的 产 品 及 服 务</string>
     <string-array name="love_practice">
         <item>实战教学</item>
         <item>表白神器</item>
     </string-array>
+    <string name="wait_for_mentor_on_micorphone">等待上麦</string>
+    <string name="have_been_banned">已禁言</string>
+
+    <string name="tx_im_send_bc_ok">发送广播消息成功</string>
+    <string name="tx_im_send_bc_fail">消息发送失败</string>
+
+    <string name="online_count">%1$d人在线</string>
+    <string name="praise_count">%1$d个赞</string>
 
 </resources>

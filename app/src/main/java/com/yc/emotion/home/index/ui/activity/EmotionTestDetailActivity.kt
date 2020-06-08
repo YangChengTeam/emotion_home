@@ -3,9 +3,9 @@ package com.yc.emotion.home.index.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.adapter.EmotionTestDetailAdapter
@@ -194,7 +194,13 @@ class EmotionTestDetailActivity : BaseSameActivity() {
         val exitFragment = ExitPublishFragment.newInstance("确定退出测试吗?")
 
         exitFragment.show(supportFragmentManager, "")
-        exitFragment.setOnConfirmListener { finish() }
+        exitFragment.setOnConfirmListener(object : ExitPublishFragment.OnConfirmListener {
+            override fun onConfirm() {
+                finish()
+            }
+
+        })
+
     }
 
     override fun onBackPressed() {

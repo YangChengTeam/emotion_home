@@ -1,0 +1,12 @@
+
+f
+java:S1301N"KReplace this "switch" statement by "if" statements to increase readability.(ë´åÝþÿÿÿÿ
+e	java:S117F"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼¡Ü8
+f	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘Åïñ
+f	java:S117s"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åœ›¸
+f	java:S117|"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(à¡Û–
+^
+java:S1128"CRemove this unused import 'com.yc.emotion.home.base.YcApplication'.(ž×›òÿÿÿÿÿ
+<	java:S131N""Add a default case to this switch.(ë´åÝþÿÿÿÿ
+Z
+java:S3398“">Move this method into the anonymous class declared at line 68.(µëúóúÿÿÿÿ

@@ -3,7 +3,6 @@ package com.yc.emotion.home.base;
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
-import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.kk.securityhttp.domain.GoagalInfo;
@@ -33,6 +32,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import androidx.multidex.MultiDexApplication;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 

@@ -3,8 +3,8 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.music.player.lib.util.ToastUtils
@@ -106,18 +106,23 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
                 when (tutorCourseDetailInfo.itemType) {
                     TutorCourseDetailInfo.ITEM_TYPE_ONE -> {
                         if (view.id == R.id.tv_tutor_course_total) {
-                            if (null != mLessons && mLessons!!.isNotEmpty()) {
-                                view_decoder.visibility = View.VISIBLE
-                                val tutorCoursePopwindow = TutorCoursePopwindow(this)
-                                tutorCoursePopwindow.setCourseData(mLessons)
-                                tutorCoursePopwindow.setOnTagSelectListener {
-                                    MobclickAgent.onEvent(this, "video_player_click", "课程视频播放点击")
-                                    startPlayer(it)
-                                }
+                            mLessons?.let {
+                                if (it.isNotEmpty()) {
+                                    view_decoder.visibility = View.VISIBLE
+                                    val tutorCoursePopWindow = TutorCoursePopwindow(this@TutorCourseDetailActivity)
+                                    tutorCoursePopWindow.setCourseData(it)
+                                    tutorCoursePopWindow.setOnTagSelectListener(object : TutorCoursePopwindow.OnTagSelectListener {
+                                        override fun onTagSelect(lessonInfo: LessonInfo?) {
+                                            MobclickAgent.onEvent(this@TutorCourseDetailActivity, "video_player_click", "课程视频播放点击")
+                                            startPlayer(lessonInfo)
+                                        }
+                                    })
 
-                                tutorCoursePopwindow.showUp(ll_tutor_buy)
-                                tutorCoursePopwindow.setOnDismissListener { view_decoder.visibility = View.GONE }
+                                    tutorCoursePopWindow.showUp(ll_tutor_buy)
+                                    tutorCoursePopWindow.setOnDismissListener { view_decoder.visibility = View.GONE }
+                                }
                             }
+
                         }
                     }
                     TutorCourseDetailInfo.ITEM_TYPE_SECOND -> {
@@ -238,7 +243,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
             tutorCourseDetailAdapter?.setNewData(tutorCourseDetailInfoList)
         } else {
             tutorCourseDetailInfoList?.let {
-                tutorCourseDetailAdapter?.addData(tutorCourseDetailInfoList!!)
+                tutorCourseDetailAdapter?.addData(it)
             }
         }
         communityInfos?.let {

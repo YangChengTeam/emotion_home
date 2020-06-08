@@ -13,10 +13,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+
 import com.video.player.lib.R;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * TinyHung@Outlook.com

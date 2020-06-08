@@ -3,8 +3,9 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+
 import android.view.View
+import androidx.fragment.app.Fragment
 import cn.youngkaaa.yviewpager.YViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
@@ -16,11 +17,8 @@ import java.util.*
 class LoveUpDownPhotoActivity : BaseSameActivity() {
 
 
-
     private var mClickPosition: Int = 0
     private var mChildUrl: String? = null
-
-
 
 
     override fun initIntentData() {

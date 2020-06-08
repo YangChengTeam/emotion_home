@@ -14,7 +14,6 @@ import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.graphics.Palette;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,6 +21,8 @@ import com.yc.emotion.home.R;
 import com.yc.emotion.home.base.listener.OnParseColorListener;
 
 import java.lang.ref.WeakReference;
+
+import androidx.palette.graphics.Palette;
 
 /**
  * Created by suns  on 2019/8/28 10:26.

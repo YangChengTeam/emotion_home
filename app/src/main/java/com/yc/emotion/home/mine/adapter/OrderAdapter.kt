@@ -1,8 +1,8 @@
 package com.yc.emotion.home.mine.adapter
 
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.utils.DateUtils
 
@@ -10,7 +10,7 @@ import com.yc.emotion.home.utils.DateUtils
  *
  * Created by suns  on 2019/10/24 11:08.
  */
-class OrderAdapter(mDatas: List<OrderInfo>?) : BaseQuickAdapter<OrderInfo, BaseViewHolder>(R.layout.layout_order_item, mDatas) {
+class OrderAdapter(mDatas: List<OrderInfo>?) : CommonMoreAdapter<OrderInfo, BaseViewHolder>(R.layout.layout_order_item, mDatas) {
     override fun convert(helper: BaseViewHolder?, item: OrderInfo?) {
 
         helper?.let {

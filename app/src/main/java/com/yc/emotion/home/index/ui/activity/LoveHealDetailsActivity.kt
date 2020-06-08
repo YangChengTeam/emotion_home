@@ -3,24 +3,19 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
 import android.view.View
-
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.LoveHealDetailsAdapter
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.base.domain.engine.MySubscriber
+import com.yc.emotion.home.index.adapter.LoveHealDetailsAdapter
 import com.yc.emotion.home.index.presenter.IndexVerbalPresenter
 import com.yc.emotion.home.index.view.IndexVerbalView
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveHealDetBean
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.pay.ui.activity.VipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_love_heal_details.*
-
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -121,7 +116,7 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
 
         val layoutManager = LinearLayoutManager(this)
         love_heal_details_rl.layoutManager = layoutManager
-        layoutManager.orientation = OrientationHelper.VERTICAL
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
         //设置增加或删除条目的动画
         love_heal_details_rl.itemAnimator = DefaultItemAnimator()
         mAdapter = LoveHealDetailsAdapter(mLoveHealDetBeans, mTitle)
@@ -132,7 +127,7 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
 
     private fun netData() {
 
-            (mPresenter as? IndexVerbalPresenter)?.loveListCategory(mCategoryId,page = PAGE_NUM,page_size = PAGE_SIZE)
+        (mPresenter as? IndexVerbalPresenter)?.loveListCategory(mCategoryId, page = PAGE_NUM, page_size = PAGE_SIZE)
 
     }
 
@@ -154,7 +149,7 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
         } else {
             mLoveHealDetBeans?.let {
 
-                mAdapter?.addData(mLoveHealDetBeans!!)
+                mAdapter?.addData(it)
             }
         }
         if (loveHealDetBeans != null && loveHealDetBeans.size == PAGE_SIZE) {

@@ -10,9 +10,6 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -26,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.video.player.lib.R;
 import com.video.player.lib.bean.VideoParams;
 import com.video.player.lib.constants.VideoConstants;
@@ -42,9 +40,14 @@ import com.video.player.lib.manager.VideoWindowManager;
 import com.video.player.lib.utils.Logger;
 import com.video.player.lib.utils.VideoUtils;
 import com.video.player.lib.view.VideoTextureView;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * TinyHung@Outlook.com

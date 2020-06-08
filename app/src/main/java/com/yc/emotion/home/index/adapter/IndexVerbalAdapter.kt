@@ -1,11 +1,12 @@
 package com.yc.emotion.home.index.adapter
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.model.bean.LoveHealDateBean
 
 /**
@@ -25,7 +26,7 @@ class IndexVerbalAdapter(data: List<LoveHealDateBean>?) : BaseMultiItemQuickAdap
     init {
         addItemType(LoveHealDateBean.ITEM_TITLE, R.layout.recycler_view_item_love_heal_new)
         addItemType(LoveHealDateBean.ITEM_CONTENT, R.layout.recycler_view_item_love_heal)
-
+        setLoadMoreView(CustomLoadMoreView())
     }
 
 

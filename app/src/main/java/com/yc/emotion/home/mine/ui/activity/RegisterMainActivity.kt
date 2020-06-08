@@ -52,7 +52,7 @@ class RegisterMainActivity : BaseSameActivity(), UserInfoView {
     }
 
 
-    fun switchFragment(fragment: BaseFragment, tag: String) {
+    fun switchFragment(fragment: BaseFragment<*>, tag: String) {
         val bt = supportFragmentManager.beginTransaction()
         bt.add(R.id.fl_container, fragment, fragment.fragmentTag)
         supportFragmentManager.findFragmentByTag(tag)?.let { bt.hide(it) }

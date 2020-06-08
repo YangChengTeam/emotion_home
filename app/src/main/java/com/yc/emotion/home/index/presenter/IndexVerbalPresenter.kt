@@ -1,7 +1,6 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import android.util.Log
 import com.alibaba.fastjson.TypeReference
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
@@ -138,9 +137,12 @@ class IndexVerbalPresenter(context: Context?, view: IndexVerbalView) : BasePrese
 
         CommonInfoHelper.getO(mContext, key, object : TypeReference<List<LoveHealDateBean>>() {
 
-        }.type, CommonInfoHelper.onParseListener<List<LoveHealDateBean>> {
-            if (null != it && it.isNotEmpty()) {
-                mView.showVerbalSenceInfo(it)
+        }.type, object :CommonInfoHelper.OnParseListener<List<LoveHealDateBean>> {
+
+            override fun onParse(o: List<LoveHealDateBean>?) {
+                if (null != o && o.isNotEmpty()) {
+                    mView.showVerbalSenceInfo(o)
+                }
             }
         })
         loveCategory(sence)

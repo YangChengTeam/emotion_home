@@ -1,18 +1,21 @@
 package me.iwf.photopicker.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 import me.iwf.photopicker.R;
 import me.iwf.photopicker.entity.Photo;
 import me.iwf.photopicker.entity.PhotoDirectory;

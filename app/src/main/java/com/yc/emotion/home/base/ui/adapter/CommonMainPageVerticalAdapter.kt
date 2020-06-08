@@ -1,9 +1,9 @@
 package com.yc.emotion.home.base.ui.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import cn.youngkaaa.yviewpager.YFragmentPagerAdapter
 import com.yc.emotion.home.factory.CommonPagerFactory
 
@@ -12,9 +12,7 @@ import com.yc.emotion.home.factory.CommonPagerFactory
  * Created by suns  on 2019/10/9 14:15.
  * 通用的fragmentPagerAdapter
  */
-class CommonMainPageVerticalAdapter(ft: FragmentManager,  fragments: List<Fragment>) : YFragmentPagerAdapter(ft) {
-
-
+class CommonMainPageVerticalAdapter(ft: FragmentManager, fragments: List<Fragment>) : YFragmentPagerAdapter(ft) {
 
 
     private var mFragments: List<Fragment> = fragments
@@ -31,8 +29,6 @@ class CommonMainPageVerticalAdapter(ft: FragmentManager,  fragments: List<Fragme
     override fun getCount(): Int {
         return mFragments.size
     }
-
-
 
 
     override fun instantiateItem(container: ViewGroup, position: Int): Fragment {
@@ -57,8 +53,8 @@ class CommonMainPageVerticalAdapter(ft: FragmentManager,  fragments: List<Fragme
         //        container.removeView(object);
         val fragment = CommonPagerFactory.createFragment(position, mFragments)
         val fragmentTransaction = mFt.beginTransaction()
-        fragment?.let {
-            fragmentTransaction.hide(fragment)
+        fragment.let {
+            fragmentTransaction.hide(it)
         }
         fragmentTransaction.commitAllowingStateLoss()
     }

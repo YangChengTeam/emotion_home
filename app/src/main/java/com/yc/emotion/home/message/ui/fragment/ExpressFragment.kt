@@ -1,11 +1,11 @@
 package com.yc.emotion.home.message.ui.fragment
 
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.OrientationHelper
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.ConfessionAdapter
 import com.yc.emotion.home.index.presenter.ExpressPresenter
 import com.yc.emotion.home.index.ui.activity.CreateBeforeActivity
@@ -14,16 +14,12 @@ import com.yc.emotion.home.model.bean.confession.ConfessionDataBean
 import kotlinx.android.synthetic.main.activity_express.*
 
 //表白
-class ExpressFragment : BaseLazyFragment<ExpressPresenter>(), ExpressView {
-
-
-
+class ExpressFragment : BaseFragment<ExpressPresenter>(), ExpressView {
 
 
     private val PAGE_SIZE = 20
     private var PAGE_NUM = 1
     private var mAdapter: ConfessionAdapter? = null
-
 
 
     override fun getLayoutId(): Int {
@@ -45,7 +41,7 @@ class ExpressFragment : BaseLazyFragment<ExpressPresenter>(), ExpressView {
 
         val layoutManager = LinearLayoutManager(activity)
         express_rl.layoutManager = layoutManager
-        layoutManager.orientation = OrientationHelper.VERTICAL
+        layoutManager.orientation = RecyclerView.VERTICAL
         //设置增加或删除条目的动画
         express_rl.itemAnimator = DefaultItemAnimator()
         mAdapter = ConfessionAdapter(null)

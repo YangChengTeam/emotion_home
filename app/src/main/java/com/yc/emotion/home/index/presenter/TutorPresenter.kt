@@ -27,14 +27,18 @@ class TutorPresenter(context: Context?, view: TutorView) : BasePresenter<TutorMo
     }
 
     override fun getCache() {
-        CommonInfoHelper.getO<List<CourseInfo>>(mContext, "tutor_category_list", object : TypeReference<List<CourseInfo>>() {}.type) { courseInfos ->
-            courseInfos?.let {
-                if (courseInfos.isNotEmpty()) {
-                    mView.showTutorCategory(courseInfos)
-                }
-            }
+        CommonInfoHelper.getO(mContext, "tutor_category_list", object : TypeReference<List<CourseInfo>>() {}.type,
+                object : CommonInfoHelper.OnParseListener<List<CourseInfo>> {
 
-        }
+                    override fun onParse(o: List<CourseInfo>?) {
+                        o?.let {
+                            if (o.isNotEmpty()) {
+                                mView.showTutorCategory(o)
+                            }
+                        }
+                    }
+
+                })
     }
 
     override fun isLoadingCache(): Boolean {

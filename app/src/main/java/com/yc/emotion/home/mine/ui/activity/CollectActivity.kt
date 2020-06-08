@@ -4,10 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
@@ -66,7 +67,8 @@ class CollectActivity : BaseSameActivity() {
             fragmentList.add(CollectArticleFragment())
         }
 
-        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager, titleLists, fragmentList)
+        val commonMainPageAdapter = CommonMainPageAdapter(supportFragmentManager,
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleLists, fragmentList)
 
 //        val collectPagerAdapter = CollectPagerAdapter(supportFragmentManager, titleLists, fragmentList)
         collect_view_pager.adapter = commonMainPageAdapter

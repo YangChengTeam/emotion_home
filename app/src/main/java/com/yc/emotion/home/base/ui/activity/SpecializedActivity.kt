@@ -3,34 +3,36 @@ package com.yc.emotion.home.base.ui.activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.text.TextUtils
+
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import com.qq.e.ads.nativ.NativeExpressADView
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.ui.fragment.common.PrivacyPolicyFragment
+import com.yc.emotion.home.constant.Constant
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.model.util.CheckNetwork
-import com.yc.emotion.home.constant.Constant
-import com.yc.emotion.home.index.ui.activity.SelectSexActivity
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_specialized.*
 import yc.com.tencent_adv.AdvDispatchManager
 import yc.com.tencent_adv.AdvType
 import yc.com.tencent_adv.OnAdvStateListener
+import java.io.FileInputStream
 
 class SpecializedActivity : BaseActivity(), OnAdvStateListener {
 
 
     private var isFirstGuide by Preference(ConstantKey.IS_FIRST_GUIDE, true)
+    private val isClick = false
+    private var isFirstOpen by Preference(Constant.first_open, true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_specialized)
         initViews()
-
 
     }
 
@@ -46,19 +48,35 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
             finish()
             return
         }
+        if (isFirstOpen) {
+            mHandler?.postDelayed({
+                val privacyFragment = PrivacyPolicyFragment();
+                privacyFragment.show(supportFragmentManager, "")
+                privacyFragment.setOnClickBtnListener(object : PrivacyPolicyFragment.OnClickBtnListener {
+                    override fun onBtnClick() {
+                        switchMain(0)
+                        isFirstOpen = false
+                    }
+                })
+            }, 100)
 
-        AdvDispatchManager.getManager().init(this, AdvType.SPLASH, splash_container, skip_view, Constant.TENCENT_ADV_ID, Constant.SPLASH_ADV_ID, this)
+        } else {
+            switchMain(100)
+        }
+
+//        AdvDispatchManager.getManager().init(this, AdvType.SPLASH, splash_container, skip_view, Constant.TENCENT_ADV_ID, Constant.SPLASH_ADV_ID, this)
     }
 
 
     private fun startNextActivity() {
 
-        if (isFirstGuide) {
-            startActivity(Intent(this, GuideActivity::class.java))
-            isFirstGuide = false
-        } else {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+//        if (isFirstGuide) {
+//            startActivity(Intent(this, GuideActivity::class.java))
+//            isFirstGuide = false
+//        } else {
+//
+//        }
+        startActivity(Intent(this, MainActivity::class.java))
         //        overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);  //开屏动画
         finish()
     }
@@ -97,7 +115,7 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
 
     private fun switchMain(delay: Long) {
 
-        UIUtils.postDelay({ this.startNextActivity() }, delay)
+        UIUtils.postDelay(Runnable { startNextActivity() }, delay)
     }
 
 

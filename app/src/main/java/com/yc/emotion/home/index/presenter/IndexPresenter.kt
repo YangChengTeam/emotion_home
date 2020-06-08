@@ -5,17 +5,14 @@ import android.util.Log
 import com.alibaba.fastjson.TypeReference
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.yc.emotion.home.R.id.swipeRefreshLayout
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.base.view.StateDefaultImpl
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.domain.model.IndexModel
 import com.yc.emotion.home.index.view.IndexView
+import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
 import com.yc.emotion.home.model.bean.IndexInfo
 import com.yc.emotion.home.utils.CommonInfoHelper
-import rx.Observable
 import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
 
 /**
  *
@@ -31,8 +28,9 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
 
     override fun loadData(isForceUI: Boolean, isLoading: Boolean) {
         if (!isForceUI) return
+//        getIndexLiveList()
+        getOnlineLiveList()
     }
-
 
 
     /**
@@ -45,9 +43,13 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
         Log.e("TAG", "getCache")
         CommonInfoHelper.getO(mContext, "index_emotion_choiceness_info", object : TypeReference<IndexInfo>() {
 
-        }.type, CommonInfoHelper.onParseListener<IndexInfo> { detailInfos ->
-            detailInfos?.let {
-                mView.showIndexCaches(detailInfos)
+        }.type, object : CommonInfoHelper.OnParseListener<IndexInfo> {
+
+
+            override fun onParse(o: IndexInfo?) {
+                o?.let {
+                    mView.showIndexCaches(o)
+                }
             }
         })
 
@@ -101,6 +103,50 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
 
             }
 
+        })
+        subScriptions?.add(subscription)
+    }
+
+    fun getIndexLiveList() {
+        val subscription = mModel?.getLiveListInfo()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
+                t?.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.list != null) {
+                        val liveInfos = t.data.list
+                        mView.showIndexLiveInfos(liveInfos)
+                    }
+                }
+            }
+
+
+            override fun onCompleted() {
+
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
+        })
+        subScriptions?.add(subscription)
+    }
+
+    fun getOnlineLiveList() {
+        val subscription = mModel?.getOnlineLiveList()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
+                t?.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                        mView.showIndexLiveInfos(t.data.list)
+                    }
+                }
+            }
+
+            override fun onCompleted() {
+
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
         })
         subScriptions?.add(subscription)
     }

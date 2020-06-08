@@ -2,9 +2,10 @@ package com.video.player.lib.view;
 
 import android.graphics.Outline;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * TinyHung@Outlook.com

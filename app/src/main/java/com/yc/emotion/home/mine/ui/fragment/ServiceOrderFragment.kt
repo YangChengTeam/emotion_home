@@ -1,21 +1,19 @@
 package com.yc.emotion.home.mine.ui.fragment
 
 import android.os.Handler
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kk.utils.ScreenUtil
 import com.music.player.lib.util.ToastUtils
 import com.yc.emotion.home.R
-import com.yc.emotion.home.R.id.swipeRefreshLayout
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.base.presenter.IPresenter
-import com.yc.emotion.home.base.ui.fragment.BaseLazyFragment
-import com.yc.emotion.home.mine.adapter.ServiceOrderAdapter
-import com.yc.emotion.home.model.bean.OrderInfo
+import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.mine.adapter.ServiceOrderAdapter
+import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.utils.ItemDecorationHelper
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 
@@ -24,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_efficient_course.*
  *
  * Created by suns  on 2019/10/17 10:28.
  */
-class ServiceOrderFragment : BaseLazyFragment<BasePresenter<IModel, IView>>() {
+class ServiceOrderFragment : BaseFragment<BasePresenter<IModel, IView>>() {
     private var mLoadingDialog: LoadDialog? = null
 
     private var serviceOrderAdapter: ServiceOrderAdapter? = null
@@ -42,7 +40,7 @@ class ServiceOrderFragment : BaseLazyFragment<BasePresenter<IModel, IView>>() {
         rv_efficient_course.setPadding(0, 0, 0, 0)
         activity?.let {
 
-            ll_efficient_course.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.gray_f2f2f2))
+            ll_efficient_course.setBackgroundColor(ContextCompat.getColor(it, R.color.gray_f2f2f2))
             ll_efficient_course.setPadding(0, 0, 0, ScreenUtil.dip2px(activity, 30f))
 
         }

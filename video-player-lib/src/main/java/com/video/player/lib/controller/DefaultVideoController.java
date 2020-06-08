@@ -2,8 +2,6 @@ package com.video.player.lib.controller;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +16,9 @@ import com.video.player.lib.constants.VideoConstants;
 import com.video.player.lib.manager.VideoPlayerManager;
 import com.video.player.lib.utils.Logger;
 import com.video.player.lib.utils.VideoUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * TinyHung@Outlook.com

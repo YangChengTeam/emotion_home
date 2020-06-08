@@ -20,11 +20,11 @@ class EditSignatureActivity : BaseSameActivity() {
     }
 
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_edit_signature)
-//        initView()
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(getLayoutId())
+        initViews()
+    }
 
     override fun initViews() {
         intent?.let {

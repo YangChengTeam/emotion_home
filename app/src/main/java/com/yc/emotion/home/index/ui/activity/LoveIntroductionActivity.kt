@@ -3,20 +3,14 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
-
-import com.kk.securityhttp.net.contains.HttpConfig
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.adapter.LoveIntroduceAdapter
-import com.yc.emotion.home.base.domain.engine.MySubscriber
-import com.yc.emotion.home.model.bean.AResultInfo
-import com.yc.emotion.home.model.bean.ArticleDetailInfo
-import com.yc.emotion.home.model.bean.ExampDataBean
-import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.index.adapter.LoveIntroduceAdapter
 import com.yc.emotion.home.index.presenter.SkillPresenter
 import com.yc.emotion.home.index.view.SkillView
+import com.yc.emotion.home.model.bean.ArticleDetailInfo
 import kotlinx.android.synthetic.main.activity_love_introduction.*
 
 /**
