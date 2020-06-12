@@ -9,6 +9,7 @@ import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.domain.model.IndexModel
 import com.yc.emotion.home.index.view.IndexView
+import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
 import com.yc.emotion.home.model.bean.IndexInfo
 import com.yc.emotion.home.utils.CommonInfoHelper
@@ -135,7 +136,10 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
             override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
                 t?.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showIndexLiveInfos(t.data.list)
+                        val list = ArrayList<LiveInfo>()
+                        list.addAll(t.data.list)
+                        list.addAll(t.data.recording)
+                        mView.showIndexLiveInfos(list)
                     }
                 }
             }
@@ -150,5 +154,12 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
         })
         subScriptions?.add(subscription)
     }
+
+//    fun createNewData(data: LiveInfoWrapper) {
+//        val liveList = data.list
+//        val recordList = data.list
+//
+//
+//    }
 
 }

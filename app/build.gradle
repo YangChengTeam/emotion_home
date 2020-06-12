@@ -139,8 +139,10 @@ dependencies {
     implementation project(':PhotoPicker')
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation files('libs/ZegoExpressEngine.jar')
+
     implementation project(path: ':likestarlibrary')
 
     implementation 'com.tencent.liteav:LiteAVSDK_TRTC:latest.release'
+    implementation(name: 'imsdk-4.8.10', ext: 'aar')
+//    api 'com.tencent.imsdk:imsdk:4.8.10'
 }

@@ -3,6 +3,7 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
@@ -11,6 +12,9 @@ import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.presenter.MonagraphPresenter
 import com.yc.emotion.home.index.view.MonagraphView
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
+import com.yc.emotion.home.model.util.SizeUtils
+import com.yc.emotion.home.utils.StatusBarUtil
+
 import kotlinx.android.synthetic.main.activity_monograph.*
 
 /**
@@ -87,6 +91,22 @@ class MonographActivity : BaseSameActivity(), MonagraphView {
         }
 
         indexChoicenessAdapter.setOnLoadMoreListener({ getData() }, recyclerView_monograph)
+    }
+
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        val layoutParams = swipeRefreshLayout.layoutParams as ConstraintLayout.LayoutParams
+
+        var bottom = 0
+
+        if (StatusBarUtil.isNavigationBarExist(this)) {
+            bottom = StatusBarUtil.getNavigationBarHeight(this)
+        }
+
+        layoutParams.bottomMargin = bottom
+
+        swipeRefreshLayout.layoutParams = layoutParams
     }
 
     override fun showMonagraphInfos(data: List<ArticleDetailInfo>?) {

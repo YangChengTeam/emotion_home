@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class LiveInfoWrapper {
     private List<LiveInfo> list;
+    private List<LiveInfo> recording;
 
     public List<LiveInfo> getList() {
         return list;
@@ -14,5 +15,13 @@ public class LiveInfoWrapper {
 
     public void setList(List<LiveInfo> list) {
         this.list = list;
+    }
+
+    public List<LiveInfo> getRecording() {
+        return recording;
+    }
+
+    public void setRecording(List<LiveInfo> recording) {
+        this.recording = recording;
     }
 }

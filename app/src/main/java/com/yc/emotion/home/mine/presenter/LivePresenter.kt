@@ -81,4 +81,39 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
         })
         subScriptions?.add(subscription)
     }
+
+    fun liveEnd(roomId: String?) {
+        val subscription = mModel?.liveEnd(roomId)?.subscribe(object : Subscriber<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>?) {
+
+            }
+
+            override fun onCompleted() {
+
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
+        })
+        subScriptions?.add(subscription)
+    }
+
+    fun dismissGroup(group_id: String) {
+        val subscription = mModel?.dismissGroup(group_id)?.subscribe(object : Subscriber<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>?) {
+
+            }
+
+            override fun onCompleted() {
+
+            }
+
+            override fun onError(e: Throwable?) {
+
+            }
+
+        })
+        subScriptions?.add(subscription)
+    }
 }

@@ -12,6 +12,8 @@ import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseBottomSheetDialogFragment
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
+import com.yc.emotion.home.mine.ui.activity.LoginMainActivity
+import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.mine.ui.activity.PrivacyStatementActivity
 import com.yc.emotion.home.mine.ui.activity.UserPolicyActivity
 import com.yc.emotion.home.mine.view.UserInfoView
@@ -20,6 +22,7 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.utils.UserLoginManager
 import org.greenrobot.eventbus.EventBus
+import org.w3c.dom.Text
 
 /**
  * Created by suns  on 2020/6/4 11:48.
@@ -33,6 +36,8 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
     private var tvUserPolicy: TextView? = null
 
     private var tvPrivacy: TextView? = null
+
+    private var tvOtherLogin: TextView? = null
     private var manager: UserLoginManager? = null
 
     private var mPresenter: BasePresenter<out IModel, out IView>? = null
@@ -61,6 +66,7 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
         tvUserPolicy = rootView?.findViewById(R.id.tv_user_policy)
 
         tvPrivacy = rootView?.findViewById(R.id.tv_privacy)
+        tvOtherLogin = rootView?.findViewById(R.id.tv_other_login)
         mPresenter = UserInfoPresenter(activity, this)
         manager = UserLoginManager.get()
         initListener()
@@ -85,6 +91,9 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
 
         tvPrivacy?.setOnClickListener {
             startActivity(Intent(activity, PrivacyStatementActivity::class.java))
+        }
+        tvOtherLogin?.setOnClickListener {
+            startActivity(Intent(activity, LoginRegisterActivity::class.java))
         }
     }
 

@@ -34,6 +34,7 @@
             android:src="@mipmap/icon_live" />
 
         <TextView
+            android:id="@+id/tv_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -63,7 +64,7 @@
         android:layout_marginStart="7dp"
         android:layout_marginTop="13dp"
         android:lineSpacingExtra="5dp"
-        android:textColor="@color/gray_222222"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/live_roundImg"
         tools:text="读懂男性情绪需求，把话说进对方心坎" />
@@ -94,7 +95,7 @@
         app:layout_constraintRight_toRightOf="@id/live_roundImg"
         app:layout_constraintTop_toTopOf="@id/tv_live_type">
 
-<!--        android:background="@drawable/live_online_bg"-->
+        <!--        android:background="@drawable/live_online_bg"-->
         <TextView
             android:id="@+id/tv_live_num"
             android:layout_width="wrap_content"

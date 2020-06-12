@@ -14,6 +14,7 @@ import com.yc.emotion.home.index.view.PracticeView
 import com.yc.emotion.home.model.bean.MainT2Bean
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_practice_teach.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -25,8 +26,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 //LoveCaseActivity
 class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
-
-
 
 
     private var mMainT2Beans: MutableList<MainT2Bean>? = null
@@ -80,8 +79,12 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
             if (mainT2Bean != null) {
                 if (MainT2Bean.VIEW_ITEM == mainT2Bean.type) {
                     LoveCaseDetailActivity.startExampleDetailActivity(activity, mainT2Bean.id, mainT2Bean.post_title)
-                } else if (MainT2Bean.VIEW_TO_PAY_VIP == mainT2Bean.type || MainT2Bean.VIEW_VIP == mainT2Bean.type) {
-                    startActivity(Intent(activity, VipActivity::class.java))
+                } else {
+                    if (!UserInfoHelper.instance.goToLogin(activity)) {
+                        if (MainT2Bean.VIEW_TO_PAY_VIP == mainT2Bean.type || MainT2Bean.VIEW_VIP == mainT2Bean.type) {
+                            startActivity(Intent(activity, VipActivity::class.java))
+                        }
+                    }
                 }
             }
         }

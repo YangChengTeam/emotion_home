@@ -1,9 +1,12 @@
 package com.yc.emotion.home.index.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -23,6 +26,12 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
+import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMGroupListener;
+import com.tencent.imsdk.v2.V2TIMGroupMemberInfo;
+import com.tencent.imsdk.v2.V2TIMMessage;
+import com.tencent.imsdk.v2.V2TIMSendCallback;
+import com.tencent.imsdk.v2.V2TIMSimpleMsgListener;
 import com.tencent.liteav.TXLiteAVCode;
 import com.tencent.trtc.TRTCCloud;
 import com.tencent.trtc.TRTCCloudDef;
@@ -33,12 +42,16 @@ import com.yc.emotion.home.base.ui.activity.BaseActivity;
 import com.yc.emotion.home.base.ui.fragment.common.AddWxFragment;
 import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment;
 import com.yc.emotion.home.constant.Constant;
+import com.yc.emotion.home.im.IMManager;
 import com.yc.emotion.home.index.adapter.ChatAdapter;
 import com.yc.emotion.home.index.domain.bean.ChatItem;
 import com.yc.emotion.home.index.domain.bean.Message;
-import com.yc.emotion.home.index.domain.bean.MessageType;
+import com.yc.emotion.home.index.presenter.LiveLookPresenter;
 import com.yc.emotion.home.index.ui.fragment.CloseLiveFragment;
+import com.yc.emotion.home.index.ui.fragment.LiveEndFragment;
+import com.yc.emotion.home.index.ui.fragment.LiveIntroFragment;
 import com.yc.emotion.home.index.ui.fragment.WxLoginFragment;
+import com.yc.emotion.home.index.view.LiveLookView;
 import com.yc.emotion.home.mine.domain.bean.LiveInfo;
 import com.yc.emotion.home.model.bean.UserInfo;
 import com.yc.emotion.home.model.bean.event.EventLoginState;
@@ -47,33 +60,36 @@ import com.yc.emotion.home.utils.PreferenceUtil;
 import com.yc.emotion.home.utils.SoftKeyBoardUtils;
 import com.yc.emotion.home.utils.UserInfoHelper;
 
+import net.lucode.hackware.magicindicator.buildins.UIUtil;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import im.zego.zegoexpress.ZegoExpressEngine;
 
 import static com.tencent.trtc.TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM;
 
 /**
  * Created by suns  on 2020/5/29 14:28.
  */
-public class LiveLookActivity extends BaseActivity {
+public class LiveLookActivity extends BaseActivity implements LiveLookView {
 
     private RelativeLayout rlLoading;
     private TCHeartLayout tcHeartLayout;
 
-    private ZegoExpressEngine engine;
     private static final String TAG = "LiveLookActivity";
 
     private Handler mHandler = new Handler();
@@ -89,7 +105,6 @@ public class LiveLookActivity extends BaseActivity {
     private ArrayList<ChatItem> records = new ArrayList<>();
     private RecyclerView recyclerViewChat;
     private ChatAdapter chatAdapter;
-    private EditText et_send_message;
     private FrameLayout send_container;
     private TextView tvSendBg;
     private String userID;
@@ -110,13 +125,31 @@ public class LiveLookActivity extends BaseActivity {
     private int onlineCount = 368;//在线人数基数
 
     private TRTCCloud mTRTCCloud;
-    private LiveInfo liveInfo;
+
     private TextView tvMentorName;
     private ImageView ivMentorAvatar;
+    private IMManager imManager;
+    private int roomId;
+    private ImageView ivIntro;
+    private ImageView ivTopPPt;
+    private RelativeLayout rlTopPPt;
+    private TextView tvPack;
+    private int topHeight;
 
-    public static void startActivity(Context context, LiveInfo liveInfo) {
+    private String tutorId;//导师id
+    private LiveLookPresenter liveLookPresenter;
+    private String userSig;//用户签名
+    private LiveInfo mLiveInfo;
+    private List<String> weixins;
+    private String face = "";//用户头像
+    private long startTime;
+    private long endTime;
+
+    public static void startActivity(Context context, int roomId, long starttime, long endtime) {
         Intent intent = new Intent(context, LiveLookActivity.class);
-        intent.putExtra("liveinfo", liveInfo);
+        intent.putExtra("roomId", roomId);
+        intent.putExtra("starttime", starttime);
+        intent.putExtra("endtime", endtime);
         context.startActivity(intent);
 
     }
@@ -144,7 +177,10 @@ public class LiveLookActivity extends BaseActivity {
     }
 
     private void initView() {
-        liveInfo = getIntent().getParcelableExtra("liveinfo");
+        liveLookPresenter = new LiveLookPresenter(this, this);
+        roomId = getIntent().getIntExtra("roomId", 0);
+        startTime = getIntent().getLongExtra("starttime", 0);
+        endTime = getIntent().getLongExtra("endtime", 0);
 
         rlLoading = findViewById(R.id.loading_connect_listen);
         tcHeartLayout = findViewById(R.id.heart_layout);
@@ -165,41 +201,49 @@ public class LiveLookActivity extends BaseActivity {
         tvPraiseCount = findViewById(R.id.praise_count);
         ivClose = findViewById(R.id.close_live);
         tvPraiseBottom = findViewById(R.id.tv_praise_bottom);
-        LinearLayout llWheat = findViewById(R.id.ll_wheat);
+        ImageView ivWheat = findViewById(R.id.iv_wheat);
         tvMentorName = findViewById(R.id.mentor_name);
         ivMentorAvatar = findViewById(R.id.mentor_avatar);
-        llWheat.setVisibility(View.GONE);
+        //简介
+        ivIntro = findViewById(R.id.iv_intro);
+        ImageView ivScreen = findViewById(R.id.iv_screen);
+        ivTopPPt = findViewById(R.id.iv_top_ppt);
+        rlTopPPt = findViewById(R.id.rl_top_ppt);
+        tvPack = findViewById(R.id.tv_pack);
+        RelativeLayout rlTopContainer = findViewById(R.id.top_container);
 
-        recyclerViewChat.setLayoutManager(new LinearLayoutManager(this));
+
+        ivWheat.setVisibility(View.GONE);
+        ivScreen.setVisibility(View.GONE);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setStackFromEnd(true);
+        recyclerViewChat.setLayoutManager(linearLayoutManager);
 
         chatAdapter = new ChatAdapter(records);
         recyclerViewChat.setAdapter(chatAdapter);
 
+
         uid = UserInfoHelper.Companion.getInstance().getUid();
 
-        // 初始化SDK
-//        engine = ZegoExpressEngine.createEngine(
-//                SettingDataUtil.getAppId(),
-//                SettingDataUtil.getAppKey(),
-//                SettingDataUtil.getEnv(),
-//                SettingDataUtil.getScenario(),
-//                getApplication(),
-//                null
-//        );
+        liveLookPresenter.getLiveLookInfo(roomId + "");
+
+        handleUser();
+
         mTRTCCloud = TRTCCloud.sharedInstance(getApplicationContext());
 
-        rlLoading.setVisibility(View.VISIBLE);
-//        TextureView preview = findViewById(R.id.preview);
+        //创建im实例
+        imManager = IMManager.getInstance();
 
-        // 调用sdk 开始预览接口 设置view 启用预览
-//        zegoCanvas = new ZegoCanvas(preview);
-        starLook();
+        rlLoading.setVisibility(View.VISIBLE);
+
+
         initListener();
         tvChat.post(() -> {
 
             tvChat.getLocationOnScreen(viewRect);
             int tvWidth = tvChat.getWidth();
             int tvHeight = tvChat.getHeight();
+            topHeight = rlTopContainer.getHeight();
 
             rect.left = viewRect[0];
             rect.top = viewRect[1];
@@ -241,12 +285,12 @@ public class LiveLookActivity extends BaseActivity {
                 wxLoginFragment.show(getSupportFragmentManager(), "");
             } else {
                 tcHeartLayout.addFavor();
-                sendMsg(Message.command_praise, "点赞");
+
+                sendCustomMsg(createMessage(Message.command_praise, "点赞"));
                 praiseCount++;
                 setPraise();
             }
         });
-
         SoftKeyBoardUtils.setListener(this, new SoftKeyBoardUtils.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
@@ -264,7 +308,8 @@ public class LiveLookActivity extends BaseActivity {
                 Toast.makeText(LiveLookActivity.this, "不能发送空消息", Toast.LENGTH_SHORT).show();
                 return;
             }
-            sendMsg(Message.command_normal, content);
+//            sendTextMsg(content);
+            sendCustomMsg(createMessage(Message.command_normal, userName + "-" + content + "-" + face));
         });
 
         et_send.addTextChangedListener(new TextWatcher() {
@@ -296,8 +341,7 @@ public class LiveLookActivity extends BaseActivity {
             ChatItem chatItem = chatAdapter.getItem(position);
             if (null != chatItem) {
                 if (chatItem.getItemType() == ChatItem.TYPE_NOTIFICATION) {
-                    AddWxFragment addWxFragment = new AddWxFragment();
-                    addWxFragment.show(getSupportFragmentManager(), "");
+                    showWxFragment();
                 }
             }
         });
@@ -306,8 +350,8 @@ public class LiveLookActivity extends BaseActivity {
                 WxLoginFragment wxLoginFragment = new WxLoginFragment();
                 wxLoginFragment.show(getSupportFragmentManager(), "");
             } else {
-                AddWxFragment addWxFragment = new AddWxFragment();
-                addWxFragment.show(getSupportFragmentManager(), "");
+                showWxFragment();
+                sendCustomMsg(createMessage(Message.command_get_wx, userName));
             }
         });
         llShare.setOnClickListener(v -> {
@@ -322,16 +366,94 @@ public class LiveLookActivity extends BaseActivity {
         ivClose.setOnClickListener(v -> {
             showCloseFragment();
         });
+        ivIntro.setOnClickListener(v -> {
+            LiveIntroFragment liveIntroFragment = new LiveIntroFragment();
+            Bundle bundle = new Bundle();
+            if (mLiveInfo != null) {
+                bundle.putString("livetitle", mLiveInfo.getLive_title());
+                bundle.putString("start_time", convertTime(startTime));
+                bundle.putString("end_time", convertTime(endTime));
+            }
+            liveIntroFragment.setArguments(bundle);
+            liveIntroFragment.show(getSupportFragmentManager(), "");
+        });
+        tvPack.setOnClickListener(v -> setPackState());
     }
 
-    private void starLook() {
+    private void showWxFragment() {
+        AddWxFragment addWxFragment = new AddWxFragment();
+        String wx = getWx();
+        addWxFragment.setWX(wx);
+        addWxFragment.show(getSupportFragmentManager(), "");
+        addWxFragment.setListener(() -> {
+            ClipboardManager myClipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData myClip = ClipData.newPlainText("text", wx);
+            myClipboard.setPrimaryClip(myClip);
+            openWeiXin();
+        });
+    }
 
-//        engine.startPreview(zegoCanvas);
+    private void setPackState() {
+        if (rlTopPPt.getVisibility() == View.VISIBLE) {
+            rlTopPPt.setVisibility(View.GONE);
+        } else {
+            rlTopPPt.setVisibility(View.VISIBLE);
+        }
+        if (rlTopPPt.getVisibility() == View.GONE) {
+            Drawable drawable = getResources().getDrawable(R.mipmap.arrow_down);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPack.setCompoundDrawables(null, null, drawable, null);
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvPack.getLayoutParams();
+
+            layoutParams.topMargin = topHeight + UIUtil.dip2px(this, 15);
+            tvPack.setLayoutParams(layoutParams);
+            tvPack.setText("展开");
+        } else {
+            Drawable drawable = getResources().getDrawable(R.mipmap.arrow_up);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tvPack.setCompoundDrawables(null, null, drawable, null);
+//            layoutParams.topMargin = 0;
+            tvPack.setText("收起");
+        }
+
+    }
+
+    private void setPraise() {
+        tvPraiseCount.setText(String.format(getString(R.string.praise_count), praiseCount));
+        tvPraiseBottom.setText(String.valueOf(praiseCount));
+        if (mLiveInfo != null) {
+            tvMentorName.setText(mLiveInfo.getNickname());
+            if (!isDestroyed()) {
+                Glide.with(this).load(mLiveInfo.getFace()).error(R.drawable.default_avatar_72)
+                        .circleCrop().into(ivMentorAvatar);
+            }
+        }
+    }
+
+    private void setLiveState(boolean isLive) {
+        tvLiveState.setVisibility(isLive ? View.GONE : View.VISIBLE);
+        ivLiveAnim.setVisibility(isLive ? View.VISIBLE : View.GONE);
+        tvOnLineCount.setVisibility(isLive ? View.VISIBLE : View.GONE);
+        tvPraiseCount.setVisibility(isLive ? View.VISIBLE : View.GONE);
+        //通过设置android:background时，得到AnimationDrawable 用如下方法
+        final AnimationDrawable animationDrawable = (AnimationDrawable) ivLiveAnim.getBackground();
+        if (isLive) {
+            animationDrawable.start();
+        } else {
+            animationDrawable.stop();
+        }
+        if (mLiveInfo != null && !isDestroyed())
+            Glide.with(this).load(mLiveInfo.getPpt_img()).into(ivTopPPt);
+
+    }
 
 
-        loginRoom();
+    private void starLook(LiveInfo liveInfo) {
+//        loginRoom();
+        joinImRoom(liveInfo);
 
         mTRTCCloud.setListener(new TRTCCloudListener() {
+
             @Override
             public void onError(int errCode, String errMsg, Bundle bundle) {
                 super.onError(errCode, errMsg, bundle);
@@ -343,17 +465,21 @@ public class LiveLookActivity extends BaseActivity {
             @Override
             public void onEnterRoom(long result) {
                 super.onEnterRoom(result);
-                Log.e(TAG, "onEnterRoom: ");
-
+                Log.e(TAG, "onEnterRoom: " + result);
 
                 if (result > 0) {
                     rlLoading.setVisibility(View.GONE);
+                    List<ChatItem> chatItems = new ArrayList<>();
+                    ChatItem chatItem = new ChatItem(userName, ChatItem.TYPE_COME_CHAT);
 
-                    sendMsg(Message.command_come_room, userName);
-
-                    Toast.makeText(LiveLookActivity.this, "进房成功，总计耗时[(" + result + ")]ms", Toast.LENGTH_SHORT).show();
+                    chatItems.add(chatItem);
+                    chatAdapter.addData(chatItems);
+                    onlineCount++;
+                    tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
+                    sendCustomMsg(createMessage(Message.command_come_room, userName));
+//                    Toast.makeText(LiveLookActivity.this, "进房成功，总计耗时[(" + result + ")]ms", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LiveLookActivity.this, "进房失败，错误码[(" + result + ")]", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LiveLookActivity.this, "进房失败，错误码[(" + result + ")]", Toast.LENGTH_SHORT).show();
                 }
                 tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
                 //
@@ -372,16 +498,14 @@ public class LiveLookActivity extends BaseActivity {
             public void onRemoteUserEnterRoom(String s) {
                 super.onRemoteUserEnterRoom(s);
                 Log.e(TAG, "onRemoteUserEnterRoom: " + s);
-                List<ChatItem> chatItems = new ArrayList<>();
-
-                ChatItem chatItem = new ChatItem(s, ChatItem.TYPE_COME_CHAT);
-
-                chatItems.add(chatItem);
-
-                chatAdapter.addData(chatItems);
-
-//                sendMsg(Message.command_get_wx, s);
-
+                tutorId = s;
+//                List<ChatItem> chatItems = new ArrayList<>();
+//
+//                ChatItem chatItem = new ChatItem(s, ChatItem.TYPE_COME_CHAT);
+//
+//                chatItems.add(chatItem);
+//
+//                chatAdapter.addData(chatItems);
 
             }
 
@@ -389,7 +513,6 @@ public class LiveLookActivity extends BaseActivity {
             public void onRemoteUserLeaveRoom(String s, int i) {
                 super.onRemoteUserLeaveRoom(s, i);
                 Log.e(TAG, "onRemoteUserLeaveRoom: ");
-
 
             }
 
@@ -402,221 +525,39 @@ public class LiveLookActivity extends BaseActivity {
                 setPraise();
             }
 
-            @Override
-            public void onRecvCustomCmdMsg(String userId, int cmdId, int seq, byte[] message) {
-//                Log.e(TAG, "onRecvCustomCmdMsg: " + cmdId);
-                // 接收到 userId 发送的消息
-                List<ChatItem> chatItems = new ArrayList<>();
-                ChatItem chatItem = null;
-                switch (cmdId) {  // 发送方和接收方协商好的cmdId
-                    case Message.command_normal:
-                        // 普通消息
-
-                        chatItem = new ChatItem(userId, new String(message, StandardCharsets.UTF_8), ChatItem.TYPE_OTHER);
-                        break;
-                    case Message.command_tutor:
-                        // 处理cmdId = 1消息
-                        chatItem = new ChatItem(userId, new String(message, StandardCharsets.UTF_8), ChatItem.TYPE_NOTIFICATION);
-                        break;
-                    case Message.command_get_wx:
-                        // 处理cmdId = 2消息
-
-                        break;
-                    case Message.command_praise:
-                        //点赞
-                        //点赞消息
-                        tcHeartLayout.addFavor();
-                        praiseCount++;
-                        setPraise();
-                        break;
-                    case Message.command_come_room:
-                        onlineCount++;
-                        tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
-
-
-                        chatItem = new ChatItem(userName, ChatItem.TYPE_COME_CHAT);
-
-                        chatItems.add(chatItem);
-
-                        break;
-
-                    default:
-                        break;
-
-                }
-                if (chatItem != null)
-                    chatItems.add(chatItem);
-
-                chatAdapter.addData(chatItems);
-            }
         });
-
-
-        /** 举例：监听房间内用户进出房间的通知 */
-//        boolean isExitLive = PreferenceUtil.getInstance().getBooleanValue(Constant.is_exit_live, true);
-//        if (isExitLive) {
-//            engine.setEventHandler(new IZegoEventHandler() {
-//                @Override
-//                public void onRoomUserUpdate(String roomID, ZegoUpdateType updateType, ArrayList<ZegoUser> userList) {
-//                    super.onRoomUserUpdate(roomID, updateType, userList);
-//                    Log.e(TAG, roomID);
-//
-//
-//                    List<ChatItem> chatItems = new ArrayList<>();
-//                    for (int i = 0; i < userList.size(); i++) {
-//                        ZegoUser user = userList.get(i);
-//                        ChatItem chatItem = new ChatItem(user.userName, ChatItem.TYPE_COME_CHAT);
-////                    Log.e(TAG, "onRoomUserUpdate: " + user.userName);
-////                    chatItem.setUsername(user.userName);
-////                    chatItem.setType(ChatItem.TYPE_COME_CHAT);
-//                        chatItems.add(chatItem);
-//                    }
-//
-//                    chatAdapter.addData(chatItems);
-//                }
-//
-//                @Override
-//                public void onRoomOnlineUserCountUpdate(String roomID, int count) {
-//                    super.onRoomOnlineUserCountUpdate(roomID, count);
-//                    Log.e(TAG, "onRoomOnlineUserCountUpdate: " + count);
-//                    if (count > onlineCount) {
-//                        onlineCount = count;
-//                    }
-//                    tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
-//
-//                }
-//
-//                //state 房间状态 1.CONNECTING 2 CONNECTED 已连接 0 DISCONNECTED 断开链接
-//                @Override
-//                public void onRoomStateUpdate(String roomID, ZegoRoomState state, int errorCode, JSONObject extendedData) {
-//                    super.onRoomStateUpdate(roomID, state, errorCode, extendedData);
-//                    int value = state.value();
-//                    if (value == 2) {
-//                        rlLoading.setVisibility(View.GONE);
-//
-//                        List<ChatItem> chatItems = new ArrayList<>();
-//                        ChatItem chatItem = new ChatItem(userName, ChatItem.TYPE_COME_CHAT);
-//
-//                        chatItems.add(chatItem);
-//                        chatAdapter.addData(chatItems);
-//                    }
-//                    Log.e(TAG, "onRoomStateUpdate: " + state.name() + " : " + value);
-//
-//                }
-//
-//
-//                @Override
-//                public void onPlayerStateUpdate(String streamID, ZegoPlayerState state, int errorCode, JSONObject extendedData) {
-//                    super.onPlayerStateUpdate(streamID, state, errorCode, extendedData);
-//                    int value = state.value();
-//                    Log.e(TAG, "onPlayerStateUpdate: " + value + "  code: " + errorCode);
-//                    if (value == 2) {//拉流成功
-//                        setLiveState(true);
-//                        setPraise();
-//                    }
-//                }
-//
-//                /**
-//                 * 接收房间广播消息通知
-//                 *
-//                 * @param roomID 房间 ID
-//                 * @param messageList 收到的消息列表
-//                 */
-//                @Override
-//                public void onIMRecvBroadcastMessage(String roomID, ArrayList<ZegoBroadcastMessageInfo> messageList) {
-//                    Log.i(TAG, "onIMRecvBroadcastMessage: roomID = " + roomID + ",  messageList= " + messageList);
-//                    List<ChatItem> chatItems = new ArrayList<>();
-//                    for (int i = 0; i < messageList.size(); i++) {
-//                        ZegoBroadcastMessageInfo info = messageList.get(i);
-//                        String content = info.message;
-//
-//                        Message message = JSON.parseObject(content, Message.class);
-//                        ChatItem chatItem = null;
-//                        switch (message.getType()) {
-//                            case TUTOR:
-//                                chatItem = new ChatItem(info.fromUser.userName, message.getContent(), ChatItem.TYPE_NOTIFICATION);
-//                                break;
-//                            case NORMAL:
-//                                chatItem = new ChatItem(info.fromUser.userName, message.getContent(), ChatItem.TYPE_OTHER);
-//                                break;
-//                            case PRAISE:
-//                                //点赞消息
-//                                tcHeartLayout.addFavor();
-//                                praiseCount++;
-//                                setPraise();
-//                                break;
-//                        }
-//                        if (chatItem != null)
-//                            chatItems.add(chatItem);
-//                    }
-//                    chatAdapter.addData(chatItems);
-//                }
-//
-//                /**
-//                 * 接收自定义信令通知
-//                 *
-//                 * @param roomID 房间 ID
-//                 * @param fromUser 信令的发送人
-//                 * @param command 信令内容
-//                 */
-//                public void onIMRecvCustomCommand(String roomID, ZegoUser fromUser, String command) {
-//                    Log.i(TAG, "onIMRecvCustomCommand: roomID = " + roomID + "fromUser :" + fromUser + ", command= " + command);
-//
-//                    /** 在ListView中显示消息 */
-//                    /** Show message in the Listview */
-//                    ChatItem chatItem = new ChatItem(fromUser.userName, command);
-//                    records.add(chatItem);
-//
-//                    chatAdapter.addData(records);
-//                }
-//
-//                /**
-//                 * 接收房间弹幕消息通知
-//                 *
-//                 * @param roomID 房间 ID
-//                 * @param messageList 收到的消息列表
-//                 */
-//                @Override
-//                public void onIMRecvBarrageMessage(String roomID, ArrayList<ZegoBarrageMessageInfo> messageList) {
-//                    Log.i(TAG, "onIMRecvBarrageMessage: roomID = " + roomID + ",  messageList= " + messageList);
-//                    for (int i = 0; i < messageList.size(); i++) {
-//                        ZegoBarrageMessageInfo info = messageList.get(i);
-//
-//                        String content = info.message;
-//
-//                        Message message = JSON.parseObject(content, Message.class);
-//                        Log.e(TAG, "onIMRecvBroadcastMessage: " + message.getType());
-//
-//                        if (message.getType() == MessageType.PRAISE) {
-//                            tcHeartLayout.addFavor();
-//                        }
-//                    }
-//                }
-//
-//
-//            });
-//            streamID = "201985627";
-//            // 开始拉流
-//            engine.startPlayingStream(streamID);
-//            Log.e(TAG, "starLook: ");
-//        }
 
     }
 
+    private String createMessage(int cmdId, String content) {
+        Message message = new Message(content, cmdId);
+        return JSON.toJSONString(message);
+    }
+
+
+    private void logoutRoom() {
+        sendCustomMsg(createMessage(Message.command_leave_room, "离开房间"));
+        if (null != imManager) {
+            imManager.logout(null);
+        }
+
+    }
 
     private void exitRoom() {
-        mTRTCCloud.stopLocalAudio();
-        mTRTCCloud.exitRoom();
+
+        logoutRoom();
         //销毁 trtc 实例
         if (mTRTCCloud != null) {
-            mTRTCCloud.setListener(null);
+            mTRTCCloud.stopLocalAudio();
+//            mTRTCCloud.setListener(null);
+            mTRTCCloud.exitRoom();
         }
         mTRTCCloud = null;
+        imManager = null;
         TRTCCloud.destroySharedInstance();
     }
 
-
-    private void loginRoom() {
+    private void handleUser() {
         String randomSuffix = (new Date().getTime() % (new Date().getTime() / 1000)) + "";
         if (uid == 0) {
             userID = "userid-" + randomSuffix;
@@ -627,113 +568,60 @@ public class LiveLookActivity extends BaseActivity {
             Log.e(TAG, "loginRoom: " + userInfo);
             if (null != userInfo && !TextUtils.isEmpty(userInfo.getNick_name())) {
                 userName = userInfo.getNick_name();
+                face = userInfo.getFace();
             } else {
                 userName = "username-" + randomSuffix;
             }
         }
+        //获取签名
+//        liveLookPresenter.getUserSeg(userID);
+    }
 
+
+    //1.没有登录的用户不能加入房间
+    //2.登录的用户能加入房间
+    private void joinImRoom(LiveInfo liveInfo) {
+
+        roomId = liveInfo.getRoomId();
+
+        if (imManager == null) {
+            imManager = IMManager.getInstance();
+        }
+        Log.e(TAG, "joinImRoom: ");
+        //用户登录
+        imManager.login(userID, GenerateTestUserSig.genTestUserSig(userID), new V2TIMCallback() {
+            @Override
+            public void onError(int code, String msg) {
+                Log.e(TAG, "login room error: code:  " + code + "  msg:  " + msg);
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.e(TAG, "login room success: ");
+                joinRoom();
+                loginRoom();
+            }
+        });
+
+
+    }
+
+    //进入房间收听语音直播
+    private void loginRoom() {
 
         TRTCCloudDef.TRTCParams trtcParams = new TRTCCloudDef.TRTCParams();
         trtcParams.userId = userID;
         trtcParams.sdkAppId = GenerateTestUserSig.SDKAPPID;
         trtcParams.userSig = GenerateTestUserSig.genTestUserSig(trtcParams.userId);
 
-        trtcParams.roomId = 123456;
+        trtcParams.roomId = roomId;
         trtcParams.role = TRTCCloudDef.TRTCRoleAudience;
 
         //进入房间
         mTRTCCloud.enterRoom(trtcParams, TRTC_APP_SCENE_VOICE_CHATROOM);
-        // 开始推流
-//        mTRTCCloud.startLocalAudio();
-
-//        ZegoUser user = new ZegoUser(userID, userName);
-//        roomId = "ChatRoom-1";
-//
-//        ZegoRoomConfig config = new ZegoRoomConfig();
-//        /** 使能用户登录/登出房间通知 */
-//        /** Enable notification when user login or logout */
-//        config.isUserStatusNotify = true;
-//
-//
-//        engine.loginRoom(roomId, user, config);
-    }
-
-    private void setPraise() {
-        tvPraiseCount.setText(String.format(getString(R.string.praise_count), praiseCount));
-        tvPraiseBottom.setText(String.valueOf(praiseCount));
-        if (liveInfo != null) {
-            tvMentorName.setText(liveInfo.getNickname());
-            Glide.with(this).load(liveInfo.getLive_cover()).circleCrop().into(ivMentorAvatar);
-        }
-    }
-
-    private void setLiveState(boolean isLive) {
-        tvLiveState.setVisibility(isLive ? View.GONE : View.VISIBLE);
-        ivLiveAnim.setVisibility(isLive ? View.VISIBLE : View.GONE);
-        tvOnLineCount.setVisibility(isLive ? View.VISIBLE : View.GONE);
-        tvPraiseCount.setVisibility(isLive ? View.VISIBLE : View.GONE);
-        //通过设置android:background时，得到AnimationDrawable 用如下方法
-        final AnimationDrawable animationDrawable = (AnimationDrawable) ivLiveAnim.getBackground();
-        if (isLive) {
-            animationDrawable.start();
-        } else {
-            animationDrawable.stop();
-        }
-
 
     }
 
-
-    private String createMessage(MessageType type, String content) {
-        Message message = new Message(type, content);
-        return JSON.toJSONString(message);
-    }
-
-    public void sendMsg(final int cmdId, final String msg) {
-
-        if (!msg.equals("")) {
-            /**
-             * cmdID	消息 ID，取值范围为1 - 10
-             * data	待发送的消息，最大支持1KB（1000字节）的数据大小
-             * reliable	是否可靠发送，可靠发送的代价是会引入一定的延时，因为接收端要暂存一段时间的数据来等待重传
-             * ordered	是否要求有序，即是否要求接收端接收的数据顺序和发送端发送的顺序一致，这会带来一定的接收延时，因为在接收端需要暂存并排序这些消息。
-             */
-            boolean isSendSuccess = mTRTCCloud.sendCustomCmdMsg(cmdId, msg.getBytes(), false, false);
-            if (isSendSuccess) {
-                Log.i(TAG, "send message success");
-
-                if (cmdId == Message.command_normal) {
-                    records.add(new ChatItem(userName, msg, ChatItem.TYPE_ME));
-                }
-                chatAdapter.setNewData(records);
-            } else {
-                Log.i(TAG, "send  message fail:" + msg);
-            }
-
-
-//            engine.sendBroadcastMessage(roomId, createMessage(type, msg), new IZegoIMSendBroadcastMessageCallback() {
-//                /** 发送广播消息结果回调处理 */
-//                /** Send broadcast message result callback processing */
-//
-//                @Override
-//                public void onIMSendBroadcastMessageResult(int errorCode, long messageID) {
-//                    if (errorCode == 0) {
-//                        Log.i(TAG, "send broadcast message success");
-//
-//                        Toast.makeText(LiveLookActivity.this, getString(R.string.tx_im_send_bc_ok), Toast.LENGTH_SHORT).show();
-//                        if (type == MessageType.NORMAL) {
-//                            records.add(new ChatItem(userName + "(我)", msg, ChatItem.TYPE_ME));
-//                            chatAdapter.setNewData(records);
-//                        }
-//
-//                    } else {
-//                        Log.i(TAG, "send broadcast message fail ");
-//                        Toast.makeText(LiveLookActivity.this, getString(R.string.tx_im_send_bc_fail) + errorCode, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-        }
-    }
 
     private void showCloseFragment() {
         CloseLiveFragment closeLiveFragment = new CloseLiveFragment();
@@ -744,6 +632,7 @@ public class LiveLookActivity extends BaseActivity {
                 PreferenceUtil.getInstance().setBooleanValue(Constant.is_exit_live, false);
 //                moveTaskToBack(true);
 //                engine.setEventHandler(null);
+                logoutRoom();
                 finish();
 
             }
@@ -751,10 +640,6 @@ public class LiveLookActivity extends BaseActivity {
             @Override
             public void onClose() {
 //                PreferenceUtil.getInstance().setBooleanValue(Constant.is_exit_live, true);
-//                if (streamID != null)
-//                    engine.stopPlayingStream(streamID);
-//                engine.logoutRoom(roomId);
-//                engine.setEventHandler(null);
                 exitRoom();
                 finish();
             }
@@ -765,7 +650,8 @@ public class LiveLookActivity extends BaseActivity {
     public void onMessageEvent(EventLoginState event) {
         if (event.state == EventLoginState.STATE_LOGINED) {
             uid = UserInfoHelper.Companion.getInstance().getUid();
-            loginRoom();
+//            loginRoom();
+            handleUser();
         }
     }
 
@@ -787,6 +673,179 @@ public class LiveLookActivity extends BaseActivity {
 
         showCloseFragment();
     }
+
+    public String getWx() {
+        String wx = "";
+        if (null != weixins) {
+            wx = weixins.get(random.nextInt(weixins.size()));
+        }
+        return wx;
+    }
+
+
+    private void joinRoom() {
+        if (imManager == null) {
+            imManager = IMManager.getInstance();
+        }
+
+//        Log.e(TAG, "joinRoom: " + roomId);
+        imManager.joinGroupRoom(roomId + "", new V2TIMCallback() {
+
+            @Override
+            public void onError(int code, String msg) {
+                Log.e(TAG, "join room failure: code： " + code + "  msg: " + msg);
+//                    joinRoom();
+            }
+
+            @Override
+            public void onSuccess() {
+                imManager.setReceiveMagListener(simpleMsgListener);
+                imManager.setGroupDismissListener(groupListener);
+            }
+
+        });
+
+    }
+
+    private V2TIMGroupListener groupListener = new V2TIMGroupListener() {
+        @Override
+        public void onGroupDismissed(String groupID, V2TIMGroupMemberInfo opUser) {
+            super.onGroupDismissed(groupID, opUser);
+            if (!isDestroyed()) {
+                LiveEndFragment liveEndFragment = new LiveEndFragment();
+                liveEndFragment.show(getSupportFragmentManager(), "");
+            }
+        }
+    };
+
+    private V2TIMSimpleMsgListener simpleMsgListener = new V2TIMSimpleMsgListener() {
+        @Override
+        public void onRecvGroupTextMessage(String msgID, String groupID, V2TIMGroupMemberInfo sender, String text) {
+            super.onRecvGroupTextMessage(msgID, groupID, sender, text);
+            List<ChatItem> chatItems = new ArrayList<>();
+            ChatItem chatItem = new ChatItem(sender.getNickName(), text, ChatItem.TYPE_OTHER);
+            chatItem.setFace(face);
+            chatItems.add(chatItem);
+            chatAdapter.addData(chatItems);
+        }
+
+        @Override
+        public void onRecvGroupCustomMessage(String msgID, String groupID, V2TIMGroupMemberInfo sender, byte[] customData) {
+            super.onRecvGroupCustomMessage(msgID, groupID, sender, customData);
+
+            String customMsg = new String(customData, StandardCharsets.UTF_8);
+            Log.e(TAG, "onRecvGroupCustomMessage: " + "  msg  " + customMsg);
+            Message message = JSON.parseObject(customMsg, Message.class);
+            List<ChatItem> chatItems = new ArrayList<>();
+            ChatItem chatItem = null;
+            switch (message.getCmdId()) {
+                case Message.command_normal:
+                    String[] strs = message.getContent().split("-");
+                    if (strs[1].startsWith("#") && TextUtils.equals(sender.getUserID(), tutorId)) {
+                        chatItem = new ChatItem(strs[0], ChatItem.TYPE_NOTIFICATION);
+                        chatItem.setFace(strs[2]);
+                    } else {
+                        chatItem = new ChatItem(strs[0], strs[1], ChatItem.TYPE_OTHER);
+                        chatItem.setFace(strs[2]);
+                    }
+                    break;
+                case Message.command_tutor://导师发微信
+                    strs = message.getContent().split("-");
+                    chatItem = new ChatItem(strs[0], ChatItem.TYPE_NOTIFICATION);
+                    chatItem.setFace(strs[1]);
+                    break;
+                case Message.command_praise://点赞
+                    //点赞
+                    //点赞消息
+                    tcHeartLayout.addFavor();
+                    praiseCount++;
+                    setPraise();
+                    break;
+                case Message.command_come_room://进入聊天室
+                    //进入房间
+                    onlineCount++;
+                    tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
+
+                    chatItem = new ChatItem(message.getContent(), ChatItem.TYPE_COME_CHAT);
+
+                    break;
+                case Message.command_get_wx://用户获取微信
+                    chatItem = new ChatItem(message.getContent(), ChatItem.TYPE_GET_WX);
+                    break;
+                case Message.command_leave_room://有用户离开房间
+                    onlineCount--;
+                    tvOnLineCount.setText(String.format(getString(R.string.online_count), onlineCount));
+                    break;
+
+            }
+            if (null != chatItem) {
+                chatItems.add(chatItem);
+            }
+
+            chatAdapter.addData(chatItems);
+            recyclerViewChat.scrollToPosition(chatAdapter.getItemCount() - 1);
+        }
+    };
+
+
+    private void sendCustomMsg(String msg) {
+        if (imManager == null) {
+            imManager = IMManager.getInstance();
+        }
+
+        if (!TextUtils.isEmpty(msg)) {
+            imManager.sendCustomMessage(msg, roomId + "", V2TIMMessage.V2TIM_PRIORITY_HIGH, new V2TIMSendCallback<V2TIMMessage>() {
+                @Override
+                public void onProgress(int i) {
+
+                }
+
+                @Override
+                public void onError(int code, String msg) {
+                    Log.e(TAG, "send customMsg error:  code: " + code + "  msg:  " + msg);
+                }
+
+                @Override
+                public void onSuccess(V2TIMMessage v2TIMMessage) {
+                    Log.e(TAG, "send customMsg success: ");
+                    Message message = JSON.parseObject(msg, Message.class);
+                    if (message.getCmdId() == Message.command_normal) {
+                        String[] strs = message.getContent().split("-");
+                        ChatItem chatItem = new ChatItem(userName, strs[1], ChatItem.TYPE_ME);
+                        chatItem.setFace(face);
+                        records.add(chatItem);
+                        et_send.setText("");
+                    } else if (message.getCmdId() == Message.command_get_wx) {
+                        records.add(new ChatItem(userName, msg, ChatItem.TYPE_GET_WX));
+                    }
+                    chatAdapter.setNewData(records);
+                    recyclerViewChat.scrollToPosition(chatAdapter.getItemCount() - 1);
+                }
+            });
+        }
+
+    }
+
+    private String convertTime(long time) {
+        SimpleDateFormat sd = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        return sd.format(new Date(time * 1000));
+    }
+
+    @Override
+    public void showLiveInfo(LiveInfo data) {
+        weixins = data.getWeixin();
+        this.mLiveInfo = data;
+        starLook(data);
+    }
+
+
+    @Override
+    public void showUserSeg(@NotNull String usersig) {
+        userSig = usersig;
+
+    }
+
 
 //    @Override
 //    protected void onDestroy() {

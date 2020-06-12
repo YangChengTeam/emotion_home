@@ -4,7 +4,7 @@ package com.yc.emotion.home.index.domain.bean;
  * Created by suns  on 2020/6/2 14:21.
  */
 public class Message {
-    //消息类型 1.普通消息 2.导师消息 3.获取微信消息 4.点赞消息 5进入房间
+    //消息类型 1.普通消息 2.导师消息 3.获取微信消息 4.点赞消息 5进入房间 6直播结束
     private MessageType type;
     public static final int command_normal = 1;
     public static final int command_tutor = 2;
@@ -13,6 +13,8 @@ public class Message {
     public static final int command_praise = 4;
 
     public static final int command_come_room = 5;
+
+    public static final int command_leave_room = 6;
 
     private String content;//内容
 

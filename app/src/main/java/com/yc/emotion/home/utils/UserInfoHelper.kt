@@ -1,11 +1,15 @@
 package com.yc.emotion.home.utils
 
+import android.app.Activity
+import android.app.AppComponentFactory
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.fastjson.JSON
 import com.yc.emotion.home.base.YcApplication
+import com.yc.emotion.home.index.ui.fragment.WxLoginFragment
 import com.yc.emotion.home.mine.ui.activity.LoginMainActivity
 import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.model.bean.UserInfo
@@ -71,9 +75,16 @@ class UserInfoHelper private constructor() {
         var isGoLogin = false
         val uId = getUid()
         if (uId <= 0) {
-            val intent = Intent(context, LoginRegisterActivity::class.java)
-            intent.putExtra("direct_finish", true)
-            context?.startActivity(intent)
+//            val intent = Intent(context, LoginRegisterActivity::class.java)
+//            intent.putExtra("direct_finish", true)
+//            context?.startActivity(intent)
+            val wxLoginFragment = WxLoginFragment()
+            context?.let {
+                if (it is AppCompatActivity) {
+                    wxLoginFragment.show(it.supportFragmentManager, "")
+                }
+            }
+
             isGoLogin = true
         }
         return isGoLogin

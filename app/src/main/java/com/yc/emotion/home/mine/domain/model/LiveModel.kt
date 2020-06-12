@@ -34,4 +34,23 @@ class LiveModel(override var context: Context?) : IModel {
         ), true, true, true) as Observable<ResultInfo<LiveInfo>>
     }
 
+    /**
+     * 直播结束回调
+     */
+
+    fun liveEnd(roomId: String?): Observable<ResultInfo<String>> {
+        return HttpCoreEngin.get(context).rxpost(URLConfig.LIVE_END_URL, object : TypeReference<ResultInfo<String>>() {}.type, mutableMapOf(
+                "room_id" to roomId
+        ), true, true, true) as Observable<ResultInfo<String>>
+    }
+
+    /**
+     * 解散群组
+     */
+    fun dismissGroup(group_id: String): Observable<ResultInfo<String>> {
+        return HttpCoreEngin.get(context).rxpost(URLConfig.DISMISS_GROUP_URL, object : TypeReference<ResultInfo<String>>() {}.type, mutableMapOf(
+                "group_id" to group_id
+        ), true, true, true) as Observable<ResultInfo<String>>
+    }
+
 }

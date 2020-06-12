@@ -266,4 +266,16 @@ object URLConfig {
     //首页直播列表
     val ONLINE_ROOM_LIST_URL = baseUrl + "live.room/lists"
 
+    //直播结束回调
+    val LIVE_END_URL = baseUrl + "live.room/close"
+
+    //用户进入直播间
+    val LOOK_LIVE_URL = baseUrl + "live.room/access"
+
+    //用户签名
+    val USER_SIGN_URL = baseUrl + "live.room/getSig"
+
+    //解散群组
+    val DISMISS_GROUP_URL = baseUrl + "live.room/close_team"
+
 }

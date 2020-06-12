@@ -9,10 +9,15 @@ public class ChatItem implements MultiItemEntity {
     private String username;
 
     private String message;
+
+    private String face;
+
     public static final int TYPE_ME = 1;//自己发的消息
     public static final int TYPE_OTHER = 2;//其他人发的消息
     public static final int TYPE_NOTIFICATION = 3;//系统消息
     public static final int TYPE_COME_CHAT = 4;//进入聊天室
+    public static final int TYPE_GET_WX = 5;//用户点击获取微信
+
     private int type;
 
     public ChatItem() {
@@ -50,6 +55,13 @@ public class ChatItem implements MultiItemEntity {
         this.message = message;
     }
 
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
 
     public void setType(int type) {
         this.type = type;

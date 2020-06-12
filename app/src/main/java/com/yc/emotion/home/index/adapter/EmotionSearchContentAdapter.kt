@@ -54,7 +54,7 @@ class EmotionSearchContentAdapter(mDatas: List<SearchContentInfo>?) : BaseMultiI
 
                         Glide.with(mContext).load(articleInfo?.image)
                                 .apply(RequestOptions().error(R.mipmap.index_example_icon).diskCacheStrategy(DiskCacheStrategy.DATA))
-                                .thumbnail(0.1f).into(helper.getView(R.id.roundCornerImg))
+                                .thumbnail(0.1f).into(helper.getView(R.id.iv_icon))
                     }
 
                     SearchContentInfo.ITEM_TYPE_COURSE -> {

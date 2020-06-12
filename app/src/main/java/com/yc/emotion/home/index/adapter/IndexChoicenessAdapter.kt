@@ -1,5 +1,6 @@
 package com.yc.emotion.home.index.adapter
 
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -27,7 +28,7 @@ class IndexChoicenessAdapter(mDatas: ArrayList<ArticleDetailInfo>?, isIndex: Boo
                         .setText(R.id.tv_reuse, "${item.feeluseful}人觉得有用")
                         .setText(R.id.tv_tag, item.tag)
 
-                val roundCornerImg = helper.getView<RoundCornerImg>(R.id.roundCornerImg)
+                val roundCornerImg = helper.getView<ImageView>(R.id.iv_icon)
 
                 Glide.with(mContext).asBitmap().load(item.image).thumbnail(0.1f).apply(RequestOptions().error(R.mipmap.index_example_icon)
                         .diskCacheStrategy(DiskCacheStrategy.DATA).skipMemoryCache(false)).into(roundCornerImg)

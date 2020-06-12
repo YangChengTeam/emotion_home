@@ -22,7 +22,7 @@ class VipPayWayFragment : BaseBottomSheetDialogFragment() {
 
     private var tvPayBtn: TextView? = null
 
-    private var payWayName = "alipay"
+    private var payWayName = "wxpay"
     override fun getLayoutId(): Int {
         return R.layout.layout_vip_pay_way
 

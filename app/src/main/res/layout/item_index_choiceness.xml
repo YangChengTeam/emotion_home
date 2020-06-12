@@ -6,30 +6,41 @@
     android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="15dp">
+    android:paddingTop="10dp"
+    android:paddingRight="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="60dp">
 
-        <com.yc.emotion.home.base.ui.widget.RoundCornerImg
-            android:id="@+id/roundCornerImg"
-            android:layout_width="104dp"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_icon"
+            android:layout_width="90dp"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/index_example_icon"
+            android:layout_gravity="center_vertical"
+            app:cardCornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/index_example_icon" />
+        </androidx.cardview.widget.CardView>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/roundCornerImg"
-            app:layout_constraintLeft_toRightOf="@id/roundCornerImg"
-            app:layout_constraintTop_toTopOf="@id/roundCornerImg">
+            app:layout_constraintBottom_toBottomOf="@id/cardview_icon"
+            app:layout_constraintLeft_toRightOf="@id/cardview_icon"
+            app:layout_constraintTop_toTopOf="@id/cardview_icon">
 
             <TextView
                 android:id="@+id/tv_content"
@@ -39,7 +50,7 @@
                 android:lineSpacingExtra="5dp"
                 android:maxLines="2"
                 android:text="女人喜欢你的潜台词，原来才是不能说的秘密"
-                android:textColor="@color/gray_222222" />
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -52,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="566人觉得有用"
-                    android:textColor="@color/gray_999"
+                    android:textColor="@color/gray_aaa"
                     android:textSize="12sp" />
 
                 <TextView
@@ -61,10 +72,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:background="@drawable/index_tag_bg"
-                    android:paddingBottom="3dp"
                     android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
                     android:paddingTop="3dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="3dp"
                     android:text="线下撩妹"
                     android:textColor="@color/red_crimson"
                     android:textSize="11sp" />
@@ -78,7 +89,7 @@
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@color/gray_edebeb" />
 
 </LinearLayout>

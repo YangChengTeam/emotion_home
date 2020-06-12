@@ -251,5 +251,6 @@
 
     <string name="online_count">%1$d人在线</string>
     <string name="praise_count">%1$d个赞</string>
+    <string name="start_end_time">%1$s-%2$s</string>
 
 </resources>

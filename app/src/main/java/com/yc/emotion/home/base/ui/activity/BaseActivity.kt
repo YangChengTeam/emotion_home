@@ -299,7 +299,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     }
 
 
-    private fun openWeiXin() {
+     fun openWeiXin() {
 
         try {
             MobclickAgent.onEvent(this, ConstantKey.UM_CONTACT_US_TO_WECHAT_ID)

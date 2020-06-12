@@ -130,7 +130,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
 
         example_detail_webview.addJavascriptInterface(AndroidJavaScript(), "android")//设置js接口
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN//支持内容重新布局
-        data = formatting(data)
+//        data = formatting(data)
 
         example_detail_webview.loadDataWithBaseURL(null, data, "text/html", "utf-8", null)
 

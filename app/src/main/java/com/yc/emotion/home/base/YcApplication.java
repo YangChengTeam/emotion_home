@@ -17,7 +17,9 @@ import com.tencent.bugly.Bugly;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.UMShareAPI;
 import com.yc.emotion.home.R;
+import com.yc.emotion.home.im.IMManager;
 import com.yc.emotion.home.model.ModelApp;
+import com.yc.emotion.home.utils.GenerateTestUserSig;
 import com.yc.emotion.home.utils.ShareInfoHelper;
 import com.yc.emotion.home.utils.UserInfoHelper;
 
@@ -62,6 +64,7 @@ public class YcApplication extends MultiDexApplication {
         ModelApp.init(this);
         MusicPlayerManager.getInstance().init(this);
         MusicPlayerManager.getInstance().setDebug(true);
+        IMManager.getInstance().init(this, GenerateTestUserSig.SDKAPPID);
 
         initBot();
 
@@ -110,8 +113,6 @@ public class YcApplication extends MultiDexApplication {
             ZipEntry ze1 = zf.getEntry("META-INF/channelconfig.json");
             InputStream in1 = zf.getInputStream(ze1);
             String result1 = FileUtil.readString(in1);
-
-
 
 
             JSONObject jsonObject = new JSONObject(result1);
@@ -165,7 +166,6 @@ public class YcApplication extends MultiDexApplication {
 
         try {
             if (jsonObject != null) {
-
 
 
                 params.put("site_id", jsonObject.getString("site_id"));

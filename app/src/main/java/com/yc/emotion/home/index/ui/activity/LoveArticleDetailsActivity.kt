@@ -128,14 +128,14 @@ class LoveArticleDetailsActivity : BaseSameActivity(), SkillView {
 
 
     private fun initWebView(data: String) {
-        var data = data
+
         val settings = love_by_stages_details_webview.settings
 
 
         love_by_stages_details_webview.addJavascriptInterface(MyJavaScript(), "android")
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN//支持内容重新布局
 
-        data = formatting(data)
+//        data = formatting(data)
 
 
         love_by_stages_details_webview.loadDataWithBaseURL(null, data, "text/html", "utf-8", null)

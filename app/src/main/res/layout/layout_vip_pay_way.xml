@@ -9,8 +9,8 @@
         android:id="@+id/iv_payway_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:padding="5dp"
         android:src="@mipmap/tutor_course_cancel"
         app:layout_constraintRight_toRightOf="parent"
@@ -30,52 +30,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
-        android:id="@+id/rl_ali_pay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_pay_way_title">
-
-        <ImageView
-            android:id="@+id/iv_alipay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/alipay_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/iv_alipay"
-            android:text="支付宝"
-            android:textColor="@color/gray_222222" />
-
-
-        <ImageView
-            android:id="@+id/iv_ali_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/icon_circle_sel" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/rl_wx_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
         android:paddingTop="10dp"
+        android:paddingRight="20dp"
         android:paddingBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rl_ali_pay">
+        app:layout_constraintTop_toBottomOf="@id/tv_pay_way_title">
 
         <ImageView
             android:id="@+id/iv_wxpay"
@@ -99,9 +62,47 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:src="@mipmap/icon_circle_sel" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_ali_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rl_wx_pay">
+
+        <ImageView
+            android:id="@+id/iv_alipay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/alipay_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_alipay"
+            android:text="支付宝"
+            android:textColor="@color/gray_222222" />
+
+
+        <ImageView
+            android:id="@+id/iv_ali_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:src="@mipmap/icon_circle_default" />
 
     </RelativeLayout>
+
 
     <TextView
         android:id="@+id/tv_pay_btn"
@@ -111,7 +112,7 @@
         android:gravity="center"
         android:text="确定支付"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/rl_wx_pay" />
+        app:layout_constraintTop_toBottomOf="@id/rl_ali_pay" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

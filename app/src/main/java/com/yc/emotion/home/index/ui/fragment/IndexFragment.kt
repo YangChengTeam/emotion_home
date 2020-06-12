@@ -2,7 +2,7 @@ package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -14,7 +14,6 @@ import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alibaba.fastjson.JSON
 import com.app.hubert.guide.NewbieGuide
 import com.app.hubert.guide.model.GuidePage
 import com.bumptech.glide.Glide
@@ -28,6 +27,7 @@ import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
+import com.yc.emotion.home.base.ui.fragment.common.SuccessFragment
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
@@ -36,16 +36,18 @@ import com.yc.emotion.home.index.adapter.IndexLiveAdapter
 import com.yc.emotion.home.index.adapter.IndexTestAdapter
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.presenter.IndexPresenter
-import com.yc.emotion.home.index.presenter.MonagraphPresenter
 import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.index.view.IndexView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
-import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
 import com.yc.emotion.home.model.bean.*
+import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.*
+import com.yc.emotion.home.utils.GlideImageLoader
+import com.yc.emotion.home.utils.ItemDecorationHelper
+import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.UIUtils
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_main_index.*
@@ -183,11 +185,18 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         indexLiveAdapter?.setOnItemClickListener { adapter, view, position ->
             val liveInfo = indexLiveAdapter?.getItem(position)
             liveInfo?.let {
-//                if (liveInfo.state == 1) {
-//                    LiveWebActivity.startActivity(mMainActivity, liveInfo.liveUrl)
-////                    startActivity(Intent(mMainActivity, LiveWebActivity::class.java))
-//                }
-                LiveLookActivity.startActivity(mMainActivity, liveInfo)
+                if (!TextUtils.isEmpty(liveInfo.record_url)) {
+                    LiveVideoActivity.startActivity(mMainActivity, liveInfo)
+
+                } else {
+                    if (it.status == 1) {
+                        LiveLookActivityNew.startActivity(mMainActivity, liveInfo.roomId, liveInfo.start_time, liveInfo.end_time)
+                    } else if (it.status == 2) {
+                        LiveNoticeActivity.startActivity(mMainActivity, liveInfo)
+                    }
+                }
+
+
             }
         }
 

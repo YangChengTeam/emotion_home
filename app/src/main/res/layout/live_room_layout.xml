@@ -160,14 +160,46 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_top_ppt"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/top_container"
+        android:background="#DEDFE0">
+
+        <ImageView
+            android:id="@+id/iv_top_ppt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_play_video"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/live_notice_back_bg"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_play_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/live_play_start_icon" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_container"
+        android:layout_above="@id/ll_bottom_layout"
+        android:layout_below="@id/rl_top_ppt"
+        android:layout_marginBottom="8dp"
         android:background="@android:color/transparent" />
-
 
     <LinearLayout
         android:id="@+id/ll_bottom_layout"
@@ -176,18 +208,32 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_chat"
+        <FrameLayout
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/live_chat_input_bg"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:text="说点什么...." />
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+
+            <TextView
+                android:id="@+id/tv_chat"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/live_chat_input_bg"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="说点什么...." />
+
+            <ImageView
+                android:id="@+id/iv_screen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@mipmap/icon_live_four" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -198,8 +244,10 @@
                 android:id="@+id/ll_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -220,17 +268,17 @@
                 android:id="@+id/ll_wx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-
                     android:src="@mipmap/open_wechat_icon" />
 
                 <TextView
+                    android:id="@+id/tv_wx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="添加微信"
@@ -243,7 +291,6 @@
                 android:id="@+id/ll_raise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -398,7 +445,7 @@
             <TextView
                 android:id="@+id/send_txt_msg_submit"
                 android:layout_width="60.0dip"
-                android:layout_height="32.0dip"
+                android:layout_height="40.0dip"
                 android:layout_gravity="center"
                 android:background="@color/color_f8f8f8"
                 android:gravity="center"
@@ -410,25 +457,44 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_wheat"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="130dp"
         android:layout_marginEnd="@dimen/dp_10"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/iv_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@mipmap/icon_live_intro" />
+
+
+        <ImageView
+            android:id="@+id/iv_wheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:src="@mipmap/im_press_say_3" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="上麦"
-            android:textColor="@color/red_crimson"
-            android:textSize="16sp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pack"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@id/rl_top_ppt"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/live_pack_bg"
+        android:drawableEnd="@mipmap/arrow_up"
+        android:drawablePadding="3dp"
+        android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:text="收起"
+        android:textSize="12sp" />
+
 </RelativeLayout>

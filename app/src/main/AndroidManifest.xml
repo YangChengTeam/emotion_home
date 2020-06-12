@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.REQUEST_PERMISSIONS" /> <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".base.YcApplication"
@@ -268,6 +269,10 @@
             android:name=".index.ui.activity.LiveLookActivity"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".index.ui.activity.LiveVideoActivity" />
+        <activity android:name=".index.ui.activity.LiveNoticeActivity" />
+        <activity android:name=".index.ui.activity.LiveRoomActivityNew" />
+        <activity android:name=".index.ui.activity.LiveLookActivityNew" />
 
 
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->

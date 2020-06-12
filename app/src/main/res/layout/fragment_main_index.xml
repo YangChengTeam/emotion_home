@@ -326,7 +326,8 @@
                                 android:drawableRight="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多导师"
-                                android:textColor="@color/gray_bebdbd" />
+                                android:textColor="@color/gray_aaa"
+                                android:textSize="12sp"  />
                         </RelativeLayout>
 
 
@@ -383,7 +384,9 @@
                                 android:drawableRight="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多课程"
-                                android:textColor="@color/gray_bebdbd" />
+                                android:textColor="@color/gray_aaa"
+                                android:textSize="12sp"
+                                 />
                         </RelativeLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -426,7 +429,8 @@
                                 android:drawableEnd="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多测试"
-                                android:textColor="@color/gray_bebdbd" />
+                                android:textColor="@color/gray_aaa"
+                                android:textSize="12sp"  />
                         </RelativeLayout>
 
                         <androidx.viewpager.widget.ViewPager
@@ -484,7 +488,8 @@
                                 android:drawableRight="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多案例"
-                                android:textColor="@color/gray_bebdbd" />
+                                android:textColor="@color/gray_aaa"
+                                android:textSize="12sp" />
                         </RelativeLayout>
 
                         <androidx.recyclerview.widget.RecyclerView

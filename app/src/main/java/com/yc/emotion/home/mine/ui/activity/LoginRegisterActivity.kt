@@ -41,5 +41,6 @@ class LoginRegisterActivity : BaseSameActivity() {
     private fun initListener() {
 
         iv_login_back.setOnClickListener { onBackPressed() }
+
     }
 }

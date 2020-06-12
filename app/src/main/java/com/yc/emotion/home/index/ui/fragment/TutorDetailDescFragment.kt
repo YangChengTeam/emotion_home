@@ -31,9 +31,9 @@ class TutorDetailDescFragment : BaseFragment<BasePresenter<IModel,IView>>() {
         webview_tutor_desc.isHorizontalScrollBarEnabled = false//不能水平滑动
 
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN//支持内容重新布局
-        val data = (activity as BaseActivity).formatting(content)
+//        val data = (activity as BaseActivity).formatting(content)
 
-        webview_tutor_desc.loadDataWithBaseURL(null, data, "text/html", "utf-8", null)
+        webview_tutor_desc.loadDataWithBaseURL(null, content, "text/html", "utf-8", null)
 
 
     }

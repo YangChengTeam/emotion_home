@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
  */
 class WXPayEntryActivity : Activity(), IWXAPIEventHandler {
     private lateinit var api: IWXAPI
-    public override fun onCreate(savedInstanceState: Bundle) {
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_entry)
         Log.e("mylog", "onCreate: " + ConstantKey.WX_APP_ID)

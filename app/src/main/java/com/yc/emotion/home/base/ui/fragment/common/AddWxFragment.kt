@@ -1,6 +1,7 @@
 package com.yc.emotion.home.base.ui.fragment.common
 
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ class AddWxFragment : BaseDialogFragment() {
 
 
     protected fun initView() {
+
         tvWx = rootView?.findViewById(R.id.tv_wx) as TextView
         val tvCopyWx = rootView?.findViewById(R.id.tv_copy_wx) as TextView
         val ivClose = rootView?.findViewById(R.id.iv_close) as ImageView
@@ -50,6 +52,7 @@ class AddWxFragment : BaseDialogFragment() {
     }
 
     fun setWX(wx: String) {
+
         mWx = wx
     }
 

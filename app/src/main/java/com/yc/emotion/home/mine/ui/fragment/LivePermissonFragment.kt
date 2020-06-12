@@ -7,6 +7,7 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseDialogFragment
 import com.yc.emotion.home.index.ui.activity.LiveRoomActivity
+import com.yc.emotion.home.index.ui.activity.LiveRoomActivityNew
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.mine.presenter.LivePresenter
 import com.yc.emotion.home.mine.view.LiveView
@@ -43,7 +44,7 @@ class LivePermissonFragment : BaseDialogFragment(), LiveView {
     }
 
     override fun showLoginSuccess(data: LiveInfo) {
-        LiveRoomActivity.startActivity(activity, data)
+        LiveRoomActivityNew.startActivity(activity, data)
         dismiss()
     }
 
