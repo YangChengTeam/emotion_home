@@ -15,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/process_bg" />
+        android:progressDrawable="@drawable/process_bg"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -34,13 +35,13 @@
                 android:id="@+id/example_detail_webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="14dp"
-                android:paddingTop="18dp" />
+                android:paddingTop="18dp"
+                android:paddingBottom="14dp" />
 
             <LinearLayout
                 android:id="@+id/example_detail_cl_like_con"
@@ -50,10 +51,10 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:orientation="vertical"
-                android:paddingBottom="65dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="25dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="65dp"
                 android:visibility="invisible">
 
                 <TextView
@@ -79,8 +80,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="8dp"
                             android:drawableTop="@mipmap/icon_line_stages"
+                            android:drawablePadding="8dp"
                             android:gravity="center_horizontal"
                             android:text="觉得有用"
                             android:textColor="@color/text_gray"
@@ -104,8 +105,8 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
-                            android:drawablePadding="8dp"
                             android:drawableTop="@mipmap/icon_line_stages"
+                            android:drawablePadding="8dp"
                             android:gravity="center_horizontal"
                             android:text="不妨点个赞"
                             android:textColor="@color/text_gray"

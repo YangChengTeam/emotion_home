@@ -103,11 +103,6 @@
     </style>
 
     <!--部分界面AlertDialog messgge不显示 自己设置样式-->
-    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert"> <!-- Used for the buttons -->
-        <item name="colorAccent">@color/red_crimson</item> <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">#000000</item> <!-- Used for the background -->
-        <item name="android:background">#FFFFFF</item>
-    </style>
 
     　
 
@@ -134,6 +129,17 @@
     <style name="share_anim">
         <item name="android:windowEnterAnimation">@anim/tup</item>
         <item name="android:windowExitAnimation">@anim/tdown</item>
+    </style>
+
+    <style name="MyDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
 

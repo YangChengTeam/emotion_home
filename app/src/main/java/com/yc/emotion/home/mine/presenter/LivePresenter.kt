@@ -41,7 +41,7 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
                         val data = t.data
                         mView.showLoginSuccess(data)
                     } else {
-                        ToastUtils.showCenterToast("您没有直播权限，请联系管理员！")
+                        ToastUtils.showCenterToast(t.message)
                     }
                 }
             }

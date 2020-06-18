@@ -24,7 +24,16 @@ class LiveEndFragment : BaseDialogFragment() {
     override fun initViews() {
         rootView?.findViewById<TextView>(R.id.tv_end)?.setOnClickListener {
             dismiss()
-            activity?.finish()
+            listener?.onClose()
         }
+    }
+
+    private var listener: OnCloseListener? = null
+    fun setOnCloseListener(listener: OnCloseListener) {
+        this.listener = listener
+    }
+
+    interface OnCloseListener {
+        fun onClose()
     }
 }

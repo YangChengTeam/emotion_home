@@ -26,7 +26,6 @@ class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : CommonMoreAdapte
                         .thumbnail(0.1f).into(roundCornerImg)
 
 
-//                Log.e("TAG", "${item.count}")
                 helper.setText(R.id.tv_course_count, "${item.count}人已学习")
                         .setText(R.id.tv_course_title, item.title)
                         .setText(R.id.tv_course_price, item.price)

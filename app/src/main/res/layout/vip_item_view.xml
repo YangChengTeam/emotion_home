@@ -4,8 +4,8 @@
     android:id="@+id/item_become_vip_tail_cl_con_01"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginBottom="@dimen/dp_10"
     android:layout_marginEnd="10dp"
+    android:layout_marginBottom="@dimen/dp_10"
     android:background="@mipmap/vip_card_bg"
     android:orientation="vertical">
 
@@ -77,15 +77,16 @@
     <TextView
         android:id="@+id/item_become_vip_tail_tv_pay_des_01"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="5dp"
-        android:background="@mipmap/vip_button"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/pay_item_intro_bg"
         android:gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:text="限时抢购¥38"
         android:textColor="#F6D4A7"
-
         android:textSize="@dimen/size_12"
         app:layout_constraintTop_toBottomOf="@+id/item_become_vip_tail_ll_pay_con_01" />
 

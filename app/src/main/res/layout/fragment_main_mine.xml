@@ -22,10 +22,11 @@
         android:paddingTop="@dimen/statusbar_view_height">
         <!--android:gravity="center_horizontal"-->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+
             android:text="@string/mine"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -41,8 +42,10 @@
 
             <RelativeLayout
                 android:id="@+id/rl_person_face"
-                android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:background="@drawable/white_circle_bg"
+                android:padding="2dp">
 
                 <ImageView
                     android:id="@+id/iv_person_face"
@@ -282,7 +285,7 @@
                 android:id="@+id/mineItemView_invite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:item_title="邀请好友" />
+                app:item_title="分享好友" />
 
             <com.yc.emotion.home.mine.ui.widget.MineItemView
                 android:id="@+id/mineItemView_feedback"

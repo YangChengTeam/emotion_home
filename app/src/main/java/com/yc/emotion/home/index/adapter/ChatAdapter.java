@@ -1,5 +1,6 @@
 package com.yc.emotion.home.index.adapter;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +20,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<ChatItem, BaseViewHol
     public ChatAdapter(@Nullable List<ChatItem> data) {
         super(data);
         addItemType(ChatItem.TYPE_OTHER, R.layout.chat_item_other_view);
+        addItemType(ChatItem.TYPE_TOUR_MSG, R.layout.chat_item_other_view);
         addItemType(ChatItem.TYPE_ME, R.layout.chat_item_my_view);
         addItemType(ChatItem.TYPE_NOTIFICATION, R.layout.chat_item_notification);
         addItemType(ChatItem.TYPE_COME_CHAT, R.layout.chat_item_come_in);
@@ -37,6 +39,13 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<ChatItem, BaseViewHol
                 Glide.with(mContext).load(item.getFace()).error(R.drawable.default_avatar_72)
                         .circleCrop().into((ImageView) helper.getView(R.id.iv_avtor));
                 break;
+            case ChatItem.TYPE_TOUR_MSG:
+
+                helper.setText(R.id.tv_chat_name, replaceStr(item.getUsername()))
+                        .setText(R.id.tv_chat_message, item.getMessage());
+                Glide.with(mContext).load(R.mipmap.appicon).error(R.drawable.default_avatar_72)
+                        .circleCrop().into((ImageView) helper.getView(R.id.iv_avtor));
+                break;
             case ChatItem.TYPE_NOTIFICATION:
                 helper.setText(R.id.tv_mess_name, "我是" + item.getUsername());
                 Glide.with(mContext).load(item.getFace()).error(R.drawable.default_avatar_72)
@@ -53,6 +62,10 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<ChatItem, BaseViewHol
     }
 
     private String replaceStr(String str) {
+        if (TextUtils.isEmpty(str)) {
+            str = "官***";
+            return str;
+        }
         int length = str.length();
         if (length == 0 || length == 1) {
             return str;

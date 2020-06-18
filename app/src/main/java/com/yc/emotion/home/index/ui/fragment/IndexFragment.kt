@@ -2,7 +2,9 @@ package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -25,9 +27,9 @@ import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.transformer.UltraScaleTransformer
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.YcApplication
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
-import com.yc.emotion.home.base.ui.fragment.common.SuccessFragment
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
@@ -40,7 +42,7 @@ import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.index.view.IndexView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.model.bean.*
-import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
+import com.yc.emotion.home.model.bean.event.IndexRefreshEvent
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.VipActivity
@@ -71,6 +73,8 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     private var indexLiveAdapter: IndexLiveAdapter? = null
 
     private var sex by Preference(ConstantKey.SEX, 1)
+
+    private val handler: Handler = Handler()
 
 
     private lateinit var mMainActivity: MainActivity
@@ -183,21 +187,42 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         }
 
         indexLiveAdapter?.setOnItemClickListener { adapter, view, position ->
+
+
             val liveInfo = indexLiveAdapter?.getItem(position)
             liveInfo?.let {
                 if (!TextUtils.isEmpty(liveInfo.record_url)) {
                     LiveVideoActivity.startActivity(mMainActivity, liveInfo)
 
                 } else {
-                    if (it.status == 1) {
-                        LiveLookActivityNew.startActivity(mMainActivity, liveInfo.roomId, liveInfo.start_time, liveInfo.end_time)
-                    } else if (it.status == 2) {
-                        LiveNoticeActivity.startActivity(mMainActivity, liveInfo)
-                    }
+                    mPresenter?.getOnlineLiveList()
+//                    when (it.status) {
+//                        2 -> {
+
+                    handler.postDelayed({
+                        mLiveInfo?.let { myit ->
+                            if (myit.status == 1) {
+                                LiveLookActivity.startActivity(mMainActivity, myit.roomId, myit.start_time, myit.end_time)
+                            } else if (myit.status == 2) {
+                                LiveNoticeActivity.startActivity(mMainActivity, myit)
+                            }
+                            //                            }
+                        }
+                    }, 1000)
+//                        }
+//                        1 -> {
+//                            LiveLookActivity.startActivity(mMainActivity, it.roomId, it.start_time, it.end_time)
+//                        }
+//                        else -> {
+//                        }
+//                    }
+
+
                 }
 
-
             }
+
+
         }
 
     }
@@ -425,6 +450,24 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLiveEnd(event: IndexRefreshEvent) {
+        val msg = event.message
+//        Log.e("tag", msg)
+        mPresenter?.getOnlineLiveList()
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (YcApplication.isBackToForeground) {
+            YcApplication.isBackToForeground = false
+//            Log.e("TAG", "onResume")
+            mPresenter?.getOnlineLiveList()
+        }
+
+    }
 
     override fun lazyLoad() {
 //        showGuide2()
@@ -433,7 +476,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
     private fun getIndexData() {
         mPresenter?.getIndexData()
-//        mPresenter?.getIndexLiveList()
 
         mPresenter?.getOnlineLiveList()
     }
@@ -509,11 +551,13 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         setData(detailInfos)
     }
 
+    private var mLiveInfo: LiveInfo? = null
     override fun showIndexLiveInfos(data: List<LiveInfo>) {
         var liveInfos = data
         if (data.size > 2) {
             liveInfos = data.subList(0, 2)
         }
+        this.mLiveInfo = liveInfos[0]
         indexLiveAdapter?.setNewData(liveInfos)
     }
 

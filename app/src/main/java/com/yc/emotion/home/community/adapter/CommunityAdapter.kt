@@ -59,10 +59,10 @@ class CommunityAdapter(data: List<CommunityInfo>?, private val mIsMy: Boolean) :
                 if (null != commentInfo) {
 
                     helper.setGone(R.id.ll_comment, true)
-                    var color = "#222222"
+                    var color = "#427FC3"
                     var commentName = commentInfo.name
                     if (!TextUtils.isEmpty(commentName)) {
-                        if (commentInfo.name.contains("情感导师") || commentInfo.name.contains("情感之家")) {
+                        if (commentInfo.name.contains("情感导师") || commentInfo.name.contains(mContext.getString(R.string.app_name))) {
                             color = "#1d99f4"
                         }
                     } else {

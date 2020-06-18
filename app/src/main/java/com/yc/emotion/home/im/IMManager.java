@@ -4,10 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMGroupInfo;
 import com.tencent.imsdk.v2.V2TIMGroupListener;
 import com.tencent.imsdk.v2.V2TIMGroupManager;
 import com.tencent.imsdk.v2.V2TIMGroupManagerImpl;
+import com.tencent.imsdk.v2.V2TIMGroupMemberFullInfo;
 import com.tencent.imsdk.v2.V2TIMGroupMemberInfo;
+import com.tencent.imsdk.v2.V2TIMGroupMemberInfoResult;
 import com.tencent.imsdk.v2.V2TIMManager;
 import com.tencent.imsdk.v2.V2TIMMessage;
 import com.tencent.imsdk.v2.V2TIMSDKConfig;
@@ -153,13 +156,16 @@ public class IMManager {
     }
 
     /**
-     * 禁言群成员
+     * 禁言或解禁群组
      */
-    public void muteGroupMember(String groupID,
-                                String userID,
-                                int seconds,
+    public void muteGroupMember(String groupId, boolean isMuted,
                                 V2TIMCallback callback) {
-        V2TIMManager.getGroupManager().muteGroupMember(groupID, userID, seconds, callback);
+        V2TIMGroupInfo groupInfo = new V2TIMGroupInfo();
+        groupInfo.setAllMuted(isMuted);
+
+        groupInfo.setGroupID(groupId);
+
+        V2TIMManager.getGroupManager().setGroupInfo(groupInfo, callback);
     }
 
     /**
@@ -173,12 +179,24 @@ public class IMManager {
 
 
     /**
-     * 群组被解算消息回调
+     * 群组消息回调
      *
      * @param listener
      */
-    public void setGroupDismissListener(V2TIMGroupListener listener) {
+    public void setGroupListener(V2TIMGroupListener listener) {
         v2TIMManager.setGroupListener(listener);
+    }
+
+    /**
+     * 获取群列表
+     *
+     * @param groupID
+     * @param callback
+     */
+    public void getGroupList(String groupID,
+                             V2TIMValueCallback<V2TIMGroupMemberInfoResult> callback) {
+        V2TIMManager.getGroupManager().getGroupMemberList(groupID, V2TIMGroupMemberFullInfo.V2TIM_GROUP_MEMBER_FILTER_ALL, 0, callback);
+//        V2TIMManager.getGroupManager().getGroupsInfo();
     }
 
 }

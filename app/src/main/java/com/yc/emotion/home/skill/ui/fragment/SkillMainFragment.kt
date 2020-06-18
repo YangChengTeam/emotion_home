@@ -75,9 +75,9 @@ class SkillMainFragment : BaseFragment<BasePresenter<*, *>>() {
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
                 val simplePagerTitleView = ColorFlipPagerTitleView(context)
                 simplePagerTitleView.text = titleList?.get(index)
-                simplePagerTitleView.textSize = 16f
+                simplePagerTitleView.textSize = 14f
                 simplePagerTitleView.normalColor = Color.BLACK
-                simplePagerTitleView.selectedColor = resources.getColor(R.color.red_crimson)
+                simplePagerTitleView.selectedColor = resources.getColor(R.color.app_color)
                 simplePagerTitleView.setOnClickListener { v -> skill_view_pager.currentItem = index }
                 return simplePagerTitleView
             }

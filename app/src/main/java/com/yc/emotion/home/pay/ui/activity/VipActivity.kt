@@ -3,6 +3,7 @@ package com.yc.emotion.home.pay.ui.activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.EventLog
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
@@ -153,7 +154,7 @@ class VipActivity : PayActivity(), VipView {
         if (indexDoodsBean == null) return
 
         if (!UserInfoHelper.instance.goToLogin(this)) {
-                (mPresenter as? VipPresenter)?.initOrders(payWayName, indexDoodsBean.m_price, indexDoodsBean.name, "${indexDoodsBean.id}")
+            (mPresenter as? VipPresenter)?.initOrders(payWayName, indexDoodsBean.m_price, indexDoodsBean.name, "${indexDoodsBean.id}")
         }
     }
 

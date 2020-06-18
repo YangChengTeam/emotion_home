@@ -3,7 +3,9 @@ package com.yc.emotion.home.base;
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.kk.securityhttp.domain.GoagalInfo;
 import com.kk.securityhttp.net.contains.HttpConfig;
@@ -19,10 +21,13 @@ import com.umeng.socialize.UMShareAPI;
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.im.IMManager;
 import com.yc.emotion.home.model.ModelApp;
+import com.yc.emotion.home.model.bean.event.IndexRefreshEvent;
 import com.yc.emotion.home.utils.GenerateTestUserSig;
+import com.yc.emotion.home.utils.SensitiveWord;
 import com.yc.emotion.home.utils.ShareInfoHelper;
 import com.yc.emotion.home.utils.UserInfoHelper;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +40,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import androidx.multidex.MultiDexApplication;
+import cn.jpush.android.api.JPushInterface;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -44,6 +50,8 @@ import rx.schedulers.Schedulers;
 
 public class YcApplication extends MultiDexApplication {
 
+    private static final String TAG = "YcApplication";
+
     private static YcApplication ycApplication;
 
     public static YcApplication getInstance() {
@@ -51,7 +59,14 @@ public class YcApplication extends MultiDexApplication {
     }
 
     public List<Activity> activityIdCorList;
+    /**
+     * 当前Acitity个数
+     */
+    private int activityCount = 0;
+    private boolean isPaused = false;
 
+    //是否是从后台到前台
+    public static boolean isBackToForeground = false;
 
     @SuppressWarnings("unused")
     @Override
@@ -143,6 +158,11 @@ public class YcApplication extends MultiDexApplication {
         activityIdCorList = new ArrayList<>();
 
         ShareInfoHelper.getNetShareInfo(this);
+        SensitiveWord.initWords(this);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);      // 初始化 JPush
+        registerActivityLifecycleCallbacks(callbacks);
+
     }
 
 
@@ -166,7 +186,6 @@ public class YcApplication extends MultiDexApplication {
 
         try {
             if (jsonObject != null) {
-
 
                 params.put("site_id", jsonObject.getString("site_id"));
                 params.put("soft_id", jsonObject.getString("soft_id"));
@@ -216,4 +235,52 @@ public class YcApplication extends MultiDexApplication {
                 Build.USER.length() % 10;
     }
 
+    private ActivityLifecycleCallbacks callbacks = new ActivityLifecycleCallbacks() {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+
+            activityCount++;
+            if (activityCount == 1 && isPaused) {
+                isPaused = false;
+                isBackToForeground = true;
+//                EventBus.getDefault().post(new IndexRefreshEvent("回到前台"));
+            }
+            Log.e(TAG, "onActivityStarted: " + activityCount);
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+
+            activityCount--;
+            if (activityCount == 0) {
+                isPaused = true;
+                Log.e(TAG, "isForeground : ");
+            }
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+
+        }
+    };
 }

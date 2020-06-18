@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_tutor_service_detail_desc.*
  *
  * Created by suns  on 2019/10/14 09:32.
  */
-class TutorServiceDetailDescFragment : BaseFragment<BasePresenter<IModel,IView>>() {
+class TutorServiceDetailDescFragment : BaseFragment<BasePresenter<IModel, IView>>() {
 
 
     override fun getLayoutId(): Int {
@@ -23,11 +23,12 @@ class TutorServiceDetailDescFragment : BaseFragment<BasePresenter<IModel,IView>>
 
 
     override fun initViews() {
+        tv_buy_intro.text = String.format(getString(R.string.buy_course_intro), getString(R.string.app_name))
+
         val content = arguments?.getString("content")
 
 
         val settings = webView.settings
-
 
 
 //        settings.textZoom = 200;//通过设置WebSettings，改变HTML中文字的大小

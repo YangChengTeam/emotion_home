@@ -14,12 +14,14 @@ import kotlinx.android.synthetic.main.fragment_tutor_detail_desc.*
  *
  * Created by suns  on 2019/10/12 13:42.
  */
-class TutorDetailDescFragment : BaseFragment<BasePresenter<IModel,IView>>() {
+class TutorDetailDescFragment : BaseFragment<BasePresenter<IModel, IView>>() {
     override fun getLayoutId(): Int {
         return R.layout.fragment_tutor_detail_desc
     }
 
     override fun initViews() {
+
+        tv_tutor_intro.text = String.format(getString(R.string.tutor_intro), getString(R.string.app_name))
 
         val content = arguments?.getString("content")
 

@@ -24,7 +24,7 @@
         android:layout_marginTop="5dp"
         android:text="xxxxx"
         android:textColor="@color/color_bdbcbc"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@id/iv_avtor"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/chat_left"
             android:lineSpacingExtra="3dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="15sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

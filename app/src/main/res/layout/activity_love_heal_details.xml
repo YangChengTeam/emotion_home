@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/love_heal_details_iv_to_wx"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="62dp"

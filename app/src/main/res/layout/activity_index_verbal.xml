@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingBottom="10dp"
-        android:paddingTop="@dimen/statusbar_view_height">
+        android:paddingTop="@dimen/statusbar_view_height"
+        android:paddingBottom="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -26,15 +26,16 @@
             android:text="话术"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:layout_marginStart="12dp"
+        android:layout_marginEnd="15dp"
         android:gravity="center_vertical">
 
 
@@ -54,7 +55,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/index_search_bg"
             android:paddingLeft="10dp"
@@ -74,8 +75,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_toEndOf="@id/iv_search"
                 android:layout_toStartOf="@id/iv_delete"
+                android:layout_toEndOf="@id/iv_search"
                 android:background="@null"
                 android:ellipsize="end"
                 android:hint="输入Ta说的话"
@@ -129,7 +130,7 @@
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/collect_pager_tabs"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:background="@color/white"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -137,7 +138,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:background="@color/gray_edebeb" />
 
             <androidx.viewpager.widget.ViewPager
@@ -152,8 +153,8 @@
             android:id="@+id/search_down_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="65dp"
             android:layout_marginStart="15dp"
+            android:layout_marginEnd="65dp"
             android:background="@color/white"
             android:elevation="1dp"
             android:visibility="gone" />

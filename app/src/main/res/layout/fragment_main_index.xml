@@ -49,14 +49,12 @@
                     <LinearLayout
                         android:id="@+id/ll_index_search"
                         android:layout_width="match_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
                         android:layout_marginEnd="15dp"
                         android:layout_toStartOf="@id/iv_vip"
                         android:background="@drawable/index_search_bg"
                         android:gravity="center_vertical"
                         android:paddingStart="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
                         tools:ignore="RtlSymmetry">
 
                         <ImageView
@@ -83,7 +81,7 @@
                             app:mvInterval="2000"
                             app:mvSingleLine="true"
                             app:mvTextColor="@color/gray_767676"
-                            app:mvTextSize="16sp" />
+                            app:mvTextSize="13sp" />
 
 
                     </LinearLayout>
@@ -323,11 +321,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:drawableRight="@mipmap/more_right_arrow_icon"
+                                android:drawableEnd="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多导师"
                                 android:textColor="@color/gray_aaa"
-                                android:textSize="12sp"  />
+                                android:textSize="12sp" />
                         </RelativeLayout>
 
 
@@ -385,15 +383,15 @@
                                 android:drawablePadding="3dp"
                                 android:text="更多课程"
                                 android:textColor="@color/gray_aaa"
-                                android:textSize="12sp"
-                                 />
+                                android:textSize="12sp" />
                         </RelativeLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/index_course_recyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp" />
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp" />
 
                     </LinearLayout>
 
@@ -430,7 +428,7 @@
                                 android:drawablePadding="3dp"
                                 android:text="更多测试"
                                 android:textColor="@color/gray_aaa"
-                                android:textSize="12sp"  />
+                                android:textSize="12sp" />
                         </RelativeLayout>
 
                         <androidx.viewpager.widget.ViewPager

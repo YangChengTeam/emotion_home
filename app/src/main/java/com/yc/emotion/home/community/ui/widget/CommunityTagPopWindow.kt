@@ -28,7 +28,7 @@ class CommunityTagPopWindow(context: Activity?) : BasePopWindow(context), Commun
     private var publishTagAdapter: PublishTagAdapter? = null
 
 
-    private var tagSelectListener: onTagSelectListener? = null
+    private var tagSelectListener: OnTagSelectListener? = null
 
     private var pos by Preference(ConstantKey.TAG_POSTION, 0)
 
@@ -89,12 +89,12 @@ class CommunityTagPopWindow(context: Activity?) : BasePopWindow(context), Commun
         publishTagAdapter?.setNewData(list)
     }
 
-    fun setOnTagSelectListener(onTagSelectListener: CommunityTagPopWindow.onTagSelectListener) {
+    fun setOnTagSelectListener(onTagSelectListener: OnTagSelectListener) {
         this.tagSelectListener = onTagSelectListener
     }
 
 
-    interface onTagSelectListener {
+    interface OnTagSelectListener {
         fun onTagSelect(communityTagInfo: CommunityTagInfo)
     }
 

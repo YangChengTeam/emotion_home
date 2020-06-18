@@ -126,8 +126,8 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
                 val simplePagerTitleView = ColorFlipPagerTitleView(context)
                 simplePagerTitleView.text = titleList?.get(index)
                 simplePagerTitleView.textSize = 14f
-                simplePagerTitleView.normalColor = resources.getColor(R.color.gray_999)
-                simplePagerTitleView.selectedColor = resources.getColor(R.color.gray_222222)
+                simplePagerTitleView.normalColor = resources.getColor(R.color.black)
+                simplePagerTitleView.selectedColor = resources.getColor(R.color.app_color)
                 simplePagerTitleView.setOnClickListener { v -> main_community_view_pager.currentItem = index }
                 return simplePagerTitleView
             }
@@ -136,8 +136,8 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
                 val indicator = LinePagerIndicator(context)
                 //                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineHeight = UIUtil.dip2px(context, 3.0).toFloat()
-                indicator.lineWidth = UIUtil.dip2px(context, 40.0).toFloat()
+                indicator.lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
+                indicator.lineWidth = UIUtil.dip2px(context, 30.0).toFloat()
                 indicator.roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
                 indicator.startInterpolator = AccelerateInterpolator()
                 indicator.endInterpolator = DecelerateInterpolator(2.0f)
@@ -195,7 +195,7 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
                 communityTagPopwindow.createNewData(tagList)//
                 communityTagPopwindow.showAsDropDown(view_divider)
                 communityTagPopwindow.setOnDismissListener { setTagArrow(false) }
-                communityTagPopwindow.setOnTagSelectListener(object : CommunityTagPopWindow.onTagSelectListener {
+                communityTagPopwindow.setOnTagSelectListener(object : CommunityTagPopWindow.OnTagSelectListener {
                     override fun onTagSelect(communityTagInfo: CommunityTagInfo) {
                         tv_community_tag.text = communityTagInfo.title
                     }

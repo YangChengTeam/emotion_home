@@ -26,6 +26,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+
         android:theme="@style/JK.SwipeBack.Transparent.Theme"
         tools:targetApi="n">
         <activity android:name=".index.ui.activity.LoveCaseActivity" />
@@ -261,20 +262,31 @@
         <activity android:name=".mine.ui.activity.PwdSetActivity" />
         <activity android:name=".index.ui.activity.MonographActivity" />
         <activity android:name=".mine.ui.activity.UserPolicyActivity" />
-        <activity
-            android:name=".index.ui.activity.LiveRoomActivity"
-            android:configChanges="keyboardHidden"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name=".index.ui.activity.LiveLookActivity"
-            android:configChanges="keyboardHidden"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".index.ui.activity.LiveVideoActivity" />
         <activity android:name=".index.ui.activity.LiveNoticeActivity" />
-        <activity android:name=".index.ui.activity.LiveRoomActivityNew" />
-        <activity android:name=".index.ui.activity.LiveLookActivityNew" />
+        <activity android:name=".index.ui.activity.LiveRoomActivity" />
+        <activity android:name=".index.ui.activity.LiveLookActivity" />
 
 
+        <service
+            android:name=".base.ui.service.PushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".base.ui.receiver.PushMessageReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->
         <uses-library
             android:name="org.apache.http.legacy"

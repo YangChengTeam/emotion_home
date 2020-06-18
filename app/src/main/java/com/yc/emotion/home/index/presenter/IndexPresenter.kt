@@ -108,28 +108,6 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
         subScriptions?.add(subscription)
     }
 
-    fun getIndexLiveList() {
-        val subscription = mModel?.getLiveListInfo()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
-                t?.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.list != null) {
-                        val liveInfos = t.data.list
-                        mView.showIndexLiveInfos(liveInfos)
-                    }
-                }
-            }
-
-
-            override fun onCompleted() {
-
-            }
-
-            override fun onError(e: Throwable?) {
-
-            }
-        })
-        subScriptions?.add(subscription)
-    }
 
     fun getOnlineLiveList() {
         val subscription = mModel?.getOnlineLiveList()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {

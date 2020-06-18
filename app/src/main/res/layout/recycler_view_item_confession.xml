@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="七夕扑克表白"
-                    android:textColor="@color/black1"
+                    android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <!--<TextView

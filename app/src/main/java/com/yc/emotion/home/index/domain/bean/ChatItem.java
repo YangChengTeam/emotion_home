@@ -17,6 +17,7 @@ public class ChatItem implements MultiItemEntity {
     public static final int TYPE_NOTIFICATION = 3;//系统消息
     public static final int TYPE_COME_CHAT = 4;//进入聊天室
     public static final int TYPE_GET_WX = 5;//用户点击获取微信
+    public static final int TYPE_TOUR_MSG=6;//巡视消息
 
     private int type;
 

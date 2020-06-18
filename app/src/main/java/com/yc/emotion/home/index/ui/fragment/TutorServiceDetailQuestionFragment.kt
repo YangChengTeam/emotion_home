@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_tutor_service_detail_question.*
  *
  * Created by suns  on 2019/10/14 10:06.
  */
-class TutorServiceDetailQuestionFragment : BaseFragment<BasePresenter<IModel,IView>>() {
+class TutorServiceDetailQuestionFragment : BaseFragment<BasePresenter<IModel, IView>>() {
     override fun getLayoutId(): Int {
         return R.layout.fragment_tutor_service_detail_question
     }
@@ -40,7 +40,7 @@ class TutorServiceDetailQuestionFragment : BaseFragment<BasePresenter<IModel,IVi
         clickView(rl_service_12, iv_service_12, tv_service_12)
         clickView(rl_service_13, iv_service_13, tv_service_13)
 
-
+        tv_tutor_course_intro.text = String.format(getString(R.string.buy_course_intro), getString(R.string.app_name))
     }
 
 
