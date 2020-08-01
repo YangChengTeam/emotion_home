@@ -6,10 +6,11 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.constant.Constant
 import com.yc.emotion.home.utils.RegexUtils
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_register_phone.*
 
 /**

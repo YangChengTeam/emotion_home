@@ -74,7 +74,7 @@
                 android:layout_marginRight="12dp"
 
                 android:background="@drawable/community_info_out_bg"
-                android:elevation="3dp"
+                android:elevation="1dp"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -88,14 +88,13 @@
                     android:singleLine="true"
                     android:text="测试报告"
                     android:textColor="#191D33"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_test_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_test_title"
                     android:layout_marginTop="18dp"
                     android:lineSpacingExtra="8dp"
                     android:text="你是一个很少暧昧的人，喜欢一个人就主动追求或者主动挑明心事，不喜欢就做朋友，也或者是选择直接的方式拒绝。，不喜欢就做朋友，也或者是选择直接的方式拒绝。"

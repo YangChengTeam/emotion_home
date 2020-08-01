@@ -25,20 +25,22 @@ class PublishTagAdapter(data: List<CommunityTagInfo>?) : CommonMoreAdapter<Commu
 
     private var pos by Preference(ConstantKey.TAG_POSTION, 0)
 
-    override fun convert(helper: BaseViewHolder, item: CommunityTagInfo) {
+    override fun convert(helper: BaseViewHolder?, item: CommunityTagInfo?) {
+        helper?.let {
+            val position = helper.adapterPosition
+            setItemParams(helper, position)
+            helper.itemView.background = ContextCompat.getDrawable(mContext, R.drawable.community_tag_selector)
 
-        val position = helper.adapterPosition
-        setItemParams(helper, position)
-        helper.itemView.background = ContextCompat.getDrawable(mContext, R.drawable.community_tag_selector)
+            helper.setText(R.id.tv_content, item?.title)
+            if (position == pos) {
+                helper.itemView.isSelected = true
+                helper.getView<View>(R.id.tv_content).isSelected = true
+            }
 
-        helper.setText(R.id.tv_content, item.title)
-        if (position == pos) {
-            helper.itemView.isSelected = true
-            helper.getView<View>(R.id.tv_content).isSelected = true
+            itemSparseArray.put(position, helper.itemView)
+            viewSparseArray.put(position, helper.getView(R.id.tv_content))
         }
 
-        itemSparseArray.put(position, helper.itemView)
-        viewSparseArray.put(position, helper.getView(R.id.tv_content))
     }
 
     private fun setItemParams(helper: BaseViewHolder, position: Int) {
@@ -76,5 +78,6 @@ class PublishTagAdapter(data: List<CommunityTagInfo>?) : CommonMoreAdapter<Commu
         itemSparseArray.get(position).isSelected = true
         viewSparseArray.get(position).isSelected = true
     }
+
 
 }

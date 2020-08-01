@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kk.utils.ScreenUtil
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
@@ -15,6 +15,7 @@ import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.adapter.ServiceOrderAdapter
 import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.utils.ItemDecorationHelper
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 
 
@@ -76,12 +77,12 @@ class ServiceOrderFragment : BaseFragment<BasePresenter<IModel, IView>>() {
             orderInfo?.let {
                 val llServiceMore = serviceOrderAdapter?.getViewByPosition(rv_efficient_course, position, R.id.ll_service_order_more)
 
-                when {
-                    view.id == R.id.tv_service_order_comment -> //todo 追加评价
+                when (view.id) {
+                    R.id.tv_service_order_comment -> //todo 追加评价
                         ToastUtils.showCenterToast("评价")
-                    view.id == R.id.tv_service_apply_refund -> //todo 申请退款
+                    R.id.tv_service_apply_refund -> //todo 申请退款
                         ToastUtils.showCenterToast("退款")
-                    view.id == R.id.iv_service_order_more -> {
+                    R.id.iv_service_order_more -> {
                         var tag = llServiceMore?.tag
                         tag = if (tag == "0") "1" else "0"
                         llServiceMore?.tag = tag

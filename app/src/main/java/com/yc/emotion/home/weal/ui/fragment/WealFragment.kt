@@ -18,7 +18,7 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.base.ui.activity.MainActivity.OnChildDisposeMainKeyDownListent
+import com.yc.emotion.home.base.ui.activity.MainActivity.OnChildDisposeMainKeyDownListener
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.model.bean.AResultInfo
@@ -98,7 +98,7 @@ class WealFragment : BaseFragment<BasePresenter<*, *>>() {
                 super.onReceivedIcon(view, icon);
             }*/
         }
-        mMainActivity?.setOnChildDisposeMainKeyDownListent(object : OnChildDisposeMainKeyDownListent {
+        mMainActivity?.setOnChildDisposeMainKeyDownListener(object : OnChildDisposeMainKeyDownListener {
             private var mIsCanBack = false
             override fun onChildDisposeMainKeyDown(): Boolean {
                 Log.d("mylog", "onChildDisposeMainKeyDown: mWebView.canGoBack " + main_t4_webview.canGoBack())

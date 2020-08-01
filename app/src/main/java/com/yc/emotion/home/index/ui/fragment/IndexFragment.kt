@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -30,13 +29,12 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.YcApplication
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
+import com.yc.emotion.home.base.ui.fragment.common.SuccessFragment
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
-import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.adapter.IndexCourseAdapter
 import com.yc.emotion.home.index.adapter.IndexLiveAdapter
 import com.yc.emotion.home.index.adapter.IndexTestAdapter
-import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.presenter.IndexPresenter
 import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.index.view.IndexView
@@ -46,10 +44,8 @@ import com.yc.emotion.home.model.bean.event.IndexRefreshEvent
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.GlideImageLoader
-import com.yc.emotion.home.utils.ItemDecorationHelper
-import com.yc.emotion.home.utils.Preference
-import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.pay.ui.fragment.PaySuccessFragment
+import com.yc.emotion.home.utils.*
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.fragment_main_index.*
@@ -98,7 +94,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         mPresenter = IndexPresenter(activity, this)
         tv_live_title.text = HtmlCompat.fromHtml("热门直播 <font color='#fa4a65'>LIVE</font>", FROM_HTML_MODE_LEGACY)
 
-
         val linearLayoutManager = LinearLayoutManager(mMainActivity)
         rcv_choiceness.layoutManager = linearLayoutManager
         rcv_choiceness.itemAnimator = DefaultItemAnimator()
@@ -108,7 +103,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         rcv_choiceness.adapter = indexChoicenessAdapter
 
 
-        index_course_recyclerView.layoutManager = GridLayoutManager(mMainActivity, 2)
+        index_course_recyclerView.layoutManager = GridLayoutManager(mMainActivity, 1)
         indexCourseAdapter = IndexCourseAdapter(null)
         index_course_recyclerView.adapter = indexCourseAdapter
         index_course_recyclerView.addItemDecoration(ItemDecorationHelper(mMainActivity, 15, 0))
@@ -121,11 +116,13 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 //        indexCourseAdapter.setLoadMoreView()
 //        indexCourseAdapter.setAutoLoadMoreSize()
 
-        initData()
+
         initListener()
 //        showGuide()
         initToolbar()
         initMarqueeView()
+
+
     }
 
 
@@ -143,7 +140,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             getIndexData()
         }
 
-        ll_advise.setOnClickListener {
+        ll_advise.clickWithTrigger {
             MobclickAgent.onEvent(mMainActivity, "personal_tailor_id", "私人订制")
             startActivity(Intent(mMainActivity, ConsultAppointActivity::class.java))
         }
@@ -156,23 +153,23 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             }
         }
 
-        tv_more_tutor.setOnClickListener { startActivity(Intent(mMainActivity, TutorListActivity::class.java)) }
-        tv_more_test.setOnClickListener { startActivity(Intent(mMainActivity, EmotionTestMainActivity::class.java)) }
-        tv_more_course.setOnClickListener { startActivity(Intent(mMainActivity, EfficientCourseActivity::class.java)) }
-        ll_index_search.setOnClickListener { switchSearch() }
-        iv_vip.setOnClickListener {
+        tv_more_tutor.clickWithTrigger { startActivity(Intent(mMainActivity, TutorListActivity::class.java)) }
+        tv_more_test.clickWithTrigger { startActivity(Intent(mMainActivity, EmotionTestMainActivity::class.java)) }
+        tv_more_course.clickWithTrigger { startActivity(Intent(mMainActivity, EfficientCourseActivity::class.java)) }
+        ll_index_search.clickWithTrigger { switchSearch() }
+        iv_vip.clickWithTrigger {
             MobclickAgent.onEvent(mMainActivity, "home_vip_id", "首页vip")
             startActivity(Intent(mMainActivity, VipActivity::class.java))
         }
-        tv_more_article.setOnClickListener { startActivity(Intent(mMainActivity, MoreArticleActivity::class.java)) }
-        iv_index_search.setOnClickListener { startActivity(Intent(mMainActivity, EmotionSearchActivity::class.java)) }
-        iv_index_vip.setOnClickListener { startActivity(Intent(mMainActivity, VipActivity::class.java)) }
-        iv_repel.setOnClickListener {
-            MonographActivity.startActivity(mMainActivity, "击退小三", "jituixiaosan")
+        tv_more_article.clickWithTrigger { startActivity(Intent(mMainActivity, MoreArticleActivity::class.java)) }
+        iv_index_search.clickWithTrigger { startActivity(Intent(mMainActivity, EmotionSearchActivity::class.java)) }
+        iv_index_vip.clickWithTrigger { startActivity(Intent(mMainActivity, VipActivity::class.java)) }
+        iv_repel.clickWithTrigger {
+            MonographActivity.startActivity(mMainActivity, "恋爱脱单", "41")
 
         }
-        iv_save.setOnClickListener {
-            MonographActivity.startActivity(mMainActivity, title = "挽救婚姻", series = "wanjiuhunyin")
+        iv_save.clickWithTrigger {
+            MonographActivity.startActivity(mMainActivity, title = "狙击挽回", series = "43")
         }
 
         indexCourseAdapter?.setOnItemClickListener { adapter, view, position ->
@@ -195,20 +192,20 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
                     LiveVideoActivity.startActivity(mMainActivity, liveInfo)
 
                 } else {
-                    mPresenter?.getOnlineLiveList()
+//                    mPresenter?.getOnlineLiveList()
 //                    when (it.status) {
 //                        2 -> {
 
-                    handler.postDelayed({
-                        mLiveInfo?.let { myit ->
-                            if (myit.status == 1) {
-                                LiveLookActivity.startActivity(mMainActivity, myit.roomId, myit.start_time, myit.end_time)
-                            } else if (myit.status == 2) {
-                                LiveNoticeActivity.startActivity(mMainActivity, myit)
-                            }
-                            //                            }
-                        }
-                    }, 1000)
+//                    handler.postDelayed({
+//                        mLiveInfo?.let { myit ->
+                    if (it.status == 1) {
+                        LiveLookActivity.startActivity(mMainActivity, it.roomId, it.start_time, it.end_time)
+                    } else if (it.status == 2) {
+                        LiveNoticeActivity.startActivity(mMainActivity, it)
+                    }
+                    //                            }
+                }
+//                    }, 1000)
 //                        }
 //                        1 -> {
 //                            LiveLookActivity.startActivity(mMainActivity, it.roomId, it.start_time, it.end_time)
@@ -218,7 +215,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 //                    }
 
 
-                }
+//                }
 
             }
 
@@ -269,52 +266,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun initData() {
-
-//        mPresenter.getCache()
-        getSexData()
-//        initLiveData()
-
-    }
-
-
-    private fun initIcon(t: List<SexInfo>) {
-
-        t.let {
-            t.forEach { item ->
-
-                val childView = LayoutInflater.from(mMainActivity).inflate(R.layout.index_content_icon, null)
-                val ivTutorPic = childView.findViewById<ImageView>(R.id.iv_index_icon)
-
-
-                val layoutParams = rootView.layoutParams
-
-                layoutParams.width = ScreenUtil.getWidth(mMainActivity) / 3
-                rootView.layoutParams = layoutParams
-                ivTutorPic.setImageResource(item.imgId)
-
-                childView.setOnClickListener {
-                    if (item.aClass == MainActivity::class.java) {
-                        mMainActivity.setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3)
-
-                    } else {
-                        val intent = Intent(mMainActivity, item.aClass)
-                        startActivity(intent)
-                    }
-
-                    item.umId?.let {
-                        MobclickAgent.onEvent(mMainActivity, item.umId, item.umDesc)
-                    }
-
-                }
-
-                ll_top_scroll_container.addView(childView)
-            }
-        }
-
-
-    }
-
     private fun initBanner(banners: List<BannerInfo>?) {
 
 
@@ -324,27 +275,30 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
                 paths.add(it.img)
             }
 
-            //设置banner样式
-            index_banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-            //设置图片加载器
-            index_banner.setImageLoader(GlideImageLoader())
-            //设置图片集合
-            index_banner.setImages(paths)
-            //设置banner动画效果
-            index_banner.setBannerAnimation(Transformer.Default)
+            index_banner?.let {
+                //设置banner样式
+                it.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                //设置图片加载器
+                it.setImageLoader(GlideImageLoader())
+                //设置图片集合
+                it.setImages(paths)
+                //设置banner动画效果
+                it.setBannerAnimation(Transformer.Default)
 
-            //设置自动轮播，默认为true
-            index_banner.isAutoPlay(true)
-            //设置轮播时间
-            index_banner.setDelayTime(2500)
-            //设置指示器位置（当banner模式中有指示器时）
-            index_banner.setIndicatorGravity(BannerConfig.CENTER)
-            //banner设置方法全部调用完毕时最后调用
-            index_banner.setOnBannerListener {
-                //todo banner点击事件
+                //设置自动轮播，默认为true
+                it.isAutoPlay(true)
+                //设置轮播时间
+                it.setDelayTime(2500)
+                //设置指示器位置（当banner模式中有指示器时）
+                it.setIndicatorGravity(BannerConfig.CENTER)
+                //banner设置方法全部调用完毕时最后调用
+                it.setOnBannerListener {
+                    //todo banner点击事件
 
+                }
+                it.start()
             }
-            index_banner.start()
+
         }
 
     }
@@ -375,7 +329,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
                 tvTutorJob.text = item.profession
 
 
-                childView.setOnClickListener {
+                childView.clickWithTrigger {
                     mMainActivity.let { it1 -> TutorDetailActivity.startActivity(it1, item.tutorId) }
                 }
 
@@ -390,8 +344,8 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     private fun initCourseData(lessonChapter: List<CourseInfo>?) {
         lessonChapter?.let {
             var newLesson = lessonChapter
-            if (lessonChapter.size > 4) {
-                newLesson = lessonChapter.subList(0, 4)
+            if (lessonChapter.size > 1) {
+                newLesson = lessonChapter.subList(0, 1)
             }
             indexCourseAdapter?.setNewData(newLesson)
         }
@@ -481,10 +435,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     }
 
 
-    private fun getSexData() {
-        mPresenter?.getSexData(sex)
-    }
-
     private var mPsychtTest: List<EmotionTestInfo>? = null
     private fun setData(indexInfo: IndexInfo) {
         initTutorData(indexInfo.tutors)//初始化导师数据
@@ -539,11 +489,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         swipeRefreshLayout?.let {
             if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
         }
-    }
-
-
-    override fun showIcon(t: List<SexInfo>) {
-        initIcon(t)
     }
 
 

@@ -3,12 +3,13 @@ package com.yc.emotion.home.index.presenter
 import android.content.Context
 import com.alibaba.fastjson.TypeReference
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.SkillModel
 import com.yc.emotion.home.index.view.SkillView
 import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.utils.CommonInfoHelper
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import rx.Subscriber
 

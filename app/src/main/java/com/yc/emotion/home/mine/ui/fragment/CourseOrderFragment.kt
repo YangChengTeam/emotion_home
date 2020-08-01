@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kk.utils.ScreenUtil
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
@@ -19,6 +19,7 @@ import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.base.view.IView
 
 import com.yc.emotion.home.utils.ItemDecorationHelper
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 
 /**
@@ -72,8 +73,8 @@ class CourseOrderFragment : BaseFragment<BasePresenter<IModel, IView>>() {
         }
 
         courseOrderAdapter?.setOnItemClickListener { adapter, view, position ->
-            val orderinfo = courseOrderAdapter?.getItem(position)
-            orderinfo?.let {
+            val orderInfo = courseOrderAdapter?.getItem(position)
+            orderInfo?.let {
 
                 startActivity(Intent(activity, TutorCourseDetailActivity::class.java))
             }
@@ -84,15 +85,15 @@ class CourseOrderFragment : BaseFragment<BasePresenter<IModel, IView>>() {
             orderInfo?.let {
                 val llCourseOrderMore = courseOrderAdapter?.getViewByPosition(rv_efficient_course, position, R.id.ll_course_order_more)
 
-                when {
-                    view.id == R.id.tv_course_order_comment -> //todo 追加评价
+                when (view.id) {
+                    R.id.tv_course_order_comment -> //todo 追加评价
                     {
                         ToastUtils.showCenterToast("评价")
                         startActivity(Intent(activity, PublishEvaluateActivity::class.java))
                     }
-                    view.id == R.id.tv_course_apply_refund -> //todo 申请退款
+                    R.id.tv_course_apply_refund -> //todo 申请退款
                         ToastUtils.showCenterToast("退款")
-                    view.id == R.id.iv_course_order_more -> {
+                    R.id.iv_course_order_more -> {
                         var tag = llCourseOrderMore?.tag
                         tag = if (tag == "0") "1" else "0"
                         llCourseOrderMore?.tag = tag

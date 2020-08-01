@@ -14,7 +14,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.Window
-import android.widget.*
+import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.fastjson.JSON
@@ -45,10 +46,7 @@ import com.yc.emotion.home.index.view.LiveLookView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.bean.event.IndexRefreshEvent
-import com.yc.emotion.home.utils.GenerateTestUserSig
-import com.yc.emotion.home.utils.PreferenceUtil
-import com.yc.emotion.home.utils.SensitiveWord
-import com.yc.emotion.home.utils.SoftKeyBoardUtils
+import com.yc.emotion.home.utils.*
 import com.yc.emotion.home.utils.SoftKeyBoardUtils.OnSoftKeyBoardChangeListener
 import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
 import kotlinx.android.synthetic.main.live_room_layout.*
@@ -153,6 +151,8 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
             rect.top = viewRect[1]
             rect.right = viewRect[0] + tvWidth
             rect.bottom = viewRect[1] + tvHeight
+
+//            Log.e(TAG,"${rect.top}--${rect.bottom}")
         }
     }
 
@@ -340,6 +340,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
         mTRTCCloud?.setListener(object : TRTCCloudListener() {
             override fun onError(errCode: Int, errMsg: String, bundle: Bundle) {
                 super.onError(errCode, errMsg, bundle)
+                Log.e(TAG, "onError: errCode--$errCode  errMsg--$errMsg")
                 if (errCode == TXLiteAVCode.ERR_ROOM_ENTER_FAIL) {
                     exitRoom()
                 }
@@ -358,6 +359,8 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
             override fun onExitRoom(reason: Int) {
                 super.onExitRoom(reason)
                 Log.e(TAG, "onExitRoom: ")
+                exitRoom()
+
             }
 
             //导师进入房间会回调
@@ -413,6 +416,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
         mTRTCCloud = null
 
         TRTCCloud.destroySharedInstance()
+        finish()
     }
 
     private fun handleUser() {
@@ -435,7 +439,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
         Log.e(TAG, "roomkey--$roomKey")
 
         //获取签名
-//        liveLookPresenter.getUserSeg(userID);
+//        liveLookPresenter.getUserSeg(userID)
     }
 
     //1.没有登录的用户不能加入房间
@@ -493,6 +497,8 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
         mTRTCCloud?.enterRoom(trtcParams, TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM)
     }
 
+
+
     private fun showCloseFragment() {
         val closeLiveFragment = CloseLiveFragment()
         closeLiveFragment.show(supportFragmentManager, "")
@@ -509,7 +515,6 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
             override fun onClose() {
 //                PreferenceUtil.getInstance().setBooleanValue(Constant.is_exit_live, true);
                 exitRoom()
-                finish()
             }
         })
     }
@@ -555,12 +560,27 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
         imManager?.joinGroupRoom("$roomId", object : V2TIMCallback {
             override fun onError(code: Int, msg: String) {
                 Log.e(TAG, "join room failure: code： $code  msg: $msg")
-                //                    joinRoom();
+                if (code == 10010) {//this group does not exist
+                    exitRoom()
+                }
+
+                //joinRoom();
             }
 
             override fun onSuccess() {
                 imManager?.setReceiveMagListener(simpleMsgListener)
                 imManager?.setGroupListener(groupListener)
+//                imManager?.setConversationListener(conversationListener)
+//                imManager?.getConversationList(0, 10, object : V2TIMValueCallback<V2TIMConversationResult> {
+//                    override fun onSuccess(v2TIMConversationResult: V2TIMConversationResult) {
+//                        updateConversation(v2TIMConversationResult.conversationList, false)
+//                    }
+//
+//                    override fun onError(code: Int, desc: String?) {
+//
+//                    }
+//                })
+
 
             }
         })
@@ -577,7 +597,6 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
                 liveEndFragment.setOnCloseListener(object : LiveEndFragment.OnCloseListener {
                     override fun onClose() {
                         exitRoom()
-                        finish()
                         isClose = true
                     }
                 })
@@ -586,7 +605,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
                     mHandler?.postDelayed({
                         liveEndFragment.dismiss()
                         exitRoom()
-                        finish()
+
                     }, 5000)
                 }
 
@@ -646,7 +665,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
                     online_count.text = String.format(getString(R.string.online_count), onlineCount)
                 }
                 Message.command_official_msg -> {
-                    chatItem = ChatItem(getString(R.string.app_name), message.content, ChatItem.TYPE_TOUR_MSG)
+                    chatItem = ChatItem(UIUtils.getAppName(this@LiveLookActivity), message.content, ChatItem.TYPE_TOUR_MSG)
                 }
                 Message.command_muted_msg -> {
                     val mutedMsg = message.content
@@ -682,6 +701,57 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
             recyclerView_chat?.scrollToPosition(chatAdapter.itemCount - 1)
         }
     }
+
+    private val conversationListener: V2TIMConversationListener = object : V2TIMConversationListener() {
+        override fun onConversationChanged(conversationList: List<V2TIMConversation?>?) {
+
+        }
+    }
+
+
+    private fun updateConversation(convList: List<V2TIMConversation>, needSort: Boolean) {
+
+        for (i in 0..convList.size) {
+
+
+            val conv = convList[i]
+            val convId = conv.conversationID
+
+            Log.e(TAG, "convId:  $convId")
+            var isExit = false;
+        }
+//            for (int j = 0; j < uiConvList.size(); j++) {
+//                V2TIMConversation uiConv = uiConvList . get (j);
+//                // UI 会话列表存在该会话，则替换
+//                if (uiConv.getConversationID().equals(conv.getConversationID())) {
+//                    uiConvList.set(j, conv);
+//                    isExit = true;
+//                    break;
+//                }
+//            }
+//            // UI 会话列表没有该会话，则新增
+//            if (!isExit) {
+//                uiConvList.add(conv);
+//            }
+//        }
+//        // 4. 按照会话 lastMessage 的 timestamp 对 UI 会话列表做排序并更新界面
+//        if (needSort) {
+//            Collections.sort(uiConvList, new Comparator < V2TIMConversation >() {
+//                @Override
+//                public int compare(V2TIMConversation o1, V2TIMConversation o2) {
+//                    if (o1.getLastMessage().getTimestamp() > o2.getLastMessage().getTimestamp()) {
+//                        return -1;
+//                    } else {
+//                        return 1;
+//                    }
+//                }
+//            });
+//        }
+//        ...
+//        mAdapter.setDataResource(uiConvList);
+//        mAdapter.notifyDataSetChanged();
+    }
+
 
     private fun sendCustomMsg(msg: String) {
         if (imManager == null) {
@@ -729,6 +799,7 @@ class LiveLookActivity : BaseActivity(), LiveLookView {
 
     override fun showUserSeg(usersig: String) {
         userSig = usersig
+
     }
 
 

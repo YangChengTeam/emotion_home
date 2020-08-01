@@ -3,13 +3,12 @@ package com.yc.emotion.home.index.presenter
 import android.content.Context
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
-import com.tencent.openqq.protocol.imsdk.im_common
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.bean.UserSeg
 import com.yc.emotion.home.index.domain.model.LiveLookModel
 import com.yc.emotion.home.index.view.LiveLookView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import com.yc.emotion.home.utils.ToastUtils
 import rx.Subscriber
 
 /**
@@ -52,7 +51,7 @@ class LiveLookPresenter(context: Context?, view: LiveLookView) : BasePresenter<L
         subScriptions?.add(subscription)
     }
 
-    fun getUserSeg(user_id: String) {
+    fun getUserSeg(user_id: String?) {
         val subscription = mModel?.getUserSeg(user_id)?.subscribe(object : Subscriber<ResultInfo<UserSeg>>() {
             override fun onNext(t: ResultInfo<UserSeg>?) {
                 t?.let {

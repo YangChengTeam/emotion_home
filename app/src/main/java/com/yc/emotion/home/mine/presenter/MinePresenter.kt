@@ -4,13 +4,14 @@ import android.content.Context
 import android.text.TextUtils
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.mine.domain.model.MineModel
 import com.yc.emotion.home.mine.view.MineView
 import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.UserInterInfo
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import rx.Subscriber
 

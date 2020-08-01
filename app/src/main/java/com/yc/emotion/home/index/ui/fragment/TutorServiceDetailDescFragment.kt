@@ -8,6 +8,7 @@ import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.fragment_tutor_service_detail_desc.*
 
 /**
@@ -23,7 +24,7 @@ class TutorServiceDetailDescFragment : BaseFragment<BasePresenter<IModel, IView>
 
 
     override fun initViews() {
-        tv_buy_intro.text = String.format(getString(R.string.buy_course_intro), getString(R.string.app_name))
+        tv_buy_intro.text = String.format(getString(R.string.buy_course_intro), UIUtils.getAppName(activity))
 
         val content = arguments?.getString("content")
 

@@ -31,7 +31,7 @@ class IndexChoicenessAdapter(mDatas: ArrayList<ArticleDetailInfo>?, isIndex: Boo
                 val roundCornerImg = helper.getView<ImageView>(R.id.iv_icon)
 
                 Glide.with(mContext).asBitmap().load(item.image).thumbnail(0.1f).apply(RequestOptions().error(R.mipmap.index_example_icon)
-                        .diskCacheStrategy(DiskCacheStrategy.DATA).skipMemoryCache(false)).into(roundCornerImg)
+                        .placeholder(R.mipmap.default_placeholder).diskCacheStrategy(DiskCacheStrategy.DATA).skipMemoryCache(false)).into(roundCornerImg)
 
                 if (mIsIndex) {
                     val pos = helper.adapterPosition

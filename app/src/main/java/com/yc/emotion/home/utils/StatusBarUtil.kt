@@ -607,18 +607,23 @@ object StatusBarUtil {
     @JvmStatic
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     fun setStatusTextColor1(useDart: Boolean, activity: Activity) {
-        if (isFlyme1) {
-            //魅族
-            setMeizuStatusBarDarkIcon(activity, useDart)
-        } else if (isMIUI) {
-            //小米
-            setMIUIStatusTextColor(activity, useDart)
-        } else if (Build.MANUFACTURER.equals("OPPO", ignoreCase = true)) {
-            //OPPO
-            setOPPOStatusTextColor(useDart, activity)
-        } else {
-            //其他
-            setOtherStatusTextColor(activity, useDart)
+        when {
+            isFlyme1 -> {
+                //魅族
+                setMeizuStatusBarDarkIcon(activity, useDart)
+            }
+            isMIUI -> {
+                //小米
+                setMIUIStatusTextColor(activity, useDart)
+            }
+            Build.MANUFACTURER.equals("OPPO", ignoreCase = true) -> {
+                //OPPO
+                setOPPOStatusTextColor(useDart, activity)
+            }
+            else -> {
+                //其他
+                setOtherStatusTextColor(activity, useDart)
+            }
         }
     }
 
@@ -673,9 +678,9 @@ object StatusBarUtil {
         //6.0后小米状态栏用的原生的
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (useDart) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                }
+
+                activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
             } else {
                 activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             }
@@ -857,10 +862,8 @@ object StatusBarUtil {
             window.attributes = attributes
         }
         if (activity is AppCompatActivity) {
-            val aa = activity
-            if (null != aa.supportActionBar) {
-                aa.supportActionBar!!.hide()
-            }
+
+            activity.supportActionBar?.hide()
         }
     }
 

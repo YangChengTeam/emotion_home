@@ -15,7 +15,7 @@ interface IndexView : IView, StateDefaultImpl {
 
     fun showIndexInfo(indexInfo: IndexInfo)
 
-    fun showIcon(t: List<SexInfo>)
+
 
     fun showIndexCaches(detailInfos: IndexInfo)
     fun showIndexLiveInfos(data: List<LiveInfo>)

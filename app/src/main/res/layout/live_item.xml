@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/ll_live"
         android:layout_width="57dp"
-        android:layout_height="16dp"
+        android:layout_height="18dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/live_state_bg"

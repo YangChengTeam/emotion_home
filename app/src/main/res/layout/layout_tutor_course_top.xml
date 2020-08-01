@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:drawablePadding="3dp"
                 android:drawableRight="@mipmap/more_right_arrow_icon"
+                android:drawablePadding="3dp"
                 android:text="共4课"
                 android:textColor="@color/gray_bebdbd" />
         </RelativeLayout>
@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/ll_scroll_container"
@@ -47,6 +48,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </com.yc.emotion.home.base.ui.widget.BouncyHScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
     <View

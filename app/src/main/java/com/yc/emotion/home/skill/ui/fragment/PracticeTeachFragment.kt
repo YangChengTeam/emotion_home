@@ -1,9 +1,13 @@
 package com.yc.emotion.home.skill.ui.fragment
 
 import android.content.Intent
+import android.view.ViewGroup
+import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -14,8 +18,10 @@ import com.yc.emotion.home.index.view.PracticeView
 import com.yc.emotion.home.model.bean.MainT2Bean
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_practice_teach.*
+
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -62,6 +68,7 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
         lchild_main_t2_t1_rl.itemAnimator = DefaultItemAnimator()
         mAdapter = PracticeItemAdapter(mMainT2Beans)
         lchild_main_t2_t1_rl.adapter = mAdapter
+
 
         initListener()
 
@@ -136,6 +143,18 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
     }
 
     override fun showPracticeInfoList(exampDataBean: List<MainT2Bean>) {
+        if (PAGE_NUM > 1) {
+            for (i in exampDataBean.indices) {
+                val item = exampDataBean[i]
+//                if (i >= 10) {
+                item.post_title = "********************************";
+//                }
+            }
+        }
+
+
+
+
         if (PAGE_NUM == 1) {
             mAdapter?.setNewData(exampDataBean)
         } else {
@@ -148,6 +167,7 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
             child_main_t2_t1_swipe_refresh.isRefreshing = false
         }
     }
+
 
     override fun showLoadingDialog() {
         (activity as? BaseActivity)?.showLoadingDialog()

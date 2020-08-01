@@ -39,6 +39,7 @@ import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.widget.ShareShowImgDialog
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.ui.activity.ResultActivity
+import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_result.*
 import java.io.*
 
@@ -50,7 +51,8 @@ class ResultActivity : BaseSameActivity() {
     private lateinit var mMsgApi: IWXAPI
     private var mFilePath: String? = null
     private var fileBitmap: Bitmap? = null
-//    private var mImageView: ImageView? = null
+
+    //    private var mImageView: ImageView? = null
     private val mIsRepeat = false
     override fun initIntentData() {
         val intent = intent
@@ -272,7 +274,7 @@ class ResultActivity : BaseSameActivity() {
     private fun sharePhotoToQQ(activity: Activity, tencent: Tencent, iUiListener: IUiListener) {
         val params = Bundle()
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, mFilePath)
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, activity.getString(R.string.app_name))
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, UIUtils.getAppName(this))
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE)
         //        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
         activity.runOnUiThread { tencent.shareToQQ(activity, params, iUiListener) }

@@ -58,18 +58,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_zb_title"
-                android:layout_marginTop="9dp">
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:id="@+id/tv_zb_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="找到你的那个他，一起哈哈哈"
                     android:textColor="@color/send_title_color"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -85,8 +84,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="使用"
-                    android:textColor="@color/black1"
-                    android:textSize="14sp" />
+                    android:textColor="@color/gray_666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_use_count"
@@ -98,7 +97,7 @@
                     android:layout_toRightOf="@+id/tv_use"
                     android:text="999"
                     android:textColor="@color/red"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_count_tv"
@@ -107,8 +106,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_use_count"
                     android:text="次"
-                    android:textColor="@color/black1"
-                    android:textSize="14sp" />
+                    android:textColor="@color/gray_666"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tv_zb_keep"

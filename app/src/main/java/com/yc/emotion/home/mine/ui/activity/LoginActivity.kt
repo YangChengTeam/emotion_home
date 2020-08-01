@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.*
 import androidx.core.content.ContextCompat
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity
@@ -15,6 +15,7 @@ import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.RegexUtils
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_login.*
 
 import org.greenrobot.eventbus.EventBus

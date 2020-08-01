@@ -2,12 +2,13 @@ package com.yc.emotion.home.index.presenter
 
 import android.content.Context
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.ArticleDetailModel
 import com.yc.emotion.home.index.view.ArticleDetailView
 import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveByStagesDetailsBean
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import rx.Subscriber
 

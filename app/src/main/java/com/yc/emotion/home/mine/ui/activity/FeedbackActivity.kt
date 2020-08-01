@@ -39,7 +39,6 @@ class FeedbackActivity : BaseSameActivity(), MineView {
 
     //
 
-
     override fun initViews() {
 
         mPresenter = MinePresenter(this, this)

@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/index_example_icon" />
+                android:src="@mipmap/default_placeholder" />
         </androidx.cardview.widget.CardView>
 
 

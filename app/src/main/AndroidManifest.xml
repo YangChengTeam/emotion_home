@@ -189,30 +189,20 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--<activity android:name=".index.ui.activity.PracticeTeachFragment" />-->
         <activity android:name=".index.ui.activity.PracticeLoveActivity" />
-        <activity
-            android:name=".index.ui.activity.LoveAudioDetailActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="com.music.player.love.action" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity android:name=".community.ui.activity.CommunityNoticeDetailActivity" />
         <activity android:name=".community.ui.activity.CommunityDetailActivity" />
         <activity android:name=".community.ui.activity.CommunityPublishActivity" />
-        <activity android:name=".index.ui.activity.AudioActivity" />
+
         <activity android:name=".index.ui.activity.ConsultAppointActivity" />
 
-        <activity android:name=".index.ui.activity.TipsCourseActivity" />
+
         <activity android:name=".message.ui.activity.ServiceChatActivity" />
         <activity android:name=".index.ui.activity.EfficientCourseActivity" />
         <activity
             android:name=".index.ui.activity.TutorCourseDetailActivity"
             android:configChanges="orientation|screenSize"
-
-            />
+            android:theme="@style/fullScreen" />
         <!--在你需要全屏播放的Activity中加上这个属性，告诉系统Activity在横竖屏切换时不要销毁Activity-->
         <activity android:name=".index.ui.activity.TutorListActivity" />
         <activity android:name=".index.ui.activity.EmotionTestMainActivity" />

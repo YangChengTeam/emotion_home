@@ -54,7 +54,7 @@ class OrderActivity : BaseSameActivity() {
         val arrays = resources.getStringArray(R.array.order_array)
 
 
-        val titleList = Arrays.asList(*arrays)
+        val titleList = listOf(*arrays)
 
         initNavigator(titleList)
 

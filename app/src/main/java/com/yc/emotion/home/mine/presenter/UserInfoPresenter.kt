@@ -5,7 +5,7 @@ import android.text.TextUtils
 import android.view.TextureView
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.net.contains.HttpConfig
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.BaseActivity
@@ -14,6 +14,7 @@ import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.WetChatInfo
 import com.yc.emotion.home.utils.RegexUtils
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import org.w3c.dom.Text
 import rx.Subscriber

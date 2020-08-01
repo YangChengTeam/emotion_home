@@ -81,6 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:lineSpacingExtra="5dp"
+                        android:textSize="14.5sp"
                         android:text="女朋友父母知道我们在谈恋爱，还让她去相亲，几个意思"
                         android:textColor="@color/black" />
 

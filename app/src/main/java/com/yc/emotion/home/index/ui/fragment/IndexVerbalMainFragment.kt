@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.music.player.lib.util.ToastUtils
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
@@ -31,6 +30,7 @@ import com.yc.emotion.home.index.view.IndexVerbalView
 import com.yc.emotion.home.model.bean.IndexHotInfo
 import com.yc.emotion.home.model.bean.SearchDialogueBean
 import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_index_verbal.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
@@ -263,12 +263,12 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
 
         MobclickAgent.onEvent(activity, "search_dialogue_id", "搜索话术框")
 
-//        mPresenter?.searchVerbalTalk(keyword, page, PAGE_SIZE)
-//        searchCount(keyword)
+
         SearchActivity.startSearchActivity(activity, keyword)
 //        if (!UserInfoHelper.instance.goToLogin(activity)) {
-//
-//
+//            mPresenter?.searchVerbalTalk(keyword, page, PAGE_SIZE)
+//            searchCount(keyword)
+////
 //        }
     }
 
@@ -313,12 +313,13 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
 
     override fun showSearchResult(searchDialogueBean: SearchDialogueBean?, keyword: String?) {
         searchDialogueBean?.let {
-            val searchBuyVip = searchDialogueBean.search_buy_vip
-            if (1 == searchBuyVip) { //1 弹窗付费 0不弹
-                startActivity(Intent(activity, VipActivity::class.java))
-            } else {
-                SearchActivity.startSearchActivity(activity, keyword)
-            }
+//            val searchBuyVip = searchDialogueBean.search_buy_vip
+//            if (1 == searchBuyVip) { //1 弹窗付费 0不弹
+//                startActivity(Intent(activity, VipActivity::class.java))
+//            } else {
+//                SearchActivity.startSearchActivity(activity, keyword)
+//            }
+            SearchActivity.startSearchActivity(activity, keyword)
         }
 
     }

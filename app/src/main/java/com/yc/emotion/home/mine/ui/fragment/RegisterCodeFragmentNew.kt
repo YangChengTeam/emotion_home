@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
 import androidx.navigation.Navigation
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.constant.Constant
@@ -14,6 +14,7 @@ import com.yc.emotion.home.mine.ui.activity.RegisterMainActivityNew
 import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.fragment_register_code.*
 

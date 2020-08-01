@@ -36,7 +36,7 @@
             android:id="@+id/share_tv_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:background="@drawable/selectot_btn_brim_red_crimson_brim"
             android:gravity="center_horizontal"
             android:paddingLeft="18dp"

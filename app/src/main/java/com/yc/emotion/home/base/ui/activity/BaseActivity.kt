@@ -223,12 +223,12 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     }
 
 
-    fun showToWxServiceDialog(tutorId: String? = "", articelId: String? = "", exampleId: String? = "", listener: OnWxListener? = null) {
+    fun showToWxServiceDialog(tutorId: String? = "", articelId: String? = "", exampleId: String? = "", position: String? = "", listener: OnWxListener? = null) {
         MobclickAgent.onEvent(this, ConstantKey.UM_CONTACT_US_CLICK_ID)
         val mWechat = arrayOf("pai201807")
 
 
-        mLoveEngine?.getWechatInfo(tutorId, articelId, exampleId)?.subscribe(object : Subscriber<ResultInfo<WetChatInfo>>() {
+        mLoveEngine?.getWechatInfo(tutorId, articelId, exampleId, position)?.subscribe(object : Subscriber<ResultInfo<WetChatInfo>>() {
             override fun onCompleted() {
 
             }
@@ -299,7 +299,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     }
 
 
-     fun openWeiXin() {
+    fun openWeiXin() {
 
         try {
             MobclickAgent.onEvent(this, ConstantKey.UM_CONTACT_US_TO_WECHAT_ID)

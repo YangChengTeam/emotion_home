@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.music.player.lib.manager.MusicPlayerManager
+
 import com.umeng.analytics.MobclickAgent
 import com.umeng.socialize.UMShareAPI
 import com.yc.emotion.home.R
@@ -42,7 +42,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private var netWorkChangReceiver: NetWorkChangReceiver? = null
     private var mPackageVersionName: String? = null
     private var mDownloadIdKey = "mDownloadIdKey"
-    private var onChildDisposeMainKeyDownListent: OnChildDisposeMainKeyDownListent? = null
+    private var onChildDisposeMainKeyDownListent: OnChildDisposeMainKeyDownListener? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,14 +72,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             "1.0"
         }
 
-        mLoadingDialog
 
         mDownloadIdKey = "download_id$mPackageVersionName"
         Log.d("mylog", "onCreate: download_id mDownloadIdKey $mDownloadIdKey")
         //初始化MusicService
 
 
-        MusicPlayerManager.getInstance().bindService(this)
+//        MusicPlayerManager.getInstance().bindService(this)
         initView()
         if (PreferenceUtil.getInstance().getStringValue(KEY_APP_ID, "") == "") {
             PreferenceUtil.getInstance()
@@ -116,12 +115,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    interface OnChildDisposeMainKeyDownListent {
+    interface OnChildDisposeMainKeyDownListener {
         fun onChildDisposeMainKeyDown(): Boolean
     }
 
-    fun setOnChildDisposeMainKeyDownListent(onChildDisposeMainKeyDownListent: OnChildDisposeMainKeyDownListent) {
-        this.onChildDisposeMainKeyDownListent = onChildDisposeMainKeyDownListent
+    fun setOnChildDisposeMainKeyDownListener(onChildDisposeMainKeyDownListener: OnChildDisposeMainKeyDownListener) {
+        this.onChildDisposeMainKeyDownListent = onChildDisposeMainKeyDownListener
     }
 
 
@@ -144,15 +143,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         if (netWorkChangReceiver != null) {
             unregisterReceiver(netWorkChangReceiver)
         }
-        MusicPlayerManager.getInstance().unBindService(this)
+//        MusicPlayerManager.getInstance().unBindService(this)
 
     }
 
     private fun initView() {
 
-        //        FloatingActionButton fabToWx = findViewById(R.love_id.comp_main_floating_action_button_to_wx);
 
-        //        fabToWx.setOnClickListener(this);
         comp_main_iv_to_wx.setOnClickListener(this)
 
         comp_main_index.setOnClickListener(this)
@@ -232,14 +229,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         //                iconSelect(MainFragmentFactory.MAIN_FRAGMENT_3);
     }
 
-    fun setCurrentItem(pos: Int) {
+    private fun setCurrentItem(pos: Int) {
         comp_main_vp_fragment.setCurrentItem(pos, false)
         iconSelect(pos)
     }
 
 
     private fun iconSelect(current: Int) {
-        cleatIconState()
+        clearIconState()
         when (current) {
             MainFragmentFactory.MAIN_FRAGMENT_0 -> setCompoundDrawablesTop(comp_main_index, R.mipmap.main_icon_tab_01_s)
 
@@ -250,7 +247,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun cleatIconState() {
+    private fun clearIconState() {
         setCompoundDrawablesTop(comp_main_index, R.mipmap.main_icon_tab_01)
         setCompoundDrawablesTop(comp_main_inVerbal, R.mipmap.home_speech_default)
         setCompoundDrawablesTop(comp_main_community, R.mipmap.home_community_default)

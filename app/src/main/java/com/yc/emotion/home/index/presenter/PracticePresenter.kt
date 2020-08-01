@@ -1,6 +1,7 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
+import android.util.Log
 import com.alibaba.fastjson.TypeReference
 import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.base.presenter.BasePresenter
@@ -94,11 +95,17 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
         if (page == 1) mMainT2Beans.add(MainT2Bean("tit", MainT2Bean.VIEW_TITLE))
         if (exampListsBeans != null && exampListsBeans.size > 0) {
 
+
+
             for (exampListsBean in exampListsBeans) {
-                var type = MainT2Bean.VIEW_ITEM
-                if (page > 1) {
-                    type = if (exampDataBean.is_vip > 0) MainT2Bean.VIEW_ITEM else MainT2Bean.VIEW_TO_PAY_VIP
-                }
+//                var type = MainT2Bean.VIEW_ITEM
+//                if (page > 1) {
+//                    type = if (exampDataBean.is_vip > 0) MainT2Bean.VIEW_ITEM else MainT2Bean.VIEW_TO_PAY_VIP
+//                }
+
+
+                val type = if (exampListsBean.is_vip > 0) MainT2Bean.VIEW_ITEM else MainT2Bean.VIEW_TO_PAY_VIP
+
 
                 mMainT2Beans.add(MainT2Bean(type, exampListsBean.create_time, exampListsBean.id, exampListsBean.image, exampListsBean.post_title))
             }
@@ -112,7 +119,7 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
             CommonInfoHelper.setO<List<MainT2Bean>>(mContext, mMainT2Beans, "main2_example_lists")
         }
         mView.showPracticeInfoList(mMainT2Beans)
-
+//        Log.e("TAG",)
         if (exampListsBeans != null && exampListsBeans.size == pageSize) {
             mView.loadMoreComplete()
         } else {

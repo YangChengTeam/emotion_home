@@ -8,6 +8,7 @@ import android.view.View
 import android.webkit.*
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
@@ -61,7 +62,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
     }
 
     override fun initViews() {
-
+//        mTvTitle.setText()
         mPresenter = ArticleDetailPresenter(this, this)
 
         netData()
@@ -240,6 +241,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
         if (isCollectLovewords) {
             mBaseSameTvSub.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_star_s, 0)
             iv_collect.setImageResource(R.mipmap.search_knack_collected_icon)
+            tv_collect.setTextColor(ContextCompat.getColor(this,R.color.gray_999))
             if (isClick) {
                 collEctResult += 1
             }
@@ -247,6 +249,8 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
         } else {
             mBaseSameTvSub.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_star_black, 0)
             iv_collect.setImageResource(R.mipmap.search_knack_collect_icon)
+
+            tv_collect.setTextColor(ContextCompat.getColor(this,R.color.black))
             if (isClick) {
                 collEctResult -= 1
             }

@@ -10,6 +10,7 @@ import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment
 import com.yc.emotion.home.model.bean.ShareInfo
 import com.yc.emotion.home.utils.StatusBarUtil
+import com.yc.emotion.home.utils.UIUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_share.*
 
@@ -43,11 +44,11 @@ class ShareActivity : BaseSameActivity() {
         }
         var nick_name = instance.getUserInfo()?.nick_name
         if (TextUtils.isEmpty(nick_name)) {
-            nick_name = getString(R.string.app_name)
+            nick_name = UIUtils.getAppName(this)
         }
         tv_share_name.text = nick_name
-        tv_invite_friend.text = String.format(getString(R.string.invitate_friend), getString(R.string.app_name))
-        tv_share_desc.text = "邀请你一起加入${getString(R.string.app_name)}"
+        tv_invite_friend.text = String.format(getString(R.string.invitate_friend), UIUtils.getAppName(this))
+        tv_share_desc.text = "邀请你一起加入${UIUtils.getAppName(this)}"
         initListener()
     }
 
@@ -76,6 +77,6 @@ class ShareActivity : BaseSameActivity() {
     }
 
     override fun offerActivityTitle(): String {
-        return getString(R.string.app_name)
+        return UIUtils.getAppName(this)
     }
 }

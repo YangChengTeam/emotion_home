@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
 
     private var mShareActivity: SearchActivity? = null
 
-    private var mLoveEngin: LoveEngine? = null
+
     private val PAGE_SIZE = 10
     private var PAGE_NUM = 1
     private var i = 0
@@ -43,7 +43,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
     private var keyword: String? = null
 
     private var uid: Int = 0
-    private var vipTips: Int = 0
+    private var vipTips: Int? = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -66,12 +66,11 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
 
 
 
-        mLoveEngin = LoveEngine(activity)
-
         initRecyclerView()
         initListener()
 
         uid = UserInfoHelper.instance.getUid()
+        vipTips = UserInfoHelper.instance.getUserInfo()?.vip_tips
         netData(keyword)
 
 
@@ -202,7 +201,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
 
 //        val uid = UserInfoHelper.instance.getUid()
 //        if (uid == 0) {
-//            if (loveHealDetBeans.size == 5) {
+//            if (loveHealDetBeans.size >= 5) {
 //                mAdapter?.loadMoreComplete()
 //                PAGE_NUM++
 //            } else {
@@ -228,6 +227,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
             if (details == null || details.size == 0) {
                 details = loveHealDetBean.detail
             }
+
 
             details?.add(0, LoveHealDetDetailsBean(0, loveHealDetBean.id, loveHealDetBean.chat_name, loveHealDetBean.ans_sex))
             if (uid == 0) {//未登录
@@ -259,11 +259,12 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
 
     override fun showSearchResult(searchDialogueBean: SearchDialogueBean?, keyword: String?) {
         searchDialogueBean?.let {
-            val searchBuyVip = searchDialogueBean.search_buy_vip
+//            val searchBuyVip = searchDialogueBean.search_buy_vip
 //            if (1 == searchBuyVip) { //1 弹窗 0不弹
-//                startActivity(Intent(mShareActivity, VipActivity::class.java))
-//                base_share_rv.postDelayed({ mShareActivity?.childDisposeOnBack() }, 1000)
-//
+////                if (!UserInfoHelper.instance.goToLogin(mShareActivity)) {
+//                    startActivity(Intent(mShareActivity, VipActivity::class.java))
+////                    base_share_rv.postDelayed({ mShareActivity?.childDisposeOnBack() }, 1000)
+////                }
 //                //                    notCanShart();
 //                return
 //            }

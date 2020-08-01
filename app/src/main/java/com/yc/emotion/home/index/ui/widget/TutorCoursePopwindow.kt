@@ -62,7 +62,8 @@ class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
             val lessonInfo = tutorCoursePpAdapter?.getItem(position)
             if (lessonInfo != null) {
                 onSelectListener?.let {
-                    if (position == 0 || !instance.goToLogin(mContext)) it.onTagSelect(lessonInfo)
+//                    if (position == 0 || !instance.goToLogin(mContext))
+                    it.onTagSelect(lessonInfo, position)
                 }
 
                 dismiss()
@@ -91,6 +92,6 @@ class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
     }
 
     interface OnTagSelectListener {
-        fun onTagSelect(lessonInfo: LessonInfo?)
+        fun onTagSelect(lessonInfo: LessonInfo?, pos: Int)
     }
 }

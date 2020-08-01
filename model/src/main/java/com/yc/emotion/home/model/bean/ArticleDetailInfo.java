@@ -32,6 +32,8 @@ public class ArticleDetailInfo implements Serializable {
     @JSONField(name = "cat_name")
     public String tag;
 
+    public int is_vip;
+
     public ArticleDetailInfo(int type, String post_title) {
         this.type = type;
         this.post_title = post_title;

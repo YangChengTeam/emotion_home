@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:text="主讲导师：慧慧"
                 android:textColor="@color/gray_999"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/tv_tutor_course_people"
@@ -41,6 +41,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="166人已购"
+                android:textSize="13sp"
                 android:textColor="@color/gray_999" />
 
         </RelativeLayout>

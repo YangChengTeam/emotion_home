@@ -35,43 +35,46 @@ class VipItemAdapter(data: List<GoodsInfo>?) : CommonMoreAdapter<GoodsInfo, Base
     private val imageViewSparseArray: SparseArray<ImageView> = SparseArray()
     private val userInfo: UserInfo? = UserInfoHelper.instance.getUserInfo()
 
-    override fun convert(helper: BaseViewHolder, item: GoodsInfo) {
-        helper.setText(R.id.item_become_vip_tail_tv_pay_tit_01, item.name)
-                .setText(R.id.item_become_vip_tail_tv_pay_mon_01, DoubleToStringUtils.doubleStringToString(item.m_price))
-                .setText(R.id.item_become_vip_tail_tv_original_price_01, "原价" + DoubleToStringUtils.doubleStringToString(item.price))
+    override fun convert(helper: BaseViewHolder?, item: GoodsInfo?) {
 
-        val tvOrigin = helper.getView<TextView>(R.id.item_become_vip_tail_tv_original_price_01)
-        tvOrigin.paintFlags = tvOrigin.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        helper.setText(R.id.item_become_vip_tail_tv_pay_des_01, item.desp)
+        helper?.let {
+
+            helper.setText(R.id.item_become_vip_tail_tv_pay_tit_01, item?.name)
+                    .setText(R.id.item_become_vip_tail_tv_pay_mon_01, DoubleToStringUtils.doubleStringToString(item?.m_price))
+                    .setText(R.id.item_become_vip_tail_tv_original_price_01, "原价" + DoubleToStringUtils.doubleStringToString(item?.price))
+
+            val tvOrigin = helper.getView<TextView>(R.id.item_become_vip_tail_tv_original_price_01)
+            tvOrigin.paintFlags = tvOrigin.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            helper.setText(R.id.item_become_vip_tail_tv_pay_des_01, item?.desp)
 
 
-        val position = helper.adapterPosition
-        constraintLayoutSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_cl_con_01))
-        payUnitSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_unit_01))
-        payMonSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_mon_01))
-        descSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_des_01))
-        imageViewSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_iv_pay_sel_01))
-        if (position == 0) {
-            showGuide()
-        }
+            val position = helper.adapterPosition
+            constraintLayoutSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_cl_con_01))
+            payUnitSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_unit_01))
+            payMonSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_mon_01))
+            descSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_tv_pay_des_01))
+            imageViewSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_iv_pay_sel_01))
+            if (position == 0) {
+                showGuide()
+            }
 
-        if (null != userInfo) {
-            if (userInfo.vip_tips == 1) {//已开通
+            if (null != userInfo) {
+                if (userInfo.vip_tips == 1) {//已开通
 
-                if (userInfo.vip_type == position + 1) {
-                    helper.setVisible(R.id.tv_expire, true)
-                    helper.setText(R.id.tv_expire, DateUtils.formatTimeToStr(userInfo.vip_end_time.toLong(), "yyyy.MM.dd") + "到期")
+                    if (userInfo.vip_type == position + 1) {
+                        helper.setVisible(R.id.tv_expire, true)
+                        helper.setText(R.id.tv_expire, DateUtils.formatTimeToStr(userInfo.vip_end_time.toLong(), "yyyy.MM.dd") + "到期")
+                    } else {
+                        helper.setVisible(R.id.tv_expire, false)
+                    }
+
                 } else {
                     helper.setVisible(R.id.tv_expire, false)
                 }
-
-            } else {
-                helper.setVisible(R.id.tv_expire, false)
             }
+
+            setSelect(0)
         }
-
-        setSelect(0)
-
 
     }
 

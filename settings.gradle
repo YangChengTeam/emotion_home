@@ -1,1 +1,1 @@
-include ':app', ':model', ':music-player-lib', ':ultraviewpager', ':video-player-lib', ':share', ":PhotoPicker", ':likestarlibrary'
+include ':app', ':model', ':ultraviewpager', ':video-player-lib', ':share', ":PhotoPicker", ':likestarlibrary'

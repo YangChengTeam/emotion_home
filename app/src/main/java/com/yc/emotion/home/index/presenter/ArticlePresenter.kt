@@ -27,7 +27,6 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
 
     override fun loadData(isForceUI: Boolean, isLoading: Boolean) {
         if (!isForceUI) return
-        getArticleTagInfos()
 
     }
 
@@ -52,7 +51,7 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
     /**
      * 更多文章分类类别
      */
-    private fun getArticleTagInfos() {
+    fun getArticleTagInfos() {
         mModel?.getArticleTagInfos()?.subscribe(object : Subscriber<ResultInfo<List<AticleTagInfo>>>() {
             override fun onNext(t: ResultInfo<List<AticleTagInfo>>?) {
                 t?.let {
@@ -77,7 +76,7 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
     }
 
 
-    fun getArticleInfoList(cat_id: Int, page: Int, page_size: Int) {
+    fun getArticleInfoList(cat_id: Int?, page: Int, page_size: Int) {
         if (page == 1)
             mView.showLoadingDialog()
         mModel?.getArticleInfoList(cat_id, 0, page, page_size)?.subscribe(object : Subscriber<ResultInfo<List<ArticleDetailInfo>>>() {

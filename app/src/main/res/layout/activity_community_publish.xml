@@ -98,11 +98,11 @@
             android:minHeight="150dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="8dp"
-            app:cardElevation="3dp"
+            app:cardElevation="0dp"
             app:contentPaddingBottom="5dp"
             app:contentPaddingLeft="10dp"
             app:contentPaddingRight="@dimen/dp_10"
-            app:contentPaddingTop="5dp">
+            app:contentPaddingTop="2dp">
 
             <EditText
                 android:id="@+id/et_community"

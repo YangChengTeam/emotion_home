@@ -42,7 +42,7 @@ class CommunityFollowAdapter(data: List<CommunityInfo>?) : CommonMoreAdapter<Com
 
                     helper.setText(R.id.tv_date, time)
                 } catch (e: Exception) {
-                    Log.e(BaseQuickAdapter.TAG, "convert: " + e.message)
+                    Log.e(TAG, "convert: " + e.message)
                 }
 
                 helper.setImageResource(R.id.iv_like, if (item.is_dig == 0) R.mipmap.community_like else R.mipmap.community_like_selected)

@@ -1,7 +1,6 @@
 package com.yc.emotion.home.index.ui.fragment
 
 import android.content.Intent
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -12,7 +11,6 @@ import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseBottomSheetDialogFragment
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
-import com.yc.emotion.home.mine.ui.activity.LoginMainActivity
 import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.mine.ui.activity.PrivacyStatementActivity
 import com.yc.emotion.home.mine.ui.activity.UserPolicyActivity
@@ -22,7 +20,6 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.utils.UserLoginManager
 import org.greenrobot.eventbus.EventBus
-import org.w3c.dom.Text
 
 /**
  * Created by suns  on 2020/6/4 11:48.
@@ -94,6 +91,7 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
         }
         tvOtherLogin?.setOnClickListener {
             startActivity(Intent(activity, LoginRegisterActivity::class.java))
+            dismiss()
         }
     }
 

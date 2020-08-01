@@ -34,51 +34,6 @@ class IndexModel(override var context: Context?) : IModel {
                 true, true, true) as Observable<ResultInfo<IndexInfo>>
     }
 
-
-    fun getSexInfoBySex(sex: Int): Observable<List<SexInfo>> {
-        return Observable.just(sex).subscribeOn(Schedulers.io()).map<List<SexInfo>> { s ->
-            val sexInfos = ArrayList<SexInfo>()
-
-            if (sex == 1) {
-
-//                var sexInfo = SexInfo(R.mipmap.home_buttom_love, IndexVerbalMainFragment::class.java, "love_dialogue_id", "恋爱话术")
-//                sexInfos.add(sexInfo)
-                var sexInfo = SexInfo(R.mipmap.home_buttom_combat, MainActivity::class.java, "chat_practice_click", "聊天实战")
-                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_skill, TipsCourseActivity::class.java, "secret_skill_id", "秘技")
-                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_article, MoreArticleActivity::class.java, "preferred_article_click", "优选文章")
-                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_test, EmotionTestMainActivity::class.java, "affective_test_id", "情感测试")
-                sexInfos.add(sexInfo)
-
-            } else if (sex == 2) {
-                var sexInfo = SexInfo(R.mipmap.home_buttom_article, MoreArticleActivity::class.java, "preferred_article_click", "优选文章")
-                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_test, EmotionTestMainActivity::class.java, "affective_test_id", "情感测试")
-                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_combat, MainActivity::class.java, "chat_practice_click", "聊天实战")
-                sexInfos.add(sexInfo)
-//                sexInfo = SexInfo(R.mipmap.home_buttom_love, IndexVerbalMainFragment::class.java, "love_dialogue_id", "恋爱话术")
-//                sexInfos.add(sexInfo)
-                sexInfo = SexInfo(R.mipmap.home_buttom_skill, TipsCourseActivity::class.java, "secret_skill_id", "秘技")
-                sexInfos.add(sexInfo)
-
-            }
-
-            sexInfos
-        }.observeOn(AndroidSchedulers.mainThread())
-    }
-
-    /**
-     * 获取直播列表
-     */
-    fun getLiveListInfo(): Observable<ResultInfo<LiveInfoWrapper>> {
-
-        return HttpCoreEngin.get(context).rxpost(URLConfig.INDEX_LIVE_LIST_URL, object : TypeReference<ResultInfo<LiveInfoWrapper>>() {}.type, null,
-                true, true, true) as Observable<ResultInfo<LiveInfoWrapper>>
-    }
-
     /**
      * 获取在线直播列表
      */

@@ -5,7 +5,7 @@ import android.text.TextUtils
 import com.alibaba.fastjson.TypeReference
 import com.kk.securityhttp.domain.ResultInfo
 import com.kk.securityhttp.engin.HttpCoreEngin
-import com.music.player.lib.bean.MusicInfo
+
 import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.*
 import rx.Observable
@@ -70,7 +70,7 @@ class LoveEngine(context: Context?) : BaseEngine(context) {
      * @param example_id
      * @return
      */
-    fun getWechatInfo(tutor_id: String?, article_id: String?, example_id: String?): Observable<ResultInfo<WetChatInfo>> {
+    fun getWechatInfo(tutor_id: String?, article_id: String?, example_id: String?, position: String?): Observable<ResultInfo<WetChatInfo>> {
         val params: MutableMap<String?, String?> = HashMap()
         if (!TextUtils.isEmpty(tutor_id)) params["tutor_id"] = tutor_id
         if (!TextUtils.isEmpty(article_id)) {
@@ -79,6 +79,7 @@ class LoveEngine(context: Context?) : BaseEngine(context) {
         if (!TextUtils.isEmpty(example_id)) {
             params["example_id"] = example_id
         }
+        if (!TextUtils.isEmpty(position)) params["position"] = position
         return HttpCoreEngin.get(mContext).rxpost(URLConfig.WECHAT_INFO_URL,
                 object : TypeReference<ResultInfo<WetChatInfo?>?>() {}.type, params,
                 true, true, true) as Observable<ResultInfo<WetChatInfo>>

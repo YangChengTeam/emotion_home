@@ -17,6 +17,7 @@ import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.adapter.VipItemAdapter
 import com.yc.emotion.home.pay.presenter.VipPresenter
+import com.yc.emotion.home.pay.ui.fragment.PaySuccessFragment
 import com.yc.emotion.home.pay.view.VipView
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UserInfoHelper
@@ -195,6 +196,8 @@ class VipActivity : PayActivity(), VipView {
         alertDialog.setTitle("提示")
         if (result) {
             EventBus.getDefault().post(EventPayVipSuccess())
+            val paySuccessFragment = PaySuccessFragment()
+            paySuccessFragment.show(supportFragmentManager, "")
         }
         alertDialog.setMessage(des)
 

@@ -3,7 +3,7 @@ package com.yc.emotion.home.mine.ui.activity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter

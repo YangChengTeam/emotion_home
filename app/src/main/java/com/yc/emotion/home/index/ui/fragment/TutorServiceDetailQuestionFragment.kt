@@ -8,6 +8,7 @@ import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.fragment_tutor_service_detail_question.*
 
 /**
@@ -40,7 +41,7 @@ class TutorServiceDetailQuestionFragment : BaseFragment<BasePresenter<IModel, IV
         clickView(rl_service_12, iv_service_12, tv_service_12)
         clickView(rl_service_13, iv_service_13, tv_service_13)
 
-        tv_tutor_course_intro.text = String.format(getString(R.string.buy_course_intro), getString(R.string.app_name))
+        tv_tutor_course_intro.text = String.format(getString(R.string.buy_course_intro), UIUtils.getAppName(activity))
     }
 
 

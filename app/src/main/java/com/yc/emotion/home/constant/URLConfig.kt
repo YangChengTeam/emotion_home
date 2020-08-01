@@ -18,35 +18,17 @@ object URLConfig {
     // 5、图片合成
     const val URL_IMAGE_CREATE = URL_SERVER_IP + "m=Home&c=Zbsq&a=start_zb"
 
-    //音频分类
-    const val AUDIO_DATA_LIST_URL = "http://love.bshu.com/v1/music/cats"
 
-    //音频列表
-    const val AUDIO_ITEM_LIST_URL = "http://love.bshu.com/v1/music/lists"
-    const val LOVE_INDEX_URL = baseUrlV1 + "Hotsearch/index"
-
-    //音频收藏接口
-    const val AUDIO_COLLECT_URL = baseUrlV1 + "music/collect"
-
-    //音频收藏列表
-    const val AUDIO_COLLECT_LIST_URL = baseUrlV1 + "music/collect_list"
 
     //首页搜索框下拉热词
     val INDEX_DROP_URL = getBaseUrl() + "dialogue.dialogue/dropdown"
 
-    //音频详情
-    const val AUDIO_DETAIL_URL = "http://love.bshu.com/v1/music/info"
+
 
     //分享得会员
     val SHARE_REWARD_URL = getBaseUrl() + "share.share/reward"
 
-    /**
-     * spa随便听听
-     */
-    const val SPA_RANDOM_URL = baseUrlV1 + "spa/random"
 
-    //音频播放次数
-    const val AUDIO_PLAY_URL = baseUrlV1 + "music/play"
 
     //默认值
     private const val sdPath = "/storage/emulated/0/Android/data/com.ant.flying/cache"

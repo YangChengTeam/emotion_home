@@ -1,9 +1,14 @@
 package com.yc.emotion.home.utils
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
 import com.sunfusheng.marqueeview.MarqueeView
+
 import java.util.*
+
 
 /**
  * Created by wanglin  on 2018/2/5 17:37.
@@ -28,5 +33,32 @@ object UIUtils {
             messages.add("挽回婚姻靠哪几招？")
             marqueeView.startWithList(messages as List<Nothing>?)
         })
+    }
+
+
+    fun getAppName(context: Context?): String {
+        return if (context == null) {
+            ""
+        } else {
+            var appName = ""
+            try {
+                val packageManager = context.packageManager
+                var applicationInfo: ApplicationInfo? = null
+                try {
+                    applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
+                } catch (e: PackageManager.NameNotFoundException) {
+                    e.printStackTrace()
+                }
+                appName = if (null != applicationInfo) {
+                    packageManager.getApplicationLabel(applicationInfo) as String
+                } else {
+                    context.resources.getString(context.applicationInfo.labelRes)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            appName
+        }
+
     }
 }

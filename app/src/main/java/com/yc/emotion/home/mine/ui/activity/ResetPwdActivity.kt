@@ -8,7 +8,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
@@ -16,6 +16,7 @@ import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.RegexUtils
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_reset_pwd.*
 
 /**

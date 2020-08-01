@@ -37,6 +37,7 @@ import com.yc.emotion.home.model.bean.ShareInfo
 import com.yc.emotion.home.model.bean.event.EventBusWxPayResult
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.ShareInfoHelper
+import com.yc.emotion.home.utils.UIUtils
 import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
 import org.greenrobot.eventbus.EventBus
 import rx.Subscriber
@@ -127,7 +128,7 @@ class ShareAppFragment : BottomSheetDialogFragment() {
     }
 
     private fun shareInfo(tag: Int) {
-        var title = "表白神器——" + mContext!!.getString(R.string.app_name) + "！会聊才会撩，撩到心动的TA！"
+        var title = "表白神器——" + UIUtils.getAppName(mContext) + "！会聊才会撩，撩到心动的TA！"
         var url: String? = "http://tic.upkao.com/apk/love.apk"
         var desc = """
             谈恋爱时，你是否因为不会聊天而苦恼过？

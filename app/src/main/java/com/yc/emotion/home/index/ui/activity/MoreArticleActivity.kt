@@ -52,7 +52,7 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
 
     fun initView() {
         mPresenter = ArticlePresenter(this, this)
-
+        (mPresenter as ArticlePresenter).getArticleTagInfos()
         initListener()
 
     }
@@ -103,6 +103,7 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
             val bundle = Bundle()
             bundle.putInt("cat_id", it)
 
+
             articleFragment.arguments = bundle
 
             fragments.add(articleFragment)
@@ -133,8 +134,8 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
                 simplePagerTitleView.text = titleList[index]
                 if (index == 0) simplePagerTitleView.typeface = Typeface.DEFAULT_BOLD
                 simplePagerTitleView.textSize = 14f
-                simplePagerTitleView.normalColor = resources.getColor(R.color.gray_999)
-                simplePagerTitleView.selectedColor = resources.getColor(R.color.gray_222222)
+                simplePagerTitleView.normalColor = resources.getColor(R.color.black)
+                simplePagerTitleView.selectedColor = resources.getColor(R.color.app_color)
                 simplePagerTitleView.setOnClickListener { v -> viewPager_efficient.currentItem = index }
                 return simplePagerTitleView
             }
@@ -143,8 +144,8 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
                 val indicator = LinePagerIndicator(context)
                 //                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 indicator.mode = LinePagerIndicator.MODE_EXACTLY
-                indicator.lineHeight = UIUtil.dip2px(context, 3.0).toFloat()
-                indicator.lineWidth = UIUtil.dip2px(context, 40.0).toFloat()
+                indicator.lineHeight = UIUtil.dip2px(context, 2.0).toFloat()
+                indicator.lineWidth = UIUtil.dip2px(context, 30.0).toFloat()
                 indicator.roundRadius = UIUtil.dip2px(context, 3.0).toFloat()
                 indicator.startInterpolator = AccelerateInterpolator()
                 indicator.endInterpolator = DecelerateInterpolator(2.0f)

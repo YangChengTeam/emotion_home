@@ -79,7 +79,7 @@
                 android:layout_toEndOf="@id/iv_search"
                 android:background="@null"
                 android:ellipsize="end"
-                android:hint="输入Ta说的话"
+                android:hint="请输入关键字，搜索常用话术"
                 android:singleLine="true"
                 android:textColor="@color/gray_222222"
                 android:textColorHint="@color/gray_999"

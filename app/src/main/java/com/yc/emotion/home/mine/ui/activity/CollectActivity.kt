@@ -52,7 +52,7 @@ class CollectActivity : BaseSameActivity() {
 
         val array = resources.getStringArray(R.array.collect_array)
 
-        val titleLists = Arrays.asList(*array)
+        val titleLists = listOf(*array)
         //        titleLists.add("问答");
 
         initNavigator(titleLists)

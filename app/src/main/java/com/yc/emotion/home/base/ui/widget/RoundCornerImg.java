@@ -1,11 +1,17 @@
 package com.yc.emotion.home.base.ui.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
+
+import com.yc.emotion.home.R;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -14,8 +20,9 @@ import androidx.appcompat.widget.AppCompatImageView;
  */
 
 public class RoundCornerImg extends AppCompatImageView {
-    float width, height;
-    int corners = 12;
+    private float width, height;
+    private int corners = 12;
+    private PaintFlagsDrawFilter pfd;
 
     public RoundCornerImg(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -26,6 +33,15 @@ public class RoundCornerImg extends AppCompatImageView {
         if (Build.VERSION.SDK_INT < 18) {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RoundCornerImg);
+
+//        try {
+//            corners = ta.getDimensionPixelSize(R.styleable.RoundCornerImg_cornerRadius, 12);
+//        } finally {
+//            ta.recycle();
+//        }
+
+        pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
     }
 
     @Override
@@ -47,13 +63,17 @@ public class RoundCornerImg extends AppCompatImageView {
             path.moveTo(corners, 0);
             path.lineTo(width - corners, 0);
             path.quadTo(width, 0, width, corners);
+
             path.lineTo(width, height - corners);
             path.quadTo(width, height, width - corners, height);
             path.lineTo(corners, height);
             path.quadTo(0, height, 0, height - corners);
             path.lineTo(0, corners);
             path.quadTo(0, 0, corners, 0);
+            path.close();
+            canvas.setDrawFilter(pfd);
             canvas.clipPath(path);
+
         }
         super.onDraw(canvas);
     }

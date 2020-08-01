@@ -39,8 +39,7 @@ class ArticleFragment : BaseFragment<ArticlePresenter>(), ArticleView {
         intent?.let {
             catId = intent.getInt("cat_id", 0)
         }
-
-
+        
         rv_efficient_course.setPadding(0, 0, 0, 0)
         val layoutManager = LinearLayoutManager(activity)
         indexChoicenessAdapter = IndexChoicenessAdapter(null, false, isMore = true)
@@ -122,6 +121,8 @@ class ArticleFragment : BaseFragment<ArticlePresenter>(), ArticleView {
     }
 
     override fun onComplete() {
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.let {
+            if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        }
     }
 }

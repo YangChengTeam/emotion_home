@@ -12,7 +12,6 @@ import com.kk.securityhttp.net.contains.HttpConfig;
 import com.kk.share.UMShareImpl;
 import com.kk.utils.FileUtil;
 import com.kk.utils.LogUtil;
-import com.music.player.lib.manager.MusicPlayerManager;
 import com.paradigm.botkit.BotKitClient;
 import com.paradigm.botlib.VisitorInfo;
 import com.tencent.bugly.Bugly;
@@ -21,13 +20,12 @@ import com.umeng.socialize.UMShareAPI;
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.im.IMManager;
 import com.yc.emotion.home.model.ModelApp;
-import com.yc.emotion.home.model.bean.event.IndexRefreshEvent;
 import com.yc.emotion.home.utils.GenerateTestUserSig;
 import com.yc.emotion.home.utils.SensitiveWord;
 import com.yc.emotion.home.utils.ShareInfoHelper;
+import com.yc.emotion.home.utils.UIUtils;
 import com.yc.emotion.home.utils.UserInfoHelper;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +58,7 @@ public class YcApplication extends MultiDexApplication {
 
     public List<Activity> activityIdCorList;
     /**
-     * 当前Acitity个数
+     * 当前Activity个数
      */
     private int activityCount = 0;
     private boolean isPaused = false;
@@ -77,8 +75,7 @@ public class YcApplication extends MultiDexApplication {
         Observable.just("").subscribeOn(Schedulers.io()).subscribe(s -> init());
 
         ModelApp.init(this);
-        MusicPlayerManager.getInstance().init(this);
-        MusicPlayerManager.getInstance().setDebug(true);
+
         IMManager.getInstance().init(this, GenerateTestUserSig.SDKAPPID);
 
         initBot();
@@ -99,7 +96,7 @@ public class YcApplication extends MultiDexApplication {
 
         UMConfigure.init(getApplicationContext(), "5da983e44ca357602b00046d", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null);
 
-//
+        //
 
         //初始化友盟SDK
         UMShareAPI.get(this);//初始化sdk
@@ -122,7 +119,7 @@ public class YcApplication extends MultiDexApplication {
         GoagalInfo.get().init(getApplicationContext());
         ApplicationInfo appinfo = getApplicationInfo();
         String sourceDir = appinfo.sourceDir;
-        ZipFile zf = null;
+        ZipFile zf;
         try {
             zf = new ZipFile(sourceDir);
             ZipEntry ze1 = zf.getEntry("META-INF/channelconfig.json");
@@ -137,7 +134,8 @@ public class YcApplication extends MultiDexApplication {
         } catch (Exception e) {
             setHttpDefaultParams(null);
         }
-
+//        new RetrofitHttpRequest.Builder()
+//                .url(URLConfig.INSTANCE.getBaseUrl());
 
         HttpConfig.setPublickey("-----BEGIN PUBLIC KEY-----\n" +
                 "MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA5KaI8l7xplShIEB0Pwgm\n" +
@@ -189,7 +187,7 @@ public class YcApplication extends MultiDexApplication {
 
                 params.put("site_id", jsonObject.getString("site_id"));
                 params.put("soft_id", jsonObject.getString("soft_id"));
-                params.put("app_name", getString(R.string.app_name));
+                params.put("app_name", UIUtils.INSTANCE.getAppName(this));
             }
         } catch (JSONException e) {
             e.printStackTrace();

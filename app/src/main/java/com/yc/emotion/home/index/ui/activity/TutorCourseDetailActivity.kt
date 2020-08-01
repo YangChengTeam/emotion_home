@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.music.player.lib.util.ToastUtils
+
 import com.umeng.analytics.MobclickAgent
+import com.video.player.lib.constants.VideoConstants
 import com.video.player.lib.manager.VideoPlayerManager
 import com.video.player.lib.manager.VideoWindowManager
 import com.yc.emotion.home.R
@@ -20,8 +22,14 @@ import com.yc.emotion.home.index.view.TutorCourseView
 import com.yc.emotion.home.model.bean.LessonInfo
 import com.yc.emotion.home.model.bean.TutorCommentInfo
 import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
+import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
+import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_tutor_course_detail.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.text.ParsePosition
 
 
 /**
@@ -92,7 +100,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
 
     private fun initListener() {
         tutorCourseDetailAdapter?.setOnLoadMoreListener({
-            getCommentData("$tutor_id")
+            getCommentData("$tutorId")
         }, rcv_tutor_course)
 
         tutorCourseDetailAdapter?.setOnItemChildClickListener { adapter, view, position ->
@@ -102,9 +110,12 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
 
             val tvTutorExtend = tutorCourseDetailAdapter?.getViewByPosition(position, R.id.tv_tutor_extend)
 
+
+
             tutorCourseDetailInfo?.let {
                 when (tutorCourseDetailInfo.itemType) {
                     TutorCourseDetailInfo.ITEM_TYPE_ONE -> {
+                        val courseRecyclerView = tutorCourseDetailAdapter?.getViewByPosition(position, R.id.recyclerview_course) as RecyclerView
                         if (view.id == R.id.tv_tutor_course_total) {
                             mLessons?.let {
                                 if (it.isNotEmpty()) {
@@ -112,9 +123,17 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
                                     val tutorCoursePopWindow = TutorCoursePopwindow(this@TutorCourseDetailActivity)
                                     tutorCoursePopWindow.setCourseData(it)
                                     tutorCoursePopWindow.setOnTagSelectListener(object : TutorCoursePopwindow.OnTagSelectListener {
-                                        override fun onTagSelect(lessonInfo: LessonInfo?) {
+                                        override fun onTagSelect(lessonInfo: LessonInfo?, pos: Int) {
                                             MobclickAgent.onEvent(this@TutorCourseDetailActivity, "video_player_click", "课程视频播放点击")
-                                            startPlayer(lessonInfo)
+                                            if (pos == 0 || lessonInfo?.need_pay == 0) {
+                                                startPlayer(lessonInfo)
+                                            } else {
+                                                if (!UserInfoHelper.instance.goToLogin(this@TutorCourseDetailActivity)) {
+                                                    startActivity(Intent(this@TutorCourseDetailActivity, VipActivity::class.java))
+                                                }
+                                            }
+                                            courseRecyclerView.scrollToPosition(pos)
+
                                         }
                                     })
 
@@ -190,12 +209,14 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
 
     }
 
-    private var tutor_id: Int? = null
-    private fun createData(data: TutorCourseDetailInfo?) {
-        tutor_id = data?.chapter?.tutor_id
+    private var tutorId: Int? = null
+    private fun createData(data: TutorCourseDetailInfo) {
+        tutorId = data.chapter?.tutor_id
+        val courseInfo = data.chapter
+        tv_money.text = "¥${courseInfo.price}"
         tutorCourseDetailInfoList = arrayListOf()
         if (page == 1) {
-            data?.let {
+            data.let {
                 val lesson = data.lessons
 
                 val tutorCourseDetailInfo1 = TutorCourseDetailInfo(TutorCourseDetailInfo.ITEM_TYPE_ONE)
@@ -214,7 +235,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
             }
         }
 
-        getCommentData("$tutor_id")
+        getCommentData("$tutorId")
     }
 
 
@@ -293,13 +314,14 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
 
 
     private fun startPlayer(lessonInfo: LessonInfo?) {
+
         Glide.with(this).load(lessonInfo?.lesson_image).apply(RequestOptions().error(R.mipmap.efficient_course_example_pic)).into(videoPlayer.coverController.mVideoCover)
+        videoPlayer.setVideoDisplayType(VideoConstants.VIDEO_DISPLAY_TYPE_ZOOM)
         videoPlayer.startPlayVideo(lessonInfo?.lesson_url, lessonInfo?.lesson_title)
     }
 
     override fun showCourseDetailInfo(data: TutorCourseDetailInfo?) {
         data?.let {
-
             val lessons = data.lessons
             mLessons = lessons
             lessons?.let {
@@ -313,6 +335,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
                 isCollect = data.chapter.is_collect
             }
             setCollectState(isCollect)
+
             createData(data)
         }
     }
@@ -321,4 +344,8 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
         createNewData(comment_list)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPaySuccess(eventPayVipSuccess: EventPayVipSuccess) {
+        getCourseData(chapterId)
+    }
 }

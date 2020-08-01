@@ -265,15 +265,6 @@
                                 android:layout_marginTop="15dp"
                                 android:layout_marginEnd="15dp" />
 
-                            <!--预约咨询-->
-
-                            <ImageView
-                                android:id="@+id/ll_advise"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="18dp"
-                                android:src="@mipmap/index_reservation" />
 
                         </LinearLayout>
                         <!--根据性别显示不同图标-->
@@ -299,6 +290,72 @@
                                 android:orientation="horizontal" />
                         </com.yc.emotion.home.base.ui.widget.BouncyHScrollView>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="15dp"
+
+                            android:paddingBottom="5dp">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="高效课程"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_more_course"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:drawableEnd="@mipmap/more_right_arrow_icon"
+                                    android:drawablePadding="3dp"
+                                    android:text="更多课程"
+                                    android:textColor="@color/gray_aaa"
+                                    android:textSize="12sp"
+                                    android:visibility="gone" />
+                            </RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/index_course_recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="5dp" />
+
+                        </LinearLayout>
+
+                        <!--预约咨询-->
+
+                        <ImageView
+                            android:id="@+id/ll_advise"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="18dp"
+                            android:src="@mipmap/index_reservation" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/gray_f2f2f2" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -343,56 +400,6 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" />
                         </com.yc.emotion.home.base.ui.widget.BouncyHScrollView>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="@color/gray_f2f2f2" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="15dp"
-
-                        android:paddingBottom="5dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="高效课程"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tv_more_course"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:drawableRight="@mipmap/more_right_arrow_icon"
-                                android:drawablePadding="3dp"
-                                android:text="更多课程"
-                                android:textColor="@color/gray_aaa"
-                                android:textSize="12sp" />
-                        </RelativeLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/index_course_recyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp" />
-
                     </LinearLayout>
 
                     <View

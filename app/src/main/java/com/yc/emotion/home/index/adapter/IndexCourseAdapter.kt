@@ -4,10 +4,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseViewHolder
+import com.kk.utils.ScreenUtil
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.model.bean.CourseInfo
+import com.yc.emotion.home.model.util.ScreenUtils
 
 /**
  *
@@ -18,8 +20,9 @@ class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : CommonMoreAdapte
         helper?.let {
             item?.let {
                 val roundCornerImg = helper.getView<RoundCornerImg>(R.id.course_roundImg)
-
-
+                val layoutParams = roundCornerImg.layoutParams
+                layoutParams.height = ScreenUtil.dip2px(mContext, 120f)
+                roundCornerImg.layoutParams = layoutParams
 
                 Glide.with(mContext).load(item.img)
                         .apply(RequestOptions().error(R.mipmap.home_course_one).diskCacheStrategy(DiskCacheStrategy.DATA))

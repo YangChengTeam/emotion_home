@@ -152,7 +152,9 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
         } else {
             loveHealDetailsAdapter?.loadMoreEnd()
         }
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.let {
+            if (it.isRefreshing) it.isRefreshing = false
+        }
     }
 
     private fun toCopy(content: LoveHealDetDetailsBean) {
@@ -196,14 +198,15 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
             openAkpDialog.show()
         }
 
+
     }
 
     override fun showCollectVerbalList(t: List<LoveHealDetDetailsBean>) {
         if (PAGE_NUM == 0) {
             if (t.isEmpty()) {
-                top_empty_view.visibility = View.VISIBLE
+                top_empty_view?.let { it.visibility = View.VISIBLE }
             } else {
-                top_empty_view.visibility = View.GONE
+                top_empty_view?.let { it.visibility = View.GONE }
             }
         }
 
@@ -211,12 +214,17 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
     }
 
     override fun onComplete() {
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.let {
+            if (it.isRefreshing) it.isRefreshing = false
+        }
     }
 
     override fun onError() {
-        if (PAGE_NUM == 0) top_empty_view.visibility = View.VISIBLE
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        if (PAGE_NUM == 0) top_empty_view?.visibility = View.VISIBLE
+        swipeRefreshLayout?.let {
+            if (it.isRefreshing) it.isRefreshing = false
+        }
+
     }
 
 

@@ -3,7 +3,8 @@ package com.yc.emotion.home.utils
 import android.content.Context
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.TypeReference
-import com.music.player.lib.util.Logger
+
+import com.video.player.lib.utils.Logger
 import com.yc.emotion.home.utils.CacheUtils.SubmitRunable
 import com.yc.emotion.home.utils.CacheUtils.readCache
 import com.yc.emotion.home.utils.CacheUtils.writeCache

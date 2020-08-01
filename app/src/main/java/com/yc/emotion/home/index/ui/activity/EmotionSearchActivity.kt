@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import com.alibaba.fastjson.JSON
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -15,6 +15,7 @@ import com.yc.emotion.home.index.ui.fragment.EmotionSearchHistoryFragment
 import com.yc.emotion.home.index.ui.fragment.EmotionSearchResultFragment
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.activity_emotion_search.*
 
 /**

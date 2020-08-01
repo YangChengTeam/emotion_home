@@ -14,6 +14,7 @@ class IndexLiveAdapter(liveInfos: List<LiveInfo>?) : CommonMoreAdapter<LiveInfo,
     override fun convert(helper: BaseViewHolder?, item: LiveInfo?) {
         helper?.let {
             item?.let {
+
                 helper.setText(R.id.tv_live_name, item.nickname)
                         .setText(R.id.tv_live_title, item.live_title)
                         .setText(R.id.tv_live_type, item.liveType)

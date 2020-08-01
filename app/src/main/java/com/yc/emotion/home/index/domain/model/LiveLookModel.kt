@@ -23,7 +23,7 @@ class LiveLookModel(override var context: Context?) : IModel {
 
     }
 
-    fun getUserSeg(user_id: String): Observable<ResultInfo<UserSeg>> {
+    fun getUserSeg(user_id: String?): Observable<ResultInfo<UserSeg>> {
         return HttpCoreEngin.get(context).rxpost(URLConfig.USER_SIGN_URL, object : TypeReference<ResultInfo<UserSeg>>() {}.type, mutableMapOf(
                 "user_id" to user_id
         ), true, true, true) as Observable<ResultInfo<UserSeg>>

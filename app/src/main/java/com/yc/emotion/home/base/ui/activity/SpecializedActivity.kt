@@ -3,7 +3,6 @@ package com.yc.emotion.home.base.ui.activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -18,9 +17,7 @@ import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_specialized.*
 import yc.com.tencent_adv.AdvDispatchManager
-import yc.com.tencent_adv.AdvType
 import yc.com.tencent_adv.OnAdvStateListener
-import java.io.FileInputStream
 
 class SpecializedActivity : BaseActivity(), OnAdvStateListener {
 

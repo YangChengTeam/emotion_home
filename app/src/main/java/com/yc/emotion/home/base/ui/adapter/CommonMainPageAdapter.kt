@@ -1,7 +1,6 @@
 package com.yc.emotion.home.base.ui.adapter
 
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -63,7 +62,7 @@ class CommonMainPageAdapter(ft: FragmentManager, behavior: Int, titles: List<Str
         //        container.removeView(object);
         val fragment = CommonPagerFactory.createFragment(position, mFragments)
         val fragmentTransaction = mFt.beginTransaction()
-        fragment?.let {
+        fragment.let {
             fragmentTransaction.hide(fragment)
         }
         fragmentTransaction.commitAllowingStateLoss()

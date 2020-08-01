@@ -6,19 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.music.player.lib.util.ToastUtils
 import com.tencent.bugly.beta.Beta
 import com.umeng.socialize.bean.SHARE_MEDIA
-
 import com.yc.emotion.home.R
-import com.yc.emotion.home.model.bean.event.EventLoginState
-import com.yc.emotion.home.model.util.DataCleanManagerUtils
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.widget.LoadDialog
+import com.yc.emotion.home.model.bean.event.EventLoginState
+import com.yc.emotion.home.model.util.DataCleanManagerUtils
+import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import com.yc.emotion.home.utils.UserLoginManager
 import kotlinx.android.synthetic.main.activity_setting.*
-
 import org.greenrobot.eventbus.EventBus
 
 class SettingActivity : BaseSameActivity() {

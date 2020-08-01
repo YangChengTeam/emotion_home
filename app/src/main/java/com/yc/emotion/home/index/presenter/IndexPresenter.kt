@@ -41,7 +41,6 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
      */
     override fun getCache() {
 
-        Log.e("TAG", "getCache")
         CommonInfoHelper.getO(mContext, "index_emotion_choiceness_info", object : TypeReference<IndexInfo>() {
 
         }.type, object : CommonInfoHelper.OnParseListener<IndexInfo> {
@@ -88,36 +87,27 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
     }
 
 
-    fun getSexData(sex: Int) {
-        val subscription = mModel?.getSexInfoBySex(sex)?.subscribe(object : Subscriber<List<SexInfo>>() {
-            override fun onNext(t: List<SexInfo>?) {
-                t?.let {
-                    mView.showIcon(t)
+    fun getOnlineLiveList() {
+        CommonInfoHelper.getO(mContext, "index_live_info_list",
+                object : TypeReference<List<LiveInfo>>() {}.type, object : CommonInfoHelper.OnParseListener<List<LiveInfo>> {
+            override fun onParse(o: List<LiveInfo>?) {
+                o?.let {
+                    if (it.isNotEmpty()) {
+                        mView.showIndexLiveInfos(o)
+                    }
                 }
             }
-
-            override fun onCompleted() {
-
-            }
-
-            override fun onError(e: Throwable?) {
-
-            }
-
         })
-        subScriptions?.add(subscription)
-    }
 
-
-    fun getOnlineLiveList() {
         val subscription = mModel?.getOnlineLiveList()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
             override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
                 t?.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.list != null && t.data.list.size > 0) {
                         val list = ArrayList<LiveInfo>()
                         list.addAll(t.data.list)
                         list.addAll(t.data.recording)
                         mView.showIndexLiveInfos(list)
+                        CommonInfoHelper.setO(mContext, list, "index_live_info_list")
                     }
                 }
             }
@@ -133,11 +123,5 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
         subScriptions?.add(subscription)
     }
 
-//    fun createNewData(data: LiveInfoWrapper) {
-//        val liveList = data.list
-//        val recordList = data.list
-//
-//
-//    }
 
 }

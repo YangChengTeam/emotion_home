@@ -43,6 +43,7 @@ import com.yc.emotion.home.mine.view.LiveView
 import com.yc.emotion.home.utils.GenerateTestUserSig
 import com.yc.emotion.home.utils.SoftKeyBoardUtils
 import com.yc.emotion.home.utils.SoftKeyBoardUtils.OnSoftKeyBoardChangeListener
+import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.live_room_layout.*
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import java.nio.charset.StandardCharsets
@@ -146,7 +147,7 @@ class LiveRoomActivity : BaseActivity(), LiveView, V2TIMCallback {
         livePresenter?.createRoom(userID)
         face = liveUser?.face
         initListener()
-        tv_chat.post {
+        tv_chat.postDelayed({
             tv_chat.getLocationOnScreen(viewRect)
 
             val width = iv_screen.width
@@ -157,14 +158,19 @@ class LiveRoomActivity : BaseActivity(), LiveView, V2TIMCallback {
             rect.top = viewRect[1]
             rect.right = viewRect[0] + tvWidth - width
             rect.bottom = viewRect[1] + tvHeight
-        }
+
+//            Log.e(TAG, "${rect.top}--${rect.bottom}")
+
+        }, 1000)
+
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+
         if (event.action == MotionEvent.ACTION_DOWN) {
             val x = event.rawX.toInt()
             val y = event.rawY.toInt()
-            //            Log.e(TAG, "x=" + x + ";y=" + y);
+//            Log.e(TAG, "x=$x;y=$y");
 //            Log.e(TAG, "onTouchEvent: " + rect.left + "---" + rect.right + "--" + rect.top + "--" + rect.bottom);
             if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
                 user_input_layout.visibility = View.VISIBLE
@@ -323,6 +329,12 @@ class LiveRoomActivity : BaseActivity(), LiveView, V2TIMCallback {
                 online_count.text = String.format(getString(R.string.online_count), onlineCount)
             }
 
+            //reason	离开房间原因，0：主动调用 exitRoom 退房；1：被服务器踢出当前房间；2：当前房间整个被解散。
+            override fun onExitRoom(reason: Int) {
+                super.onExitRoom(reason)
+                exitRoom()
+            }
+
 
             override fun onSendFirstLocalAudioFrame() {
                 super.onSendFirstLocalAudioFrame()
@@ -428,6 +440,7 @@ class LiveRoomActivity : BaseActivity(), LiveView, V2TIMCallback {
         trtcParams.userSig = data.usersig
         trtcParams.roomId = roomId
         trtcParams.role = TRTCCloudDef.TRTCRoleAnchor
+
 
         //进入房间
         mTRTCCloud?.enterRoom(trtcParams, TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM)
@@ -552,7 +565,7 @@ class LiveRoomActivity : BaseActivity(), LiveView, V2TIMCallback {
                             records.add(chatItem)
                         }
                         Message.command_official_msg -> {
-                            val chatItem = ChatItem(getString(R.string.app_name), message.content, ChatItem.TYPE_TOUR_MSG)
+                            val chatItem = ChatItem(UIUtils.getAppName(this@LiveRoomActivity), message.content, ChatItem.TYPE_TOUR_MSG)
                             records.add(chatItem)
                         }
                     }

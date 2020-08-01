@@ -195,11 +195,17 @@ class CommunityFragment : BaseFragment<CommunityPresenter>(), View.OnClickListen
     }
 
     override fun onComplete() {
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.let {
+            if (it.isRefreshing) it.isRefreshing = false
+        }
+
     }
 
     override fun onError() {
-        if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.let {
+            if (it.isRefreshing) it.isRefreshing = false
+        }
+
     }
 
     override fun showLikeTopicSuccess(communityInfo: CommunityInfo, position: Int) {

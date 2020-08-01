@@ -272,6 +272,7 @@
                 android:id="@+id/mineItemView_live"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 app:item_title="直播" />
 
             <com.yc.emotion.home.mine.ui.widget.MineItemView
@@ -312,14 +313,24 @@
                 android:layout_height="wrap_content"
                 app:is_show_divider="false"
                 app:item_title="系统设置" />
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_f2f2f2" />
+        android:background="@color/gray_f2f2f2">
 
+        <TextView
+            android:id="@+id/tv_business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="商务微信号 ：qgzj802"
+            android:textSize="13sp" />
 
+    </LinearLayout>
 </LinearLayout>

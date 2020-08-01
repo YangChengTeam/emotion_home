@@ -18,8 +18,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/tutor_icon_protection"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="@string/platform_guarantee"
                 android:textColor="@color/gray_222222"
@@ -29,8 +29,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/tutor_icon_commitment"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="@string/tutor_commitment"
                 android:textColor="@color/gray_222222"
@@ -40,8 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="5dp"
                 android:drawableTop="@mipmap/tutor_icon_qualification"
+                android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="@string/tutor_qualification"
                 android:textColor="@color/gray_222222"
@@ -171,14 +171,16 @@
             android:text="团队营业执照"
             android:textColor="@color/gray_222222"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/qualification_bg"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,8 +233,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-               >
+                    android:layout_marginTop="7dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -285,6 +286,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="交易担保"
             android:textColor="@color/gray_222222"
             android:textSize="15sp"
@@ -315,9 +317,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_deal_guarantee"
-                android:layout_marginEnd="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
                 android:lineSpacingExtra="5dp"
                 android:text="肖邦已承诺平台交易担保规则，不私下交易，保障用户权益和资金安全"
                 android:textColor="@color/gray_999" />
@@ -325,10 +327,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginBottom="15dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginEnd="30dp"
+                android:layout_marginBottom="15dp"
                 android:src="@mipmap/verified" />
 
 

@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:lineSpacingExtra="3dp"
+
         android:text="更新您的聊天思维，教你越聊越投机"
         android:textColor="@color/black"
         android:textSize="14.5sp"
@@ -61,7 +62,7 @@
             android:id="@+id/tv_course_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:text="2000.00"
             android:textColor="@color/app_color"
             android:textSize="@dimen/sp_16"

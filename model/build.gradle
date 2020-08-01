@@ -3,14 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'ycLove'
-            keyPassword '123456'
-            storeFile file('D:/app_key_store/ycLove.jks')
-            storePassword '123456'
-        }
-    }
+
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 17
@@ -26,9 +19,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
-            signingConfig signingConfigs.config
-        }
+       
     }
 }
 greendao {

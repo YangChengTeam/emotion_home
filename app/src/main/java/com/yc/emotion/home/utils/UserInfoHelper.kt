@@ -1,17 +1,12 @@
 package com.yc.emotion.home.utils
 
-import android.app.Activity
-import android.app.AppComponentFactory
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.fastjson.JSON
 import com.yc.emotion.home.base.YcApplication
 import com.yc.emotion.home.index.ui.fragment.WxLoginFragment
-import com.yc.emotion.home.mine.ui.activity.LoginMainActivity
-import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 
@@ -41,7 +36,6 @@ class UserInfoHelper private constructor() {
         }
 
         try {
-
             userInfo = JSON.parseObject(userInfoStr, UserInfo::class.java)
         } catch (e: Exception) {
             Log.e("userinfo", "解析用户数据错误")
@@ -97,6 +91,4 @@ class UserInfoHelper private constructor() {
     }
 
     fun getUid() = getUserInfo()?.id ?: 0
-
-
 }

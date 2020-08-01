@@ -14,6 +14,7 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.utils.DateUtils
+import com.yc.emotion.home.utils.UIUtils
 
 /**
  * Created by suns  on 2019/8/28 15:44.
@@ -62,7 +63,7 @@ class CommunityAdapter(data: List<CommunityInfo>?, private val mIsMy: Boolean) :
                     var color = "#427FC3"
                     var commentName = commentInfo.name
                     if (!TextUtils.isEmpty(commentName)) {
-                        if (commentInfo.name.contains("情感导师") || commentInfo.name.contains(mContext.getString(R.string.app_name))) {
+                        if (commentInfo.name.contains("情感导师") || commentInfo.name.contains(UIUtils.getAppName(mContext))) {
                             color = "#1d99f4"
                         }
                     } else {

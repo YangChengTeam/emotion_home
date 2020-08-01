@@ -33,7 +33,7 @@ class ArticleModel(override var context: Context?) : IModel {
      * @param cat_id
      * @return
      */
-    fun getArticleInfoList(cat_id: Int, sex: Int, page: Int, page_size: Int): Observable<ResultInfo<List<ArticleDetailInfo>>> {
+    fun getArticleInfoList(cat_id: Int?, sex: Int, page: Int, page_size: Int): Observable<ResultInfo<List<ArticleDetailInfo>>> {
         val params = HashMap<String, String>()
 
         params["cat_id"] = "$cat_id"

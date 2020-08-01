@@ -2,11 +2,12 @@ package com.yc.emotion.home.mine.ui.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
-import com.music.player.lib.util.ToastUtils
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.constant.Constant
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_register_pwd.*
 
 /**

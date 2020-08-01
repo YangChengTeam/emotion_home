@@ -11,7 +11,7 @@
         android:layout_marginBottom="45dp"
         android:orientation="vertical">
 
-        <!--顶部播放器-->
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="220dp">

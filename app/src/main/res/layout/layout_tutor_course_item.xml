@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -21,7 +21,8 @@
                 android:layout_height="106dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/index_tutor_example" />
+                android:src="@mipmap/index_tutor_example"
+                app:cornerRadius="8dp" />
 
             <ImageView
                 android:id="@+id/iv_tutor_course_lock"
@@ -36,7 +37,7 @@
             android:id="@+id/tv_tutor_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:text="第一节课：情绪的循环"
             android:textColor="@color/gray_222222"
             android:textSize="13sp" />

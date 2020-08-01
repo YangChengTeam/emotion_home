@@ -141,7 +141,7 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
             return
         }
 
-        if (!UserInfoHelper.instance.goToLogin(this)) {
+//        if (!UserInfoHelper.instance.goToLogin(this)) {
             query = query?.trim { it <= ' ' }
             if (TextUtils.isEmpty(query) || share_view_pager == null) {
                 return
@@ -155,7 +155,7 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
             //        netPagerOneData(query); //为了解决Fragment切换白屏的问题，第一页数据在Activity中请求
 
             replaceFragment(query)
-        }
+//        }
 
 
     }

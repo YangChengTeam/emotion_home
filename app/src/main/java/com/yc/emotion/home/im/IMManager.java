@@ -1,9 +1,12 @@
 package com.yc.emotion.home.im;
 
 import android.content.Context;
+import android.service.voice.VoiceInteractionService;
 import android.util.Log;
 
 import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMConversationListener;
+import com.tencent.imsdk.v2.V2TIMConversationResult;
 import com.tencent.imsdk.v2.V2TIMGroupInfo;
 import com.tencent.imsdk.v2.V2TIMGroupListener;
 import com.tencent.imsdk.v2.V2TIMGroupManager;
@@ -197,6 +200,29 @@ public class IMManager {
                              V2TIMValueCallback<V2TIMGroupMemberInfoResult> callback) {
         V2TIMManager.getGroupManager().getGroupMemberList(groupID, V2TIMGroupMemberFullInfo.V2TIM_GROUP_MEMBER_FILTER_ALL, 0, callback);
 //        V2TIMManager.getGroupManager().getGroupsInfo();
+    }
+
+    /**
+     * 获取会话列表
+     *
+     * @param nextSeq
+     * @param count
+     * @param callback
+     */
+    public void getConversationList(long nextSeq,
+                                    int count,
+                                    V2TIMValueCallback<V2TIMConversationResult> callback) {
+        V2TIMManager.getConversationManager().getConversationList(nextSeq, count, callback);
+    }
+
+
+    /**
+     * 设置会话监听
+     *
+     * @param listener
+     */
+    public void setConversationListener(V2TIMConversationListener listener) {
+        V2TIMManager.getConversationManager().setConversationListener(listener);
     }
 
 }

@@ -68,5 +68,7 @@ public class BouncyHScrollView extends HorizontalScrollView {
         void onScrolled(int l, int t, int oldl, int oldt);
     }
 
+
+
 }
 

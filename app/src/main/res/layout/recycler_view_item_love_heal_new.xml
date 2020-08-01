@@ -22,7 +22,8 @@
         android:padding="10dp"
         android:text="55555"
         android:textColor="@color/black"
-        android:textSize="@dimen/size_16"
+        android:textSize="@dimen/size_14"
+        android:lineSpacingExtra="5dp"
         android:textStyle="bold" />
 </LinearLayout>
 

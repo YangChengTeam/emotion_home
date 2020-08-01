@@ -8,6 +8,7 @@ import android.webkit.*
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
@@ -206,6 +207,7 @@ class LoveCaseDetailActivity : BaseSameActivity(), LoveCaseDetailView {
         if (isCollect) {
             mBaseSameTvSub.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_star_s, 0)
             iv_collect.setImageResource(R.mipmap.search_knack_collected_icon)
+            tv_collect.setTextColor(ContextCompat.getColor(this,R.color.gray_999))
             if (isClick) {
                 collEctResult += 1
             }
@@ -213,6 +215,7 @@ class LoveCaseDetailActivity : BaseSameActivity(), LoveCaseDetailView {
         } else {
             mBaseSameTvSub.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_star_black, 0)
             iv_collect.setImageResource(R.mipmap.search_knack_collect_icon)
+            tv_collect.setTextColor(ContextCompat.getColor(this,R.color.black))
             if (isClick) {
                 collEctResult -= 1
             }
@@ -254,8 +257,7 @@ class LoveCaseDetailActivity : BaseSameActivity(), LoveCaseDetailView {
             changSubImg(collectNum, mIsCollectLovewords, false)
 
             //点赞
-            val isLike = data.is_like
-            when (isLike) {
+            when (data.is_like) {
                 0 -> {
                 }
                 1 -> mIsDigArticle = true

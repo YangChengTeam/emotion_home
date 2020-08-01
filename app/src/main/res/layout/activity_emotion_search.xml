@@ -25,7 +25,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="36dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/index_search_bg"
             android:paddingLeft="10dp"
@@ -54,7 +54,7 @@
                 android:singleLine="true"
                 android:textColor="@color/gray_222222"
                 android:textColorHint="@color/gray_999"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
 
             <ImageView
