@@ -49,6 +49,12 @@ public class RetrofitHttpRequest {
         private static Converter.Factory convertFactory;
         private static CallAdapter.Factory adapterFactory;
 
+        public Builder() {
+        }
+
+        public Builder(String url){
+            Builder.url=url;
+        }
 
         public Builder url(String url) {
             Builder.url = url;

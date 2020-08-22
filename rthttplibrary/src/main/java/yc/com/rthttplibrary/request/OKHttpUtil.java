@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -63,6 +64,24 @@ public final class OKHttpUtil {
         return EncryptUtil.compress(jsonStr);
     }
 
+
+    //< 设置请求参数FormBody.Builder
+    public static FormBody.Builder setBuilder(Map<String, String> params) {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        addDefaultParams(params);
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            builder.add(key, value);
+        }
+        JSONObject jsonObject = new JSONObject(params);
+        String jsonStr = jsonObject.toString();
+        LogUtil.msg("客户端请求数据->" + jsonStr);
+        return builder;
+    }
 
     ///< 解密返回值
     public static String decodeBody(InputStream in) {

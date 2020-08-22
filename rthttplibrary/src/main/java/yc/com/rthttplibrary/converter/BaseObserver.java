@@ -3,6 +3,7 @@ package yc.com.rthttplibrary.converter;
 import io.reactivex.observers.DisposableObserver;
 import yc.com.rthttplibrary.bean.ResultInfo;
 import yc.com.rthttplibrary.config.HttpConfig;
+import yc.com.rthttplibrary.exception.ApiException;
 import yc.com.rthttplibrary.view.BaseLoadingView;
 
 
@@ -44,10 +45,10 @@ public abstract class BaseObserver<T, V extends BaseLoadingView> extends Disposa
             if (value.code == HttpConfig.STATUS_OK) {
                 onSuccess(value.data, value.message);
             } else {
-                onFailure(null, value.message);
+                onFailure(value.code, value.message);
             }
         } else {
-            onFailure(null, HttpConfig.SERVICE_ERROR);
+            onFailure(-1, HttpConfig.SERVICE_ERROR);
         }
     }
 
@@ -56,8 +57,13 @@ public abstract class BaseObserver<T, V extends BaseLoadingView> extends Disposa
         if (view != null && isShow()) {
             view.hideLoading();
         }
-        e.printStackTrace();
-        onFailure(e, HttpConfig.NET_ERROR);
+//        e.printStackTrace();
+        if (e instanceof ApiException) {
+            ApiException exception = (ApiException) e;
+            onFailure(exception.getErrorCode(),exception.getErrorMsg());
+            return;
+        }
+        onFailure(-1, HttpConfig.NET_ERROR);
     }
 
     @Override
@@ -71,7 +77,7 @@ public abstract class BaseObserver<T, V extends BaseLoadingView> extends Disposa
 
     public abstract void onSuccess(T data, String message);
 
-    public abstract void onFailure(Throwable e, String errorMsg);
+    public abstract void onFailure(int code, String errorMsg);
 
     public abstract void onRequestComplete();
 

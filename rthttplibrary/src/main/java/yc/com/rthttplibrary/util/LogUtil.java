@@ -2,12 +2,6 @@ package yc.com.rthttplibrary.util;
 
 import android.util.Log;
 
-
-/**
- * 日志输出类
- *
- * @author zhangkai
- */
 public class LogUtil {
     private static boolean DEBUG = true;
 
@@ -22,7 +16,7 @@ public class LogUtil {
     public static final int W = 3;
     public static final int E = 4;
 
-    private static final String TAG = "securityrthttp";
+    private static final String TAG = "rthttp";
 
     public static void msg(String msg, int level) {
         if (!DEBUG) return;

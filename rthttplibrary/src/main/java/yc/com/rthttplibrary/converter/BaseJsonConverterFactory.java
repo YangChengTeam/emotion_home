@@ -36,14 +36,18 @@ public class BaseJsonConverterFactory extends Converter.Factory {
 
     private final Gson gson;
 
+
     private BaseJsonConverterFactory(Gson gson) {
         this.gson = gson;
     }
+
+
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
                                                             Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+
 
         return new BaseJsonResponseConverter<>(gson, adapter);
     }
