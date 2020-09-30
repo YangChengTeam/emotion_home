@@ -16,8 +16,8 @@ class EfficientCourseTagAdapter(data: List<String?>?) : CommonMoreAdapter<String
     private val itemSparseArray: SparseArray<View> = SparseArray()
     private val viewSparseArray: SparseArray<View> = SparseArray()
 
-    override fun convert(helper: BaseViewHolder?, item: String?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: String?) {
+
             item?.let {
                 val position = helper.adapterPosition
                 setItemParams(helper, position)
@@ -32,7 +32,7 @@ class EfficientCourseTagAdapter(data: List<String?>?) : CommonMoreAdapter<String
             }
         }
 
-    }
+
 
     private fun setItemParams(helper: BaseViewHolder, position: Int) {
         val layoutParams = helper.itemView.layoutParams as MarginLayoutParams

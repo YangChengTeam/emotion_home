@@ -83,7 +83,7 @@ class TutorListActivity : BaseSameActivity(), TutorView {
     private fun initNavigator(titleList: List<String>) {
         val commonNavigator = CommonNavigator(this)
         //        commonNavigator.setScrollPivotX(0.65f);
-//        commonNavigator.isAdjustMode = true
+        commonNavigator.isAdjustMode = true
         val navigatorAdapter = object : CommonNavigatorAdapter() {
 
             override fun getCount(): Int {
@@ -121,6 +121,7 @@ class TutorListActivity : BaseSameActivity(), TutorView {
         }
         commonNavigator.adapter = navigatorAdapter
         magicIndicator_efficient.navigator = commonNavigator
+
         ViewPagerHelper.bind(magicIndicator_efficient, viewPager_efficient)
 
         viewPager_efficient.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {

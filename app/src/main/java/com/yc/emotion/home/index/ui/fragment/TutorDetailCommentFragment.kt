@@ -5,7 +5,7 @@ import android.os.Handler
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_efficient_course.*
 class TutorDetailCommentFragment : BaseFragment<BasePresenter<IModel, IView>>() {
 
 
-    private var loveEngine: LoveEngine? = null
+    private var loveEngine: BaseModel? = null
     private var tutorDetailCommentAdapter: TutorDetailCommentAdapter? = null
     var loadDialog: LoadDialog? = null
     private var mHandler: Handler? = null
@@ -35,7 +35,7 @@ class TutorDetailCommentFragment : BaseFragment<BasePresenter<IModel, IView>>() 
 
 
     override fun initViews() {
-        loveEngine = LoveEngine(activity)
+        loveEngine = BaseModel(activity)
         loadDialog = LoadDialog(activity)
         mHandler = Handler()
         val layoutManager = LinearLayoutManager(activity)

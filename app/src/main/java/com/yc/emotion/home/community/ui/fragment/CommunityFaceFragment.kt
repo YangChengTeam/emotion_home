@@ -8,9 +8,10 @@ import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.kk.utils.ScreenUtil
+
 import com.yc.emotion.home.R
 import kotlinx.android.synthetic.main.frament_community_face.*
+import yc.com.rthttplibrary.util.ScreenUtil
 
 /**
  *
@@ -76,17 +77,7 @@ class CommunityFaceFragment : DialogFragment() {
         Glide.with(this).load(face).apply(RequestOptions().error(R.mipmap.head_bomb).circleCrop()).into(iv_face)
 
 
-//        val tvCancel = getView(R.id.tv_cancel) as TextView
-//        val tvConfirm = getView(R.id.tv_confirm) as TextView
-//
-//        tvCancel.setOnClickListener { v -> dismiss() }
-//
-//        tvConfirm.setOnClickListener { v ->
-//            if (confirmListener != null) {
-//                confirmListener!!.onConfirm()
-//            }
-//            dismiss()
-//        }
+
     }
 
     private fun getWidth(): Float {
@@ -102,7 +93,7 @@ class CommunityFaceFragment : DialogFragment() {
         return ViewGroup.LayoutParams.WRAP_CONTENT
     }
 
-    protected fun getGravity(): Int {
+    private fun getGravity(): Int {
         return Gravity.CENTER
     }
 

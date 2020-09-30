@@ -8,6 +8,7 @@ import com.yc.emotion.home.base.ui.fragment.BaseDialogFragment
 import com.yc.emotion.home.mine.ui.activity.PrivacyStatementActivity
 import com.yc.emotion.home.mine.ui.activity.UserPolicyActivity
 import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlin.system.exitProcess
 
 /**
@@ -39,18 +40,18 @@ class PrivacyPolicyFragment : BaseDialogFragment() {
         val tvNotAgree = rootView?.findViewById<TextView>(R.id.tv_not_agree)
         val tvDesc = rootView?.findViewById<TextView>(R.id.tv_desc)
         tvDesc?.text = String.format(getString(R.string.privacy_desc, UIUtils.getAppName(activity)))
-        tvServiceClause?.setOnClickListener {
+        tvServiceClause?.clickWithTrigger {
             startActivity(Intent(mContext, UserPolicyActivity::class.java))
 
         }
-        tvPrivacy?.setOnClickListener {
+        tvPrivacy?.clickWithTrigger {
             startActivity(Intent(mContext, PrivacyStatementActivity::class.java))
         }
-        tvKnow?.setOnClickListener {
+        tvKnow?.clickWithTrigger {
             onClickBtnListener?.onBtnClick()
             dismiss()
         }
-        tvNotAgree?.setOnClickListener {
+        tvNotAgree?.clickWithTrigger {
             dismiss()
             activity?.finish()
             exitProcess(0)

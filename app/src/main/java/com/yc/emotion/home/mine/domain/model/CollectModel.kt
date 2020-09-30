@@ -1,28 +1,26 @@
 package com.yc.emotion.home.mine.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.ModelApp
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
 import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.dao.LoveHealDetDetailsBeanDao
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Func1
-import rx.schedulers.Schedulers
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import retrofit2.http.Field
+
+
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
  * Created by suns  on 2019/11/15 16:08.
  */
-class CollectModel(override var context: Context?) : IModel {
+class CollectModel(override var context: Context?) : IModel(context) {
     private var detailsBeanDao: LoveHealDetDetailsBeanDao? = null
 
     init {
@@ -38,13 +36,10 @@ class CollectModel(override var context: Context?) : IModel {
      * @return
      */
     fun getCourseCollectList(userId: String, page: Int, page_size: Int): Observable<ResultInfo<List<CourseInfo>>> {
-        val params = HashMap<String, String>()
-        params["user_id"] = userId
-        params["page"] = page.toString() + ""
-        params["page_size"] = page_size.toString() + ""
-        return HttpCoreEngin.get(context).rxpost(URLConfig.COURSE_COLLECT_LIST_URL, object : TypeReference<ResultInfo<List<CourseInfo>>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<List<CourseInfo>>>
+
+        return request.getCourseCollectList(userId, page, page_size)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -55,6 +50,10 @@ class CollectModel(override var context: Context?) : IModel {
         return Observable.just("").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map { detailsBeanDao?.queryBuilder()?.where(LoveHealDetDetailsBeanDao.Properties.UserId.eq("$userId"))?.offset(offset * limit)?.limit(limit)?.orderDesc(LoveHealDetDetailsBeanDao.Properties.SaveTime)?.list() }
     }
 
+    fun getVerbalList(page: Int, page_size: Int): Observable<ResultInfo<List<LoveHealDetDetailsBean>>>? {
+        return request.getVerbalList("${UserInfoHelper.instance.getUid()}", page, page_size).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
 
     /**
      * 获取文章收藏列表
@@ -63,16 +62,9 @@ class CollectModel(override var context: Context?) : IModel {
      * @return
      */
     fun getArticleCollectList(userId: String, page: Int, pageSize: Int): Observable<ResultInfo<List<ArticleDetailInfo>>> {
-        val params = HashMap<String, String>()
-        params["user_id"] = userId
-        params["page"] = page.toString() + ""
 
-        params["page_size"] = pageSize.toString() + ""
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.ARTICLE_COLLECT_LIST_URL, object : TypeReference<ResultInfo<List<ArticleDetailInfo>>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<List<ArticleDetailInfo>>>
-
+        return request.getArticleCollectList(userId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 

@@ -5,11 +5,43 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ProgressBar
+        android:id="@+id/live_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentTop="true"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/process_bg"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.yc.emotion.home.base.ui.widget.CommonWebView
         android:id="@+id/webView_live"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/live_progress" />
+
+    <com.video.player.lib.view.VideoPlayerTrackView
+        android:id="@+id/videoPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:video_autoSetCoverController="true"
+        app:video_autoSetVideoController="true" />
+
+    <ImageView
+        android:id="@+id/live_to_wx"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@mipmap/icon_floating_weixin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

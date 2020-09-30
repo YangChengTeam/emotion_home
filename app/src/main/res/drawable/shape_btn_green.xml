@@ -7,6 +7,6 @@
         android:width="1dp"
         android:color="@color/red_crimson_66" />-->
     <!-- 填充  填充的颜色 -->
-    <solid android:color="@color/pay_vip_green" />
+    <solid android:color="#07c160" />
 
 </shape>

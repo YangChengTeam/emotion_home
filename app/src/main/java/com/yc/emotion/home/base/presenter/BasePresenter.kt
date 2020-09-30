@@ -1,10 +1,9 @@
 package com.yc.emotion.home.base.presenter
 
 import android.content.Context
-import android.util.Log
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.view.IView
-import rx.subscriptions.CompositeSubscription
+
 
 /**
  *
@@ -15,7 +14,7 @@ import rx.subscriptions.CompositeSubscription
  */
 abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) : IPresenter {
 
-    var subScriptions: CompositeSubscription? = null
+
 
     var mModel: M? = null
 
@@ -30,10 +29,7 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
     protected var isFirstLoad = true
 
 
-    init {
-        subScriptions = CompositeSubscription()
 
-    }
 
     fun loadData(isForceUI: Boolean) {
         loadData(isFirstLoad or isForceUI, true)
@@ -58,7 +54,7 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
     }
 
     override fun unSubscribe() {
-        subScriptions?.clear()
+
     }
 
 

@@ -5,15 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSlidingActivity
 import com.yc.emotion.home.index.presenter.EmotionTestPresenter
 import com.yc.emotion.home.index.view.EmotionTestView
 import com.yc.emotion.home.model.bean.EmotionTestInfo
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_emotion_test_result.*
-import rx.Subscriber
 
 /**
  *
@@ -55,9 +53,11 @@ class TestRecordDetailActivity : BaseSlidingActivity(), EmotionTestView {
     }
 
     private fun initView() {
-        val record_id = intent?.getStringExtra("record_id")
 
-        getRecordDetail(record_id)
+
+        val recordId = intent?.getStringExtra("record_id")
+
+        getRecordDetail(recordId)
         tv_test_again.visibility = View.GONE
 
         showToWxServiceDialog(listener = object : OnWxListener {
@@ -69,15 +69,15 @@ class TestRecordDetailActivity : BaseSlidingActivity(), EmotionTestView {
     }
 
     private fun initListener() {
-        tv_test_again.setOnClickListener { finish() }
-        tv_test_praise.setOnClickListener {
+        tv_test_again.clickWithTrigger { finish() }
+        tv_test_praise.clickWithTrigger {
             tv_test_praise.visibility = View.GONE
             tv_test_praise_count.visibility = View.VISIBLE
         }
 
-        activity_base_same_iv_back.setOnClickListener { finish() }
+        activity_base_same_iv_back.clickWithTrigger { finish() }
 
-        tv_copy_wx.setOnClickListener { showToWxServiceDialog() }
+        tv_copy_wx.clickWithTrigger { showToWxServiceDialog() }
 
     }
 

@@ -7,9 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import android.view.View
 import android.webkit.*
 import android.widget.LinearLayout
-import com.kk.utils.LogUtil
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.base.ui.widget.NewsScrollView
 import com.yc.emotion.home.index.presenter.SkillPresenter
 import com.yc.emotion.home.index.view.SkillView
 import com.yc.emotion.home.model.bean.LoveByStagesDetailsBean
@@ -18,6 +19,7 @@ import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_love_by_stages_details.*
 import kotlinx.android.synthetic.main.layout_bottom_wechat.*
+import yc.com.rthttplibrary.util.LogUtil
 
 /**
  * 秘技文章详情
@@ -93,16 +95,20 @@ class LoveArticleDetailsActivity : BaseSameActivity(), SkillView {
         ll_get_wechat.setOnClickListener(this)
         ll_collect.setOnClickListener(this)
 
-
-        love_by_stages_details_scroll_view.setOnScrollChangeListener { l, t, oldl, oldt ->
-            if (t > love_by_stages_details_ll_title_con.measuredHeight) {
-                setBarTitle(mPostTitle)
-                //                    mToolbar.setTitle(title);
-            } else {
-                setBarTitle("问答")
-                //                    mToolbar.setTitle("");
+        love_by_stages_details_scroll_view.setOnScrollChangeListener(object :NewsScrollView.onScrollChangeListener{
+            override fun onScrollChange(l: Int, t: Int, oldl: Int, oldt: Int) {
+                if (t > love_by_stages_details_ll_title_con.measuredHeight) {
+                    setBarTitle(mPostTitle)
+                    //                    mToolbar.setTitle(title);
+                } else {
+                    setBarTitle("问答")
+                    //                    mToolbar.setTitle("");
+                }
             }
-        }
+
+        })
+
+
         netData()
 
     }

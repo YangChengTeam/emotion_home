@@ -2,7 +2,6 @@ package com.yc.emotion.home.index.presenter
 
 import android.content.Context
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.net.contains.HttpConfig
 
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.SkillModel
@@ -11,7 +10,9 @@ import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -51,24 +52,24 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
 
     private fun exampleTsCategory() {
         mView.showLoadingDialog()
-        val subscription = mModel?.exampleTsCategory()?.subscribe(object : Subscriber<AResultInfo<ExampleTsCategory>>() {
-            override fun onNext(t: AResultInfo<ExampleTsCategory>?) {
-                t?.let {
+        mModel?.exampleTsCategory()?.subscribe(object : DisposableObserver<ResultInfo<ExampleTsCategory>>() {
+            override fun onNext(t: ResultInfo<ExampleTsCategory>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         createNewData(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -85,17 +86,17 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     }
 
     fun categoryArticle() {
-        mModel?.categoryArticle()?.subscribe(object : Subscriber<AResultInfo<List<CategoryArticleBean>>>() {
-            override fun onCompleted() {
+        mModel?.categoryArticle()?.subscribe(object : DisposableObserver<ResultInfo<List<CategoryArticleBean>>>() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
-            override fun onNext(t: AResultInfo<List<CategoryArticleBean>>?) {
-                t?.let {
+            override fun onNext(t: ResultInfo<List<CategoryArticleBean>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val data = t.data
                         if (data == null || data.isEmpty()) {
@@ -145,74 +146,74 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     fun exampleTsList(id: String?, page: Int, pageSize: Int) {
         if (page == 1)
             mView.showLoadingDialog()
-        val subscription = mModel?.exampleTsList(id, page, pageSize)?.subscribe(object : Subscriber<AResultInfo<ExampDataBean>>() {
-            override fun onNext(t: AResultInfo<ExampDataBean>?) {
-                t?.let {
+        mModel?.exampleTsList(id, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<ExampDataBean>>() {
+            override fun onNext(t: ResultInfo<ExampDataBean>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showSkillListInfo(t.data.lists)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1)
                     mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun listsArticle(categoryId: String?, page: Int, pageSize: Int) {
         if (page == 1)
             mView.showLoadingDialog()
-        val subscription = mModel?.listsArticle(categoryId, page, pageSize, "article.example/article_lists")?.subscribe(object : Subscriber<AResultInfo<List<LoveByStagesBean>>>() {
-            override fun onNext(t: AResultInfo<List<LoveByStagesBean>>?) {
-                t?.let {
+        mModel?.listsArticle(categoryId, page, pageSize, "article.example/article_lists")?.subscribe(object : DisposableObserver<ResultInfo<List<LoveByStagesBean>>>() {
+            override fun onNext(t: ResultInfo<List<LoveByStagesBean>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showSkillArticleList(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun detailArticle(id: String) {
         val userId = UserInfoHelper.instance.getUid()
         mView.showLoadingDialog()
-        mModel?.detailArticle(id, "$userId", "article.example/detail")?.subscribe(object : Subscriber<AResultInfo<LoveByStagesDetailsBean>>() {
-            override fun onNext(t: AResultInfo<LoveByStagesDetailsBean>?) {
+        mModel?.detailArticle(id, "$userId", "article.example/detail")?.subscribe(object : DisposableObserver<ResultInfo<LoveByStagesDetailsBean>>() {
+            override fun onNext(t: ResultInfo<LoveByStagesDetailsBean>) {
                 mView.hideLoadingDialog()
-                t?.let {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showSkillArticleDetailInfo(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
@@ -228,11 +229,11 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
             "article.example/uncollect"
         }
         mView.showLoadingDialog()
-        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : Subscriber<AResultInfo<String>>() {
-            override fun onNext(t: AResultInfo<String>?) {
-                t?.let {
+        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.msg
+                        val msg = t.message
                         ToastUtils.showCenterToast(msg)
                         val isCollectArticle = !isCollectArticle
 
@@ -242,11 +243,11 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
@@ -262,11 +263,11 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
             "article.example/dig"
         }
         mView.showLoadingDialog()
-        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : Subscriber<AResultInfo<String>>() {
-            override fun onNext(t: AResultInfo<String>?) {
-                t?.let {
+        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.msg
+                        val msg = t.message
                         ToastUtils.showCenterToast(msg)
                         val isDigArticle = !isDigArticle
 
@@ -276,11 +277,11 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 

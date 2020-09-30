@@ -332,7 +332,7 @@ class UserInfoActivity : BasePushPhotoActivity(), MineView {
         return "我的资料"
     }
 
-    override fun onLubanFileSuccess(file: File) {
+    override fun onLubanFileSuccess(file: File?) {
 
         UploadPhotoEngin(file, object : Callback {
             override fun onFailure(call: Call, e: IOException) {

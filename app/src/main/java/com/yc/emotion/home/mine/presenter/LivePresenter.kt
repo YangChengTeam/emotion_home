@@ -2,15 +2,16 @@ package com.yc.emotion.home.mine.presenter
 
 import android.content.Context
 import android.text.TextUtils
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.mine.domain.model.LiveModel
 import com.yc.emotion.home.mine.view.LiveView
 import com.yc.emotion.home.utils.ToastUtils
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.config.HttpConfig
+
 
 /**
  * Created by suns  on 2020/6/5 09:34.
@@ -33,11 +34,10 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
             ToastUtils.showCenterToast("密码不能为空")
             return
         }
-
         mView.showLoadingDialog()
-        val subscription = mModel?.liveLogin(username, password)?.subscribe(object : Subscriber<ResultInfo<LiveInfo>>() {
-            override fun onNext(t: ResultInfo<LiveInfo>?) {
-                t?.let {
+        mModel?.liveLogin(username, password)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val data = t.data
                         mView.showLoginSuccess(data)
@@ -47,23 +47,23 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
 
-        subScriptions?.add(subscription)
+
     }
 
 
     fun createRoom(userId: String?) {
-        val subscription = mModel?.createRoom(userId)?.subscribe(object : Subscriber<ResultInfo<LiveInfo>>() {
-            override fun onNext(t: ResultInfo<LiveInfo>?) {
-                t?.let {
+        mModel?.createRoom(userId)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val data = t.data
                         mView.showCreateRoomSuccess(data)
@@ -74,47 +74,47 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
 
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
     fun liveEnd(roomId: String?) {
-        val subscription = mModel?.liveEnd(roomId)?.subscribe(object : Subscriber<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>?) {
+        mModel?.liveEnd(roomId)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<String>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<String>) {
 
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
     fun dismissGroup(group_id: String) {
-        val subscription = mModel?.dismissGroup(group_id)?.subscribe(object : Subscriber<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>?) {
+        mModel?.dismissGroup(group_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<String>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<String>) {
 
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 }

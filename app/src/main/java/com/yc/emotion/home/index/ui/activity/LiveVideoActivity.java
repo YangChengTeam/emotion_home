@@ -23,39 +23,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
-import com.tencent.imsdk.v2.V2TIMCallback;
-import com.tencent.imsdk.v2.V2TIMGroupListener;
-import com.tencent.imsdk.v2.V2TIMGroupMemberInfo;
-import com.tencent.imsdk.v2.V2TIMMessage;
-import com.tencent.imsdk.v2.V2TIMSendCallback;
-import com.tencent.imsdk.v2.V2TIMSimpleMsgListener;
-import com.tencent.liteav.TXLiteAVCode;
-import com.tencent.trtc.TRTCCloud;
-import com.tencent.trtc.TRTCCloudDef;
-import com.tencent.trtc.TRTCCloudListener;
 import com.wapchief.likestarlibrary.like.TCHeartLayout;
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.base.ui.activity.BaseActivity;
 import com.yc.emotion.home.base.ui.fragment.common.AddWxFragment;
 import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment;
-import com.yc.emotion.home.constant.Constant;
-import com.yc.emotion.home.im.IMManager;
 import com.yc.emotion.home.index.adapter.ChatAdapter;
 import com.yc.emotion.home.index.domain.bean.ChatItem;
-import com.yc.emotion.home.index.domain.bean.Message;
-import com.yc.emotion.home.index.presenter.LiveLookPresenter;
 import com.yc.emotion.home.index.ui.fragment.CloseLiveFragment;
-import com.yc.emotion.home.index.ui.fragment.LiveEndFragment;
 import com.yc.emotion.home.index.ui.fragment.LiveIntroFragment;
 import com.yc.emotion.home.index.ui.fragment.WxLoginFragment;
-import com.yc.emotion.home.index.view.LiveLookView;
 import com.yc.emotion.home.mine.domain.bean.LiveInfo;
-import com.yc.emotion.home.model.bean.UserInfo;
 import com.yc.emotion.home.model.bean.event.EventLoginState;
-import com.yc.emotion.home.utils.GenerateTestUserSig;
-import com.yc.emotion.home.utils.PreferenceUtil;
 import com.yc.emotion.home.utils.SoftKeyBoardUtils;
 import com.yc.emotion.home.utils.UserInfoHelper;
 
@@ -64,12 +44,9 @@ import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -78,7 +55,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.tencent.trtc.TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM;
+
 
 /**
  * Created by suns  on 2020/5/29 14:28.

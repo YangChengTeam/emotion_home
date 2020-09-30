@@ -15,9 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
-import com.kk.utils.ToastUtil
+
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSlidingActivity
@@ -33,6 +31,9 @@ import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_community_detail.*
 import kotlinx.android.synthetic.main.common_topbar_view.*
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.util.ToastUtil
 import java.util.*
 
 /**
@@ -196,7 +197,7 @@ class CommunityDetailActivity : BaseSlidingActivity(), View.OnClickListener, Com
             R.id.activity_base_same_iv_back -> finish()
             R.id.tv_send -> {
                 if (TextUtils.isEmpty(result)) {
-                    ToastUtil.toast2(this, "评论内容不能为空")
+                    ToastUtil.toast(this, "评论内容不能为空")
                     return
                 }
                 // TODO: 2019/8/30 提交到服务器
@@ -211,8 +212,6 @@ class CommunityDetailActivity : BaseSlidingActivity(), View.OnClickListener, Com
     }
 
     private fun submitComment(topicId: String?, content: String?) {
-
-
 
         (mPresenter as? CommunityPresenter)?.createComment(topicId, content)
 

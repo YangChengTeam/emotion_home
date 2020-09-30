@@ -1,7 +1,7 @@
 package com.yc.emotion.home.utils
 
 import android.content.Context
-import com.yc.emotion.home.base.YcApplication
+import com.yc.emotion.home.base.EmApplication
 import java.io.ByteArrayOutputStream
 import java.io.ObjectOutputStream
 import java.net.URLEncoder
@@ -15,7 +15,7 @@ import kotlin.reflect.KProperty
 
 class Preference<T>(val context: Context, val string: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
-    constructor(string: String, default: T) : this(YcApplication.getInstance().applicationContext, string, default)
+    constructor(string: String, default: T) : this(EmApplication.instance.applicationContext, string, default)
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return findPreference(string, default)

@@ -16,11 +16,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
@@ -34,8 +33,11 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.WetChatInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.StatusBarUtil
+import io.reactivex.observers.DisposableObserver
 import org.jetbrains.annotations.NotNull
-import rx.Subscriber
+
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  * Created by mayn on 2019/4/25.
@@ -44,7 +46,7 @@ import rx.Subscriber
 abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView {
 
     var mLoadingDialog: LoadDialog? = null
-    protected var mLoveEngine: LoveEngine? = null
+    protected var mLoveEngine: BaseModel? = null
     protected var mHandler: Handler? = null
     private var taskRunnable: MyRunnable? = null
 
@@ -65,9 +67,9 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         super.onCreate(savedInstanceState)
 //        setContentView(getLayoutId())
 
-//        mLoadingDialog = LoadDialog(this)
+
         mLoadingDialog = LoadDialog(this)
-        mLoveEngine = LoveEngine(this)
+        mLoveEngine = BaseModel(this)
         mHandler = Handler()
         mPresenter = UserInfoPresenter(this, this)
 //        initViews()
@@ -192,7 +194,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         }
     }
 
-    fun getStatusHeight(context: Context): Int {
+    private fun getStatusHeight(context: Context): Int {
         var statusHeight = -1
         try {
             val clazz = Class.forName("com.android.internal.R\$dimen")
@@ -228,8 +230,8 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         val mWechat = arrayOf("pai201807")
 
 
-        mLoveEngine?.getWechatInfo(tutorId, articelId, exampleId, position)?.subscribe(object : Subscriber<ResultInfo<WetChatInfo>>() {
-            override fun onCompleted() {
+        mLoveEngine?.getWechatInfo(tutorId, articelId, exampleId, position)?.subscribe(object : DisposableObserver<ResultInfo<WetChatInfo>>() {
+            override fun onComplete() {
 
             }
 
@@ -237,8 +239,8 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
                 getWechatInfoSuccess(mWechat[0], listener)
             }
 
-            override fun onNext(wetChatInfoResultInfo: ResultInfo<WetChatInfo>?) {
-                if (wetChatInfoResultInfo != null && wetChatInfoResultInfo.code == HttpConfig.STATUS_OK) {
+            override fun onNext(wetChatInfoResultInfo: ResultInfo<WetChatInfo>) {
+                if (wetChatInfoResultInfo.code == HttpConfig.STATUS_OK) {
                     mWechat[0] = wetChatInfoResultInfo.data.weixin
                     getWechatInfoSuccess(mWechat[0], listener)
                 }
@@ -256,7 +258,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
         } else {
             runOnUiThread {
                 showService(wx)
-//                                               showServieDialog(mWechat[0]));
             }
         }
     }
@@ -399,7 +400,7 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
 
         mPresenter?.unSubscribe()
 
-//        windowManager
+
     }
 
     interface OnWxListener {
@@ -425,7 +426,6 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     override fun getUserInfoSuccess(userInfo: UserInfo, listener: OnUserInfoListener?) {
         listener?.onUserInfo(userInfo)
     }
-
 
 }
 /**

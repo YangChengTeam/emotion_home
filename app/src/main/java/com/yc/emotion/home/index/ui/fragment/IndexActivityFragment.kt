@@ -15,23 +15,29 @@ import com.yc.emotion.home.base.ui.widget.RoundCornerImg
  * Created by suns  on 2019/9/26 17:48.
  */
 class IndexActivityFragment : BaseDialogFragment() {
-    private val window: Window? = null
-    private override var rootView: View? = null
-    private var mWx = ""
+
+
     private var tvWx: TextView? = null
-    fun getView(resId: Int): View {
-        return rootView!!.findViewById(resId)
+    fun getView(resId: Int): View? {
+        return rootView?.findViewById(resId)
     }
 
-    protected fun initView() {
-        Log.e("->", "initView: ")
+    private fun initView() {
+
         val roundCornerImg = getView(R.id.roundCornerImg) as RoundCornerImg
         tvWx = getView(R.id.tv_wx) as TextView
         roundCornerImg.setCorner(20)
-        rootView!!.setOnClickListener { v: View? ->
-            if (listener != null) {
-                listener!!.onToWx()
-            }
+
+        val arg = arguments
+        arg?.let {
+            val mWx = it.getString("wx")
+            tvWx?.text = Html.fromHtml("添加客服微信：<font color='#ddae52'>$mWx</font>")
+        }
+
+        rootView?.setOnClickListener { v: View? ->
+
+            listener?.onToWx()
+
         }
         val ivClose = getView(R.id.iv_close) as ImageView
         ivClose.setOnClickListener { v: View? -> dismiss() }
@@ -43,15 +49,6 @@ class IndexActivityFragment : BaseDialogFragment() {
     override val height: Int
         get() = ViewGroup.LayoutParams.WRAP_CONTENT
 
-    fun setWX(wx: String) {
-        mWx = wx
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.e("->", "setWX: $mWx")
-        tvWx!!.text = Html.fromHtml("添加客服微信：<font color='#ddae52'>$mWx</font>")
-    }
 
     private var listener: onToWxListener? = null
     fun setListener(listener: onToWxListener?) {

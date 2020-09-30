@@ -43,10 +43,10 @@ abstract class BasePushPhotoActivity : BaseSameActivity() {
         // 自定义图片加载器
         if (mInstance == null) {
             mInstance = ISNav.getInstance()
-            mInstance.init(ImageLoader { context: Context?, path: String, imageView: ImageView? ->
-                Glide.with(context!!).load("file://$path").into(imageView!!)
+            mInstance?.init { context: Context, path: String, imageView: ImageView? ->
+                Glide.with(context).load("file://$path").into(imageView!!)
                 Log.d("mylog", "displayImage: path $path")
-            })
+            }
         }
     }
 
@@ -65,7 +65,7 @@ abstract class BasePushPhotoActivity : BaseSameActivity() {
                 }
             }
         }
-        selectPhotoDialog.instanceDialog(this)
+        selectPhotoDialog?.instanceDialog(this)
     }
 
     fun openAlbum() {

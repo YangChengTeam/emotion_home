@@ -1,30 +1,376 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@id/layout_short_video_play_header" android:background="#ff000000" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.pili.pldroid.player.widget.PLVideoTextureView android:layout_gravity="center" android:id="@id/short_video_view" android:layout_width="fill_parent" android:layout_height="fill_parent" />
-    <View android:layout_gravity="bottom" android:background="@drawable/mask_short_video_gradient_30" android:layout_width="fill_parent" android:layout_height="150.0dip" />
-    <ImageView android:layout_gravity="center" android:id="@id/short_video_play_or_pause_iv" android:visibility="gone" android:layout_width="40.0dip" android:layout_height="40.0dip" android:src="@drawable/icon_short_play" />
-    <com.mei.widget.progress.ProgressView android:layout_gravity="center" android:id="@id/short_video_loading" android:visibility="gone" android:layout_width="32.0dip" android:layout_height="32.0dip" app:pv_progressMode="indeterminate" app:pv_progressStyle="@style/CircularProgress" />
-    <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@id/short_video_error_root" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
-        <TextView android:textSize="16.0sp" android:textStyle="bold" android:textColor="@android:color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/video_loading_failed" />
-        <com.mei.widget.round.RoundTextView android:textSize="15.0sp" android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center" android:id="@id/short_video_error_retry" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="120.0dip" android:layout_height="wrap_content" android:layout_marginTop="25.0dip" android:text="@string/retry_click" app:back_color="#ff484848" app:stroke_radius="20.0dip" />
-    </LinearLayout>
-    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/short_video_end_person_short_root" android:background="#ff000000" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/short_video_end_person_ll" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <ImageView android:id="@id/short_video_end_person_iv" android:layout_width="80.0dip" android:layout_height="80.0dip" />
-            <TextView android:textSize="20.0sp" android:textStyle="bold" android:textColor="@android:color/white" android:id="@id/short_video_end_person_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="15.0dip" android:layout_marginBottom="15.0dip" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/layout_short_video_play_header"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ff000000">
+
+                <com.yc.emotion.home.message.ui.view.MyVideoPlayerTrackView
+                    android:id="@+id/short_video_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    app:video_autoSetCoverController="true"
+                    app:video_autoSetVideoController="false" />
+
+
+                <LinearLayout
+                    android:layout_width="83dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="90dp"
+                    android:background="@drawable/video_tutor_bg"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_video_tutor_face"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/main_icon_default_head" />
+
+                    <TextView
+                        android:id="@+id/tv_video_tutor_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:text="椰子"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="150.0dip"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/mask_short_video_gradient_30" />
+
+                <ImageView
+                    android:id="@+id/short_video_play_or_pause_iv"
+                    android:layout_width="40.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_short_play"
+                    android:visibility="gone" />
+
+                <com.yc.emotion.home.message.ui.view.ProgressView
+                    android:id="@+id/short_video_loading"
+                    android:layout_width="32.0dip"
+                    android:layout_height="32.0dip"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:pv_progressMode="1" />
+
+
+                <LinearLayout
+                    android:id="@+id/short_video_error_root"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/video_loading_failed"
+                        android:textColor="@android:color/white"
+                        android:textSize="16.0sp"
+                        android:textStyle="bold" />
+
+                    <com.yc.emotion.home.message.ui.view.RoundTextView
+                        android:id="@+id/short_video_error_retry"
+                        android:layout_width="120.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25.0dip"
+                        android:gravity="center"
+                        android:paddingTop="10.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:text="@string/retry_click"
+                        android:textColor="@android:color/white"
+                        android:textSize="15.0sp"
+                        android:textStyle="bold"
+                        app:back_color="#ff484848"
+                        app:stroke_radius="20.0dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/short_video_end_person_short_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ff000000"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:id="@+id/short_video_end_person_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/short_video_end_person_iv"
+                            android:layout_width="64.0dip"
+                            android:layout_height="64.0dip" />
+
+                        <TextView
+                            android:id="@+id/short_video_end_person_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5.0dip"
+                            android:layout_marginBottom="15.0dip"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/short_video_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5.0dip"
+
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/short_video_end_hint_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/video_end_hint"
+                        android:textColor="#ff939190"
+                        android:textSize="15.0sp" />
+
+                    <com.yc.emotion.home.message.ui.view.RoundTextView
+                        android:id="@+id/short_video_end_person_get_wx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50.0dip"
+                        android:drawableStart="@mipmap/icon_wechat_white"
+                        android:drawablePadding="9.0dip"
+                        android:gravity="center"
+                        android:minHeight="39.0dip"
+                        android:paddingLeft="40.0dip"
+                        android:paddingRight="40.0dip"
+                        android:text="@string/wx_advisory"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        app:back_color="#ff28AC51"
+                        app:stroke_radius="20.0dip" />
+
+                    <TextView
+                        android:id="@+id/short_video_end_person_retry_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10.0dip"
+                        android:drawableStart="@mipmap/video_over_refresh"
+                        android:drawablePadding="5dp"
+                        android:gravity="center"
+                        android:paddingLeft="10.0dip"
+                        android:paddingTop="10.0dip"
+                        android:paddingRight="10.0dip"
+                        android:paddingBottom="10.0dip"
+                        android:text="@string/retry_replay"
+                        android:textColor="#939190"
+                        android:textSize="15.0sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/short_video_person_short_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="15.0dip"
+                    android:layout_marginBottom="15.0dip"
+
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/short_video_person_short_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dip"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:maxEms="5"
+                        android:textColor="@android:color/white"
+                        android:textSize="18.0sp" />
+                    <!--                    <Space-->
+                    <!--                        android:layout_width="0.0dip"-->
+                    <!--                        android:layout_height="1.0dip"-->
+                    <!--                        android:layout_weight="1.0" />-->
+
+
+                    <ImageView
+                        android:id="@+id/iv_wx"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="15.0dip"
+                        android:src="@mipmap/icon_d_wx" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/gray_fafafa"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_video_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="分手挽回17.对你厌烦的前任要如何挽回呢（33s）"
+                        android:textColor="@color/black_333333"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_create_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="08-06"
+                            android:textColor="#D7D7D7"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_play_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:drawableStart="@mipmap/right_triangle"
+                            android:drawablePadding="5dp"
+                            android:text="268"
+                            android:textColor="#D7D7D7"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/gray_f5f5f5" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp">
+
+                    <TextView
+                        android:id="@+id/tv_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="内容来自网络，如有侵权请联系删除"
+                        android:textColor="#B4B4B4" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_from"
+                        android:layout_marginTop="25dp"
+                        android:background="@drawable/video_item_shadow_bg"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_app_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:text="@string/app_name"
+                            android:textColor="@color/black_333333"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_tutor_profession"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="婚姻家庭咨询师 婚姻家庭咨询师"
+                            android:textColor="@color/gray_d2d2d2" />
+
+                        <com.yc.emotion.home.message.ui.view.RoundTextView
+                            android:id="@+id/short_video_person_get_wx_short"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:drawableStart="@mipmap/icon_wechat_white"
+                            android:drawablePadding="9.0dip"
+                            android:gravity="center"
+                            android:minHeight="38.0dip"
+                            android:paddingLeft="40.0dip"
+                            android:paddingRight="40.0dip"
+                            android:text="@string/wx_advisory"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+                            app:back_color="#ff28AC51"
+                            app:stroke_color="@android:color/transparent"
+                            app:stroke_radius="20.0dip"
+                            app:stroke_width="0dp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_tutor_face"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="28dp"
+                        android:src="@mipmap/main_icon_default_head" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
-        <TextView android:textSize="15.0sp" android:textColor="#80ffffff" android:id="@id/short_video_end_hint_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/video_end_hint" />
-        <com.mei.widget.round.RoundTextView android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center" android:id="@id/short_video_end_person_get_wx" android:paddingLeft="40.0dip" android:paddingRight="40.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="50.0dip" android:minHeight="39.0dip" android:text="@string/wx_advisory" android:drawablePadding="9.0dip" android:drawableStart="@drawable/wx_login_white_icon" app:back_color="#ff229947" app:stroke_radius="20.0dip" />
-        <TextView android:textSize="15.0sp" android:textColor="#80ffffff" android:id="@id/short_video_end_person_retry_play" android:paddingLeft="10.0dip" android:paddingTop="10.0dip" android:paddingRight="10.0dip" android:paddingBottom="10.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/retry_replay" />
-    </LinearLayout>
-    <LinearLayout android:gravity="center_vertical" android:layout_gravity="bottom" android:orientation="horizontal" android:id="@id/short_video_person_short_root" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="15.0dip" android:layout_marginStart="15.0dip">
-        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/short_video_person_short_ll" android:layout_width="wrap_content" android:layout_height="wrap_content">
-            <ImageView android:id="@id/short_video_person_short_iv" android:layout_width="30.0dip" android:layout_height="30.0dip" />
-            <TextView android:textSize="18.0sp" android:textStyle="bold" android:textColor="@android:color/white" android:ellipsize="end" android:id="@id/short_video_person_short_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:maxEms="5" android:layout_marginStart="11.0dip" />
-        </LinearLayout>
-        <Space android:layout_width="0.0dip" android:layout_height="1.0dip" android:layout_weight="1.0" />
-        <com.mei.widget.round.RoundTextView android:textStyle="bold" android:textColor="@android:color/white" android:gravity="center" android:id="@id/short_video_person_get_wx_short" android:paddingLeft="40.0dip" android:paddingRight="40.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="38.0dip" android:text="@string/wx_advisory" android:drawablePadding="9.0dip" android:drawableStart="@drawable/wx_login_white_icon" android:layout_marginEnd="20.0dip" app:back_color="#66000000" app:stroke_radius="20.0dip" />
-    </LinearLayout>
-    <ProgressBar android:layout_gravity="bottom" android:id="@id/short_video_progress" android:layout_width="fill_parent" android:layout_height="2.0dip" android:max="100" android:progressDrawable="@drawable/short_video_play_progress_bg" style="?android:progressBarStyleHorizontal" />
-</FrameLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/statusbar_view_height"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:src="@mipmap/ic_back" />
+</RelativeLayout>

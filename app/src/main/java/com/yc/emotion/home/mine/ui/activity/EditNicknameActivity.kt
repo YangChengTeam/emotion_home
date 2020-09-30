@@ -6,6 +6,7 @@ import android.text.TextUtils
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.utils.ToastUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_edit_signature.*
 
 /**
@@ -41,11 +42,11 @@ class EditNicknameActivity : BaseSameActivity() {
         tvSub.setTextColor(resources.getColor(R.color.gray_666))
         tvSub.text = "保存"
 
-        tvSub.setOnClickListener {
+        tvSub.clickWithTrigger {
             val result = et_signature.text.toString().trim()
             if (TextUtils.isEmpty(result)) {
                 ToastUtils.showCenterToast("请填写昵称再保存")
-                return@setOnClickListener
+                return@clickWithTrigger
 
             }
 

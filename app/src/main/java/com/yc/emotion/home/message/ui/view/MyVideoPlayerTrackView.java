@@ -1,4 +1,4 @@
-package com.video.player.lib.view;
+package com.yc.emotion.home.message.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,19 +7,12 @@ import com.video.player.lib.R;
 import com.video.player.lib.base.BaseVideoPlayer;
 import com.video.player.lib.controller.DefaultCoverController;
 import com.video.player.lib.controller.DefaultGestureController;
-import com.video.player.lib.controller.DefaultVideoController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-/**
- * TinyHung@Outlook.com
- * 2019/4/8
- * Default Video
- * 示例视频播放器
- */
 
-public class VideoPlayerTrackView extends BaseVideoPlayer<DefaultVideoController,
+public class MyVideoPlayerTrackView extends BaseVideoPlayer<MyVideoController,
         DefaultCoverController, DefaultGestureController> {
 
     @Override
@@ -27,15 +20,15 @@ public class VideoPlayerTrackView extends BaseVideoPlayer<DefaultVideoController
         return R.layout.video_default_track_layout;
     }
 
-    public VideoPlayerTrackView(@NonNull Context context) {
+    public MyVideoPlayerTrackView(@NonNull Context context) {
         this(context,null);
     }
 
-    public VideoPlayerTrackView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MyVideoPlayerTrackView(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public VideoPlayerTrackView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MyVideoPlayerTrackView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 }

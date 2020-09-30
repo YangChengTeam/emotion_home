@@ -1,24 +1,20 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
+import com.alibaba.fastjson.JSONArray
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.model.bean.CourseInfo
-import com.yc.emotion.home.model.bean.CourseInfoWrapper
-import com.yc.emotion.home.model.bean.TutorCommentInfoWrapper
-import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
-import rx.Observable
-import java.util.ArrayList
-import java.util.HashMap
+import com.yc.emotion.home.model.bean.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
+import java.util.*
 
 /**
  *
  * Created by suns  on 2019/11/12 15:54.
  */
-class TutorCourseModel(override var context: Context?) : IModel {
+class TutorCourseModel(override var context: Context?) : IModel(context) {
 
 
     /**
@@ -29,14 +25,8 @@ class TutorCourseModel(override var context: Context?) : IModel {
      * @return
      */
     fun getCourseInfo(chapter_id: String?, user_id: String): Observable<ResultInfo<TutorCourseDetailInfo>> {
-        val params = HashMap<String, String?>()
 
-        params["chapter_id"] = chapter_id
-        params["user_id"] = user_id
-
-        return HttpCoreEngin.get(context).rxpost(URLConfig.COURSE_DETAIL_URL, object : TypeReference<ResultInfo<TutorCourseDetailInfo>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<TutorCourseDetailInfo>>
+        return request.getCourseInfo(chapter_id, user_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -49,14 +39,9 @@ class TutorCourseModel(override var context: Context?) : IModel {
      * @return
      */
     fun getTutorCommentInfos(tutor_id: String?, page: Int, pageSize: Int): Observable<ResultInfo<TutorCommentInfoWrapper>> {
-        val params = HashMap<String, String?>()
-        params["tutor_id"] = tutor_id
-        params["page"] = page.toString() + ""
-        params["page_size"] = pageSize.toString() + ""
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_COMMENT_LIST_URL, object : TypeReference<ResultInfo<TutorCommentInfoWrapper>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<TutorCommentInfoWrapper>>
+        return request.getTutorCommentInfos(tutor_id, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -68,13 +53,8 @@ class TutorCourseModel(override var context: Context?) : IModel {
      * @return
      */
     fun collectCourse(chapter_id: String?, userId: String): Observable<ResultInfo<List<CourseInfo>>> {
-        val params = HashMap<String, String?>()
-        params["chapter_id"] = chapter_id
-        params["user_id"] = userId
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.COLLECT_COURSE_URL, object : TypeReference<ResultInfo<List<CourseInfo>>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<List<CourseInfo>>>
+        return request.collectCourse(chapter_id, userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -83,9 +63,8 @@ class TutorCourseModel(override var context: Context?) : IModel {
      * @return
      */
     fun getCourseCategory(): Observable<ResultInfo<ArrayList<CourseInfo>>> {
-        return HttpCoreEngin.get(context).rxpost(URLConfig.COURSE_CATEGORY_URL, object : TypeReference<ResultInfo<ArrayList<CourseInfo>>>() {
 
-        }.type, null, true, true, true) as Observable<ResultInfo<ArrayList<CourseInfo>>>
+        return request.getCourseCategory().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -96,12 +75,8 @@ class TutorCourseModel(override var context: Context?) : IModel {
      * @return
      */
     fun getCourseList(cat_id: String?): Observable<ResultInfo<List<CourseInfo>>> {
-        val params = HashMap<String, String?>()
-        params["cat_id"] = cat_id
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.COURSE_LIST_URL, object : TypeReference<ResultInfo<List<CourseInfo>>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<List<CourseInfo>>>
+        return request.getCourseList(cat_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -114,12 +89,35 @@ class TutorCourseModel(override var context: Context?) : IModel {
      */
     fun getTutorCourseInfos(tutor_id: String?, page: Int, pageSize: Int): Observable<ResultInfo<CourseInfoWrapper>> {
 
-        val params = HashMap<String, String?>()
-        params["tutor_id"] = tutor_id
-        params["page"] = page.toString() + ""
-        params["page_size"] = pageSize.toString() + ""
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_COURSE_DETAIL_URL, object : TypeReference<ResultInfo<CourseInfoWrapper>>() {
+        return request.getTutorCourseInfos(tutor_id, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
 
-        }.type, params, true, true, true) as Observable<ResultInfo<CourseInfoWrapper>>
+    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Observable<ResultInfo<OrdersInitBean>> {
+        val params = HashMap<String, String>()
+
+
+        params["user_id"] = userId
+        params["pay_way_name"] = pay_way_name
+        params["money"] = money
+
+
+        params["title"] = title //订单标题，会员购买，商品购买等
+
+
+        val jsonListArray = JSONArray()
+
+        val goodParams = hashMapOf<String, String>()
+
+
+        goodParams["goods_id"] = goodId
+
+        goodParams["num"] = "1"
+
+        jsonListArray.add(goodParams)
+
+        params["goods_list"] = jsonListArray.toJSONString()
+
+
+        return request.initOrders(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }

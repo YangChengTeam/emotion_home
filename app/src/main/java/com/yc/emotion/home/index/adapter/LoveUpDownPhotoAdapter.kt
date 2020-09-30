@@ -23,9 +23,9 @@ class LoveUpDownPhotoAdapter(data: List<LoveHealingDetailBean>?) : BaseMultiItem
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: LoveHealingDetailBean) {
+    override fun convert(helper: BaseViewHolder, item: LoveHealingDetailBean) {
         when (item.type) {
-            LoveHealingDetailBean.VIEW_ITEM_MEN, LoveHealingDetailBean.VIEW_ITEM_WOMEN -> helper?.setText(R.id.item_up_down_women_tv_name, item.content)
+            LoveHealingDetailBean.VIEW_ITEM_MEN, LoveHealingDetailBean.VIEW_ITEM_WOMEN -> helper.setText(R.id.item_up_down_women_tv_name, item.content)
             LoveHealingDetailBean.VIEW_TITLE -> {
             }
         }

@@ -1,31 +1,24 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.engin.HttpCoreEngin
+import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveByStagesDetailsBean
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
  * Created by suns  on 2019/11/12 11:08.
  */
-class ArticleDetailModel(override var context: Context?) : IModel {
+class ArticleDetailModel(override var context: Context?) : IModel(context) {
 
 
-    fun getArticleDetai(id: String, userId: String): Observable<AResultInfo<LoveByStagesDetailsBean>> {
-        val params = HashMap<String, String>()
-        params["article_id"] = id
-        params["user_id"] = userId
-        //        requestParams(params);
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.ARTICLE_DETAIL_URL, object : TypeReference<AResultInfo<LoveByStagesDetailsBean>>() {
+    fun getArticleDetai(id: String, userId: String): Observable<ResultInfo<LoveByStagesDetailsBean>> {
 
-        }.type, params, true, true, true) as Observable<AResultInfo<LoveByStagesDetailsBean>>
+        return request.getArticleDetail(id, userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -37,12 +30,9 @@ class ArticleDetailModel(override var context: Context?) : IModel {
      * @param url
      * @return
      */
-    fun articleCollect(userId: String, exampleId: String, url: String): Observable<AResultInfo<String>> {
-        val params = HashMap<String, String>()
-        params["user_id"] = userId
-        params["article_id"] = exampleId
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.getBaseUrl() + url, object : TypeReference<AResultInfo<String>>() {
-        }.type, params, true, true, true) as Observable<AResultInfo<String>>
+    fun articleCollect(userId: String, exampleId: String, url: String): Observable<ResultInfo<String>> {
+
+        return request.articleCollect(userId, exampleId, URLConfig.getBaseUrl() + url)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }

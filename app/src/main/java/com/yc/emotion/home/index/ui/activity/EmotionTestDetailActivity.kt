@@ -1,24 +1,22 @@
 package com.yc.emotion.home.index.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import androidx.viewpager.widget.ViewPager
-import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.adapter.EmotionTestDetailAdapter
 import com.yc.emotion.home.mine.ui.fragment.ExitPublishFragment
 import com.yc.emotion.home.model.bean.QuestionInfo
 import com.yc.emotion.home.model.bean.event.EventBusEmotionTest
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_emotion_test_detail.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import rx.Observable
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 /**
@@ -161,7 +159,7 @@ class EmotionTestDetailActivity : BaseSameActivity() {
     }
 
 
-    private var subscription: Subscription? = null
+    private var subscription: Disposable? = null
 
     @SuppressLint("SetTextI18n")
     fun startTime() {
@@ -171,8 +169,9 @@ class EmotionTestDetailActivity : BaseSameActivity() {
                     mTimes++
                     val minutes = mTimes / 60
                     if (minutes > 60) {
-                        if (subscription?.isUnsubscribed != true) {
-                            subscription?.unsubscribe()
+
+                        if (subscription?.isDisposed != true) {
+                            subscription?.dispose()
                         }
                     } else {
                         val seconds = mTimes - minutes * 60
@@ -182,8 +181,8 @@ class EmotionTestDetailActivity : BaseSameActivity() {
     }
 
     private fun stopTime() {
-        if (subscription != null && subscription?.isUnsubscribed == true) {
-            subscription?.unsubscribe()
+        if (subscription != null && subscription?.isDisposed == true) {
+            subscription?.dispose()
         }
     }
 

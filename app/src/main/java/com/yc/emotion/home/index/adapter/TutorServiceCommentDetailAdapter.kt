@@ -11,13 +11,13 @@ import com.yc.emotion.home.model.bean.CommunityInfo
  * Created by suns  on 2019/10/14 16:12.
  */
 class TutorServiceCommentDetailAdapter(mDatas: List<CommunityInfo>?) : CommonMoreAdapter<CommunityInfo, BaseViewHolder>(R.layout.tutor_service_comment_detail_item, mDatas) {
-    override fun convert(helper: BaseViewHolder?, item: CommunityInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: CommunityInfo?) {
+
             item?.let {
 
                 helper.addOnClickListener(R.id.tv_once_again_comment)
             }
-        }
+
     }
 
 }

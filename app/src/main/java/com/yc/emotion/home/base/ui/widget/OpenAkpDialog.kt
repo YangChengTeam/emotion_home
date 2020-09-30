@@ -71,6 +71,7 @@ class OpenAkpDialog(private val mContext: Context?, private val mOpenApkPkgInfos
                 if (!UserInfoHelper.instance.goToLogin(mContext)) {
                     handleCollect()
                     MobclickAgent.onEvent(mContext, "collection_id", "收藏话术")
+                    dismiss()
                 }
             }
             //        tvTt.setOnClickListener(clickToOpenApk(openApkPkgInfos.get(3).pkg));

@@ -10,7 +10,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.kk.utils.ScreenUtil
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
@@ -35,6 +35,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
+import yc.com.rthttplibrary.util.ScreenUtil
 import java.util.*
 
 /**
@@ -92,7 +93,7 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
 
         val arrays = resources.getStringArray(R.array.community_array)
 
-        val titleList = Arrays.asList(*arrays)
+        val titleList = listOf(*arrays)
 
         val fragmentList = arrayListOf<Fragment>()
 

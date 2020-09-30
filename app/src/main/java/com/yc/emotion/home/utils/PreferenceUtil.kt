@@ -2,6 +2,7 @@ package com.yc.emotion.home.utils
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
+import com.yc.emotion.home.base.EmApplication
 
 /**
  * Copyright © 2016 Zego. All rights reserved.
@@ -74,6 +75,6 @@ class PreferenceUtil private constructor() {
     }
 
     init {
-        mSharedPreferences = instance.getSharedPreferences(SHARE_PREFERENCE_NAME, AppCompatActivity.MODE_PRIVATE)
+        mSharedPreferences = EmApplication.instance.getSharedPreferences(SHARE_PREFERENCE_NAME, AppCompatActivity.MODE_PRIVATE)
     }
 }

@@ -12,18 +12,19 @@ import com.yc.emotion.home.R
  * Created by mayn on 2019/4/27.
  */
 class MainNavigationLin(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    private var mTvDes: TextView? = null
+    private lateinit var mTvDes: TextView
     private fun initView(context: Context, attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MainNavigationLin)
         val text = typedArray.getString(R.styleable.MainNavigationLin_textName)
         val inflate = LayoutInflater.from(context).inflate(R.layout.layout_main_navigation_lin, this, true)
         mTvDes = inflate.findViewById(R.id.main_navigation_lin_tv_des)
-        mTvDes.setText(text)
+        mTvDes.text = text
+        typedArray.recycle()
     }
 
     fun setDes(des: String?) {
         if (!TextUtils.isEmpty(des)) {
-            mTvDes!!.text = des
+            mTvDes.text = des
         }
     }
 

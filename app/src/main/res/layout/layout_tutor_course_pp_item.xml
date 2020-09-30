@@ -20,22 +20,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="15dp"
-
         android:text="23:26"
         android:textColor="@color/gray_666"
         android:textSize="13sp"
         app:layout_constraintLeft_toRightOf="@id/iv_course_play_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_course_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:text="第一节情绪的循环"
         android:textColor="@color/gray_666"
         app:layout_constraintLeft_toRightOf="@id/tv_course_duration"
+        app:layout_constraintRight_toLeftOf="@id/iv_course_pp_lock"
         app:layout_constraintTop_toTopOf="parent" />
 
 

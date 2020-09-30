@@ -384,6 +384,25 @@ public class VideoWindowController extends BaseVideoController implements SeekBa
     }
 
     @Override
+    public void complete() {
+        Logger.d(TAG,"reset："+mScrrenOrientation);
+        removeCallbacks(View.INVISIBLE);
+        updateVideoControllerUI(View.INVISIBLE,View.INVISIBLE);
+        if(null!=mVideoTotal){
+            mVideoTotal.setText("00:00");
+            mVideoCurrent.setText("00:00");
+        }
+        if(null!=mSeekBar){
+            mSeekBar.setSecondaryProgress(0);
+            mSeekBar.setProgress(0);
+        }
+        if(null!=mBottomProgressBar){
+            mBottomProgressBar.setSecondaryProgress(0);
+            mBottomProgressBar.setProgress(0);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         mVideoCurrent=null; mVideoTotal=null; mBottomProgressBar=null; mProgressBar=null;

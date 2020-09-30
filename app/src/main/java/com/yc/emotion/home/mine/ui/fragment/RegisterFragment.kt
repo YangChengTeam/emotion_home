@@ -14,6 +14,7 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.greenrobot.eventbus.EventBus
 
@@ -62,20 +63,21 @@ class RegisterFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
     }
 
     private fun initListener() {
-        tv_register_btn.setOnClickListener { Navigation.findNavController(it).navigate(R.id.action_to_setPwd) }
-        tv_user_policy.setOnClickListener { // todo 用户协议
+        tv_register_btn.clickWithTrigger { Navigation.findNavController(it).navigate(R.id.action_to_setPwd) }
+        tv_user_policy.clickWithTrigger { // todo 用户协议
             val userPolicyFragment = UserPolicyFragment()
             userPolicyFragment.show(childFragmentManager, "")
         }
 
-        tv_register_btn.setOnClickListener {
+        tv_register_btn.clickWithTrigger {
             val phone = et_phone.text.toString().trim()
             val code = et_code.text.toString().trim()
             val pwd = et_pwd.text.toString().trim()
-            mPresenter?.phoneRegister(phone, pwd, code)
+            val invitationCode = et_invitation_code.text.toString().trim()
+            mPresenter?.phoneRegister(phone, pwd, code, invitationCode)
         }
 
-        tv_get_code.setOnClickListener {
+        tv_get_code.clickWithTrigger {
             val phone = et_phone.text.toString().trim()
             mPresenter?.sendCode(phone)
         }

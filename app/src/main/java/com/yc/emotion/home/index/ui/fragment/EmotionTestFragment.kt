@@ -3,6 +3,7 @@ package com.yc.emotion.home.index.ui.fragment
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -45,8 +46,6 @@ class EmotionTestFragment : BaseFragment<EmotionTestPresenter>(), EmotionTestVie
         }
 
 
-
-
 //        rv_efficient_course.setPadding(0, 0, 0, 0)
         val layoutManager = LinearLayoutManager(activity)
         emotionTestAdapter = EmotionTestAdapter(null)
@@ -74,6 +73,7 @@ class EmotionTestFragment : BaseFragment<EmotionTestPresenter>(), EmotionTestVie
             emotionTestInfo?.let {
                 activity?.let {
                     EmotionTestDescActivity.startActivity(activity, emotionTestInfo.id)
+                    MobclickAgent.onEvent(activity,"emotion_test_click" ,"情感测试点击")
                 }
             }
         }

@@ -19,6 +19,7 @@ import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
 import com.yc.emotion.home.index.presenter.TutorCoursePresenter
 import com.yc.emotion.home.index.view.TutorCourseView
+import com.yc.emotion.home.model.bean.OrdersInitBean
 import kotlinx.android.synthetic.main.activity_course_efficient.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -57,7 +58,6 @@ class EfficientCourseActivity : BaseSameActivity(), TutorCourseView {
             categoryList = intent.getParcelableArrayListExtra("category_list")
 
         }
-
 
         if (categoryList != null && categoryList!!.isNotEmpty()) {
             netSwitchPagerData(categoryList)
@@ -226,5 +226,9 @@ class EfficientCourseActivity : BaseSameActivity(), TutorCourseView {
     override fun showCourseCategory(data: ArrayList<CourseInfo>?) {
         categoryList = data
         netSwitchPagerData(data)
+    }
+
+    override fun showOrderInfo(data: OrdersInitBean?, payWayName: String) {
+
     }
 }

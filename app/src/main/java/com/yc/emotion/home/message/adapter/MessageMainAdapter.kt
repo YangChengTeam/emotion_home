@@ -20,9 +20,9 @@ class MessageMainAdapter(mDatas: List<MessageInfo>?) : BaseMultiItemQuickAdapter
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: MessageInfo?) {
+    override fun convert(helper: BaseViewHolder, item: MessageInfo?) {
 
-        helper?.let {
+
             item?.let {
                 when (item.itemType) {
                     MessageInfo.TYPE_MESSAGE -> {
@@ -45,6 +45,6 @@ class MessageMainAdapter(mDatas: List<MessageInfo>?) : BaseMultiItemQuickAdapter
 
 
             }
-        }
+
     }
 }

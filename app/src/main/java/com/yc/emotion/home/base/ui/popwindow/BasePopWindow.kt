@@ -26,7 +26,7 @@ abstract class BasePopWindow(activity: Activity?) : PopupWindow() {
         val inflater = mContext?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         rootView = inflater.inflate(getLayoutId(), null)
         width = ViewGroup.LayoutParams.MATCH_PARENT
-        height = ViewGroup.LayoutParams.WRAP_CONTENT
+        height = getPopHeight()
         contentView = rootView
         setWindowAlpha(1f)
         setBackgroundDrawable(BitmapDrawable())
@@ -47,7 +47,7 @@ abstract class BasePopWindow(activity: Activity?) : PopupWindow() {
 
     override fun dismiss() {
         super.dismiss()
-        UIUtils.postDelay(Runnable{ setWindowAlpha(1f) }, 300)
+        UIUtils.postDelay(Runnable { setWindowAlpha(1f) }, 300)
         mPresenter?.unSubscribe()
     }
 
@@ -99,4 +99,8 @@ abstract class BasePopWindow(activity: Activity?) : PopupWindow() {
 
     abstract fun getLayoutId(): Int
     abstract fun init()
+
+    open fun getPopHeight(): Int {
+        return ViewGroup.LayoutParams.WRAP_CONTENT
+    }
 }

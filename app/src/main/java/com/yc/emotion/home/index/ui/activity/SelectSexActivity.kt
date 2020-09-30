@@ -9,6 +9,7 @@ import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_select_sex.*
 
 /**
@@ -44,8 +45,8 @@ class SelectSexActivity : BaseSameActivity() {
 
     private fun initListener() {
 
-        mBaseSameTvSub.setOnClickListener { switchMain() }
-        ll_sex_female.setOnClickListener {
+        mBaseSameTvSub.clickWithTrigger { switchMain() }
+        ll_sex_female.clickWithTrigger {
             ll_sex_female.isSelected = true
             ll_male.isSelected = false
             iv_female.setImageResource(R.mipmap.girl_sel)
@@ -54,7 +55,7 @@ class SelectSexActivity : BaseSameActivity() {
             mHandler?.postDelayed({ switchMain() }, 500)
 
         }
-        ll_male.setOnClickListener {
+        ll_male.clickWithTrigger {
             ll_sex_female.isSelected = false
             ll_male.isSelected = true
             iv_female.setImageResource(R.mipmap.girl_default)

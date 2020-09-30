@@ -1,19 +1,21 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import android.util.Log
+import android.text.TextUtils
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.index.domain.model.IndexModel
 import com.yc.emotion.home.index.view.IndexView
-import com.yc.emotion.home.mine.domain.bean.LiveInfo
-import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
+import com.yc.emotion.home.mine.domain.bean.*
 import com.yc.emotion.home.model.bean.IndexInfo
+import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.CommonInfoHelper
-import rx.Subscriber
+import com.yc.emotion.home.utils.Preference
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+
 
 /**
  *
@@ -21,6 +23,7 @@ import rx.Subscriber
  */
 class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexModel, IndexView>(context, view) {
 
+    private var invatationcode by Preference(ConstantKey.INVITATION_CODE, "")
 
     init {
         mModel = IndexModel(context)
@@ -30,7 +33,9 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
     override fun loadData(isForceUI: Boolean, isLoading: Boolean) {
         if (!isForceUI) return
 //        getIndexLiveList()
-        getOnlineLiveList()
+//        getOnlineLiveList()
+        getLiveVideoInfoList()
+        getRewardInfo()
     }
 
 
@@ -61,9 +66,10 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
      */
     fun getIndexData() {
 
-        val subscription = mModel?.getIndexInfo()?.subscribe(object : Subscriber<ResultInfo<IndexInfo>>() {
-            override fun onNext(t: ResultInfo<IndexInfo>?) {
-                t?.let {
+
+        mModel?.getIndexInfo()?.subscribe(object : DisposableObserver<ResultInfo<IndexInfo>>() {
+            override fun onNext(t: ResultInfo<IndexInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val indexInfo = t.data
 
@@ -74,16 +80,17 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
                 }
             }
 
-            override fun onCompleted() {
 
-                mView.onComplete()
+            override fun onError(e: Throwable) {
+            }
+
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
-            }
+
         })
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -99,9 +106,9 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
             }
         })
 
-        val subscription = mModel?.getOnlineLiveList()?.subscribe(object : Subscriber<ResultInfo<LiveInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<LiveInfoWrapper>?) {
-                t?.let {
+        mModel?.getOnlineLiveList()?.subscribe(object : DisposableObserver<ResultInfo<LiveInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<LiveInfoWrapper>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.list != null && t.data.list.size > 0) {
                         val list = ArrayList<LiveInfo>()
                         list.addAll(t.data.list)
@@ -112,16 +119,92 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
                 }
             }
 
-            override fun onCompleted() {
+
+            override fun onError(e: Throwable) {
 
             }
 
-            override fun onError(e: Throwable?) {
+
+            override fun onComplete() {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
 
+    fun getLiveVideoInfoList() {
+        CommonInfoHelper.getO(mContext, "index_live_video_list",
+                object : TypeReference<List<LiveVideoInfo>>() {}.type, object : CommonInfoHelper.OnParseListener<List<LiveVideoInfo>> {
+            override fun onParse(o: List<LiveVideoInfo>?) {
+                o?.let {
+                    if (it.isNotEmpty()) {
+                        mView.showIndexLiveVideos(o)
+                    }
+                }
+            }
+        })
+
+        mModel?.getLiveVideoInfoList()?.subscribe(object : DisposableObserver<ResultInfo<LiveVideoInfoWrapper>?>() {
+            override fun onNext(t: ResultInfo<LiveVideoInfoWrapper>) {
+                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                    val data = t.data
+                    mView.showIndexLiveVideos(data.list)
+                    CommonInfoHelper.setO(mContext, data.list, "index_live_video_list")
+                }
+            }
+
+            override fun onComplete() {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+
+        })
+
+    }
+
+    fun statisticsLive(id: String?) {
+        mModel?.statisticsLive(id)?.subscribe(object : DisposableObserver<ResultInfo<String>?>() {
+            override fun onNext(t: ResultInfo<String>) {
+
+            }
+
+            override fun onComplete() {
+
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        })
+
+    }
+
+
+    fun getRewardInfo() {
+        mModel?.getRewardInfo()?.subscribe(object : DisposableObserver<ResultInfo<RewardInfo>>() {
+            override fun onComplete() {
+
+            }
+
+            override fun onNext(t: ResultInfo<RewardInfo>) {
+                t.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                        val data = t.data
+                        if (!TextUtils.isEmpty(data.code))
+                            invatationcode = data.code
+                    }
+                }
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
+    }
 }

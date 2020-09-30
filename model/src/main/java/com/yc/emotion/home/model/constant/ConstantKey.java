@@ -65,4 +65,8 @@ public class ConstantKey {
     public static final String IS_FIRST_LOGIN = "is_first_login";//是否是首次登陆
     @NotNull
     public static final String TIME_TOTAL = "time_total";//
+
+    public static final String INVITATION_CODE = "invitation_code";
+    @NotNull
+    public static final String VIP_NUM="vip_num";
 }

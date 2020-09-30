@@ -24,6 +24,7 @@
         android:background="@drawable/live_state_bg"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="@id/live_roundImg"
         app:layout_constraintTop_toTopOf="@id/live_roundImg">
 
@@ -57,6 +58,7 @@
         android:paddingBottom="3dp"
         android:textColor="@color/white"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/live_roundImg"
         app:layout_constraintRight_toRightOf="@id/live_roundImg"
         tools:text="圆弧" />
@@ -78,10 +80,10 @@
     <TextView
         android:id="@+id/tv_live_type"
         android:layout_width="wrap_content"
-        android:layout_height="15dp"
+        android:layout_height="16dp"
         android:layout_marginStart="7dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/live_type_bg"
         android:gravity="center"
         android:paddingLeft="5dp"
@@ -97,15 +99,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="7dp"
-        app:layout_constraintRight_toRightOf="@id/live_roundImg"
-        app:layout_constraintTop_toTopOf="@id/tv_live_type">
+
+        app:layout_constraintBottom_toBottomOf="@id/tv_live_type"
+        app:layout_constraintRight_toRightOf="@id/live_roundImg">
 
         <!--        android:background="@drawable/live_online_bg"-->
         <TextView
             android:id="@+id/tv_live_num"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
 
             android:gravity="center"
             android:paddingLeft="5dp"

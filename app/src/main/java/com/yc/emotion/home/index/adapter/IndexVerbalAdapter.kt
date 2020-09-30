@@ -1,5 +1,6 @@
 package com.yc.emotion.home.index.adapter
 
+import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,19 +31,18 @@ class IndexVerbalAdapter(data: List<LoveHealDateBean>?) : BaseMultiItemQuickAdap
     }
 
 
-    override fun convert(helper: BaseViewHolder?, item: LoveHealDateBean?) {
+    override fun convert(helper: BaseViewHolder, item: LoveHealDateBean?) {
 
-        helper?.let {
+        item?.let {
+            when (item.type) {
 
-            item?.let {
-                when (item.type) {
-                    LoveHealDateBean.ITEM_TITLE -> helper.setText(R.id.item_love_heal_title_tv_name, item.name)
-                    LoveHealDateBean.ITEM_CONTENT -> helper.setText(R.id.item_love_heal_tv_name, item.name)
-                    else -> {
-                    }
+                LoveHealDateBean.ITEM_TITLE -> helper.setText(R.id.item_love_heal_title_tv_name, item.name)
+                        .setText(R.id.item_love_sub_title, item.sub_title)
+                        .setGone(R.id.item_love_sub_title,!TextUtils.isEmpty(item.sub_title))
+                LoveHealDateBean.ITEM_CONTENT -> helper.setText(R.id.item_love_heal_tv_name, item.name)
+                else -> {
                 }
             }
-
         }
 
 

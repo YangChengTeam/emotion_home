@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.yc.emotion.home.R;
-import com.yc.emotion.home.constant.Constant;
+import com.yc.emotion.home.base.constant.Constant;
 
 import java.util.List;
 

@@ -11,14 +11,13 @@ import com.yc.emotion.home.model.bean.LoveByStagesBean
  */
 class LoveByStagesAdapter(data: List<LoveByStagesBean>?) : CommonMoreAdapter<LoveByStagesBean, BaseViewHolder>(R.layout.recycler_view_item_love_by_stages, data) {
 
-    override fun convert(helper: BaseViewHolder?, item: LoveByStagesBean?) {
+    override fun convert(helper: BaseViewHolder, item: LoveByStagesBean?) {
 
-        helper?.let {
+
             item?.let {
                 helper.setText(R.id.item_love_by_stages_tv_name, item.post_title)
                         .setText(R.id.item_love_by_stages_tv_des, item.feeluseful.toString() + "人觉得有用")
             }
-        }
 
     }
 }

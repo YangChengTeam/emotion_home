@@ -16,8 +16,8 @@ import com.yc.emotion.home.model.bean.ArticleDetailInfo
  */
 class LoveIntroduceAdapter(data: List<ArticleDetailInfo>?) : CommonMoreAdapter<ArticleDetailInfo, BaseViewHolder>(R.layout.recycler_view_item_love_intro, data) {
 
-    override fun convert(helper: BaseViewHolder?, item: ArticleDetailInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: ArticleDetailInfo?) {
+
             item?.let {
                 val ivIcon = helper.getView<ImageView>(R.id.love_intro_iv_icon)
                 helper.setText(R.id.love_intro_tv_name, item.post_title)
@@ -33,6 +33,6 @@ class LoveIntroduceAdapter(data: List<ArticleDetailInfo>?) : CommonMoreAdapter<A
                         .diskCacheStrategy(DiskCacheStrategy.DATA)).into(ivIcon)
             }
 
-        }
+
     }
 }

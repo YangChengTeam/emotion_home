@@ -35,9 +35,8 @@ class VipItemAdapter(data: List<GoodsInfo>?) : CommonMoreAdapter<GoodsInfo, Base
     private val imageViewSparseArray: SparseArray<ImageView> = SparseArray()
     private val userInfo: UserInfo? = UserInfoHelper.instance.getUserInfo()
 
-    override fun convert(helper: BaseViewHolder?, item: GoodsInfo?) {
+    override fun convert(helper: BaseViewHolder, item: GoodsInfo?) {
 
-        helper?.let {
 
             helper.setText(R.id.item_become_vip_tail_tv_pay_tit_01, item?.name)
                     .setText(R.id.item_become_vip_tail_tv_pay_mon_01, DoubleToStringUtils.doubleStringToString(item?.m_price))
@@ -74,13 +73,13 @@ class VipItemAdapter(data: List<GoodsInfo>?) : CommonMoreAdapter<GoodsInfo, Base
             }
 
             setSelect(0)
-        }
+
 
     }
 
     private fun showGuide() {
         if (null != mContext && mContext is Activity) {
-            Log.e(BaseQuickAdapter.TAG, "showGuide: ")
+
             val activity = mContext as Activity
             NewbieGuide.with(activity)
                     .setLabel("guide3")
@@ -93,7 +92,7 @@ class VipItemAdapter(data: List<GoodsInfo>?) : CommonMoreAdapter<GoodsInfo, Base
         }
     }
 
-    fun setSelect(position: Int) {
+    private fun setSelect(position: Int) {
         resetState()
         constraintLayoutSparseArray.get(position).isSelected = true
         payUnitSparseArray.get(position).isSelected = true

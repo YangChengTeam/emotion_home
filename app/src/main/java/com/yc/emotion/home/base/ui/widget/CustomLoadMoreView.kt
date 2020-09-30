@@ -32,6 +32,6 @@ class CustomLoadMoreView : LoadMoreView() {
      * isLoadEndGone()为false，不能返回0
      */
     override fun getLoadEndViewId(): Int {
-        return 0
+        return R.id.tv_more_end_text
     }
 }

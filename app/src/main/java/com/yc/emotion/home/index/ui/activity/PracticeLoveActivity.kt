@@ -5,19 +5,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.LoveHealingAdapter
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveHealingBean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.activity_practice_love.*
-import rx.Subscriber
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 import java.util.*
 
 /**
@@ -87,7 +87,7 @@ class PracticeLoveActivity : BaseSameActivity() {
     }
 
 
-    protected fun lazyLoad() {
+    private fun lazyLoad() {
         MobclickAgent.onEvent(this, ConstantKey.UM_HONEYEDWORDS_ID)
         netData(false)
     }
@@ -114,16 +114,16 @@ class PracticeLoveActivity : BaseSameActivity() {
             mLoadingDialog?.showLoadingDialog()
         }
         mLoveEngine?.recommendLovewords(UserInfoHelper.instance.getUid().toString(), PAGE_NUM.toString(), PAGE_SIZE.toString(), "lovewords/recommend")
-                ?.subscribe(object : Subscriber<AResultInfo<List<LoveHealingBean>>>() {
+                ?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealingBean>>>() {
 
-                    override fun onNext(t: AResultInfo<List<LoveHealingBean>>?) {
+                    override fun onNext(t: ResultInfo<List<LoveHealingBean>>) {
                         if (PAGE_NUM == 1 && !isRefesh) {
                             mLoadingDialog?.dismissLoadingDialog()
                         }
                         if (swipeRefreshLayout.isRefreshing) {
                             swipeRefreshLayout.isRefreshing = false
                         }
-                        t?.let {
+                        t.let {
                             if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                                 val loveHealingBeanList = t.data
                                 createNewData(loveHealingBeanList)
@@ -132,7 +132,7 @@ class PracticeLoveActivity : BaseSameActivity() {
 
                     }
 
-                    override fun onCompleted() {
+                    override fun onComplete() {
                         if (PAGE_NUM == 1 && !isRefesh) {
                             mLoadingDialog?.dismissLoadingDialog()
                         }
@@ -141,7 +141,7 @@ class PracticeLoveActivity : BaseSameActivity() {
                         }
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                         if (PAGE_NUM == 1 && !isRefesh) {
                             mLoadingDialog?.dismissLoadingDialog()
                         }

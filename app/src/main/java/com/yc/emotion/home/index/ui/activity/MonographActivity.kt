@@ -10,13 +10,10 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.presenter.ArticlePresenter
-import com.yc.emotion.home.index.presenter.MonagraphPresenter
 import com.yc.emotion.home.index.view.ArticleView
 import com.yc.emotion.home.index.view.MonagraphView
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
-import com.yc.emotion.home.model.util.SizeUtils
 import com.yc.emotion.home.utils.StatusBarUtil
-
 import kotlinx.android.synthetic.main.activity_monograph.*
 
 /**

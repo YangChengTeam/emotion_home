@@ -4,6 +4,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -75,6 +76,8 @@ class IndexVerbalFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalVie
                 if (LoveHealDateBean.ITEM_CONTENT == item.type) {
                     activity?.let {
                         LoveHealDetailsActivity.startLoveHealDetailsActivity(it, item.name, "${item.id}")
+                        MobclickAgent.onEvent(activity, "verbal_click", "话术点击")
+
                     }
                 }
             }

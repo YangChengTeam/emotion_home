@@ -1,4 +1,4 @@
-package com.yc.emotion.home.message.ui.fragment
+package com.yc.emotion.home.message.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,6 @@ import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.message.adapter.MessageMainAdapter
 import com.yc.emotion.home.message.presenter.MessagePresenter
-import com.yc.emotion.home.message.ui.activity.NotificationListActivity
-import com.yc.emotion.home.message.ui.activity.ServiceChatActivity
 import com.yc.emotion.home.message.view.MessageView
 import com.yc.emotion.home.model.bean.MessageInfo
 import com.yc.emotion.home.utils.UserInfoHelper

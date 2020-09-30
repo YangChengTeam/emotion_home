@@ -1,4 +1,4 @@
-package com.yc.emotion.home.constant
+package com.yc.emotion.home.base.constant
 
 import java.io.File
 
@@ -268,4 +268,6 @@ object URLConfig {
 
     //直播点击
     val LIVE_COUNT_URL = baseUrl + "lesson.lesson/click"
+
+    val AI_VERBAL_URL= baseUrl+"search.search/search"
 }

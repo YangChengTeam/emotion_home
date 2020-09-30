@@ -1,15 +1,16 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.LoveCaseDetailModel
 import com.yc.emotion.home.index.view.LoveCaseDetailView
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveByStagesDetailsBean
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -35,26 +36,26 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
         val userId = UserInfoHelper.instance.getUid()
 
         mView.showLoadingDialog()
-        val subscription = mModel?.detailLoveCase(id, "$userId")?.subscribe(object : Subscriber<AResultInfo<LoveByStagesDetailsBean>>() {
-            override fun onNext(t: AResultInfo<LoveByStagesDetailsBean>?) {
-                t?.let {
+        mModel?.detailLoveCase(id, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<LoveByStagesDetailsBean>>() {
+            override fun onNext(t: ResultInfo<LoveByStagesDetailsBean>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showLoveCaseDetail(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
 
-        subScriptions?.add(subscription)
+
     }
 
     fun collectLoveCase(exampleId: String, isCollected: Boolean) {
@@ -68,11 +69,11 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
 
         mView.showLoadingDialog()
 
-        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : Subscriber<AResultInfo<String>>() {
-            override fun onNext(t: AResultInfo<String>?) {
-                t?.let {
+        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.msg
+                        val msg = t.message
                         ToastUtils.showCenterToast(msg)
 
                         var isCollected = isCollected
@@ -82,11 +83,11 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
@@ -108,11 +109,11 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
 
         mView.showLoadingDialog()
 
-        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : Subscriber<AResultInfo<String>>() {
-            override fun onNext(t: AResultInfo<String>?) {
-                t?.let {
+        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
+            override fun onNext(t: ResultInfo<String>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.msg
+                        val msg = t.message
                         ToastUtils.showCenterToast(msg)
 
                         var isDig = isDig
@@ -122,11 +123,11 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 

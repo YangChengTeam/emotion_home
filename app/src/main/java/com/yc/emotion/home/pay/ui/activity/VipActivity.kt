@@ -3,12 +3,12 @@ package com.yc.emotion.home.pay.ui.activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.EventLog
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.PayActivity
+import com.yc.emotion.home.index.ui.fragment.PaySuccWxFragment
 import com.yc.emotion.home.index.ui.fragment.VipPayWayFragment
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.bean.OrdersInitBean
@@ -17,10 +17,10 @@ import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.pay.adapter.VipItemAdapter
 import com.yc.emotion.home.pay.presenter.VipPresenter
-import com.yc.emotion.home.pay.ui.fragment.PaySuccessFragment
 import com.yc.emotion.home.pay.view.VipView
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_vip.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -124,7 +124,7 @@ class VipActivity : PayActivity(), VipView {
 
 
     private fun initListener() {
-        iv_vip_close.setOnClickListener { finish() }
+        iv_vip_close.clickWithTrigger { finish() }
 
         vipItemAdapter?.setOnItemClickListener { adapter, view, position ->
 
@@ -196,7 +196,7 @@ class VipActivity : PayActivity(), VipView {
         alertDialog.setTitle("提示")
         if (result) {
             EventBus.getDefault().post(EventPayVipSuccess())
-            val paySuccessFragment = PaySuccessFragment()
+            val paySuccessFragment = PaySuccWxFragment()
             paySuccessFragment.show(supportFragmentManager, "")
         }
         alertDialog.setMessage(des)

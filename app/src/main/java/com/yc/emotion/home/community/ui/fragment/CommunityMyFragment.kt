@@ -19,6 +19,7 @@ import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
 import com.yc.emotion.home.utils.ItemDecorationHelper
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_community.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -108,7 +109,7 @@ class CommunityMyFragment : BaseFragment<CommunityPresenter>(), View.OnClickList
                 }//todo 删除自己的发帖
             }
         }
-        ll_login_tint.setOnClickListener { UserInfoHelper.instance.goToLogin(mMainActivity) }
+        ll_login_tint.clickWithTrigger { UserInfoHelper.instance.goToLogin(mMainActivity) }
 
 
     }

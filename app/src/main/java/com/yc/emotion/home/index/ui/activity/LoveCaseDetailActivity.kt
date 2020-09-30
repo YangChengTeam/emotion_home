@@ -49,7 +49,6 @@ class LoveCaseDetailActivity : BaseSameActivity(), LoveCaseDetailView {
 
         initViews()
 
-
     }
 
     override fun getLayoutId(): Int {
@@ -104,7 +103,7 @@ class LoveCaseDetailActivity : BaseSameActivity(), LoveCaseDetailView {
 
 
     private fun initWebView(data: String) {
-//        var data = data
+
 
         val settings = example_detail_webview.settings
 

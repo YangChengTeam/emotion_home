@@ -1,8 +1,10 @@
 package com.yc.emotion.home.message.ui.fragment
 
+import android.content.Intent
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -11,6 +13,7 @@ import com.yc.emotion.home.index.presenter.ExpressPresenter
 import com.yc.emotion.home.index.ui.activity.CreateBeforeActivity
 import com.yc.emotion.home.index.view.ExpressView
 import com.yc.emotion.home.model.bean.confession.ConfessionDataBean
+import com.yc.emotion.home.skill.ui.activity.PromotionPlanActivity
 import kotlinx.android.synthetic.main.activity_express.*
 
 //表白
@@ -51,8 +54,18 @@ class ExpressFragment : BaseFragment<ExpressPresenter>(), ExpressView {
     private fun initListener() {
         mAdapter?.setOnItemClickListener { adapter, view, position ->
             val confessionDataBean = mAdapter?.getItem(position)
-            if (confessionDataBean != null && ConfessionDataBean.VIEW_ITEM == confessionDataBean.itemType)
-                CreateBeforeActivity.startCreateBeforeActivity(activity, confessionDataBean)
+
+            confessionDataBean?.let {
+                if (ConfessionDataBean.VIEW_ITEM == confessionDataBean.itemType) {
+                    CreateBeforeActivity.startCreateBeforeActivity(activity, confessionDataBean)
+                    MobclickAgent.onEvent(activity, "chat_confession_click", "表白神器点击")
+                }else if (ConfessionDataBean.VIEW_TITLE==confessionDataBean.itemType){
+                    startActivity(Intent(activity, PromotionPlanActivity::class.java))
+                    MobclickAgent.onEvent(activity,"promotion_plan_click","情感星动力点击")
+                }
+            }
+
+
         }
         mAdapter?.setOnLoadMoreListener({ this.getData() }, express_rl)
         swipeRefreshLayout.setColorSchemeResources(R.color.red_crimson)

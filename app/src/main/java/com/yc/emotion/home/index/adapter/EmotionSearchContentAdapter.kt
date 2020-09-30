@@ -33,8 +33,8 @@ class EmotionSearchContentAdapter(mDatas: List<SearchContentInfo>?) : BaseMultiI
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: SearchContentInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: SearchContentInfo?) {
+
             item?.let {
                 val pos = helper.adapterPosition
                 when (item.type) {
@@ -129,7 +129,7 @@ class EmotionSearchContentAdapter(mDatas: List<SearchContentInfo>?) : BaseMultiI
                 }
             }
         }
-    }
+
 
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

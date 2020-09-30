@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.mine.adapter.OrderAdapter
@@ -13,20 +12,19 @@ import com.yc.emotion.home.mine.presenter.OrderPresenter
 import com.yc.emotion.home.mine.view.OrderView
 import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.utils.ItemDecorationHelper
-import com.yc.emotion.home.utils.UserInfoHelper
-import kotlinx.android.synthetic.main.activity_order_new.*
+import kotlinx.android.synthetic.main.activity_order.*
 
-import rx.Subscriber
+
 
 /**
  *
  * Created by suns  on 2019/10/17 09:34.
  */
-class OrderActivityNew : BaseSameActivity(), OrderView {
+class OrderActivity : BaseSameActivity(), OrderView {
 
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_order_new
+        return R.layout.activity_order
     }
 
     private var orderAdapter: OrderAdapter? = null
@@ -105,6 +103,11 @@ class OrderActivityNew : BaseSameActivity(), OrderView {
     override fun onComplete() {
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
 
+    }
+
+    override fun onEnd() {
+        super.onEnd()
+        orderAdapter?.loadMoreEnd()
     }
 
     override fun onError() {

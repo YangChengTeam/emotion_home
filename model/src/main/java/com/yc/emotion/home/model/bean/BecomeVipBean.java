@@ -1,4 +1,4 @@
-package com.yc.verbaltalk.chat.bean;
+package com.yc.emotion.home.model.bean;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -9,15 +9,15 @@ import java.util.List;
  * Created by sunshey on 2019/5/5.
  */
 
-public class BecomeVipBean  implements MultiItemEntity, Serializable {
+public class BecomeVipBean implements MultiItemEntity, Serializable {
 
 
     public int type;
     public String subName;
     public String name;
     public int imgResId;
-//    public List<BecomeVipPayBean> payBeans;
-    public List<IndexDoodsBean> payBeans;
+    //    public List<BecomeVipPayBean> payBeans;
+    public List<GoodsInfo> payBeans;
 
     public static final int VIEW_TITLE = 1;
     public static final int VIEW_ITEM = 2;
@@ -39,7 +39,7 @@ public class BecomeVipBean  implements MultiItemEntity, Serializable {
         this.imgResId = imgResId;
     }
 
-    public BecomeVipBean(int type, List<IndexDoodsBean> payBeans) {
+    public BecomeVipBean(int type, List<GoodsInfo> payBeans) {
         this.type = type;
         this.payBeans = payBeans;
     }

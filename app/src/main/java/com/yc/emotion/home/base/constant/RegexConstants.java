@@ -1,4 +1,4 @@
-package com.yc.emotion.home.constant;
+package com.yc.emotion.home.base.constant;
 
 /**
  * <pre>

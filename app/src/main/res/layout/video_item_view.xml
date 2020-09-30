@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<!--    android:background="@drawable/video_item_shadow_bg"-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/video_item_shadow_bg"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="161dp">
+
+            <com.video.player.lib.view.VideoRoundImageView
+                android:id="@+id/iv_video_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                app:video_borderRadius="7dp"
+                app:video_bottom_left="false"
+                app:video_bottom_right="false"
+                app:video_scale="video_crop"
+                app:video_type="video_round" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:src="@mipmap/course_play" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="直男如何谈恋爱"
+            android:textColor="#ff222222"
+            android:textSize="13sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iv_icon_face"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@mipmap/tutor_head" />
+
+            <TextView
+                android:id="@+id/tv_tutor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="7dp"
+                android:layout_toEndOf="@id/iv_icon_face"
+                android:layout_toStartOf="@id/ll_count"
+                android:layout_marginEnd="2dp"
+                android:text="玳彤"
+                android:textColor="@color/gray_666"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_see" />
+
+                <TextView
+                    android:id="@+id/tv_play_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="4596"
+                    android:textColor="@color/gray_999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

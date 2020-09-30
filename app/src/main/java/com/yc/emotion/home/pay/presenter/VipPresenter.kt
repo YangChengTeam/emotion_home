@@ -2,16 +2,16 @@ package com.yc.emotion.home.pay.presenter
 
 import android.content.Context
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.base.presenter.BasePresenter
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.pay.model.VipModel
 import com.yc.emotion.home.pay.view.VipView
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -29,23 +29,23 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
 
     override fun getCache() {
         CommonInfoHelper.getO(mContext, "vip_infos", object : TypeReference<List<GoodsInfo>>() {}.type,
-        object :CommonInfoHelper.OnParseListener<List<GoodsInfo>>{
-            override fun onParse(o: List<GoodsInfo>?) {
-                if (o != null && o.isNotEmpty()) {
-                    mView.showGoodInfoList(o)
-                }
-            }
+                object : CommonInfoHelper.OnParseListener<List<GoodsInfo>> {
+                    override fun onParse(o: List<GoodsInfo>?) {
+                        if (o != null && o.isNotEmpty()) {
+                            mView.showGoodInfoList(o)
+                        }
+                    }
 
-        })
+                })
 
         getGoodListInfo()
     }
 
     private fun getGoodListInfo() {
         mView.showLoadingDialog()
-        val subscription = mModel?.getGoodListInfo()?.subscribe(object : Subscriber<AResultInfo<List<GoodsInfo>>>() {
-            override fun onNext(t: AResultInfo<List<GoodsInfo>>?) {
-                t?.let {
+        mModel?.getGoodListInfo()?.subscribe(object : DisposableObserver<ResultInfo<List<GoodsInfo>>>() {
+            override fun onNext(t: ResultInfo<List<GoodsInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showGoodInfoList(t.data)
                         CommonInfoHelper.setO(mContext, t.data, "vip_infos")
@@ -53,16 +53,16 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
     fun initOrders(pay_way_name: String, money: String, title: String, goodId: String) {
@@ -70,17 +70,17 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
 
         mView.showLoadingDialog()
 
-        val subscription = mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.subscribe(object : Subscriber<AResultInfo<OrdersInitBean>>() {
-            override fun onCompleted() {
+        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.subscribe(object : DisposableObserver<ResultInfo<OrdersInitBean>>() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
-            override fun onNext(t: AResultInfo<OrdersInitBean>?) {
-                t?.let {
+            override fun onNext(t: ResultInfo<OrdersInitBean>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showOrderInfo(t.data, pay_way_name)
                     }
@@ -89,6 +89,6 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
 
         })
 
-        subScriptions?.add(subscription)
+
     }
 }

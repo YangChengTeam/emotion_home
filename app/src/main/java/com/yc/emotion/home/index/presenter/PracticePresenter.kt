@@ -1,18 +1,18 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import android.util.Log
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.PracticeModel
 import com.yc.emotion.home.index.view.PracticeView
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.ExampDataBean
 import com.yc.emotion.home.model.bean.MainT2Bean
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -53,12 +53,12 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
             mView.showLoadingDialog()
         }
 
-        mModel?.getPracticeInfos("$userId", page, pageSize)?.subscribe(object : Subscriber<AResultInfo<ExampDataBean>>() {
-            override fun onNext(t: AResultInfo<ExampDataBean>?) {
+        mModel?.getPracticeInfos("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<ExampDataBean>>() {
+            override fun onNext(t: ResultInfo<ExampDataBean>) {
                 if (page == 1 && !isRefresh) {
                     mView.hideLoadingDialog()
                 }
-                t?.let {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val exampDataBean = t.data
                         createNewData(page, pageSize, exampDataBean)
@@ -66,14 +66,14 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1 && !isRefresh) {
                     mView.hideLoadingDialog()
                 }
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
                 if (page == 1 && !isRefresh) {
                     mView.hideLoadingDialog()
                 }

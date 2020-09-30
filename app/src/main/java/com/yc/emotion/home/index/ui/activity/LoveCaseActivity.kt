@@ -12,7 +12,7 @@ import com.yc.emotion.home.index.adapter.PracticeItemAdapter
 import com.yc.emotion.home.index.presenter.LoveCasePresenter
 import com.yc.emotion.home.index.view.LoveCaseView
 import com.yc.emotion.home.model.bean.MainT2Bean
-import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
 import com.yc.emotion.home.utils.CommonInfoHelper
 import kotlinx.android.synthetic.main.activity_love_case.*
 
@@ -81,7 +81,7 @@ class LoveCaseActivity : BaseSameActivity(), LoveCaseView {
                 if (MainT2Bean.VIEW_ITEM == mainT2Bean.type) {
                     LoveCaseDetailActivity.startExampleDetailActivity(this@LoveCaseActivity, mainT2Bean.id, mainT2Bean.post_title)
                 } else if (MainT2Bean.VIEW_TO_PAY_VIP == mainT2Bean.type || MainT2Bean.VIEW_VIP == mainT2Bean.type) {
-                    startActivity(Intent(this@LoveCaseActivity, VipActivity::class.java))
+                    startActivity(Intent(this@LoveCaseActivity, BecomeVipActivity::class.java))
                 }
             }
         }

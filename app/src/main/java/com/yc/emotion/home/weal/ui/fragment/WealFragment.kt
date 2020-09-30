@@ -12,22 +12,23 @@ import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity.OnChildDisposeMainKeyDownListener
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.MenuadvInfoBean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.CommonInfoHelper.OnParseListener
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.fragment_main_t4.*
-import rx.Subscriber
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+
 
 /**
  * Created by mayn on 2019/5/22.
@@ -40,7 +41,7 @@ class WealFragment : BaseFragment<BasePresenter<*, *>>() {
     private var homeUrl: String? = null
     private var mWechat: String? = null
     private var mLoadDialog: LoadDialog? = null
-    private var mLoveEngine: LoveEngine? = null
+    private var mLoveEngine: BaseModel? = null
     private var mMainActivity: MainActivity? = null
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,7 +57,7 @@ class WealFragment : BaseFragment<BasePresenter<*, *>>() {
     override fun initViews() {
         val viewBar = rootView.findViewById<View>(R.id.main_t4_view_bar)
         mMainActivity?.setStateBarHeight(main_t4_view_bar, 1)
-        mLoveEngine = LoveEngine(mMainActivity)
+        mLoveEngine = BaseModel(mMainActivity)
 //        mProgressBar = rootView.findViewById(R.id.main_t4_pb_progress)
 //        mWebView = rootView.findViewById(R.id.main_t4_webview)
         //        initWebView();
@@ -147,16 +148,16 @@ class WealFragment : BaseFragment<BasePresenter<*, *>>() {
     private fun netData() {
         mLoadDialog = LoadDialog(mMainActivity)
         mLoadDialog?.showLoadingDialog()
-        mLoveEngine?.menuadvInfo("menuadv/info")?.subscribe(object : Subscriber<AResultInfo<MenuadvInfoBean>?>() {
-            override fun onCompleted() {}
+        mLoveEngine?.menuadvInfo("menuadv/info")?.subscribe(object : DisposableObserver<ResultInfo<MenuadvInfoBean>?>() {
+            override fun onComplete() {}
             override fun onError(e: Throwable) {
 //                getCache();
                 mLoadDialog?.dismissLoadingDialog()
             }
 
-            override fun onNext(menuadvInfoBeanAResultInfo: AResultInfo<MenuadvInfoBean>?) {
+            override fun onNext(menuadvInfoBeanAResultInfo: ResultInfo<MenuadvInfoBean>) {
                 mLoadDialog?.dismissLoadingDialog()
-                if (menuadvInfoBeanAResultInfo != null && menuadvInfoBeanAResultInfo.code == HttpConfig.STATUS_OK && menuadvInfoBeanAResultInfo.data != null) {
+                if (menuadvInfoBeanAResultInfo.code == HttpConfig.STATUS_OK && menuadvInfoBeanAResultInfo.data != null) {
                     val menuadvInfoBean = menuadvInfoBeanAResultInfo.data
 
                     //不需要重复加载

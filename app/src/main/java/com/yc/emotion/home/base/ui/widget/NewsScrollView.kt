@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.widget.ScrollView
+import kotlin.math.abs
 
 /**
  * Created by mayn on 2019/5/10.
@@ -32,7 +33,7 @@ class NewsScrollView : ScrollView {
             MotionEvent.ACTION_UP -> {
                 val curY = ev.y.toInt()
                 val curX = ev.x.toInt()
-                if (Math.abs(curY - y) > scaledTouchSlop) {
+                if (abs(curY - y) > scaledTouchSlop) {
                     return true
                 }
             }
@@ -42,9 +43,7 @@ class NewsScrollView : ScrollView {
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
-        if (listener != null) {
-            listener!!.onScrollChange(l, t, oldl, oldt)
-        }
+            listener?.onScrollChange(l, t, oldl, oldt)
     }
 
     interface onScrollChangeListener {

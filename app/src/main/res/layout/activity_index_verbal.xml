@@ -1,164 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    tools:context=".mine.ui.activity.CollectActivity">
+    android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingTop="@dimen/statusbar_view_height"
-        android:paddingBottom="10dp">
+        app:elevation="0dp">
 
-        <TextView
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="话术"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </LinearLayout>
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <include
+                android:id="@+id/top_view"
+                layout="@layout/verbal_search_top" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_down_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="-12dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                android:elevation="1dp"
+                android:visibility="gone"
+                tools:targetApi="lollipop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:id="@+id/collect_pager_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_edebeb" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="15dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <ImageView
-            android:id="@+id/collect_pager_iv_back"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:src="@mipmap/icon_arr_lift_black"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/collect_pager_tabs"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/collect_pager_tabs"
-            app:layout_goneMarginLeft="12dp" />
+            android:background="@color/white"
+            android:paddingTop="@dimen/statusbar_view_height"
+            android:paddingBottom="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="话术"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
 
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:background="@drawable/index_search_bg"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/index_search_icon" />
 
-            <EditText
-                android:id="@+id/et_verbal_search"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_toStartOf="@id/iv_delete"
-                android:layout_toEndOf="@id/iv_search"
-                android:background="@null"
-                android:ellipsize="end"
-                android:hint="请输入关键字，搜索常用话术"
-                android:singleLine="true"
-                android:textColor="@color/gray_222222"
-                android:textColorHint="@color/gray_999"
-                android:textSize="14sp" />
+                android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/iv_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:padding="3dp"
-                android:src="@mipmap/tutor_course_cancel"
-                android:visibility="gone" />
+                <LinearLayout
+                    android:id="@+id/ll_normal_verbal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/collect_view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp" />
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_verbal_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="5dp"
-            android:text="@string/search"
-            android:textColor="@color/app_color"
-            android:visibility="gone" />
     </LinearLayout>
 
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_search_verbal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
         <LinearLayout
-            android:id="@+id/ll_normal_verbal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <net.lucode.hackware.magicindicator.MagicIndicator
-                android:id="@+id/collect_pager_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="@color/white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray_edebeb" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/collect_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_down_rv"
+            android:id="@+id/ll_top_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="65dp"
-            android:background="@color/white"
-            android:elevation="1dp"
-            android:visibility="gone" />
-    </FrameLayout>
+            android:paddingTop="@dimen/statusbar_view_height">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="15dp"
+                    android:gravity="center_vertical">
 
 
-</LinearLayout>
+                    <ImageView
+                        android:id="@+id/collect_pager_iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@mipmap/icon_arr_lift_black"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/collect_pager_tabs"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/collect_pager_tabs"
+                        app:layout_goneMarginLeft="12dp" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_search_container"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/index_search_bg"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/iv_search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/index_search_icon" />
+
+                        <EditText
+                            android:id="@+id/et_verbal_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_toStartOf="@id/iv_delete"
+                            android:layout_toEndOf="@id/iv_search"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:hint="请输入关键字，搜索常用话术"
+                            android:singleLine="true"
+                            android:textColor="@color/gray_222222"
+                            android:textColorHint="@color/gray_999"
+                            android:textSize="14sp" />
+
+
+                        <ImageView
+                            android:id="@+id/iv_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:padding="3dp"
+                            android:src="@mipmap/tutor_course_cancel"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_verbal_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="5dp"
+                        android:text="@string/search"
+                        android:textColor="@color/app_color"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

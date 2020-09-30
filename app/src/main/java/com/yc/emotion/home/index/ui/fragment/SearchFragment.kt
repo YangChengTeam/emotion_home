@@ -5,7 +5,6 @@ import android.content.Intent
 import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.index.adapter.LoveHealDetailsAdapter
@@ -17,7 +16,7 @@ import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.bean.SearchDialogueBean
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
-import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.fragment_base_share.*
 import org.greenrobot.eventbus.EventBus
@@ -93,7 +92,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
                 when (it.type) {
                     LoveHealDetBean.VIEW_VIP ->
                         if (!UserInfoHelper.instance.goToLogin(mShareActivity)) {
-                            startActivity(Intent(mShareActivity, VipActivity::class.java))
+                            startActivity(Intent(mShareActivity, BecomeVipActivity::class.java))
                         }
 
                     else -> {
@@ -108,7 +107,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
                     LoveHealDetBean.VIEW_VIP -> {
                         if (view.id == R.id.tv_look) {
                             if (!UserInfoHelper.instance.goToLogin(mShareActivity)) {
-                                startActivity(Intent(mShareActivity, VipActivity::class.java))
+                                startActivity(Intent(mShareActivity, BecomeVipActivity::class.java))
                             }
                         }
                     }

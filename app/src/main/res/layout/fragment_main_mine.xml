@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -17,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@mipmap/personal_bg"
-
         android:orientation="vertical"
         android:paddingTop="@dimen/statusbar_view_height">
         <!--android:gravity="center_horizontal"-->
@@ -26,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-
             android:text="@string/mine"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/rl_user_info"
@@ -73,15 +73,30 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/main_t5_tv_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="普通用户"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold" />
+                    android:gravity="center">
 
+                    <TextView
+                        android:id="@+id/main_t5_tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="普通用户"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_vip_expire_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/main_theme_color"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        tools:text="到期时间：xxxx" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/main_t5_tv_btn_info"
@@ -94,7 +109,40 @@
                     android:paddingRight="10dp"
                     android:text="信息未完善"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_invitation_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_invitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="邀请码：ASDFGG"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tv_invitation_copy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/white_shape_radius_10"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="3dp"
+                        android:text="复制"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -123,19 +171,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+
             android:background="?attr/selectableItemBackground"
             android:gravity="center">
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@mipmap/personal_icon_vip"
                 android:drawablePadding="5dp"
                 android:gravity="center"
                 android:text="VIP特权卡"
                 android:textColor="@color/gray_222222"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableStartCompat="@mipmap/personal_icon_vip" />
+
+
         </LinearLayout>
 
         <View
@@ -146,7 +198,7 @@
             android:background="@color/gray_edebeb" />
 
         <LinearLayout
-            android:id="@+id/ll_free_order"
+            android:id="@+id/ll_make_money"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -156,14 +208,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@mipmap/personal_icon_reserve"
                 android:drawablePadding="5dp"
                 android:gravity="center"
-                android:text="免费预约"
+                android:text="赚现金"
                 android:textColor="@color/gray_222222"
-
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableStartCompat="@mipmap/personal_icon_money" />
         </LinearLayout>
     </LinearLayout>
 
@@ -185,10 +236,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/personal_icon_attention"
                 android:drawablePadding="9dp"
                 android:text="我的关注"
-                android:textColor="@color/gray_222222" />
+                android:textColor="@color/gray_222222"
+                app:drawableTopCompat="@mipmap/personal_icon_attention" />
         </LinearLayout>
 
         <LinearLayout
@@ -204,11 +255,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/personal_icon_collect"
                 android:drawablePadding="9dp"
                 android:text="我的收藏"
                 android:textColor="@color/gray_222222"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:drawableTopCompat="@mipmap/personal_icon_collect" />
         </LinearLayout>
 
         <LinearLayout
@@ -224,11 +275,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/personal_icon_order"
                 android:drawablePadding="9dp"
                 android:text="我的订单"
                 android:textColor="@color/gray_222222"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:drawableTopCompat="@mipmap/personal_icon_order" />
         </LinearLayout>
 
         <LinearLayout
@@ -244,11 +295,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@mipmap/personal_icon_report"
                 android:drawablePadding="9dp"
                 android:text="测试报告"
                 android:textColor="@color/gray_222222"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                app:drawableTopCompat="@mipmap/personal_icon_report" />
         </LinearLayout>
 
     </LinearLayout>
@@ -272,7 +323,7 @@
                 android:id="@+id/mineItemView_live"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:visibility="gone"
                 app:item_title="直播" />
 
             <com.yc.emotion.home.mine.ui.widget.MineItemView
@@ -286,7 +337,7 @@
                 android:id="@+id/mineItemView_invite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:item_title="分享好友" />
+                app:item_title="分享赚钱" />
 
             <com.yc.emotion.home.mine.ui.widget.MineItemView
                 android:id="@+id/mineItemView_feedback"
@@ -314,23 +365,23 @@
                 app:is_show_divider="false"
                 app:item_title="系统设置" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_f2f2f2"
+                android:padding="15dp">
 
+                <TextView
+                    android:id="@+id/tv_business"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="商务合作微信号 ：qgzj0001"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray_f2f2f2">
 
-        <TextView
-            android:id="@+id/tv_business"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="商务微信号 ：qgzj802"
-            android:textSize="13sp" />
-
-    </LinearLayout>
 </LinearLayout>

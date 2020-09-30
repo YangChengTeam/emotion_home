@@ -1,6 +1,5 @@
 package com.yc.emotion.home.index.ui.fragment
 
-import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView

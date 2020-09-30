@@ -21,9 +21,9 @@ class CommunityFollowAdapter(data: List<CommunityInfo>?) : CommonMoreAdapter<Com
 
     private val titleArray: SparseArray<TextView> = SparseArray()
 
-    override fun convert(helper: BaseViewHolder?, item: CommunityInfo?) {
+    override fun convert(helper: BaseViewHolder, item: CommunityInfo?) {
 
-        helper?.let {
+
             item?.let {
 
                 helper.setText(R.id.tv_name, item.name)
@@ -53,7 +53,7 @@ class CommunityFollowAdapter(data: List<CommunityInfo>?) : CommonMoreAdapter<Com
                 titleArray.put(helper.adapterPosition, helper.getView(R.id.tv_like_num))
             }
         }
-    }
+
 
 
     fun getView(position: Int): TextView {

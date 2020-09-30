@@ -1,21 +1,20 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
-import com.yc.emotion.home.base.domain.engine.OrderEngine
+import com.alibaba.fastjson.JSONArray
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.*
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
+import java.util.*
 
 /**
  *
  * Created by suns  on 2019/11/12 16:48.
  */
-class TutorModel(override var context: Context?) : IModel, OrderEngine(context) {
+class TutorModel(override var context: Context?) : IModel(context) {
 
 
     /**
@@ -25,13 +24,8 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      * @return
      */
     fun getTutorDetailInfo(tutor_id: String?): Observable<ResultInfo<TutorDetailInfo>> {
-        val params = HashMap<String, String?>()
 
-        params["tutor_id"] = tutor_id
-
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_DETAIL_URL, object : TypeReference<ResultInfo<TutorDetailInfo>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<TutorDetailInfo>>
+        return request.getTutorDetailInfo(tutor_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -45,15 +39,9 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      * @return
      */
     fun getTutorServices(tutor_id: String?, page: Int, page_sie: Int): Observable<ResultInfo<List<TutorServiceInfo>>> {
-        val params = HashMap<String, String?>()
 
-        params["tutor_id"] = tutor_id
-        params["page"] = page.toString() + ""
-        params["page_sie"] = page_sie.toString() + ""
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_SERVICE_LIST_URL, object : TypeReference<ResultInfo<List<TutorServiceInfo>>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<List<TutorServiceInfo>>>
+        return request.getTutorServices(tutor_id, page, page_sie).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
 
     }
@@ -66,11 +54,9 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      * @return
      */
     fun getTutorServiceDetailInfo(service_id: String?): Observable<ResultInfo<TutorServiceDetailInfo>> {
-        val params = HashMap<String, String?>()
-        params["service_id"] = service_id
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_SERVICE_DEATAIL_URL, object : TypeReference<ResultInfo<TutorServiceDetailInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<TutorServiceDetailInfo>>
+
+        return request.getTutorServiceDetailInfo(service_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -81,12 +67,9 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      * @return
      */
     fun getApitudeInfo(tutor_id: String?): Observable<ResultInfo<TutorInfoWrapper>> {
-        val params = HashMap<String, String?>()
-        params["tutor_id"] = tutor_id
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_CERTS_URL, object : TypeReference<ResultInfo<TutorInfoWrapper>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<TutorInfoWrapper>>
+        return request.getApitudeInfo(tutor_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -96,10 +79,8 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      */
     fun getTutorCategory(): Observable<ResultInfo<List<CourseInfo>>> {
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_CATGORY_URL, object : TypeReference<ResultInfo<List<CourseInfo>>>() {
 
-        }.type, null, true, true, true) as Observable<ResultInfo<List<CourseInfo>>>
-
+        return request.getTutorCategory().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -111,15 +92,36 @@ class TutorModel(override var context: Context?) : IModel, OrderEngine(context) 
      * @return
      */
     fun getTutorListInfo(catid: String?, page: Int, pageSize: Int): Observable<ResultInfo<List<TutorInfo>>> {
-        val params = HashMap<String, String?>()
 
-        params["page"] = page.toString() + ""
-        params["page_size"] = pageSize.toString() + ""
-        params["cat_id"] = catid
+        return request.getTutorListInfo(catid, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TUTOR_LIST_URL, object : TypeReference<ResultInfo<List<TutorInfo>>>() {
+    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Observable<ResultInfo<OrdersInitBean>> {
+        val params = HashMap<String, String>()
 
-        }.type, params, true, true, true) as Observable<ResultInfo<List<TutorInfo>>>
 
+        params["user_id"] = userId
+        params["pay_way_name"] = pay_way_name
+        params["money"] = money
+
+
+        params["title"] = title //订单标题，会员购买，商品购买等
+
+
+        val jsonListArray = JSONArray()
+
+        val goodParams = hashMapOf<String, String>()
+
+
+        goodParams["goods_id"] = goodId
+
+        goodParams["num"] = "1"
+
+        jsonListArray.add(goodParams)
+
+        params["goods_list"] = jsonListArray.toJSONString()
+
+
+        return request.initOrders(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }

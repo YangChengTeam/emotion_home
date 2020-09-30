@@ -25,8 +25,8 @@ class PublishTagAdapter(data: List<CommunityTagInfo>?) : CommonMoreAdapter<Commu
 
     private var pos by Preference(ConstantKey.TAG_POSTION, 0)
 
-    override fun convert(helper: BaseViewHolder?, item: CommunityTagInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: CommunityTagInfo?) {
+
             val position = helper.adapterPosition
             setItemParams(helper, position)
             helper.itemView.background = ContextCompat.getDrawable(mContext, R.drawable.community_tag_selector)
@@ -41,7 +41,7 @@ class PublishTagAdapter(data: List<CommunityTagInfo>?) : CommonMoreAdapter<Commu
             viewSparseArray.put(position, helper.getView(R.id.tv_content))
         }
 
-    }
+
 
     private fun setItemParams(helper: BaseViewHolder, position: Int) {
         val layoutParams = helper.itemView.layoutParams as ViewGroup.MarginLayoutParams

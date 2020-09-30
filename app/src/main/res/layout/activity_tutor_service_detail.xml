@@ -39,7 +39,8 @@
                             android:id="@+id/iv_service_detail"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY" />
 
                         <ImageView
                             android:id="@+id/iv_tutor_back"
@@ -54,8 +55,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="10dp"
                             android:layout_marginTop="35dp"
+                            android:layout_marginEnd="10dp"
                             android:padding="5dp"
                             android:src="@mipmap/efficient_course_share_icon" />
 
@@ -114,7 +115,7 @@
                                     android:id="@+id/tv_service_buy_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
                                     android:text="166人已购"
                                     android:textColor="@color/gray_999"
@@ -162,8 +163,8 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_marginBottom="11dp"
                                 android:layout_marginTop="13dp"
+                                android:layout_marginBottom="11dp"
                                 android:background="@color/gray_edebeb" />
 
 
@@ -209,9 +210,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingBottom="15dp"
                             android:paddingStart="15dp"
                             android:paddingTop="15dp"
+                            android:paddingBottom="15dp"
                             android:visibility="gone">
 
                             <RelativeLayout
@@ -299,10 +300,10 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerVertical="true"
                                     android:background="@drawable/red_rect_storke_bg"
-                                    android:paddingBottom="4dp"
                                     android:paddingLeft="8dp"
-                                    android:paddingRight="8dp"
                                     android:paddingTop="4dp"
+                                    android:paddingRight="8dp"
+                                    android:paddingBottom="4dp"
                                     android:text="TA的主页"
                                     android:textColor="@color/app_color"
                                     android:textSize="@dimen/sp_12" />
@@ -418,8 +419,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawablePadding="3dp"
                     android:drawableStart="@mipmap/tutor_service_icon_wechat"
+                    android:drawablePadding="3dp"
                     android:text="@string/free_consult"
                     android:textColor="@color/gray_222222"
                     android:textStyle="bold" />

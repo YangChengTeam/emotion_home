@@ -1,15 +1,14 @@
 package com.yc.emotion.home.message.ui.activity
 
 import android.os.Bundle
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.message.presenter.MessagePresenter
 import com.yc.emotion.home.message.view.MessageView
 import com.yc.emotion.home.model.bean.MessageInfo
 import kotlinx.android.synthetic.main.activity_notification_detail.*
-import rx.Subscriber
+
 
 /**
  *

@@ -74,9 +74,9 @@ class LoveUpDownPhotoActivity : BaseSameActivity() {
     }
 
 
-    override fun onClick(view: View) {
-        super.onClick(view)
-        when (view.id) {
+    override fun onClick(v: View) {
+        super.onClick(v)
+        when (v.id) {
 
             R.id.comp_main_iv_to_wx -> showToWxServiceDialog()
         }//                collectAudio(musicInfo);

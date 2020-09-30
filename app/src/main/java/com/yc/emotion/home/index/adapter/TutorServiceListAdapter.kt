@@ -14,9 +14,9 @@ import com.yc.emotion.home.model.bean.TutorServiceInfo
  * Created by suns  on 2019/10/12 17:03.
  */
 class TutorServiceListAdapter(mDatas: List<TutorServiceInfo>?) : CommonMoreAdapter<TutorServiceInfo, BaseViewHolder>(R.layout.tutor_service_list_item, mDatas) {
-    override fun convert(helper: BaseViewHolder?, item: TutorServiceInfo?) {
+    override fun convert(helper: BaseViewHolder, item: TutorServiceInfo?) {
 
-        helper?.let {
+
             item?.let {
                 helper.setText(R.id.tv_tutor_service_list_title, item.name)
                         .setText(R.id.tv_tutor_service_list_price, item.price)
@@ -25,7 +25,7 @@ class TutorServiceListAdapter(mDatas: List<TutorServiceInfo>?) : CommonMoreAdapt
 
                 Glide.with(mContext).load(item.img).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)
                         .error(R.mipmap.service_picture_one)).thumbnail(0.1f).into(helper.getView(R.id.iv_tutor_service_list_pic))
-            }
+
         }
 
     }

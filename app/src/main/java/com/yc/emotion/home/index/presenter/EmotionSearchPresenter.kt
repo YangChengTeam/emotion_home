@@ -1,13 +1,14 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.EmotionSearchModel
 import com.yc.emotion.home.index.view.EmotionSearchView
 import com.yc.emotion.home.model.bean.IndexSearchInfo
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -29,9 +30,9 @@ class EmotionSearchPresenter(context: Context?, view: EmotionSearchView) : BaseP
 
     fun searchIndexInfo(keyword: String?, type: Int) {
         mView.showLoadingDialog()
-        val subscription = mModel?.searchIndexInfo(keyword, type)?.subscribe(object : Subscriber<ResultInfo<IndexSearchInfo>>() {
-            override fun onNext(t: ResultInfo<IndexSearchInfo>?) {
-                t?.let {
+        mModel?.searchIndexInfo(keyword, type)?.subscribe(object : DisposableObserver<ResultInfo<IndexSearchInfo>>() {
+            override fun onNext(t: ResultInfo<IndexSearchInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showEmotionSearchResult(t.data)
                     }else{
@@ -40,17 +41,17 @@ class EmotionSearchPresenter(context: Context?, view: EmotionSearchView) : BaseP
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
 
-        subScriptions?.add(subscription)
+
     }
 }

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -465,13 +464,17 @@ public abstract class BaseVideoPlayer<V extends BaseVideoController, C extends B
         }
         //还原可能正在进行的播放任务
         IMediaPlayer.getInstance().onReset();
+//        PIMediaPlayer.getInstance().onReset();
         IMediaPlayer.getInstance().addOnPlayerEventListener(this);
+//        PIMediaPlayer.getInstance().addOnPlayerEventListener(this);
         setPlayerWorking(true);
         //准备画面渲染图层
         if (null != mSurfaceView) {
             addTextrueViewToView(BaseVideoPlayer.this);
             //开始准备播放
             IMediaPlayer.getInstance().startVideoPlayer(mDataSource, getContext());
+//            PIMediaPlayer.getInstance().startVideoPlayer(mDataSource, getContext());
+
         }
     }
 
@@ -486,8 +489,10 @@ public abstract class BaseVideoPlayer<V extends BaseVideoController, C extends B
         this.mTitle = title;
         startPlayVideo();
     }
+
     /**
      * 设置视频画面显示缩放类型,如果正在播放，会立刻生效
+     *
      * @param displayType 详见VideoConstants常量定义
      */
 
@@ -1614,12 +1619,28 @@ public abstract class BaseVideoPlayer<V extends BaseVideoController, C extends B
                         break;
                     //停止
                     case VideoConstants.MUSIC_PLAYER_STOP:
+
                         isPlayerWorking = false;
                         if (null != mCoverController && mCoverController.getVisibility() != VISIBLE) {
                             mCoverController.setVisibility(VISIBLE);
                         }
                         if (null != mVideoController) {
                             mVideoController.reset();
+                        }
+                        stopScreenKeepBrightness();
+                        VideoWindowManager.getInstance().onDestroy();
+                        //停止、结束 播放时，检测当前播放器如果处于非常规状态下，退出全屏、或小窗
+                        if (SCRREN_ORIENTATION != VideoConstants.SCREEN_ORIENTATION_PORTRAIT) {
+                            backPressed();
+                        }
+                        break;
+                    case VideoConstants.MUSIC_PLAY_COMPLETE:
+                        isPlayerWorking = false;
+                        if (null != mCoverController && mCoverController.getVisibility() != VISIBLE) {
+                            mCoverController.setVisibility(VISIBLE);
+                        }
+                        if (null != mVideoController) {
+                            mVideoController.complete();
                         }
                         stopScreenKeepBrightness();
                         VideoWindowManager.getInstance().onDestroy();

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_solid_bg_8"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/tv_tint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提示"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_dispose_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="姓名："
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tint" />
+
+    <TextView
+        android:id="@+id/tv_dispose_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toRightOf="@id/tv_dispose_name_title"
+        app:layout_constraintTop_toTopOf="@id/tv_dispose_name_title"
+        tools:text="xxxxxx" />
+
+    <TextView
+        android:id="@+id/tv_dispose_account_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="支付宝账号："
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dispose_name_title" />
+
+    <TextView
+        android:id="@+id/tv_dispose_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toRightOf="@id/tv_dispose_account_title"
+        app:layout_constraintTop_toTopOf="@id/tv_dispose_account_title"
+        tools:text="xxxxxx" />
+
+    <TextView
+        android:id="@+id/tv_dispose_money_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="提现金额："
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dispose_account_title" />
+
+    <TextView
+        android:id="@+id/tv_dispose_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toRightOf="@id/tv_dispose_money_title"
+        app:layout_constraintTop_toTopOf="@id/tv_dispose_money_title"
+        tools:text="xxxxxx" />
+
+    <TextView
+        android:id="@+id/tv_message_tint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="请仔细核对以上信息是否准确无误，若填写错误，可能导致提现失败!"
+        android:textColor="@color/app_color"
+        android:textSize="@dimen/size_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_dispose_money_title" />
+
+    <TextView
+        android:id="@+id/tv_modify"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/community_gray_send_selector"
+        android:gravity="center"
+        android:text="修改"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_confirm_submit"
+        app:layout_constraintTop_toBottomOf="@id/tv_message_tint" />
+
+    <TextView
+        android:id="@+id/tv_confirm_submit"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/community_red_send_selector"
+        android:gravity="center"
+        android:text="确认提交"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toRightOf="@id/tv_modify"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_message_tint" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

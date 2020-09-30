@@ -11,8 +11,9 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.index.ui.activity.EmotionTestDescActivity.Companion.startActivity
+import com.yc.emotion.home.index.ui.activity.EmotionTestDescActivity
 import com.yc.emotion.home.model.bean.EmotionTestInfo
 
 /**
@@ -28,7 +29,10 @@ class IndexTestAdapter(private val mContext: Context, private val emotionTestInf
         val cardView: CardView = view.findViewById(R.id.cardView_emotion_test)
         tvTestTitle.text = emotionTestInfo.title
         tvTestCount.text = String.format(mContext.getString(R.string.test_count), emotionTestInfo.people)
-        cardView.setOnClickListener { v: View? -> startActivity(mContext, emotionTestInfo.id) }
+        cardView.setOnClickListener { v: View? ->
+            EmotionTestDescActivity.startActivity(mContext, emotionTestInfo.id)
+            MobclickAgent.onEvent(mContext, "emotion_test_click", "情感测试点击")
+        }
 
 //        Log.e("TAG", "instantiateItem: "+imageUrl );
         Glide.with(container.context).load(emotionTestInfo.img).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA).circleCrop()).into(imageView)

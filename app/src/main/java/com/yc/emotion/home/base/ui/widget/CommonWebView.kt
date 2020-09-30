@@ -41,10 +41,10 @@ class CommonWebView : WebView {
         webSettings.setSupportZoom(false)
         webSettings.builtInZoomControls = false
         webSettings.allowFileAccess = true
-        webSettings.setAppCacheEnabled(true)
+        webSettings.setAppCacheEnabled(false)
         webSettings.databaseEnabled = true
-        val appCaceDir = context.getDir("cache", Context.MODE_PRIVATE).path
-        webSettings.setAppCachePath(appCaceDir)
+//        val appCaceDir = context.getDir("cache", Context.MODE_PRIVATE).path
+//        webSettings.setAppCachePath(appCaceDir)
 
 
         //设置自适应屏幕，两者合用

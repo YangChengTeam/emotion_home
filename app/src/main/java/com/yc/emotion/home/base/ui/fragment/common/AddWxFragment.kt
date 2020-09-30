@@ -9,26 +9,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.fragment.BaseDialogFragment
+import com.yc.emotion.home.utils.clickWithTrigger
 
 /**
  * Created by suns  on 2019/9/6 16:41.
  */
 class AddWxFragment : BaseDialogFragment() {
 
-    private var mWx = ""
+    private var mWx: String? = ""
     private var tvWx: TextView? = null
 
 
-    protected fun initView() {
+    private fun initView() {
 
         tvWx = rootView?.findViewById(R.id.tv_wx) as TextView
         val tvCopyWx = rootView?.findViewById(R.id.tv_copy_wx) as TextView
         val ivClose = rootView?.findViewById(R.id.iv_close) as ImageView
         if (!TextUtils.isEmpty(mWx)) tvWx?.text = mWx
-        tvCopyWx.setOnClickListener { v: View? ->
+        tvCopyWx.clickWithTrigger { v: View? ->
             listener?.onToWx()
         }
-        ivClose.setOnClickListener { v: View? -> dismiss() }
+        ivClose.clickWithTrigger { v: View? -> dismiss() }
     }
 
     override val width: Float
@@ -51,7 +52,7 @@ class AddWxFragment : BaseDialogFragment() {
         initView()
     }
 
-    fun setWX(wx: String) {
+    fun setWX(wx: String?) {
 
         mWx = wx
     }

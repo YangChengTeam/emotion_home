@@ -16,6 +16,7 @@ import com.yc.emotion.home.mine.view.UserInfoView
 import com.yc.emotion.home.utils.RegexUtils
 import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.ToastUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_consult_appoint.*
 
 /**
@@ -91,47 +92,47 @@ class ConsultAppointActivity : BaseSameActivity(), UserInfoView {
             }
         })
 
-        iv_phone_close.setOnClickListener {
+        iv_phone_close.clickWithTrigger {
             et_phone.setText("")
             iv_phone_close.visibility = View.GONE
         }
 
-        iv_wx_close.setOnClickListener {
+        iv_wx_close.clickWithTrigger {
             et_wx.setText("")
             iv_wx_close.visibility = View.GONE
         }
 
-        tv_get_code.setOnClickListener {
+        tv_get_code.clickWithTrigger {
 
             val phone = et_phone.text.toString().trim()
             if (TextUtils.isEmpty(phone)) {
                 ToastUtils.showCenterToast("手机号不能为空")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (!RegexUtils.isMobileSimple(phone)) {
                 ToastUtils.showCenterToast("手机号格式不正确")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
 
             //todo 获取验证码
             sendCode(phone)
 
         }
-        tv_advise.setOnClickListener {
+        tv_advise.clickWithTrigger {
             //todo 立即预约
             val phone = et_phone.text.toString().trim()
             val wx = et_wx.text.toString().trim()
             if (TextUtils.isEmpty(phone)) {
                 ToastUtils.showCenterToast("手机号不能为空")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (!RegexUtils.isMobileSimple(phone)) {
                 ToastUtils.showCenterToast("手机号格式不正确")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (TextUtils.isEmpty(code)) {
                 ToastUtils.showCenterToast("验证码不能为空")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             consult(phone, wx, code)
             MobclickAgent.onEvent(this, "free_consultation_id", "导师页面免费咨询")

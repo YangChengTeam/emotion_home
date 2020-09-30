@@ -1,6 +1,6 @@
 package com.yc.emotion.home.community.view
 
-import com.kk.securityhttp.domain.ResultInfo
+
 import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.base.view.StateDefaultImpl
@@ -8,6 +8,7 @@ import com.yc.emotion.home.model.bean.CommunityDetailInfo
 import com.yc.emotion.home.model.bean.CommunityInfo
 import com.yc.emotion.home.model.bean.CommunityTagInfo
 import com.yc.emotion.home.model.bean.TopTopicInfo
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *

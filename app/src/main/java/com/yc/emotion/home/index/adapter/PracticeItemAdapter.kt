@@ -25,9 +25,9 @@ class PracticeItemAdapter(data: List<MainT2Bean?>?) : BaseMultiItemQuickAdapter<
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: MainT2Bean?) {
+    override fun convert(helper: BaseViewHolder, item: MainT2Bean?) {
 
-        helper?.let {
+
             item?.let {
                 when (item.type) {
                     MainT2Bean.VIEW_ITEM -> helper.setText(R.id.item_main_t2_tv_name, item.post_title)
@@ -41,7 +41,7 @@ class PracticeItemAdapter(data: List<MainT2Bean?>?) : BaseMultiItemQuickAdapter<
                 }
             }
 
-        }
+
     }
 
 

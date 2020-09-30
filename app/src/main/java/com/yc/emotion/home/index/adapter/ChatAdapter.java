@@ -9,6 +9,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.index.domain.bean.ChatItem;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -28,7 +30,7 @@ public class ChatAdapter extends BaseMultiItemQuickAdapter<ChatItem, BaseViewHol
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ChatItem item) {
+    protected void convert(@NotNull BaseViewHolder helper, ChatItem item) {
         switch (item.getItemType()) {
             case ChatItem.TYPE_ME:
             case ChatItem.TYPE_OTHER:

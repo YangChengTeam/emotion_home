@@ -18,7 +18,7 @@ import com.yc.emotion.home.index.ui.fragment.SearchFragment
 import com.yc.emotion.home.index.view.IndexVerbalView
 import com.yc.emotion.home.model.util.SPUtils
 import com.yc.emotion.home.model.util.TimeUtils
-import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
@@ -147,7 +147,6 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
                 return
             }
 
-
             changHistoryFluidLayout(query)
 
             hindKeyboard(share_view_pager)
@@ -214,7 +213,7 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
             }
             R.id.share_iv_to_vip ->
                 //TODO 购买VIP刷新数据
-                startActivity(Intent(this@SearchActivity, VipActivity::class.java))
+                startActivity(Intent(this@SearchActivity, BecomeVipActivity::class.java))
             R.id.share_tv_to_help -> {
             }
         }

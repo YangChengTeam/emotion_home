@@ -2,23 +2,21 @@ package com.yc.emotion.home.mine.domain.model
 
 import android.content.Context
 import android.text.TextUtils
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.model.bean.AResultInfo
+import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.model.bean.UserInfo
-import com.yc.emotion.home.model.bean.WetChatInfo
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
+import java.util.*
 
 /**
  *
  * Created by suns  on 2019/11/19 15:13.
  */
-class UserInfoModel(override var context: Context?) : IModel {
+class UserInfoModel(override var context: Context?) : IModel(context) {
 
     /**
      * 手机号登录
@@ -38,9 +36,9 @@ class UserInfoModel(override var context: Context?) : IModel {
         }
         if (!TextUtils.isEmpty(code))
             params["code"] = code
-        return HttpCoreEngin.get(context).rxpost(URLConfig.LOGIN_URL, object : TypeReference<ResultInfo<UserInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<UserInfo>>
+
+        return request.phoneLogin(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -52,12 +50,9 @@ class UserInfoModel(override var context: Context?) : IModel {
      * @return
      */
     fun sendCode(mobile: String?): Observable<ResultInfo<String>> {
-        val params = HashMap<String, String?>()
-        params["mobile"] = mobile
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.SEND_CODE_URL, object : TypeReference<ResultInfo<String>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<String>>
+        return request.sendCode(mobile).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -69,17 +64,17 @@ class UserInfoModel(override var context: Context?) : IModel {
      * @param code     验证码
      * @return
      */
-    fun phoneRegister(mobile: String?, password: String?, code: String?): Observable<ResultInfo<UserInfo>> {
+    fun phoneRegister(mobile: String?, password: String?, code: String?, relation_code: String?): Observable<ResultInfo<UserInfo>> {
         val params = HashMap<String, String?>()
         params["mobile"] = mobile
         if (!TextUtils.isEmpty(password))
             params["password"] = password
         params["code"] = code
+        if (!TextUtils.isEmpty(relation_code))
+            params["relation_code"] = relation_code
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.REGISTER_URL, object : TypeReference<ResultInfo<UserInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<UserInfo>>
-
+        return request.phoneRegister(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -93,13 +88,8 @@ class UserInfoModel(override var context: Context?) : IModel {
      * @return
      */
     fun resetPwd(mobile: String?, code: String?, pwd: String?): Observable<ResultInfo<String>> {
-        val params = HashMap<String, String?>()
-        params["mobile"] = mobile
-        params["code"] = code
-        params["new_password"] = pwd
-        return HttpCoreEngin.get(context).rxpost(URLConfig.RESET_PWD_URL, object : TypeReference<ResultInfo<String>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<String>>
+        return request.resetPwd(mobile, code, pwd).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -118,9 +108,7 @@ class UserInfoModel(override var context: Context?) : IModel {
         if (!TextUtils.isEmpty(wx)) params["wx"] = wx
         params["code"] = code
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.CONSULT_TUTOR_URL, object : TypeReference<ResultInfo<String>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<String>>
+        return request.consultAppoint(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -135,17 +123,8 @@ class UserInfoModel(override var context: Context?) : IModel {
 
     fun thridLogin(access_token: String?, account_type: Int, face: String?, sex: String?, nick_name: String?): Observable<ResultInfo<UserInfo>> {
 
-        val params = HashMap<String, String?>()
-        params["token"] = access_token
-        params["sns"] = account_type.toString() + ""
-        params["face"] = face
-        params["sex"] = sex
-        params["nick_name"] = nick_name
 
-
-        return HttpCoreEngin.get(context).rxpost(URLConfig.THRID_LOGIN_URL, object : TypeReference<ResultInfo<UserInfo>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<UserInfo>>
+        return request.thridLogin(access_token, account_type, face, sex, nick_name).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -157,31 +136,26 @@ class UserInfoModel(override var context: Context?) : IModel {
      * @return
      */
     fun userInfo(userId: String): Observable<ResultInfo<UserInfo>> {
-        val params = HashMap<String, String>()
-        params["user_id"] = userId
 
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.USER_INFO_URL, object : TypeReference<ResultInfo<UserInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<UserInfo>>
+        return request.userInfo(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
     fun setPwd(pwd: String?): Observable<ResultInfo<UserInfo>> {
-        return HttpCoreEngin.get(context).rxpost(URLConfig.SET_PWD_URL, object : TypeReference<ResultInfo<UserInfo>>() {}.type, mutableMapOf(
-                "user_id" to "${UserInfoHelper.instance.getUid()}",
-                "password" to pwd
-        ), true, true, true) as Observable<ResultInfo<UserInfo>>
+
+
+        return request.setPwd("${UserInfoHelper.instance.getUid()}", pwd).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
     fun modifyPwd(pwd: String?, new_pwd: String?): Observable<ResultInfo<UserInfo>> {
-        //user_id=52192&password=123456&new_password=123456
-        return HttpCoreEngin.get(context).rxpost(URLConfig.MODIFY_PWD_URL, object : TypeReference<ResultInfo<UserInfo>>() {}.type, mutableMapOf(
-                "user_id" to "${UserInfoHelper.instance.getUid()}",
-                "password" to pwd,
-                "new_password" to new_pwd
-        ), true, true, true) as Observable<ResultInfo<UserInfo>>
+
+        return request.modifyPwd("${UserInfoHelper.instance.getUid()}", pwd, new_pwd).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getRewardInfo(): Observable<ResultInfo<RewardInfo>>? {
+        return request.getRewardInfo("${UserInfoHelper.instance.getUid()}").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 }

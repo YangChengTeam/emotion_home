@@ -4,20 +4,19 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseViewHolder
-import com.kk.utils.ScreenUtil
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMoreAdapter
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.model.bean.CourseInfo
-import com.yc.emotion.home.model.util.ScreenUtils
+import yc.com.rthttplibrary.util.ScreenUtil
 
 /**
  *
  * Created by suns  on 2019/9/27 17:19.
  */
 class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : CommonMoreAdapter<CourseInfo, BaseViewHolder>(R.layout.index_course_item, courseInfos) {
-    override fun convert(helper: BaseViewHolder?, item: CourseInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: CourseInfo?) {
+
             item?.let {
                 val roundCornerImg = helper.getView<RoundCornerImg>(R.id.course_roundImg)
                 val layoutParams = roundCornerImg.layoutParams
@@ -37,5 +36,5 @@ class IndexCourseAdapter(courseInfos: ArrayList<CourseInfo>?) : CommonMoreAdapte
 
             }
         }
-    }
+
 }

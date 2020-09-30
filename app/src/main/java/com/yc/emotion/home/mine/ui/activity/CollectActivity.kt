@@ -117,9 +117,15 @@ class CollectActivity : BaseSameActivity() {
                 super.onPageSelected(position)
                 resetNavigator(commonNavigator)
                 //
-                val pagerTitleView = commonNavigator.getPagerTitleView(position) as SimplePagerTitleView
-                //                pagerTitleView.setTextSize(12);
-                pagerTitleView.typeface = Typeface.DEFAULT_BOLD
+
+                val pagerTitleView = commonNavigator.getPagerTitleView(position)
+                pagerTitleView?.let {
+                    val pagerTitleView1 = pagerTitleView as SimplePagerTitleView
+                    pagerTitleView1.typeface = Typeface.DEFAULT_BOLD
+                }
+
+                //pagerTitleView.setTextSize(12);
+
             }
 
         })

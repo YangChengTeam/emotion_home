@@ -125,7 +125,7 @@ class CommunityHotFragment : BaseFragment<CommunityPresenter>(), View.OnClickLis
     }
 
     private fun like(communityInfo: CommunityInfo, position: Int) {
-//        val userId = UserInfoHelper.instance.getUid()
+
         mPresenter?.likeTopic(communityInfo, position)
 
 

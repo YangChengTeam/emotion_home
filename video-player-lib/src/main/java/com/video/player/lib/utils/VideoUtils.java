@@ -34,7 +34,7 @@ public class VideoUtils {
     private static volatile VideoUtils mInstance;
 
     public static synchronized VideoUtils getInstance() {
-        if(null==mInstance){
+        if (null == mInstance) {
             synchronized (VideoUtils.class) {
                 if (null == mInstance) {
                     mInstance = new VideoUtils();
@@ -45,10 +45,12 @@ public class VideoUtils {
         return mInstance;
     }
 
-    private VideoUtils(){}
+    private VideoUtils() {
+    }
 
     /**
      * 时长格式化
+     *
      * @param timeMs 毫秒时间戳
      * @return 格式化后的String时间
      */
@@ -71,6 +73,7 @@ public class VideoUtils {
 
     /**
      * 返回设备是否连接至WIFI网络
+     *
      * @param context context
      * @return if wifi is connected,return true
      */
@@ -83,9 +86,11 @@ public class VideoUtils {
 
     /**
      * 检查设备是否已连接至可用网络
+     *
      * @return 是否连接网络
      */
     public boolean isCheckNetwork(Context context) {
+        if (context == null) return false;
         ConnectivityManager cm = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -117,6 +122,7 @@ public class VideoUtils {
 
     /**
      * Get activity from context object
+     *
      * @param context context
      * @return object of Activity or null if it is not Activity
      */
@@ -134,6 +140,7 @@ public class VideoUtils {
 
     /**
      * 获取屏幕宽度
+     *
      * @param context 上下文
      * @return 屏幕宽度 px
      */
@@ -143,6 +150,7 @@ public class VideoUtils {
 
     /**
      * 设备屏幕高度
+     *
      * @param context 上下文
      * @return 屏幕高度 px
      */
@@ -152,48 +160,52 @@ public class VideoUtils {
 
     /**
      * 将dp转换成px
+     *
      * @param dp 即将要转换的大小
      * @return 像素px
      */
-    public float dpToPx(Context context,float dp) {
+    public float dpToPx(Context context, float dp) {
         return dp * context.getApplicationContext().getResources().getDisplayMetrics().density;
     }
 
-    public int dpToPxInt(Context context,float dp) {
-        return (int) (dpToPx(context,dp) + 0.5f);
+    public int dpToPxInt(Context context, float dp) {
+        return (int) (dpToPx(context, dp) + 0.5f);
     }
 
     /**
      * 格式化URL eyepetizer://ranklist/
+     *
      * @param actionUrl
      * @return 真实URL
      */
     public String formatActionUrl(String actionUrl) {
-        if(TextUtils.isEmpty(actionUrl)){
+        if (TextUtils.isEmpty(actionUrl)) {
             return actionUrl;
         }
         Uri uri = Uri.parse(actionUrl);
         String scheme = uri.getScheme();
         String host = uri.getHost();
         String path = uri.getPath();
-        Logger.d(TAG,"scheme:"+scheme+",host:"+host+",path:"+path);
+        Logger.d(TAG, "scheme:" + scheme + ",host:" + host + ",path:" + path);
         return host;
     }
 
     /**
      * 根据标题格式化标题
+     *
      * @param title 源标题
      * @return 格式化后的标题
      */
     public String formatTitleByTitle(String title) {
-        if(TextUtils.isEmpty(title)){
+        if (TextUtils.isEmpty(title)) {
             return "全部";
         }
-        return title.replace("查看","");
+        return title.replace("查看", "");
     }
 
     /**
      * 获取应用的包名
+     *
      * @param context 上下文
      * @return 应用包名
      */
@@ -213,8 +225,9 @@ public class VideoUtils {
 
     /**
      * 获取状态栏高度
+     *
      * @param context 上下文
-     * @return 状态栏高度,单位px
+     * @return 状态栏高度, 单位px
      */
     public int getStatusBarHeight(Context context) {
         try {
@@ -226,15 +239,16 @@ public class VideoUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return dpToPxInt(context,25f);
+        return dpToPxInt(context, 25f);
     }
 
     /**
      * 获取底部虚拟按键的高度
+     *
      * @param context 上下文
-     * @return 虚拟导航栏高度,单位px
+     * @return 虚拟导航栏高度, 单位px
      */
-    public int getNavigationHeight(Context context){
+    public int getNavigationHeight(Context context) {
         int result = 0;
         if (hasNavBar(context)) {
             Resources res = context.getResources();
@@ -248,6 +262,7 @@ public class VideoUtils {
 
     /**
      * 检查是否存在虚拟按键
+     *
      * @param context 上下文
      * @return 为true则表示存在虚拟导航栏
      */
@@ -271,6 +286,7 @@ public class VideoUtils {
 
     /**
      * 检查虚拟按键是否被重写
+     *
      * @return 是否被改写
      */
     private static String getNavBarOverride() {
@@ -289,6 +305,7 @@ public class VideoUtils {
 
     /**
      * 反射获取Context
+     *
      * @return APP的全局上下文
      */
     public Context getContext() {
@@ -299,7 +316,7 @@ public class VideoUtils {
             Object currentActivityThread = method.invoke(ActivityThread);//获取currentActivityThread 对象
 
             Method method2 = currentActivityThread.getClass().getMethod("getApplication");
-            return (Context)method2.invoke(currentActivityThread);//获取 Context对象
+            return (Context) method2.invoke(currentActivityThread);//获取 Context对象
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,13 +326,14 @@ public class VideoUtils {
 
     /**
      * 检测资源地址是否是直播流
+     *
      * @param dataSource 资源地址
      * @return 是否时直播流协议的
      */
     public boolean isLiveStream(String dataSource) {
-        if(dataSource.isEmpty()) return false;
-        if(dataSource.startsWith("htpp")||dataSource.startsWith("htpps")){
-            if(dataSource.endsWith(".m3u8")||dataSource.endsWith(".hks")||dataSource.endsWith(".rtmp")){
+        if (dataSource.isEmpty()) return false;
+        if (dataSource.startsWith("htpp") || dataSource.startsWith("htpps")) {
+            if (dataSource.endsWith(".m3u8") || dataSource.endsWith(".hks") || dataSource.endsWith(".rtmp")) {
                 return true;
             }
         }

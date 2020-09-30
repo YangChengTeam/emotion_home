@@ -24,8 +24,8 @@ class EmotionTestDetailAnswerAdapter(mDatas: List<QuestionInfo>?) : BaseMultiIte
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: QuestionInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: QuestionInfo?) {
+
             item?.let {
                 when (item.itemType) {
                     QuestionInfo.ITEM_TYPE_TOPIC -> {
@@ -39,7 +39,7 @@ class EmotionTestDetailAnswerAdapter(mDatas: List<QuestionInfo>?) : BaseMultiIte
                     }
                 }
             }
-        }
+
     }
 
 

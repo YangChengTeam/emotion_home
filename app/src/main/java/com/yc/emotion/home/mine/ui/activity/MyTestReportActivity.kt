@@ -53,7 +53,7 @@ class MyTestReportActivity : BaseSameActivity(), EmotionTestView {
         initData()
         initListener()
 
-        userId = UserInfoHelper.instance.getUid() as Int
+        userId = UserInfoHelper.instance.getUid()
 
 
     }

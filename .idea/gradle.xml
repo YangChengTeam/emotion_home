@@ -5,7 +5,7 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="testRunner" value="PLATFORM" />
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-6.1.1" />
         <option name="modules">
@@ -15,7 +15,9 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/likestarlibrary" />
             <option value="$PROJECT_DIR$/model" />
+            <option value="$PROJECT_DIR$/rthttplibrary" />
             <option value="$PROJECT_DIR$/share" />
+            <option value="$PROJECT_DIR$/toutiao-adv" />
             <option value="$PROJECT_DIR$/ultraviewpager" />
             <option value="$PROJECT_DIR$/video-player-lib" />
           </set>

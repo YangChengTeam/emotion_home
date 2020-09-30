@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_publish_evaluate.*
 
 /**
@@ -63,7 +64,7 @@ class PublishEvaluateActivity : BaseSameActivity() {
 
 
     private fun setStar(imageView: ImageView) {
-        imageView.setOnClickListener {
+        imageView.clickWithTrigger {
             var tag = imageView.tag
 
             tag = if (tag == "0") "1"

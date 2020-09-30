@@ -19,6 +19,7 @@ import com.yc.emotion.home.model.bean.UserAccreditInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.utils.UserLoginManager
+import com.yc.emotion.home.utils.clickWithTrigger
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -29,6 +30,8 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
     private var ivWxClose: ImageView? = null
 
     private var ivWxLogin: ImageView? = null
+
+    private var ivPhoneLogin: ImageView? = null
 
     private var tvUserPolicy: TextView? = null
 
@@ -60,6 +63,8 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
 
         ivWxLogin = rootView?.findViewById(R.id.iv_wx_login)
 
+        ivPhoneLogin = rootView?.findViewById(R.id.iv_phone_login)
+
         tvUserPolicy = rootView?.findViewById(R.id.tv_user_policy)
 
         tvPrivacy = rootView?.findViewById(R.id.tv_privacy)
@@ -70,8 +75,8 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
     }
 
     private fun initListener() {
-        ivWxClose?.setOnClickListener { dismiss() }
-        ivWxLogin?.setOnClickListener {
+        ivWxClose?.clickWithTrigger { dismiss() }
+        ivWxLogin?.clickWithTrigger {
 
             manager?.setCallBack(activity, object : ThirdLoginListener {
                 override fun onLoginResult(userDataInfo: UserAccreditInfo) {
@@ -81,15 +86,15 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
             })?.oauthAndLogin(SHARE_MEDIA.WEIXIN)
         }
 
-        tvUserPolicy?.setOnClickListener {
+        tvUserPolicy?.clickWithTrigger {
 
             startActivity(Intent(activity, UserPolicyActivity::class.java))
         }
 
-        tvPrivacy?.setOnClickListener {
+        tvPrivacy?.clickWithTrigger {
             startActivity(Intent(activity, PrivacyStatementActivity::class.java))
         }
-        tvOtherLogin?.setOnClickListener {
+        ivPhoneLogin?.clickWithTrigger {
             startActivity(Intent(activity, LoginRegisterActivity::class.java))
             dismiss()
         }

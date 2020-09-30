@@ -19,8 +19,8 @@ import java.math.BigDecimal
  * Created by suns  on 2019/10/9 14:02.
  */
 class EfficientCourseAdapter(mDatas: List<CourseInfo>?) : CommonMoreAdapter<CourseInfo, BaseViewHolder>(R.layout.item_course_efficient, mDatas) {
-    override fun convert(helper: BaseViewHolder?, item: CourseInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: CourseInfo?) {
+
             item?.let {
                 val bd = BigDecimal(item.price).toInt()
                 val roundCornerImg = helper.getView<RoundCornerImg>(R.id.efficient_roundCornerImg)
@@ -45,5 +45,5 @@ class EfficientCourseAdapter(mDatas: List<CourseInfo>?) : CommonMoreAdapter<Cour
 
             }
         }
-    }
+
 }

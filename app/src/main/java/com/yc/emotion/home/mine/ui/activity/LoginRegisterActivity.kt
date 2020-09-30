@@ -5,6 +5,7 @@ import androidx.navigation.findNavController
 import com.yc.emotion.home.R
 
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_login_register.*
 
 /**
@@ -40,7 +41,7 @@ class LoginRegisterActivity : BaseSameActivity() {
 
     private fun initListener() {
 
-        iv_login_back.setOnClickListener { onBackPressed() }
+        iv_login_back.clickWithTrigger { onBackPressed() }
 
     }
 }

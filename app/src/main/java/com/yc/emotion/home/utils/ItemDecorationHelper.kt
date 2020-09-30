@@ -5,7 +5,8 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.kk.utils.ScreenUtil
+import yc.com.rthttplibrary.util.ScreenUtil
+
 
 /**
  * Created by wanglin  on 2018/10/25 13:45.

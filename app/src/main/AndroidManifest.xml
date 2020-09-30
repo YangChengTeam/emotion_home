@@ -6,28 +6,30 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.REQUEST_PERMISSIONS" /> <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <uses-permission android:name="android.permission.REQUEST_PERMISSIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".base.YcApplication"
+        android:name=".base.EmApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-
         android:theme="@style/JK.SwipeBack.Transparent.Theme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity android:name=".index.ui.activity.LoveCaseActivity" />
         <activity android:name=".pay.ui.activity.ResultActivity" />
@@ -92,7 +94,7 @@
         -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.yc.emotion.fileProvider"
+            android:authorities="com.yc.emotion.home.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -151,7 +153,7 @@
         <activity android:name=".mine.ui.activity.PrivacyStatementActivity" />
         <!-- android:theme="@style/ActivityV7Translucent" -->
 
-        <receiver android:name=".receiver.UpdataBroadcastReceiver">
+        <receiver android:name=".receiver.UpdateBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
@@ -223,17 +225,12 @@
         <activity android:name=".mine.ui.activity.MyTestReportActivity" />
         <activity android:name=".mine.ui.activity.EditSignatureActivity" />
         <activity android:name=".mine.ui.activity.ShareActivity" />
-        <activity android:name=".mine.ui.activity.LoginMainActivity">
 
-        </activity>
-
-        <activity android:name=".mine.ui.activity.LoginActivity" />
-        <activity android:name=".mine.ui.activity.RegisterMainActivity" />
         <activity android:name=".mine.ui.activity.PublishEvaluateActivity" />
         <activity android:name=".mine.ui.activity.OnceEvaluateActivity" />
         <activity android:name=".index.ui.activity.MoreArticleActivity" />
         <activity android:name=".index.ui.activity.ArticleDetailActivity" />
-        <activity android:name=".mine.ui.activity.OrderActivityNew" />
+
         <activity android:name=".index.ui.activity.EmotionTestSkipDetailActivity" />
         <activity android:name=".index.ui.activity.SelectSexActivity" />
         <activity android:name=".mine.ui.activity.EditNicknameActivity" />
@@ -245,38 +242,44 @@
         <activity android:name=".mine.ui.activity.ResetPwdActivity" />
         <activity android:name=".message.ui.activity.NotificationDetailActivity" />
         <activity android:name=".message.ui.activity.NotificationListActivity" />
-        <activity android:name=".message.ui.fragment.MessageActivity" />
-        <activity android:name=".index.ui.activity.LiveWebActivity" />
-        <activity android:name=".mine.ui.activity.RegisterMainActivityNew" />
+        <activity android:name=".message.ui.activity.MessageActivity" />
+        <activity
+            android:name=".index.ui.activity.LiveWebActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/fullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="video"
+                    android:scheme="douyu" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".mine.ui.activity.LoginRegisterActivity" />
         <activity android:name=".mine.ui.activity.PwdSetActivity" />
         <activity android:name=".index.ui.activity.MonographActivity" />
         <activity android:name=".mine.ui.activity.UserPolicyActivity" />
         <activity android:name=".index.ui.activity.LiveVideoActivity" />
         <activity android:name=".index.ui.activity.LiveNoticeActivity" />
-        <activity android:name=".index.ui.activity.LiveRoomActivity" />
-        <activity android:name=".index.ui.activity.LiveLookActivity" />
+
+        <activity android:name=".pay.ui.activity.BecomeVipActivity" />
+        <activity android:name=".message.ui.activity.VideoDetailActivity" />
+        <activity android:name=".index.ui.activity.AIChatActivity" />
+
+        <activity android:name=".mine.ui.fragment.RewardDetailFragment" />
+        <activity android:name=".mine.ui.activity.WithdrawalApplyActivity" />
+        <activity android:name=".mine.ui.activity.DisposeDetailActivity" />
+        <activity android:name=".index.ui.activity.RewardPlanActivity" />
+        <activity android:name=".skill.ui.activity.PromotionPlanActivity" />
+        <activity android:name=".mine.ui.activity.RewardActivity" />
+        <activity android:name=".index.ui.activity.SmartChatVerbalActivity" />
+        <activity android:name=".mine.ui.activity.EarningsDetailActivity" />
 
 
-        <service
-            android:name=".base.ui.service.PushService"
-            android:enabled="true"
-            android:exported="false"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jiguang.user.service.action" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name=".base.ui.receiver.PushMessageReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="${applicationId}" />
-            </intent-filter>
-        </receiver>
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->
         <uses-library
             android:name="org.apache.http.legacy"

@@ -14,9 +14,7 @@ class MyScrollView : NestedScrollView {
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
-        if (onScrollListener != null) {
-            onScrollListener!!.onScroll(l, t, oldl, oldt)
-        }
+            onScrollListener?.onScroll(l, t, oldl, oldt)
     }
 
     private var onScrollListener: OnScrollListener? = null

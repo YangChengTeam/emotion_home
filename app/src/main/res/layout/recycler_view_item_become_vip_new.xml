@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,46 +18,48 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableTop="@mipmap/become_vip_icon_05"
             android:gravity="center"
-            android:paddingRight="2dp"
+            android:paddingEnd="2dp"
             android:text="低成本高回报\n恋爱成功100%"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12" />
+            android:textSize="@dimen/size_12"
+            app:drawableTopCompat="@mipmap/become_vip_icon_05"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/become_vip_icon_01"
             android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:text="20w+精彩话术\n一键搜索复制"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12" />
+            android:textSize="@dimen/size_12"
+            app:drawableTopCompat="@mipmap/become_vip_icon_01" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/become_vip_icon_02"
             android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:text=" 学员群导师指导"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12" />
+            android:textSize="@dimen/size_12"
+            app:drawableTopCompat="@mipmap/become_vip_icon_02" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:drawableTop="@mipmap/become_vip_icon_03"
             android:gravity="center"
-            android:paddingLeft="2dp"
+            android:paddingStart="2dp"
             android:text="贴心服务\n诚信经营"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12" />
+            android:textSize="@dimen/size_12"
+            app:drawableTopCompat="@mipmap/become_vip_icon_03"
+            tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
 

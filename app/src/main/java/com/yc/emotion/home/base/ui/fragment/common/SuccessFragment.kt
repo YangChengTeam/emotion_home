@@ -21,7 +21,7 @@ class SuccessFragment : BaseDialogFragment() {
         mTilte = title
     }
 
-    protected fun initView() {
+    private fun initView() {
         val tv = getView(R.id.tv_success) as TextView
         if (!TextUtils.isEmpty(mTilte)) tv.text = mTilte
     }

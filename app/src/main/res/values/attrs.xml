@@ -86,4 +86,34 @@
         <attr name="cornerRadius" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="RoundTextView">
+        <attr name="back_color" format="color" />
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+        <attr name="stroke_radius" format="dimension" />
+        <attr name="is_circle" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CircularProgressDrawable">
+        <attr name="cpd_padding" format="dimension" />
+        <attr name="cpd_initialAngle" format="integer" />
+        <attr name="pv_progress" format="float" />
+        <attr name="pv_secondaryProgress" format="float" />
+        <attr name="cpd_maxSweepAngle" format="integer" />
+        <attr name="cpd_minSweepAngle" format="integer" />
+        <attr name="cpd_strokeSize" format="dimension" />
+        <attr name="cpd_strokeColor" format="color" />
+        <attr name="cpd_strokeColors" format="reference" />
+        <attr name="cpd_strokeSecondaryColor" format="color" />
+        <attr name="cpd_reverse" format="boolean" />
+        <attr name="cpd_rotateDuration" format="integer" />
+        <attr name="cpd_transformDuration" format="integer" />
+        <attr name="cpd_keepDuration" format="integer" />
+        <attr name="cpd_transformInterpolator" format="reference" />
+        <attr name="pv_progressMode" format="integer" />
+        <attr name="cpd_inAnimDuration" format="integer" />
+        <attr name="cpd_inStepColors" format="reference" />
+        <attr name="cpd_inStepPercent" format="float" />
+        <attr name="cpd_outAnimDuration" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="CircularProgress" />
 </resources>

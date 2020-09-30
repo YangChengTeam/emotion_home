@@ -14,8 +14,8 @@ import com.yc.emotion.home.model.bean.EmotionTestInfo
  * Created by suns  on 2019/10/9 14:02.
  */
 class EmotionTestAdapter(mDatas: List<EmotionTestInfo>?) : CommonMoreAdapter<EmotionTestInfo, BaseViewHolder>(R.layout.layout_emotion_test_item, mDatas) {
-    override fun convert(helper: BaseViewHolder?, item: EmotionTestInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: EmotionTestInfo?) {
+
             item?.let {
 
                 Glide.with(mContext).load(item.img).apply(RequestOptions().error(R.mipmap.index_example_icon)
@@ -25,7 +25,7 @@ class EmotionTestAdapter(mDatas: List<EmotionTestInfo>?) : CommonMoreAdapter<Emo
                 helper.setText(R.id.tv_emotion_title, item.title)
                         .setText(R.id.tv_emotion_test_count, "${item.people}人已测试")
 
-            }
+
         }
     }
 }

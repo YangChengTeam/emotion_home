@@ -131,16 +131,21 @@
         <item name="android:windowExitAnimation">@anim/tdown</item>
     </style>
 
-    <style name="MyDialogStyle">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:backgroundDimEnabled">true</item>
+    <style name="CircularProgress">
+        <item name="cpd_inAnimDuration">0</item>
+        <item name="cpd_initialAngle">0</item>
+        <item name="cpd_keepDuration">200</item>
+        <item name="cpd_maxSweepAngle">270</item>
+        <item name="cpd_minSweepAngle">1</item>
+        <item name="cpd_outAnimDuration">@android:integer/config_mediumAnimTime</item>
+        <item name="cpd_padding">0.0dip</item>
+        <item name="cpd_reverse">false</item>
+        <item name="cpd_rotateDuration">1000</item>
+        <item name="cpd_strokeColor">@color/colorPrimary</item>
+        <item name="cpd_strokeSecondaryColor">@android:color/transparent</item>
+        <item name="cpd_strokeSize">4.0dip</item>
+        <item name="cpd_transformDuration">600</item>
+        <item name="cpd_transformInterpolator">@android:anim/decelerate_interpolator</item>
     </style>
-
 
 </resources>

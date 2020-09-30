@@ -30,16 +30,18 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+
+                />
 
             <TextView
                 android:id="@+id/tv_efficient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@mipmap/community_icon_arrow_down"
                 android:text="@string/more"
                 android:textColor="@color/gray_999"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                app:drawableEndCompat="@mipmap/community_icon_arrow_down" />
 
         </LinearLayout>
 

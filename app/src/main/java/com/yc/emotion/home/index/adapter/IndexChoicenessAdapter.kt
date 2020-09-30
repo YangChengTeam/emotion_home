@@ -21,8 +21,8 @@ class IndexChoicenessAdapter(mDatas: ArrayList<ArticleDetailInfo>?, isIndex: Boo
     private val mIsIndex = isIndex
 
     private val mIsMore = isMore
-    override fun convert(helper: BaseViewHolder?, item: ArticleDetailInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: ArticleDetailInfo?) {
+
             item?.let {
                 helper.setText(R.id.tv_content, item.post_title)
                         .setText(R.id.tv_reuse, "${item.feeluseful}人觉得有用")
@@ -45,7 +45,7 @@ class IndexChoicenessAdapter(mDatas: ArrayList<ArticleDetailInfo>?, isIndex: Boo
 
             }
 
-        }
+
 
     }
 }

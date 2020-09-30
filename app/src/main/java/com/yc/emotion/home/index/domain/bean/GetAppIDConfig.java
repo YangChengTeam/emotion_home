@@ -17,5 +17,5 @@ public class GetAppIDConfig {
      * for example:
      * public static final String appSign = "0123456789012345678901234567890123456789012345678901234567890123;
      */
-    public static final String appSign = "4816016696d8403f6a0178e02c3932d8f5c6a9d689c851b70c93b95afcf025b5";
+    public static final String appSign = "";
 }

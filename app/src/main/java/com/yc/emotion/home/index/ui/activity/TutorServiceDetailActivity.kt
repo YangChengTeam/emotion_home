@@ -20,9 +20,8 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
-import com.kk.utils.ScreenUtil
+
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.OrderEngine
 import com.yc.emotion.home.base.ui.activity.PayActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
@@ -38,6 +37,7 @@ import com.yc.emotion.home.model.bean.TutorServiceDetailInfo
 import com.yc.emotion.home.model.bean.event.EventBusWxPayResult
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_tutor_service_detail.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -50,6 +50,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import yc.com.rthttplibrary.util.ScreenUtil
 import java.util.*
 
 /**
@@ -62,7 +63,7 @@ class TutorServiceDetailActivity : PayActivity(), TutorView {
     private var serviceId: String? = null
     private var tutorId: String? = null
 
-    private var mOrderEngine: OrderEngine? = null
+
 
     companion object {
         fun startActivity(context: Context, service_id: String?, tutorId: String?) {
@@ -91,7 +92,6 @@ class TutorServiceDetailActivity : PayActivity(), TutorView {
     override fun initViews() {
         invadeStatusBar() //侵入状态栏
         setAndroidNativeLightStatusBar() //状态栏字体颜色改变
-        mOrderEngine = OrderEngine(this)
 
         mPresenter = TutorPresenter(this, this)
 
@@ -150,16 +150,16 @@ class TutorServiceDetailActivity : PayActivity(), TutorView {
 
 
     private fun initListener() {
-        rl_free_consult.setOnClickListener { showToWxServiceDialog(tutorId = tutorId) }
-        tv_tutor_service_detail_comment_all.setOnClickListener { startActivity(Intent(this, TutorServiceCommentDetailActivity::class.java)) }
-        tv_tutor_service_detail_homepage.setOnClickListener {
+        rl_free_consult.clickWithTrigger { showToWxServiceDialog(tutorId = tutorId) }
+        tv_tutor_service_detail_comment_all.clickWithTrigger { startActivity(Intent(this, TutorServiceCommentDetailActivity::class.java)) }
+        tv_tutor_service_detail_homepage.clickWithTrigger {
             startActivity(Intent(this, TutorDetailActivity::class.java))
             finish()
         }
-        iv_tutor_back.setOnClickListener { finish() }
+        iv_tutor_back.clickWithTrigger { finish() }
         toolbar.setNavigationOnClickListener { finish() }
-        iv_service_share.setOnClickListener { startActivity(Intent(this, ShareActivity::class.java)) }
-        rl_buy_service.setOnClickListener {
+        iv_service_share.clickWithTrigger { startActivity(Intent(this, ShareActivity::class.java)) }
+        rl_buy_service.clickWithTrigger {
             val vipPayWayFragment = VipPayWayFragment()
             vipPayWayFragment.show(supportFragmentManager, "")
             vipPayWayFragment.setOnPayWaySelectListener(object : VipPayWayFragment.OnPayWaySelectListener {
@@ -328,7 +328,7 @@ class TutorServiceDetailActivity : PayActivity(), TutorView {
             mServiceDetailInfo = data
             val serviceInfo = data.service_info
             val goodsInfo = data.goods_info
-            Glide.with(this).load(serviceInfo?.img).apply(RequestOptions().error(R.mipmap.tutor_banner_example)).into(iv_service_detail)
+            Glide.with(this).load(serviceInfo?.img).apply(RequestOptions().error(R.mipmap.tutor_banner_example).centerInside()).into(iv_service_detail)
             tv_service_title.text = serviceInfo?.name
             tv_service_price.text = goodsInfo?.m_price
             tv_service_buy_count.text = "${serviceInfo?.buy_count}人已购"

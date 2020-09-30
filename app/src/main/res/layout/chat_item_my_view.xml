@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_avtor"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/default_avatar_72"
         app:layout_constraintRight_toRightOf="parent"
@@ -21,21 +21,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:text="xxxxx"
         android:textColor="@color/color_bdbcbc"
         android:textSize="13sp"
         app:layout_constraintRight_toLeftOf="@id/iv_avtor"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--     android:layout_marginTop="5dp"-->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:gravity="right"
+        android:layout_marginEnd="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/tv_chat_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_chat_name">
+        app:layout_constraintRight_toLeftOf="@id/iv_avtor"
+        app:layout_constraintTop_toTopOf="@id/iv_avtor">
 
         <TextView
             android:id="@+id/tv_chat_message"

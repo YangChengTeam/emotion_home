@@ -30,6 +30,7 @@ import com.yc.emotion.home.index.view.TutorView
 import com.yc.emotion.home.mine.ui.activity.ShareActivity
 import com.yc.emotion.home.model.bean.TutorDetailInfo
 import com.yc.emotion.home.model.bean.TutorInfo
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_tutor_detail.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -39,7 +40,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import java.util.*
 
 /**
  *
@@ -100,19 +100,19 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
     private fun initListener() {
 
 
-        iv_tutor_back.setOnClickListener { finish() }
+        iv_tutor_back.clickWithTrigger { finish() }
 //        ll_tutor_buy.setOnClickListener { ToastUtils.showCenterToast("购买课程") }
-        rl_free_consult.setOnClickListener { showToWxServiceDialog(tutorId = tutorId) }
-        rl_buy_service.setOnClickListener {
+        rl_free_consult.clickWithTrigger { showToWxServiceDialog(tutorId = tutorId) }
+        rl_buy_service.clickWithTrigger {
             MobclickAgent.onEvent(this, "purchase_service_id", "导师页面购买服务")
             TutorServiceListActivity.startActivity(this, tutorId)
         }
-        ll_tutor_detail_aptitude.setOnClickListener {
+        ll_tutor_detail_aptitude.clickWithTrigger {
             val intent = Intent(this, TutorAptitudeActivity::class.java)
             intent.putExtra("tutor_id", tutorId)
             startActivity(intent)
         }
-        iv_tutor_share.setOnClickListener {
+        iv_tutor_share.clickWithTrigger {
             startActivity(Intent(this, ShareActivity::class.java))
         }
 
@@ -123,7 +123,7 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
         val arrays = resources.getStringArray(R.array.tutor_detail_array)
 
 
-        val titleList = Arrays.asList(*arrays)
+        val titleList = listOf(*arrays)
 
         initNavigator(titleList)
 
@@ -218,7 +218,8 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
     }
 
     private fun initData(tutorInfo: TutorInfo?) {
-        Glide.with(this).load(tutorInfo?.bg_img).apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)).thumbnail(0.1f).into(iv_tutor_detail)
+        Glide.with(this).load(tutorInfo?.bg_img).apply(RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.DATA).centerInside()).thumbnail(0.1f).into(iv_tutor_detail)
         tv_tutor_detail_name.text = tutorInfo?.name
 
         val profession = tutorInfo?.profession

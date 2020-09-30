@@ -4,6 +4,7 @@ import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.base.view.StateDefaultImpl
 import com.yc.emotion.home.index.domain.bean.SexInfo
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import com.yc.emotion.home.mine.domain.bean.LiveVideoInfo
 import com.yc.emotion.home.model.bean.IndexInfo
 
 /**
@@ -16,8 +17,8 @@ interface IndexView : IView, StateDefaultImpl {
     fun showIndexInfo(indexInfo: IndexInfo)
 
 
-
     fun showIndexCaches(detailInfos: IndexInfo)
     fun showIndexLiveInfos(data: List<LiveInfo>)
+    fun showIndexLiveVideos(list: List<LiveVideoInfo>)
 
 }

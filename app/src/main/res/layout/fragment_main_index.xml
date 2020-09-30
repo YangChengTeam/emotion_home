@@ -36,7 +36,18 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:paddingEnd="15dp"
-                    app:layout_collapseMode="pin">
+                    app:layout_collapseMode="pin"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="让幸福更简单"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/iv_vip"
@@ -44,7 +55,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/index_vip_icon" />
+                        android:src="@mipmap/index_vip_icon"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/ll_index_search"
@@ -55,6 +67,7 @@
                         android:background="@drawable/index_search_bg"
                         android:gravity="center_vertical"
                         android:paddingStart="12dp"
+                        android:visibility="gone"
                         tools:ignore="RtlSymmetry">
 
                         <ImageView
@@ -203,7 +216,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp">
+                            android:layout_marginRight="15dp"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/iv_repel"
@@ -222,12 +236,38 @@
                                 android:src="@mipmap/save_bg_text" />
 
                         </LinearLayout>
+                        <!--预约咨询-->
+
+                        <ImageView
+                            android:id="@+id/iv_come_ai"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/index_ai_bg"
+                            />
+
+                        <com.youth.banner.Banner
+                            android:id="@+id/activity_banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="10dp" />
+
+                        <ImageView
+                            android:id="@+id/ll_advise"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="10dp"
+                            android:src="@mipmap/index_reservation"
+                            android:visibility="gone" />
                         <!--热门直播-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -263,7 +303,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="15dp" />
+                                android:layout_marginEnd="15dp"
+                                android:nestedScrollingEnabled="false" />
 
 
                         </LinearLayout>
@@ -272,7 +313,8 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            android:background="@color/gray_f2f2f2" />
+                            android:background="@color/gray_f2f2f2"
+                            android:visibility="gone" />
 
                         <com.yc.emotion.home.base.ui.widget.BouncyHScrollView
                             android:layout_width="match_parent"
@@ -295,8 +337,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:paddingTop="15dp"
-
-                            android:paddingBottom="5dp">
+                            android:paddingBottom="5dp"
+                            android:visibility="gone">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -335,15 +377,7 @@
 
                         </LinearLayout>
 
-                        <!--预约咨询-->
 
-                        <ImageView
-                            android:id="@+id/ll_advise"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="18dp"
-                            android:src="@mipmap/index_reservation" />
                     </LinearLayout>
 
                     <View

@@ -48,13 +48,14 @@ public interface VideoConstants {
     /**
      * 播放器内部状态，替换enum
      */
-    int MUSIC_PLAYER_STOP       = 0;//已结束，或未开始
-    int MUSIC_PLAYER_PREPARE    = 1 ;//准备中
-    int MUSIC_PLAYER_BUFFER     = 2;//缓冲中
-    int MUSIC_PLAYER_START      = 3;//播放中
-    int MUSIC_PLAYER_PAUSE      = 4;//暂停
-    int MUSIC_PLAYER_PLAY       = 5;//恢复
-    int MUSIC_PLAYER_SEEK       = 6;//跳转至某处播放中
-    int MUSIC_PLAYER_MOBILE     = 7;//移动网络环境下
-    int MUSIC_PLAYER_ERROR      = 8;//错误
+    int MUSIC_PLAYER_STOP =           0;//已结束，或未开始
+    int MUSIC_PLAYER_PREPARE =        1;//准备中
+    int MUSIC_PLAYER_BUFFER =         2;//缓冲中
+    int MUSIC_PLAYER_START =          3;//播放中
+    int MUSIC_PLAYER_PAUSE =          4;//暂停
+    int MUSIC_PLAYER_PLAY =           5;//恢复
+    int MUSIC_PLAYER_SEEK =           6;//跳转至某处播放中
+    int MUSIC_PLAYER_MOBILE =         7;//移动网络环境下
+    int MUSIC_PLAYER_ERROR =          8;//错误
+    int MUSIC_PLAY_COMPLETE =         9;//播放完成（单独拎出来）
 }

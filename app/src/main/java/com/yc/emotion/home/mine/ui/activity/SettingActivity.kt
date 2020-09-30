@@ -34,7 +34,7 @@ class SettingActivity : BaseSameActivity() {
 
     override fun initViews() {
 
-        val userId = UserInfoHelper.instance.getUid() as Int
+        val userId = UserInfoHelper.instance.getUid()
         if (userId <= 0) {
             setting_tv_exit.visibility = View.GONE
         } else {
@@ -90,6 +90,7 @@ class SettingActivity : BaseSameActivity() {
 
     private fun clearExit() {
         val alertDialog = AlertDialog.Builder(this).create()
+
         alertDialog.setMessage("是否退出登录？")
         val listent: DialogInterface.OnClickListener? = null
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", listent)

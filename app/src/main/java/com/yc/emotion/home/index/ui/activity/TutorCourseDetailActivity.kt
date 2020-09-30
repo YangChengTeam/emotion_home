@@ -1,35 +1,41 @@
 package com.yc.emotion.home.index.ui.activity
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-
+import com.danikula.videocache.HttpProxyCacheServer
 import com.umeng.analytics.MobclickAgent
 import com.video.player.lib.constants.VideoConstants
 import com.video.player.lib.manager.VideoPlayerManager
 import com.video.player.lib.manager.VideoWindowManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.base.EmApplication
+import com.yc.emotion.home.base.ui.activity.PayActivity
 import com.yc.emotion.home.index.adapter.TutorCourseDetailAdapter
 import com.yc.emotion.home.index.presenter.TutorCoursePresenter
+import com.yc.emotion.home.index.ui.fragment.PaySuccWxFragment
+import com.yc.emotion.home.index.ui.fragment.VipPayWayFragment
 import com.yc.emotion.home.index.ui.widget.TutorCoursePopwindow
 import com.yc.emotion.home.index.view.TutorCourseView
-import com.yc.emotion.home.model.bean.LessonInfo
-import com.yc.emotion.home.model.bean.TutorCommentInfo
-import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
+import com.yc.emotion.home.message.ui.fragment.CoursePayFragment
+import com.yc.emotion.home.model.bean.*
+import com.yc.emotion.home.model.bean.event.EventBusWxPayResult
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
-import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_tutor_course_detail.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.text.ParsePosition
+import yc.com.rthttplibrary.util.LogUtil
 
 
 /**
@@ -37,7 +43,7 @@ import java.text.ParsePosition
  * Created by suns  on 2019/10/9 16:35.
  * 导师课程详情
  */
-class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
+class TutorCourseDetailActivity : PayActivity(), TutorCourseView {
 
 
     private var tutorCourseDetailAdapter: TutorCourseDetailAdapter? = null
@@ -62,25 +68,14 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         initViews()
+        invadeStatusBar() //侵入状态栏
+        setAndroidNativeLightStatusBar() //状态栏字体颜色改变
     }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_tutor_course_detail
     }
 
-
-    override fun offerActivityTitle(): String {
-
-        return ""
-    }
-
-    override fun hindActivityBar(): Boolean {
-        return true
-    }
-
-    override fun hindActivityTitle(): Boolean {
-        return true
-    }
 
     override fun initViews() {
 
@@ -95,6 +90,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
         rcv_tutor_course.layoutManager = layoutManager
         rcv_tutor_course.adapter = tutorCourseDetailAdapter
         getCourseData(chapterId)
+
         initListener()
     }
 
@@ -129,7 +125,8 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
                                                 startPlayer(lessonInfo)
                                             } else {
                                                 if (!UserInfoHelper.instance.goToLogin(this@TutorCourseDetailActivity)) {
-                                                    startActivity(Intent(this@TutorCourseDetailActivity, VipActivity::class.java))
+//                                                    startActivity(Intent(this@TutorCourseDetailActivity, VipActivity::class.java))
+                                                    showPay(lessonInfo)
                                                 }
                                             }
                                             courseRecyclerView.scrollToPosition(pos)
@@ -172,21 +169,81 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
         }
 
         tutorCourseDetailAdapter?.setOnItemPlayerListener(object : TutorCourseDetailAdapter.OnItemPlayerListener {
-            override fun onItemPlay(lessonInfo: LessonInfo) {
+            override fun onItemPlay(lessonInfo: LessonInfo?) {
                 startPlayer(lessonInfo)
+            }
+
+            override fun onItemPay(lessonInfo: LessonInfo?) {
+                showPay(lessonInfo)
             }
         })
 
-        iv_tutor_back.setOnClickListener { finish() }
-        ll_tutor_buy.setOnClickListener { ToastUtils.showCenterToast("购买课程") }
+        iv_tutor_back.clickWithTrigger { finish() }
+        ll_tutor_buy.clickWithTrigger {
 
-        iv_course_share.setOnClickListener {
+            MobclickAgent.onEvent(this, "course_detail_pay", "课程详情页购买")
+
+            val coursePayFragment = CoursePayFragment.newInstance(mLessons as ArrayList<LessonInfo>?)
+            coursePayFragment.setOnLessonItemClickListener(object : CoursePayFragment.OnLessonItemClickListener {
+                override fun onLessonClick(lessonInfo: LessonInfo, position: Int) {
+                    if (lessonInfo.need_pay == 0) {
+                        startPlayer(lessonInfo)
+                    } else {
+                        if (!UserInfoHelper.instance.goToLogin(this@TutorCourseDetailActivity)) {
+                            showPay(lessonInfo)
+                        }
+                    }
+                }
+            })
+            coursePayFragment.show(supportFragmentManager, "")
+        }
+
+        iv_course_share.clickWithTrigger {
             //todo 分享
         }
 
-        iv_course_collect.setOnClickListener {
+        iv_course_collect.clickWithTrigger {
             //收藏
             collectCourse(chapterId)
+        }
+        ll_wx_advise.clickWithTrigger {
+            //添加微信
+            showToWxServiceDialog(tutorId = "$tutorId")
+            MobclickAgent.onEvent(this, "course_detail_add_wx", "课程详情页添加微信")
+        }
+    }
+
+    private fun showPay(lessonInfo: LessonInfo?) {
+        val vipPayWayFragment = VipPayWayFragment()
+        vipPayWayFragment.show(supportFragmentManager, "")
+        vipPayWayFragment.setOnPayWaySelectListener(object : VipPayWayFragment.OnPayWaySelectListener {
+            override fun onPayWaySelect(payway: String) {
+                //                    nextOrders(payway, indexDoodsBean)
+
+                val goodsInfo = GoodsInfo()
+
+                lessonInfo?.let {
+                    goodsInfo.m_price = it.m_price
+                    goodsInfo.name = it.lesson_title
+                    goodsInfo.id = it.good_id
+                    nextOrders(payway, goodsInfo)
+                }
+//                courseInfo?.let {
+//                    goodsInfo.m_price = it.price
+//                    goodsInfo.name = it.title
+//                    goodsInfo.id = it.goods_id
+//                    nextOrders(payway, goodsInfo)
+//                }
+            }
+        })
+    }
+
+
+    private fun nextOrders(payWayName: String, indexDoodsBean: GoodsInfo?) { // PAY_TYPE_ZFB=0   PAY_TYPE_WX=1;
+        if (indexDoodsBean == null) return
+
+        if (!UserInfoHelper.instance.goToLogin(this)) {
+            (mPresenter as? TutorCoursePresenter)?.initOrders(payWayName, indexDoodsBean.m_price, indexDoodsBean.name, "${indexDoodsBean.id}")
         }
     }
 
@@ -210,10 +267,19 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
     }
 
     private var tutorId: Int? = null
+    private var courseInfo: CourseInfo? = null
+
     private fun createData(data: TutorCourseDetailInfo) {
         tutorId = data.chapter?.tutor_id
-        val courseInfo = data.chapter
-        tv_money.text = "¥${courseInfo.price}"
+        courseInfo = data.chapter
+        tv_money.text = "¥${courseInfo?.price}"
+        val hasPay = courseInfo?.has_buy
+        if (hasPay == 0) {
+            ll_tutor_buy.visibility = View.VISIBLE
+        } else {
+            ll_tutor_buy.visibility = View.GONE
+        }
+
         tutorCourseDetailInfoList = arrayListOf()
         if (page == 1) {
             data.let {
@@ -249,8 +315,74 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
         }
     }
 
-    private fun createNewData(communityInfos: List<TutorCommentInfo>?) {
+    public override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
 
+    public override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun showOrderInfo(data: OrdersInitBean?, payWayName: String) {
+        data?.let {
+            val paramsBean = data.params
+            Log.d("mylog", "onNetNext: payType == 0  Zfb   payType $payWayName")
+            if (payWayName == "alipay") {
+                //                    String info="alipay_sdk=alipay-sdk-php-20180705&app_id=2019051564672294&biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22seller_id%22%3A%22%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A0.01%2C%22subject%22%3A%221%22%2C%22body%22%3A%22%5Cu5145%5Cu503c%22%2C%22out_trade_no%22%3A%22201905161657594587%22%7D&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Flove.bshu.com%2Fnotify%2Falipay%2Fdefault&sign_type=RSA2&timestamp=2019-05-16+16%3A57%3A59&version=1.0&sign=BRj%2FY6Bk319dZwNoHwWbYIKYZFJahg1TRgvhFf7ubJzFKZEIESnattbFnaGJ6wq6%2BmauaKZcGv83ianrZfw0R%2BMQ9OmbTPXjKYGZUMzdPNDV3NygmVMgM68vs6oeHyQOxsbx16L4ltGi%2BdEjPDsLWqlw8E1INukZMxV4EDbFl8ZlyzKYerY9YZR1dRtxscFXgG7npmyPp3mO%2BA%2BywZABb5sANxqBShG%2FgeGbE%2BG1hpkZUE4KYGV7rCC80dcBjODWPgj%2FKQtFUXnx5NzCfWIeUMcyc8UaeK%2FsxqyrMJmsFPQgCBYGR5HH1llIfQ8NJuitwhDnJTKMhqCgh03UG9j%2B%2BQ%3D%3D";
+                //                    toZfbPay(info);
+                toZfbPay(paramsBean.info)
+            } else {
+                toWxPay(paramsBean)
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: EventBusWxPayResult) {
+        when (event.code) {
+            0//支付成功
+            ->
+                //  微信支付成功
+                showPaySuccessDialog(true, event.mess)
+            -1//错误
+            -> showPaySuccessDialog(false, event.mess)
+            -2//用户取消
+            -> showPaySuccessDialog(false, event.mess)
+            else -> {
+            }
+        }
+    }
+
+
+    override fun onZfbPauResult(result: Boolean, des: String?) {
+        showPaySuccessDialog(result, des)
+    }
+
+
+    private fun showPaySuccessDialog(result: Boolean, des: String?) {
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setCancelable(false)
+        alertDialog.setTitle("提示")
+        if (result) {
+
+            val paySuccessFragment = PaySuccWxFragment()
+            paySuccessFragment.show(supportFragmentManager, "")
+
+            getCourseData(chapterId)
+        }
+        alertDialog.setMessage(des)
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "确定") { dialog, which ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+
+    private fun createNewData(communityInfos: List<TutorCommentInfo>?) {
 
         communityInfos?.let {
             communityInfos.forEach {
@@ -299,7 +431,7 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
     }
 
     override fun onBackPressed() {
-        //尝试弹射返回
+        //尝试返回
         if (VideoPlayerManager.getInstance().isBackPressed) {
             super.onBackPressed()
         }
@@ -315,12 +447,20 @@ class TutorCourseDetailActivity : BaseSameActivity(), TutorCourseView {
 
     private fun startPlayer(lessonInfo: LessonInfo?) {
 
+        var proxyUrl = lessonInfo?.lesson_url
+
+        val proxy: HttpProxyCacheServer? = EmApplication.instance.getProxy()
+        proxy?.let {
+            proxyUrl = proxy.getProxyUrl(proxyUrl)
+        }
+
         Glide.with(this).load(lessonInfo?.lesson_image).apply(RequestOptions().error(R.mipmap.efficient_course_example_pic)).into(videoPlayer.coverController.mVideoCover)
         videoPlayer.setVideoDisplayType(VideoConstants.VIDEO_DISPLAY_TYPE_ZOOM)
-        videoPlayer.startPlayVideo(lessonInfo?.lesson_url, lessonInfo?.lesson_title)
+        videoPlayer.startPlayVideo(proxyUrl, lessonInfo?.lesson_title)
     }
 
     override fun showCourseDetailInfo(data: TutorCourseDetailInfo?) {
+
         data?.let {
             val lessons = data.lessons
             mLessons = lessons

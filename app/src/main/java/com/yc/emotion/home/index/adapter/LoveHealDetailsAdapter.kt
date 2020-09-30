@@ -3,6 +3,7 @@ package com.yc.emotion.home.index.adapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
@@ -58,25 +59,30 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
                     details = item.detail
                 }
 
-                val loveHealDetAdapterNew = LoveHealDetAdapter(details)
+                if (details != null && details.isNotEmpty()) {
+                    helper.itemView.visibility = View.VISIBLE
+                    val loveHealDetAdapterNew = LoveHealDetAdapter(details)
 
-                recyclerView.adapter = loveHealDetAdapterNew
-                loveHealDetAdapterNew.setOnItemChildClickListener { adapter, view, position ->
-                    val item1 = loveHealDetAdapterNew.getItem(position)
-                    if (item1 != null) {
-                        MobclickAgent.onEvent(mContext, "copy_dialogue_id", "复制恋爱话术")
-                        item1.setTitle(mTitle)
-                        toCopy(mContext, item1)
+                    recyclerView.adapter = loveHealDetAdapterNew
+                    loveHealDetAdapterNew.setOnItemChildClickListener { adapter, view, position ->
+                        val item1 = loveHealDetAdapterNew.getItem(position)
+                        if (item1 != null) {
+                            MobclickAgent.onEvent(mContext, "copy_dialogue_id", "复制恋爱话术")
+                            item1.setTitle(mTitle)
+                            toCopy(mContext, item1)
+                        }
                     }
-                }
 
-                loveHealDetAdapterNew.setOnItemClickListener { adapter, view, position ->
-                    val item1 = loveHealDetAdapterNew.getItem(position)
-                    if (item1 != null) {
-                        item1.setTitle(mTitle)
-                        MobclickAgent.onEvent(mContext, "copy_dialogue_id", "复制恋爱话术")
-                        toCopy(mContext, item1)
+                    loveHealDetAdapterNew.setOnItemClickListener { adapter, view, position ->
+                        val item1 = loveHealDetAdapterNew.getItem(position)
+                        if (item1 != null) {
+                            item1.setTitle(mTitle)
+                            MobclickAgent.onEvent(mContext, "copy_dialogue_id", "复制恋爱话术")
+                            toCopy(mContext, item1)
+                        }
                     }
+                } else {
+                    helper.itemView.visibility = View.GONE
                 }
             } else if (item.type == LoveHealDetBean.VIEW_VIP) {
                 if (details == null || details.isEmpty()) {

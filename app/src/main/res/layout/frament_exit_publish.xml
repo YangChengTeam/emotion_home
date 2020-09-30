@@ -19,11 +19,14 @@
 
     <TextView
         android:id="@+id/tv_confirm_publish"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="center"
         android:text="确定要放弃发布吗？"
-        android:textSize="15sp"
+        android:textSize="@dimen/sp_14"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_tint" />
@@ -31,9 +34,9 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:layout_marginTop="15dp"
-        android:background="@color/gray_aaa"
+        android:background="@color/gray_f2f2f2"
         app:layout_constraintTop_toBottomOf="@id/tv_confirm_publish" />
 
     <LinearLayout
@@ -42,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/divider">
 
         <TextView
+
             android:id="@+id/tv_cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -52,9 +56,11 @@
             android:textColor="@color/red_crimson" />
 
         <View
-            android:layout_width="0.5dp"
+            android:id="@+id/view_divider"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_aaa" />
+            android:background="@color/gray_f2f2f2"
+            />
 
         <TextView
             android:id="@+id/tv_confirm"

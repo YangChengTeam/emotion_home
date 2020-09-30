@@ -1,6 +1,8 @@
 package com.yc.emotion.home.index.adapter
 
 import android.text.TextUtils
+import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
@@ -8,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
+import org.w3c.dom.Text
 
 /**
  * Created by mayn on 2019/5/5.
@@ -44,6 +47,7 @@ class LoveHealDetAdapter(data: List<LoveHealDetDetailsBean>?) : BaseMultiItemQui
 
                 }
             } else if (item.type == LoveHealDetDetailsBean.VIEW_ITEM) {
+
                 helper.setText(R.id.item_details_bean_tv_name, item.content)
                 if (!TextUtils.isEmpty(ansSex)) {
 
@@ -51,7 +55,10 @@ class LoveHealDetAdapter(data: List<LoveHealDetDetailsBean>?) : BaseMultiItemQui
                         "1" -> //1男2女0bi'a
                             helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_men))
                         "2" -> helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_women))
-                        else -> helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_nothing))
+                        else -> {
+                            helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_nothing))
+                        }
+
                     }
                 }
                 helper.addOnClickListener(R.id.item_details_bean_iv_copy)

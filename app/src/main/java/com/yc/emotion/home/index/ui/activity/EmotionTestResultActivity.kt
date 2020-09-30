@@ -11,6 +11,8 @@ import com.yc.emotion.home.index.presenter.EmotionTestPresenter
 import com.yc.emotion.home.index.view.EmotionTestView
 import com.yc.emotion.home.model.bean.EmotionTestInfo
 import com.yc.emotion.home.model.bean.QuestionInfo
+import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_emotion_test_result.*
 
 /**
@@ -55,6 +57,7 @@ class EmotionTestResultActivity : BaseSlidingActivity(), EmotionTestView {
     }
 
     private fun initView() {
+        tv_app_name.text=UIUtils.getAppName(this)
         val test_id = intent?.getStringExtra("test_id")
         val questionInfos = intent?.getParcelableArrayListExtra<QuestionInfo>("answer")
         val aid = intent?.getIntExtra("aid", 0)
@@ -70,15 +73,15 @@ class EmotionTestResultActivity : BaseSlidingActivity(), EmotionTestView {
     }
 
     private fun initListener() {
-        tv_test_again.setOnClickListener { finish() }
-        tv_test_praise.setOnClickListener {
+        tv_test_again.clickWithTrigger { finish() }
+        tv_test_praise.clickWithTrigger {
             tv_test_praise.visibility = View.GONE
             tv_test_praise_count.visibility = View.VISIBLE
         }
 
-        activity_base_same_iv_back.setOnClickListener { finish() }
+        activity_base_same_iv_back.clickWithTrigger { finish() }
 
-        tv_copy_wx.setOnClickListener { showToWxServiceDialog() }
+        tv_copy_wx.clickWithTrigger { showToWxServiceDialog() }
 
     }
 

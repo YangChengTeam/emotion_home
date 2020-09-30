@@ -1,14 +1,15 @@
 package com.yc.emotion.home.mine.presenter
 
 import android.content.Context
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.mine.domain.model.OrderModel
 import com.yc.emotion.home.mine.view.OrderView
 import com.yc.emotion.home.model.bean.OrderInfo
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -36,14 +37,17 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<OrderMod
             mView.showLoadingDialog()
         }
 
-        mModel?.getOrderList("$userId", page, pageSize)?.subscribe(object : Subscriber<ResultInfo<List<OrderInfo>>>() {
-            override fun onNext(t: ResultInfo<List<OrderInfo>>?) {
-                t?.let {
+        mModel?.getOrderList("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<OrderInfo>>>() {
+            override fun onNext(t: ResultInfo<List<OrderInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null) {
+                        if (t.data != null && t.data.isNotEmpty()) {
                             mView.showOrderList(t.data)
                         } else {
                             if (page == 1) mView.onNoData()
+                            else {
+                                mView.onEnd()
+                            }
                         }
                     } else {
                         if (page == 1) mView.onNoData()
@@ -51,12 +55,12 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<OrderMod
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
                 if (page == 1) mView.hideLoadingDialog()
 
                 mView.onError()

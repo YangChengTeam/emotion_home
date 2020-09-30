@@ -16,6 +16,7 @@ import com.yc.emotion.home.index.ui.fragment.EmotionSearchResultFragment
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.ToastUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_emotion_search.*
 
 /**
@@ -76,7 +77,7 @@ class EmotionSearchActivity : BaseActivity() {
     }
 
     private fun initListener() {
-        activity_base_same_iv_back.setOnClickListener {
+        activity_base_same_iv_back.clickWithTrigger {
             popBackStack()
         }
         et_emotion_search.addTextChangedListener(object : TextWatcher {
@@ -103,14 +104,14 @@ class EmotionSearchActivity : BaseActivity() {
 
             }
         })
-        iv_delete.setOnClickListener {
+        iv_delete.clickWithTrigger {
             et_emotion_search.setText("")
             iv_delete.visibility = View.GONE
         }
-        tv_emotion_search.setOnClickListener {
+        tv_emotion_search.clickWithTrigger {
             if (TextUtils.isEmpty(keyword)) {
                 ToastUtils.showCenterToast("请输入关键字搜索")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
 
 

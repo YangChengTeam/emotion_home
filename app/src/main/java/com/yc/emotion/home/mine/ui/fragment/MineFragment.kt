@@ -5,11 +5,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.text.Html
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -20,21 +17,26 @@ import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
-import com.yc.emotion.home.index.ui.activity.ConsultAppointActivity
-import com.yc.emotion.home.message.ui.fragment.MessageActivity
+import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment
+import com.yc.emotion.home.message.ui.activity.MessageActivity
+import com.yc.emotion.home.mine.domain.bean.RewardInfo
+import com.yc.emotion.home.mine.domain.model.UserInfoModel
 import com.yc.emotion.home.mine.ui.activity.*
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
-import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.utils.ToastUtils
-import com.yc.emotion.home.utils.UserInfoHelper
-import com.yc.emotion.home.utils.clickWithTrigger
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.utils.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main_mine.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  * Created by mayn on 2019/4/23.
@@ -43,6 +45,9 @@ import org.greenrobot.eventbus.ThreadMode
 class MineFragment : BaseFragment<BasePresenter<*, *>>() {
 
     private var mMainActivity: MainActivity? = null
+
+    private var invatationcode by Preference(ConstantKey.INVITATION_CODE, "")
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {
@@ -67,7 +72,8 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
 
     override fun initViews() {
 
-        tv_business.text = HtmlCompat.fromHtml("商务微信号 ：<font color='#FF2D55'>qgzj802</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+        tv_business.text = HtmlCompat.fromHtml("商务微信号 ：<font color='#FF2D55'>qgzj0001</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         main_t5_tv_btn_info.clickWithTrigger { toUserInfo() }
 
@@ -87,7 +93,7 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
         ll_mine_order.clickWithTrigger {
             mMainActivity?.let {
                 if (!UserInfoHelper.instance.goToLogin(mMainActivity))
-                    startActivity(Intent(mMainActivity, OrderActivityNew::class.java))
+                    startActivity(Intent(mMainActivity, OrderActivity::class.java))
             }
         }
         ll_mine_test_report.clickWithTrigger {
@@ -99,26 +105,46 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
         rl_person_face.clickWithTrigger { toUserInfo() }
         main_t5_tv_name.clickWithTrigger { toUserInfo() }
         mineItemView_invite.clickWithTrigger {
-            startActivity(Intent(mMainActivity, ShareActivity::class.java))
+//            startActivity(Intent(mMainActivity, ShareActivity::class.java))
+            val shareAppFragment = ShareAppFragment()
+            mMainActivity?.let {
+
+                shareAppFragment.show(it.supportFragmentManager, "")
+            }
+            MobclickAgent.onEvent(mMainActivity, "share_reward", "分享赚钱")
         }
         ll_vip.clickWithTrigger {
             MobclickAgent.onEvent(mMainActivity, "vip_pay_id", "VIP特权卡点击")
-            startActivity(Intent(mMainActivity, VipActivity::class.java))
+            mMainActivity?.let {
+                if (!UserInfoHelper.instance.goToLogin(mMainActivity)) {
+                    startActivity(Intent(mMainActivity, BecomeVipActivity::class.java))
+                }
+            }
         }
-        ll_free_order.clickWithTrigger {
-            startActivity(Intent(mMainActivity, ConsultAppointActivity::class.java))
-            MobclickAgent.onEvent(mMainActivity, "free_booking_id", "我的免费预约")
+        ll_make_money.clickWithTrigger {
+//            startActivity(Intent(mMainActivity, ConsultAppointActivity::class.java))
+            MobclickAgent.onEvent(mMainActivity, "reward_click", "赚现金点击")
+            mMainActivity?.let {
+                if (!UserInfoHelper.instance.goToLogin(mMainActivity)) {
+                    startActivity(Intent(mMainActivity, RewardActivity::class.java))
+                }
+            }
+
+
         }
         rl_user_info.clickWithTrigger { toUserInfo() }
         mineItemView_message.clickWithTrigger {
             startActivity(Intent(mMainActivity, MessageActivity::class.java))
         }
         mineItemView_live.clickWithTrigger {
-            val livePermissonFragment = LivePermissonFragment()
-            livePermissonFragment.show(childFragmentManager, "")
+            val livePermissionFragment = LivePermissionFragment()
+            livePermissionFragment.show(childFragmentManager, "")
         }
         tv_business.clickWithTrigger {
-            copyBusiness()
+            copyBusiness("qgzj0001", "微信号已复制，请到微信里添加！")
+        }
+        tv_invitation_copy.clickWithTrigger {
+            copyBusiness(invatationcode, "邀请码已复制，快去邀请好友赚钱吧！")
         }
     }
 
@@ -136,7 +162,6 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
             return
         }
 
-
 //        CommonInfoHelper.getO<UserInfo>(mMainActivity, "${id}_mine_user_info", object : TypeReference<UserInfo>() {
 //
 //        }.type) { idCorrelationLoginBean ->
@@ -148,6 +173,31 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
 
         fillData(UserInfoHelper.instance.getUserInfo())
 
+    }
+
+    private fun getInvitationCode() {
+
+        val userInfoModel = UserInfoModel(mMainActivity)
+        userInfoModel.getRewardInfo()?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe(object : DisposableObserver<ResultInfo<RewardInfo>>() {
+            override fun onComplete() {
+
+            }
+
+            override fun onNext(t: ResultInfo<RewardInfo>) {
+                t.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                        if (!TextUtils.isEmpty(t.data.code))
+                            invatationcode = t.data.code
+                        tv_invitation.text = "邀请码：$invatationcode"
+                    }
+
+                }
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        })
 
     }
 
@@ -167,6 +217,8 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
         iv_person_face.setImageResource(R.mipmap.main_icon_default_head)
         main_t5_tv_btn_info.visibility = View.GONE
         iv_vip_tips.visibility = View.GONE
+        ll_invitation_container.visibility = View.GONE
+        tv_vip_expire_time.visibility = View.GONE
     }
 
 
@@ -190,16 +242,24 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
             0, 2 -> {//0 未开通
                 if (TextUtils.isEmpty(nickName))
                     nickName = "普通用户"
+//                main_t5_tv_btn_info.visibility = View.VISIBLE
+                ll_invitation_container.visibility = View.GONE
+                tv_vip_expire_time.visibility = View.GONE
             }
             1 -> {// 1 已开通
                 if (TextUtils.isEmpty(nickName))
                     nickName = "VIP用户"
                 iv_vip_tips.visibility = View.VISIBLE
+                main_t5_tv_btn_info.visibility = View.GONE
+                tv_vip_expire_time.visibility = View.VISIBLE
+                tv_vip_expire_time.text = "到期时间：${DateUtils.formatTimeToStr(userInfo.vip_end_time.toLong(), "yyyy.MM.dd")}"
+                if (!TextUtils.isEmpty(invatationcode)) {
+                    ll_invitation_container.visibility = View.VISIBLE
+                    tv_invitation.text = "邀请码：$invatationcode"
+                }
             }
         }
         main_t5_tv_name.text = nickName
-
-
 
         if (!TextUtils.isEmpty(signature)) {
             count += 1
@@ -234,9 +294,8 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
         if (ratio == "100") {
             text = "信息已完善"
         }
-        main_t5_tv_btn_info.visibility = View.VISIBLE
+//        main_t5_tv_btn_info.visibility = View.VISIBLE
         main_t5_tv_btn_info.text = text
-
 
     }
 
@@ -250,7 +309,10 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
             }
             EventLoginState.STATE_LOGINED ->
                 //                setTitleName();
+            {
                 netIsVipData()
+                getInvitationCode()
+            }
             EventLoginState.STATE_UPDATE_INFO -> {
                 val userInfo = event.userInfo
                 fillData(userInfo)
@@ -262,13 +324,14 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPaySuccess(eventPayVipSuccess: EventPayVipSuccess) {
         netIsVipData()
+        getInvitationCode()
     }
 
-    private fun copyBusiness() {
+    private fun copyBusiness(wx: String, mess: String) {
         val myClipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val myClip = ClipData.newPlainText("text", "qgzj802")
+        val myClip = ClipData.newPlainText("text", wx)
         myClipboard.primaryClip = myClip
-        ToastUtils.showCenterToast("微信号已复制，请到微信里添加！")
+        ToastUtils.showCenterToast(mess)
         mMainActivity?.openWeiXin()
     }
 

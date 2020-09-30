@@ -5,6 +5,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.fragment.BaseBottomSheetDialogFragment
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.layout_vip_pay_way.*
 
 /**
@@ -43,20 +44,20 @@ class VipPayWayFragment : BaseBottomSheetDialogFragment() {
 
     private fun initListener() {
 
-        icClose?.setOnClickListener { dismiss() }
+        icClose?.clickWithTrigger { dismiss() }
 
-        rlAliPay?.setOnClickListener {
+        rlAliPay?.clickWithTrigger {
             payWayName = "alipay"
             ivAli?.setImageResource(R.mipmap.icon_circle_sel)
             ivWx?.setImageResource(R.mipmap.icon_circle_default)
         }
 
-        rlWxiPay?.setOnClickListener {
+        rlWxiPay?.clickWithTrigger {
             payWayName = "wxpay"
             ivWx?.setImageResource(R.mipmap.icon_circle_sel)
             ivAli?.setImageResource(R.mipmap.icon_circle_default)
         }
-        tvPayBtn?.setOnClickListener {
+        tvPayBtn?.clickWithTrigger {
 
             onPayWaySelectListener?.onPayWaySelect(payWayName)
             dismiss()

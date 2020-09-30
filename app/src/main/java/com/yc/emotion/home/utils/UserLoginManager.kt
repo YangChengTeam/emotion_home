@@ -2,14 +2,15 @@ package com.yc.emotion.home.utils
 
 import android.app.Activity
 import android.util.Log
-import com.kk.utils.LogUtil
-import com.kk.utils.ToastUtil
+
 import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.yc.emotion.home.base.listener.ThirdLoginListener
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.model.bean.UserAccreditInfo
+import yc.com.rthttplibrary.util.LogUtil
+import yc.com.rthttplibrary.util.ToastUtil
 
 /**
  * Created by wanglin  on 2018/11/19 13:39.
@@ -62,14 +63,14 @@ class UserLoginManager {
                         mLoginListener?.onLoginResult(userDataInfo)
                         closeProgressDialog()
                     } else {
-                        ToastUtil.toast2(mActivity, "登录失败，请重试!")
+                        ToastUtil.toast(mActivity, "登录失败，请重试!")
                         closeProgressDialog()
                     }
                 }
             } catch (e: Exception) {
                 LogUtil.msg("complete:-->" + e.message)
                 closeProgressDialog()
-                ToastUtil.toast2(mActivity, "登录失败，请重试!")
+                ToastUtil.toast(mActivity, "登录失败，请重试!")
                 deleteOauth(share_media)
             }
         }
@@ -77,12 +78,12 @@ class UserLoginManager {
         override fun onError(share_media: SHARE_MEDIA, action: Int, throwable: Throwable) {
             closeProgressDialog()
             LogUtil.msg("login error->>" + throwable.message)
-            ToastUtil.toast2(mActivity, "登录失败,请重试！")
+            ToastUtil.toast(mActivity, "登录失败,请重试！")
             deleteOauth(share_media)
         }
 
         override fun onCancel(share_media: SHARE_MEDIA, action: Int) {
-            ToastUtil.toast2(mActivity, "登录取消")
+            ToastUtil.toast(mActivity, "登录取消")
             closeProgressDialog()
         }
     }

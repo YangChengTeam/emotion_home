@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.LoveUpDownPhotoAdapter
@@ -28,7 +28,7 @@ class LoveUpDownPhotoFragment : BaseFragment<LoveUpDownPresenter>(), View.OnClic
     private var mDataString: String? = null
     private lateinit var mLoveUpDownPhotoActivity: LoveUpDownPhotoActivity
     private var mLoadingDialog: LoadDialog? = null
-    private var mLoveEngin: LoveEngine? = null
+    private var mLoveEngin: BaseModel? = null
     private var mPosition = 0
     private var mIsVisibleFragment = false
 
@@ -51,7 +51,7 @@ class LoveUpDownPhotoFragment : BaseFragment<LoveUpDownPresenter>(), View.OnClic
 
         mLoveUpDownPhotoActivity = activity as LoveUpDownPhotoActivity
         mLoadingDialog = mLoveUpDownPhotoActivity.mLoadingDialog
-        mLoveEngin = LoveEngine(mLoveUpDownPhotoActivity)
+        mLoveEngin = BaseModel(mLoveUpDownPhotoActivity)
         //        TextView tv = rootView.findViewById(R.love_id.fragment_love_up_down_photo_tv);
         initTitle()
 //        mRecyclerView = rootView.findViewById(R.id.fragment_love_up_down_photo_rv)

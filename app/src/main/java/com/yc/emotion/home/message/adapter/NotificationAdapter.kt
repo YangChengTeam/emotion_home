@@ -13,9 +13,9 @@ import com.yc.emotion.home.model.bean.MessageInfo
 class NotificationAdapter(mDatas: List<MessageInfo>?) : CommonMoreAdapter<MessageInfo, BaseViewHolder>(R.layout.notification_item_view, mDatas) {
 
 
-    override fun convert(helper: BaseViewHolder?, item: MessageInfo?) {
+    override fun convert(helper: BaseViewHolder, item: MessageInfo?) {
 
-        helper?.let {
+
             item?.let {
 
                 helper.setText(R.id.tv_message_name, item.name)
@@ -23,6 +23,6 @@ class NotificationAdapter(mDatas: List<MessageInfo>?) : CommonMoreAdapter<Messag
             }
 
 
-        }
+
     }
 }

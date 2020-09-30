@@ -45,11 +45,13 @@ public class CourseInfo implements Parcelable {
 
     private String tutor_face;//导师图像
 
-    private String goods_id;//商品id
+    private int goods_id;//商品id
 
     private int is_collect;//是否收藏
 
     private long duration;//时长
+
+    private int has_buy;//0 是没有购买 | 1. 购买
 
 
     @Nullable
@@ -175,11 +177,11 @@ public class CourseInfo implements Parcelable {
         this.tutor_face = tutor_face;
     }
 
-    public String getGoods_id() {
+    public int getGoods_id() {
         return goods_id;
     }
 
-    public void setGoods_id(String goods_id) {
+    public void setGoods_id(int goods_id) {
         this.goods_id = goods_id;
     }
 
@@ -197,6 +199,14 @@ public class CourseInfo implements Parcelable {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public int getHas_buy() {
+        return has_buy;
+    }
+
+    public void setHas_buy(int has_buy) {
+        this.has_buy = has_buy;
     }
 
     public CourseInfo() {
@@ -224,12 +234,13 @@ public class CourseInfo implements Parcelable {
         dest.writeSerializable(this.goods_info);
         dest.writeString(this.chapter_content);
         dest.writeString(this.tutor_face);
-        dest.writeString(this.goods_id);
+        dest.writeInt(this.goods_id);
         dest.writeInt(is_collect);
         dest.writeLong(duration);
+        dest.writeInt(this.has_buy);
     }
 
-    protected CourseInfo(Parcel in) {
+    protected CourseInfo(@NotNull Parcel in) {
         this.id = in.readString();
         this.img = in.readString();
         this.count = in.readInt();
@@ -245,9 +256,10 @@ public class CourseInfo implements Parcelable {
         this.goods_info = (GoodsInfo) in.readSerializable();
         this.chapter_content = in.readString();
         this.tutor_face = in.readString();
-        this.goods_id = in.readString();
+        this.goods_id = in.readInt();
         this.is_collect = in.readInt();
         this.duration = in.readLong();
+        this.has_buy = in.readInt();
     }
 
     public static final Creator<CourseInfo> CREATOR = new Creator<CourseInfo>() {

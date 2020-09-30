@@ -47,25 +47,6 @@ class CommunityNoticeDetailActivity : BaseSameActivity(), CommunityView {
     private fun getData() {
 
         (mPresenter as? CommunityPresenter)?.getTopTopicInfos()
-//        mLoadingDialog?.showLoadingDialog()
-//        mLoveEngine?.topTopicInfos?.subscribe(object : Subscriber<ResultInfo<TopTopicInfo>>() {
-//            override fun onCompleted() {
-//                mLoadingDialog?.dismissLoadingDialog()
-//            }
-//
-//            override fun onError(e: Throwable) {
-//
-//
-//            }
-//
-//            override fun onNext(topTopicInfoResultInfo: ResultInfo<TopTopicInfo>?) {
-//                if (topTopicInfoResultInfo != null && topTopicInfoResultInfo.code == HttpConfig.STATUS_OK && topTopicInfoResultInfo.data.topic_info != null) {
-//                    val topic_info = topTopicInfoResultInfo.data.topic_info
-//
-//
-//                }
-//            }
-//        })
 
     }
 

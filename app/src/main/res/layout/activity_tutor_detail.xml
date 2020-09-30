@@ -7,7 +7,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -146,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:theme="@style/actionBarTheme"
+            android:background="@android:color/transparent"
             app:contentInsetStart="0dp">
 
             <LinearLayout

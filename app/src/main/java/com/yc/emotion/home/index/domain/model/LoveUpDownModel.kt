@@ -1,45 +1,28 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.engin.HttpCoreEngin
+import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.LoveHealingBean
-import rx.Observable
-import java.util.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
  * Created by suns  on 2020/4/28 16:01.
  */
-class LoveUpDownModel(override var context: Context?) : IModel {
+class LoveUpDownModel(override var context: Context?) : IModel(context) {
 
 
-    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String?): Observable<AResultInfo<List<LoveHealingBean>>> {
-        val params: MutableMap<String?, String?> = HashMap()
-        params["user_id"] = userId
-        params["page"] = page
-        params["page_size"] = page_size
+    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String?): io.reactivex.Observable<ResultInfo<List<LoveHealingBean>>> {
 
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.debugBaseUrl + url, object : TypeReference<AResultInfo<List<LoveHealingBean>>>() {}.type,
-                params,
-                true,
-                true, true) as Observable<AResultInfo<List<LoveHealingBean>>>
+        return request.recommendLovewords(userId, page, page_size, URLConfig.debugBaseUrl + url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun collectLovewords(userId: String?, lovewordsId: String?, url: String?): Observable<AResultInfo<String>> {
-        val params: MutableMap<String?, String?> = HashMap()
-        params["user_id"] = userId
-        params["lovewords_id"] = lovewordsId
+    fun collectLovewords(userId: String?, lovewordsId: String?, url: String?): io.reactivex.Observable<ResultInfo<String>> {
 
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.getUrlV1(url), object : TypeReference<AResultInfo<String?>?>() {}.type,
-                params,
-                true,
-                true, true) as Observable<AResultInfo<String>>
+        return request.collectLovewords(userId, lovewordsId, URLConfig.getUrlV1(url)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 }

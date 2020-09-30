@@ -14,7 +14,8 @@ import com.yc.emotion.home.R
  * Created by mayn on 2019/4/28.
  */
 class MainMyItemLin(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    private var mTvSub: TextView? = null
+    private lateinit var mTvSub: TextView
+
     private fun initView(context: Context, attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MainMyItemLin)
         try {
@@ -36,7 +37,7 @@ class MainMyItemLin(context: Context, attrs: AttributeSet) : LinearLayout(contex
                 viewLineBom.visibility = View.GONE
             }
             tvDes.text = text
-            mTvSub.setText(textSub)
+            mTvSub.text = textSub
             ivIcon.setImageDrawable(imgSrc)
         } catch (e: Exception) {
         } finally {
@@ -51,7 +52,7 @@ class MainMyItemLin(context: Context, attrs: AttributeSet) : LinearLayout(contex
         }*/
     fun setSub(des: String?) {
         if (!TextUtils.isEmpty(des)) {
-            mTvSub!!.text = des
+            mTvSub.text = des
         }
     }
 

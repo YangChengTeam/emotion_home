@@ -53,7 +53,7 @@ public class GenerateTestUserSig {
     private static final int EXPIRETIME = 604800;
 
 
-    private static final String SECRETKEY = "2e7a289f4ae41049e30c2c1efeaab15c1ccd096bc193deee37eda155fb9b7a0e"; //"cd0a1d5dc0cb4a4f275154a496abbb087b3c21b7d7bfb86f2d34fbb10614870c";
+    private static final String SECRETKEY = "";
 
 
     /**

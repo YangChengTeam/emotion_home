@@ -18,10 +18,9 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.kk.share.UMShareImpl
-import com.kk.utils.ToastUtil
+
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
 import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject
@@ -31,7 +30,7 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.model.bean.ShareInfo
 import com.yc.emotion.home.model.bean.event.EventBusWxPayResult
@@ -39,8 +38,13 @@ import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.ShareInfoHelper
 import com.yc.emotion.home.utils.UIUtils
 import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
+import com.yc.emotion.home.utils.clickWithTrigger
+import io.reactivex.observers.DisposableObserver
 import org.greenrobot.eventbus.EventBus
-import rx.Subscriber
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.util.ToastUtil
+
 import java.io.ByteArrayOutputStream
 import java.util.*
 
@@ -57,9 +61,10 @@ class ShareAppFragment : BottomSheetDialogFragment() {
     private var llCircle: LinearLayout? = null
     private var tvCancelShare: TextView? = null
     private var mShareInfo: ShareInfo? = null
-    private lateinit var loveEngin: LoveEngine
+    private lateinit var baseModel: BaseModel
     private var llMiniProgram: LinearLayout? = null
     private var api: IWXAPI? = null
+
     fun setShareInfo(mShareInfo: ShareInfo?) {
         this.mShareInfo = mShareInfo
     }
@@ -114,8 +119,9 @@ class ShareAppFragment : BottomSheetDialogFragment() {
 
     private fun init() {
         api = WXAPIFactory.createWXAPI(mContext, ConstantKey.WX_APP_ID, false)
-        loveEngin = LoveEngine(mContext)
-        tvCancelShare?.setOnClickListener { v: View? -> dismiss() }
+        baseModel = BaseModel(mContext)
+
+        tvCancelShare?.clickWithTrigger { v: View? -> dismiss() }
         val shareItemViews: MutableList<View?> = ArrayList()
         shareItemViews.add(llWx)
         shareItemViews.add(llCircle)
@@ -123,8 +129,9 @@ class ShareAppFragment : BottomSheetDialogFragment() {
         for (i in shareItemViews.indices) {
             val view = shareItemViews[i]
             view?.tag = i
-            view?.setOnClickListener { v: View? -> shareInfo(i) }
+            view?.clickWithTrigger { v: View? -> shareInfo(i) }
         }
+        getShareLink()
     }
 
     private fun shareInfo(tag: Int) {
@@ -135,7 +142,8 @@ class ShareAppFragment : BottomSheetDialogFragment() {
             和女生聊天没有话题？遇见喜欢的人不敢搭讪？无法吸引TA的注意？猜不透女生的心意？恋爱话术宝，一款专门为您解决以上所有情感烦恼的APP。从搭讪开场到线下邀约互动对话，妹子的回复再也不用担心没话聊。只需搜一搜，N+精彩聊天回复任你选择，让您和女生聊天不再烦恼，全方面提高您的聊天能力。
             """.trimIndent()
         val bitmap = mShareInfo?.bitmap
-        mShareInfo = ShareInfoHelper.shareInfo
+        if (mShareInfo == null)
+            mShareInfo = ShareInfoHelper.shareInfo
 
 
         mShareInfo?.let {
@@ -232,12 +240,15 @@ class ShareAppFragment : BottomSheetDialogFragment() {
         override fun onStart(share_media: SHARE_MEDIA) {
             loadingView?.setText("正在分享...")
             loadingView?.showLoadingDialog()
+            UIUtils.postDelay(Runnable {
+                loadingView?.dismissLoadingDialog()
+            }, 3000)
         }
 
         override fun onResult(share_media: SHARE_MEDIA) {
 
             loadingView?.dismissLoadingDialog()
-            ToastUtil.toast2(mContext, "分享成功")
+            ToastUtil.toast(mContext, "分享成功")
             //            RxSPTool.putBoolean(mContext, SpConstant.SHARE_SUCCESS, true);
 
 //            if (mShareInfo == null)
@@ -257,13 +268,13 @@ class ShareAppFragment : BottomSheetDialogFragment() {
 
         override fun onError(share_media: SHARE_MEDIA, throwable: Throwable) {
             loadingView?.dismissLoadingDialog()
-            ToastUtil.toast2(mContext, "分享有误")
+            ToastUtil.toast(mContext, "分享有误")
         }
 
         override fun onCancel(share_media: SHARE_MEDIA) {
 //            if (loadingView != null) {
             loadingView?.dismissLoadingDialog()
-            ToastUtil.toast2(mContext, "取消发送")
+            ToastUtil.toast(mContext, "取消发送")
         }
     }
 
@@ -272,15 +283,37 @@ class ShareAppFragment : BottomSheetDialogFragment() {
         if (id < 0) {
             return
         }
-        loveEngin.shareReward(id.toString() + "").subscribe(object : Subscriber<ResultInfo<String>?>() {
-            override fun onCompleted() {}
+        baseModel.shareReward("$id").subscribe(object : DisposableObserver<ResultInfo<String>?>() {
+            override fun onComplete() {}
             override fun onError(e: Throwable) {}
-            override fun onNext(stringResultInfo: ResultInfo<String>?) {
-                if (stringResultInfo != null && stringResultInfo.code == HttpConfig.STATUS_OK) {
+            override fun onNext(stringResultInfo: ResultInfo<String>) {
+                if (stringResultInfo.code == HttpConfig.STATUS_OK) {
                     //分享成功
-                    EventBus.getDefault().post(EventBusWxPayResult(0, "分享成功"))
+//                    EventBus.getDefault().post(EventBusWxPayResult(0, "分享成功"))
                 }
             }
+        })
+    }
+
+    private fun getShareLink() {
+        baseModel.getShareLink()?.subscribe(object : DisposableObserver<ResultInfo<ShareInfo>>() {
+            override fun onComplete() {
+
+            }
+
+            override fun onNext(t: ResultInfo<ShareInfo>) {
+                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                    val shareInfo = t.data
+
+                    mShareInfo = shareInfo
+                    ShareInfoHelper.shareInfo= shareInfo
+                }
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
         })
     }
 

@@ -214,7 +214,7 @@ public class VerificationCodeInput extends ViewGroup {
 
             if (listener != null) {
                 listener.onComplete(stringBuilder.toString());
-                setEnabled(false);
+                setEnabled(true);
             }
 
         }

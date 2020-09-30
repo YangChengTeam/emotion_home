@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.presenter.EmotionTestPresenter
@@ -16,8 +14,9 @@ import com.yc.emotion.home.model.bean.EmotionTestTopicInfo
 import com.yc.emotion.home.model.bean.QuestionInfo
 import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_emotion_test_desc.*
-import rx.Subscriber
+
 
 /**
  *
@@ -72,7 +71,7 @@ class EmotionTestDescActivity : BaseSameActivity(), EmotionTestView {
     }
 
     fun initListener() {
-        tv_emotion_test_btn.setOnClickListener {
+        tv_emotion_test_btn.clickWithTrigger {
 
             if (!UserInfoHelper.instance.goToLogin(this)) {
 
@@ -80,13 +79,13 @@ class EmotionTestDescActivity : BaseSameActivity(), EmotionTestView {
 
                     var dIntent: Intent? = null
 
-                    when {
-                        emotionTestInfo?.type == 1 -> dIntent = Intent(this, EmotionTestSkipDetailActivity::class.java)
-                        emotionTestInfo?.type == 2 -> {
+                    when (emotionTestInfo?.type) {
+                        1 -> dIntent = Intent(this, EmotionTestSkipDetailActivity::class.java)
+                        2 -> {
                             dIntent = Intent(this, EmotionTestDetailActivity::class.java)
                             dIntent.putExtra("type", 2)
                         }
-                        emotionTestInfo?.type == 3 -> {
+                        3 -> {
                             dIntent = Intent(this, EmotionTestDetailActivity::class.java)
                             dIntent.putExtra("type", 3)
                         }

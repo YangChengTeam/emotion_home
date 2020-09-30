@@ -16,6 +16,7 @@ import com.yc.emotion.home.model.bean.event.CommunityPublishSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.SnackBarUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_community_publish.*
 import org.greenrobot.eventbus.EventBus
 
@@ -72,13 +73,13 @@ class CommunityPublishActivity : BaseSameActivity(), CommunityView {
             tagAdapter?.resetView()
             tagAdapter?.setViewState(position)
         }
-        ivBack.setOnClickListener { v -> showExitFragment() }
-        mBaseSameTvSub.setOnClickListener { v ->
+        ivBack.clickWithTrigger { v -> showExitFragment() }
+        mBaseSameTvSub.clickWithTrigger { v ->
             val content = et_community.text.toString().trim { it <= ' ' }
             hindKeyboard(et_community)
             if (TextUtils.isEmpty(content)) {
                 SnackBarUtils.tips(this@CommunityPublishActivity, "请输入您的问题")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             publishComment(content)
 
@@ -90,9 +91,7 @@ class CommunityPublishActivity : BaseSameActivity(), CommunityView {
 
     private fun publishComment(content: String) {
 
-
         (mPresenter as? CommunityPresenter)?.publishCommunityInfo(tagInfo?.id, content)
-
 
     }
 
@@ -113,7 +112,7 @@ class CommunityPublishActivity : BaseSameActivity(), CommunityView {
     }
 
     private fun showExitFragment() {
-        val exitPublishFragment = ExitPublishFragment()
+        val exitPublishFragment = ExitPublishFragment.newInstance("")
         exitPublishFragment.show(supportFragmentManager, "")
         exitPublishFragment.setOnConfirmListener (object :ExitPublishFragment.OnConfirmListener{
             override fun onConfirm() {

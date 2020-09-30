@@ -11,6 +11,7 @@ import com.yc.emotion.home.index.presenter.TutorCoursePresenter
 import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
 import com.yc.emotion.home.index.view.TutorCourseView
 import com.yc.emotion.home.model.bean.CourseInfo
+import com.yc.emotion.home.model.bean.OrdersInitBean
 import kotlinx.android.synthetic.main.fragment_collect_view.*
 
 /**
@@ -21,10 +22,10 @@ class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCours
 
 
 
-    var efficientCourseAdapter: EfficientCourseAdapter? = null
+    private var efficientCourseAdapter: EfficientCourseAdapter? = null
 
 
-    var catId: String? = null
+    private var catId: String? = null
 
 
     override fun getLayoutId(): Int {
@@ -57,7 +58,6 @@ class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCours
     fun initListener() {
         val activity = activity
         activity?.let {
-
             swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(activity, R.color.app_color))
             swipeRefreshLayout.setOnRefreshListener {
                 getData()
@@ -100,6 +100,10 @@ class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCours
     override fun showCourseListInfo(data: List<CourseInfo>?) {
         efficientCourseAdapter?.setNewData(data)
         top_empty_view.visibility = View.GONE
+    }
+
+    override fun showOrderInfo(data: OrdersInitBean?, payWayName: String) {
+
     }
 
 

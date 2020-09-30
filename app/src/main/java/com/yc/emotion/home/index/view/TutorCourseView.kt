@@ -4,6 +4,7 @@ import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.base.view.StateDefaultImpl
 import com.yc.emotion.home.model.bean.CourseInfo
+import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.model.bean.TutorCommentInfo
 import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
 import java.util.ArrayList
@@ -19,4 +20,5 @@ interface TutorCourseView : IView, IDialog, StateDefaultImpl {
     fun showCourseCategory(data: ArrayList<CourseInfo>?) {}
     fun showCourseListInfo(data: List<CourseInfo>?) {}
     fun showTutorCourseInfos(lessons: List<CourseInfo>?) {}
+    fun showOrderInfo(data: OrdersInitBean?, payWayName: String)
 }

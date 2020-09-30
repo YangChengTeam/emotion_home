@@ -14,8 +14,8 @@ import com.yc.emotion.home.model.bean.TutorInfo
  * Created by suns  on 2019/10/9 14:02.
  */
 class TutorListAdapter(mDatas: List<TutorInfo>?) : CommonMoreAdapter<TutorInfo, BaseViewHolder>(R.layout.layout_tutor_list_item, mDatas) {
-    override fun convert(helper: BaseViewHolder?, item: TutorInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: TutorInfo?) {
+
             item?.let {
 
                 helper.setText(R.id.tv_tutor_name, item.name)
@@ -38,5 +38,5 @@ class TutorListAdapter(mDatas: List<TutorInfo>?) : CommonMoreAdapter<TutorInfo, 
                         .diskCacheStrategy(DiskCacheStrategy.DATA)).into(helper.getView(R.id.iv_tutor_face))
             }
         }
-    }
+
 }

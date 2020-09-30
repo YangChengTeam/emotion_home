@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.yc.emotion.home.R;
 import com.yc.emotion.home.base.listener.Callback;
-import com.yc.emotion.home.constant.Constant;
+import com.yc.emotion.home.base.constant.Constant;
 
 import java.io.File;
 import java.util.ArrayList;

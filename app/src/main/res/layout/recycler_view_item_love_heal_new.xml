@@ -17,14 +17,23 @@
 
     <TextView
         android:id="@+id/item_love_heal_title_tv_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="@dimen/dp_10"
         android:text="55555"
-        android:textColor="@color/black"
+        android:textColor="@color/app_color"
         android:textSize="@dimen/size_14"
         android:lineSpacingExtra="5dp"
         android:textStyle="bold" />
+    <TextView
+        android:id="@+id/item_love_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_10"
+        android:lineSpacingExtra="5dp" />
 </LinearLayout>
 
 

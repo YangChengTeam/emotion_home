@@ -22,7 +22,8 @@
                 android:padding="8dp"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/size_16" />
+                android:textSize="@dimen/size_16"
+                android:text="@string/login_protocol"/>
 
             <View
                 android:layout_width="match_parent"

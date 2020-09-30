@@ -109,8 +109,6 @@ class CommunityFragment : BaseFragment<CommunityPresenter>(), View.OnClickListen
 
     private fun initData() {
 
-//        mHandler = WeakHandler(this)
-//        mPresenter.getCommunityNewsCache()
 
         getData()
     }

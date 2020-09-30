@@ -26,12 +26,13 @@ class ConfessionAdapter(data: List<ConfessionDataBean?>?) : BaseMultiItemQuickAd
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: ConfessionDataBean?) {
+    override fun convert(helper: BaseViewHolder, item: ConfessionDataBean?) {
 
-        helper?.let {
+
             item?.let {
                 when (item.itemType) {
                     ConfessionDataBean.VIEW_TITLE -> {
+                        helper.setImageResource(R.id.roundCornerImg,R.mipmap.main_bg_title_t2)
                     }
                     ConfessionDataBean.VIEW_ITEM -> {
                         val ivIcon = helper.getView<ImageView>(R.id.iv_zb_thumb)
@@ -49,7 +50,7 @@ class ConfessionAdapter(data: List<ConfessionDataBean?>?) : BaseMultiItemQuickAd
 
 
         }
-    }
+
 
 
 }

@@ -209,11 +209,6 @@
         <item>导师</item>
     </string-array>
 
-    <string-array name="order_array">
-        <item>课程</item>
-        <item>服务</item>
-    </string-array>
-
 
     <!--<item>服务</item>-->
     <string-array name="collect_array">
@@ -224,7 +219,7 @@
     </string-array>
     <string name="test_count">%1$d人测试</string>
     <string name="index">首页</string>
-    <string name="community">社区</string>
+    <string name="video">视频</string>
     <string name="study">教学</string>
     <string name="mine">我的</string>
     <string name="inVerbal">话术</string>
@@ -241,12 +236,45 @@
     </string-array>
     <string name="wait_for_mentor_on_micorphone">等待上麦</string>
     <string name="have_been_banned">已禁言</string>
-
-    <string name="online_count">%1$d人在线</string>
     <string name="praise_count">%1$d个赞</string>
     <string name="start_end_time">%1$s-%2$s</string>
     <string name="tutor_intro">%1$s实操类导师，擅长婚恋关系维护、分手挽回。心理咨询成长联盟会员</string>
     <string name="buy_course_intro">尊敬的用户：\n 您好！为了帮助您更好的选购的课程，请您在购买前务必要认真、详细阅读并完全理解本告知书的全部内容，一旦购买产品或服务，平台将默认您已知悉并同意本协议全部内容，详情请查看《%1$s三方服务协议》。\n （1）购买课程后由平台认证情感咨询师及导师为您提供服务，服务内容仅情感咨询或个人提升在线指导及建议，帮助您走出情感困境，但是无法做出任何效果性承诺或代替您采取行动，请您勿轻信类似承诺，由于情感状况收个人因素不同，不保证可以百分之百解决问题，请及时调整自我预期。\n （2）服务期间平台与您共同监督导师服务质量，平台将保证您的个人权益，如服务期间产生问题，请联系平台客服，客服会联系导师进行协调。\n （3）请在购买前查看“服务说明”，确认您的课程属于48小时不满意退款或者不支持退款，如48小时不满意退款，您有权在48小时内终止课程，并申请退款，请您在平台申请退款后及时联系您的导师进行沟通，平台将全程保障您的权益，如无法沟通请联系官方客服进行咨询。\n 为了方便您更多的了解平台服务模式，请您付款前仔细观看《%1$s三方服务协议》，致力于打造国内婚恋情感咨询领先平台，将严格监督每一位认证导师的服务质量，为用户提供专业的情感咨询，感谢您的选择!</string>
-    <string name="umeng_socialize_male">男</string>
-    <string name="umeng_socialize_female">女</string>
+    <string name="share_des" translatable="false">请输入聊天关键字，搜索常用话术</string>
+    <string name="load_failed">加载失败，请稍候重试</string>
+    <string name="load_end">没有更多数据</string>
+    <string-array name="vip_item_sub_name">
+        <item>花样幽默风趣语句，提高妹子好感度</item>
+        <item>输入TA的话，快速查找撩心话术</item>
+        <item>话术聊天实战案例，跟着套路学撩妹</item>
+        <item>恋爱脱单的爱情秘籍，撩动TA心的话术技巧</item>
+        <item>最全聊天开场白，跨出撩妹第一步</item>
+        <item>高情商表白话术，提高表白成功率</item>
+    </string-array>
+
+    <string-array name="vip_item_name">
+        <item>最少投入，恋爱成功率提高98%</item>
+        <item>20W+话术免费搜索</item>
+        <item>海量话术实战免费查看</item>
+        <item>海量话术技巧免费阅读</item>
+        <item>经典聊天开场白免费看</item>
+        <item>多样表白话术免费查看</item>
+    </string-array>
+    <string name="video_loading_failed">视频加载失败</string>
+    <string name="video_end_hint">添加咨询师微信，获取一对一在线解答</string>
+    <string name="retry_replay">点击重播</string>
+    <string name="wx_advisory">微信咨询</string>
+    <string name="retry_click">点击重试</string>
+    <string name="account_detail">明细</string>
+    <string name="refresh_verbal">换一换</string>
+    <string-array name="reward_array">
+        <item>赚钱攻略</item>
+        <item>打款晒单</item>
+        <item>排行榜</item>
+
+    </string-array>
+    <string-array name="earnings_array">
+        <item>收益</item>
+        <item>提现</item>
+    </string-array>
 </resources>

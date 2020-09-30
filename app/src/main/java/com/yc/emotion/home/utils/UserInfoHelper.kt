@@ -1,12 +1,14 @@
 package com.yc.emotion.home.utils
 
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.fastjson.JSON
-import com.yc.emotion.home.base.YcApplication
+import com.yc.emotion.home.base.EmApplication
 import com.yc.emotion.home.index.ui.fragment.WxLoginFragment
+import com.yc.emotion.home.mine.ui.activity.LoginRegisterActivity
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 
@@ -57,7 +59,7 @@ class UserInfoHelper private constructor() {
         }
         try {
             userInfoStr = JSON.toJSONString(userInfo)
-            YcApplication.getInstance().setVistorInfo()
+            EmApplication.instance.setVistorInfo()
         } catch (e: Exception) {
             Log.e("userinfo", "保存用户数据错误")
         }

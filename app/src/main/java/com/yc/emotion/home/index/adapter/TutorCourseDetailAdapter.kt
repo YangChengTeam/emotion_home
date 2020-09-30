@@ -1,6 +1,5 @@
 package com.yc.emotion.home.index.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebSettings
@@ -15,7 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.kk.utils.ScreenUtil
+
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.widget.CustomLoadMoreView
@@ -23,8 +22,8 @@ import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.model.bean.LessonInfo
 import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
 import com.yc.emotion.home.model.bean.UserInfo
-import com.yc.emotion.home.pay.ui.activity.VipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
+import yc.com.rthttplibrary.util.ScreenUtil
 
 /**
  * Created by suns  on 2019/10/10 09:00.
@@ -52,9 +51,9 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
         setLoadMoreView(CustomLoadMoreView())
     }
 
-    override fun convert(helper: BaseViewHolder?, item: TutorCourseDetailInfo?) {
+    override fun convert(helper: BaseViewHolder, item: TutorCourseDetailInfo?) {
 
-        helper?.let {
+
             item?.let {
                 when (item.itemType) {
                     TutorCourseDetailInfo.ITEM_TYPE_ONE -> {
@@ -70,13 +69,14 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
                             val lessonInfo = tutorCourseLessonAdapter.getItem(position)
                             if (listener != null) {
                                 if (position == 0 || lessonInfo?.need_pay == 0) {
-                                    if (lessonInfo != null) {
+                                    if (lessonInfo != null) {  
                                         listener?.onItemPlay(lessonInfo)
                                     }
                                     MobclickAgent.onEvent(mContext, "video_player_click", "课程视频播放点击")
                                 } else {
                                     if (!UserInfoHelper.instance.goToLogin(mContext)) {
-                                        mContext.startActivity(Intent(mContext, VipActivity::class.java))
+//                                        mContext.startActivity(Intent(mContext, BecomeVipActivity::class.java))
+                                        listener?.onItemPay(lessonInfo)
                                     }
                                 }
 
@@ -119,9 +119,8 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
                     }
                 }
             }
-        }
-    }
 
+    }
 
 
     private fun initWebView(webView: WebView, data: String?) {
@@ -188,7 +187,8 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
                             MobclickAgent.onEvent(mContext, "video_player_click", "课程视频播放点击")
                         } else {
                             if (!UserInfoHelper.instance.goToLogin(mContext)) {
-                                mContext.startActivity(Intent(mContext, VipActivity::class.java))
+//                                mContext.startActivity(Intent(mContext, VipActivity::class.java))
+                                listener?.onItemPay(lessonInfo)
                             }
                         }
 
@@ -206,7 +206,10 @@ class TutorCourseDetailAdapter(data: List<TutorCourseDetailInfo>?) : BaseMultiIt
     }
 
     interface OnItemPlayerListener {
-        fun onItemPlay(lessonInfo: LessonInfo)
+        fun onItemPlay(lessonInfo: LessonInfo?)
+
+        fun onItemPay(lessonInfo: LessonInfo?)
+
     }
 
 }

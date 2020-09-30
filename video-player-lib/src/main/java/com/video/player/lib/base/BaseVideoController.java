@@ -138,6 +138,9 @@ public abstract class BaseVideoController extends FrameLayout{
         this.mScrrenOrientation=scrrenOrientation;
     }
 
+    public abstract void complete();
+
+
     //子类控制器实现扩展功能
     public abstract static class OnFuctionListener{
         /**

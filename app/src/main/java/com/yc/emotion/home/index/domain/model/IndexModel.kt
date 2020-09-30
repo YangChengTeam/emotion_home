@@ -1,27 +1,23 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
-import com.yc.emotion.home.R
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.base.ui.activity.MainActivity
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.index.domain.bean.SexInfo
-import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.mine.domain.bean.LiveInfoWrapper
+import com.yc.emotion.home.mine.domain.bean.LiveVideoInfoWrapper
+import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.model.bean.IndexInfo
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import java.util.ArrayList
+import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
+
 
 /**
  *
  * Created by suns  on 2019/11/7 16:38.
  */
-class IndexModel(override var context: Context?) : IModel {
+class IndexModel(override var context: Context?) : IModel(context) {
 
     /**
      * 获取首页数据
@@ -29,9 +25,8 @@ class IndexModel(override var context: Context?) : IModel {
      * @return
      */
     fun getIndexInfo(): Observable<ResultInfo<IndexInfo>> {
-        return HttpCoreEngin.get(context).rxpost(URLConfig.INDEX_INFO_URL, object : TypeReference<ResultInfo<IndexInfo>>() {
-        }.type, null,
-                true, true, true) as Observable<ResultInfo<IndexInfo>>
+
+        return request.getIndexInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
@@ -39,8 +34,26 @@ class IndexModel(override var context: Context?) : IModel {
      */
     fun getOnlineLiveList(): Observable<ResultInfo<LiveInfoWrapper>> {
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.ONLINE_ROOM_LIST_URL, object : TypeReference<ResultInfo<LiveInfoWrapper>>() {}.type, null, true, true, true)
-                as Observable<ResultInfo<LiveInfoWrapper>>
+        return request.getOnlineLiveList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
+
+    /**
+     * 获取视频直播列表
+     */
+    fun getLiveVideoInfoList(): Observable<ResultInfo<LiveVideoInfoWrapper>?> {
+
+        return request.getLiveVideoInfoList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun statisticsLive(id: String?): Observable<ResultInfo<String>?> {
+
+        return request.statisticsLive(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
+
+    fun getRewardInfo(): Observable<ResultInfo<RewardInfo>>? {
+        return request.getRewardInfo("${UserInfoHelper.instance.getUid()}").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 }

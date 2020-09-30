@@ -2,8 +2,6 @@ package com.yc.emotion.home.index.presenter
 
 import android.content.Context
 import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.LoveCaseModel
 import com.yc.emotion.home.index.view.LoveCaseView
@@ -11,7 +9,9 @@ import com.yc.emotion.home.model.bean.ExampDataBean
 import com.yc.emotion.home.model.bean.MainT2Bean
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.config.HttpConfig
+
 
 /**
  *
@@ -52,27 +52,27 @@ class LoveCasePresenter(context: Context, view: LoveCaseView) : BasePresenter<Lo
         if (page == 1) {
             mView.showLoadingDialog()
         }
-        val subscription = mModel?.exampLists("$userId", page, pageSize)?.subscribe(object : Subscriber<ResultInfo<ExampDataBean>>() {
-            override fun onNext(t: ResultInfo<ExampDataBean>?) {
-                t?.let {
+        mModel?.exampLists("$userId", page, pageSize)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<ExampDataBean>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<ExampDataBean>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         createNewData(t.data, page, pageSize)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onError()
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
     private fun createNewData(exampDataBean: ExampDataBean, page: Int, pageSize: Int) {

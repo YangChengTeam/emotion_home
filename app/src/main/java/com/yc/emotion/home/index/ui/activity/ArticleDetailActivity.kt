@@ -72,6 +72,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
 
     fun initListener() {
         mBaseSameTvSub.setOnClickListener(this)
+
         example_detail_iv_like.setOnClickListener(this)
         ll_get_wechat.setOnClickListener(this)
         ll_collect.setOnClickListener(this)
@@ -81,7 +82,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
         super.onWindowFocusChanged(hasFocus)
         val layoutParams = rlBottom.layoutParams as ConstraintLayout.LayoutParams
 
-        val scroolLayoutParams = example_detail_scroll_view.layoutParams as ConstraintLayout.LayoutParams
+        val scrollLayoutParams = example_detail_scroll_view.layoutParams as ConstraintLayout.LayoutParams
 
         var bottom = 0
         var marginBottom = 0
@@ -93,8 +94,8 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
         layoutParams.bottomMargin = bottom
         rlBottom.layoutParams = layoutParams
 
-        scroolLayoutParams.bottomMargin = marginBottom
-        example_detail_scroll_view.layoutParams = scroolLayoutParams
+        scrollLayoutParams.bottomMargin = marginBottom
+        example_detail_scroll_view.layoutParams = scrollLayoutParams
     }
 
     override fun onClick(v: View) {
@@ -125,7 +126,7 @@ class ArticleDetailActivity : BaseSameActivity(), ArticleDetailView {
     }
 
     private fun initWebView(data: String) {
-        var data = data
+        val data = data
 
         val settings = example_detail_webview.settings
 

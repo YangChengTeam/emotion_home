@@ -22,17 +22,18 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.socialize.UMShareAPI
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
-import com.yc.emotion.home.community.ui.fragment.CommunityMainFragment
 import com.yc.emotion.home.factory.MainFragmentFactory
 import com.yc.emotion.home.index.domain.bean.GetAppIDConfig
 import com.yc.emotion.home.index.ui.fragment.IndexFragment
 import com.yc.emotion.home.index.ui.fragment.IndexVerbalMainFragment
+import com.yc.emotion.home.message.ui.fragment.VideoFragment
 import com.yc.emotion.home.mine.ui.fragment.MineFragment
 import com.yc.emotion.home.receiver.NetWorkChangReceiver
 import com.yc.emotion.home.skill.ui.fragment.SkillMainFragment
 import com.yc.emotion.home.utils.PreferenceUtil
-import com.yc.emotion.home.utils.PreferenceUtil.KEY_APP_ID
-import com.yc.emotion.home.utils.PreferenceUtil.KEY_APP_SIGN
+import com.yc.emotion.home.utils.PreferenceUtil.Companion.KEY_APP_ID
+import com.yc.emotion.home.utils.PreferenceUtil.Companion.KEY_APP_SIGN
+
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -72,20 +73,17 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             "1.0"
         }
 
-
         mDownloadIdKey = "download_id$mPackageVersionName"
         Log.d("mylog", "onCreate: download_id mDownloadIdKey $mDownloadIdKey")
         //初始化MusicService
 
-
 //        MusicPlayerManager.getInstance().bindService(this)
         initView()
-        if (PreferenceUtil.getInstance().getStringValue(KEY_APP_ID, "") == "") {
-            PreferenceUtil.getInstance()
-                    .setStringValue(KEY_APP_ID, java.lang.String.valueOf(GetAppIDConfig.appID))
+        if (PreferenceUtil.instance?.getStringValue(KEY_APP_ID, "") == "") {
+            PreferenceUtil.instance?.setStringValue(KEY_APP_ID, java.lang.String.valueOf(GetAppIDConfig.appID))
         }
-        if (PreferenceUtil.getInstance().getStringValue(KEY_APP_SIGN, "") == "") {
-            PreferenceUtil.getInstance().setStringValue(KEY_APP_SIGN, GetAppIDConfig.appSign)
+        if (PreferenceUtil.instance?.getStringValue(KEY_APP_SIGN, "") == "") {
+            PreferenceUtil.instance?.setStringValue(KEY_APP_SIGN, GetAppIDConfig.appSign)
         }
 
         getUserInfo()
@@ -162,7 +160,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         val fragmentList = arrayListOf<Fragment>()
         fragmentList.add(IndexFragment())
         fragmentList.add(IndexVerbalMainFragment())
-        fragmentList.add(CommunityMainFragment())
+//        fragmentList.add(CommunityMainFragment())
+        fragmentList.add(VideoFragment())
 //        fragmentList.add(MessageActivity())
         fragmentList.add(SkillMainFragment())
         fragmentList.add(MineFragment())
@@ -176,7 +175,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         comp_main_vp_fragment.adapter = commonMainPageAdapter
 //        comp_main_vp_fragment.offscreenPageLimit = 4
 
-        comp_main_vp_fragment.currentItem = 1
+        comp_main_vp_fragment.currentItem = 0
         comp_main_index.postDelayed({ this.initNetWorkChangReceiver() }, 200)
 
         comp_main_vp_fragment.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -204,19 +203,22 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         when (v.id) {
             R.id.comp_main_index -> {
                 setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_0)
+                MobclickAgent.onEvent(this, "index_click", "导航首页点击")
             }
             R.id.comp_main_inVerbal -> {
                 setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_1)
+                MobclickAgent.onEvent(this, "main_verbal_click", "导航话术点击")
             }
             R.id.comp_main_community -> {
                 setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_2)
+                MobclickAgent.onEvent(this, "main_video_click", "导航视频点击")
             }
             R.id.comp_main_message -> {
                 setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3)
+                MobclickAgent.onEvent(this, "main_pratice_click", "导航教学点击")
 
             }
             R.id.comp_main_my -> {
-
                 setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_4)
             }
 
@@ -225,7 +227,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 MobclickAgent.onEvent(this, "contact_us_click", "联系导师点击悬浮")
             }
 
-        }//                mVpFragment.setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3, false);
+        }
+        //                mVpFragment.setCurrentItem(MainFragmentFactory.MAIN_FRAGMENT_3, false);
         //                iconSelect(MainFragmentFactory.MAIN_FRAGMENT_3);
     }
 
@@ -241,7 +244,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             MainFragmentFactory.MAIN_FRAGMENT_0 -> setCompoundDrawablesTop(comp_main_index, R.mipmap.main_icon_tab_01_s)
 
             MainFragmentFactory.MAIN_FRAGMENT_1 -> setCompoundDrawablesTop(comp_main_inVerbal, R.mipmap.home_speech_sel)
-            MainFragmentFactory.MAIN_FRAGMENT_2 -> setCompoundDrawablesTop(comp_main_community, R.mipmap.home_community_select)
+            MainFragmentFactory.MAIN_FRAGMENT_2 -> setCompoundDrawablesTop(comp_main_community, R.mipmap.home_course_sel)
             MainFragmentFactory.MAIN_FRAGMENT_3 -> setCompoundDrawablesTop(comp_main_message, R.mipmap.home_love_sel)
             MainFragmentFactory.MAIN_FRAGMENT_4 -> setCompoundDrawablesTop(comp_main_my, R.mipmap.main_icon_tab_05_s)
         }
@@ -250,7 +253,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private fun clearIconState() {
         setCompoundDrawablesTop(comp_main_index, R.mipmap.main_icon_tab_01)
         setCompoundDrawablesTop(comp_main_inVerbal, R.mipmap.home_speech_default)
-        setCompoundDrawablesTop(comp_main_community, R.mipmap.home_community_default)
+        setCompoundDrawablesTop(comp_main_community, R.mipmap.home_course_default)
         setCompoundDrawablesTop(comp_main_message, R.mipmap.home_love_default)
         //        setCompoundDrawablesTop(mTvTab4, R.mipmap.main_icon_tab_04);
         setCompoundDrawablesTop(comp_main_my, R.mipmap.main_icon_tab_05)
@@ -275,7 +278,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onNewIntent(intent)
         val pos = intent.getIntExtra("pos", 0)
 
-        setCurrentItem(pos)
+//        setCurrentItem(pos)
     }
 
 

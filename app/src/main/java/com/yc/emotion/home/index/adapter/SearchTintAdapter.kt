@@ -10,13 +10,13 @@ import com.yc.emotion.home.model.bean.IndexHotInfo
  */
 class SearchTintAdapter(data: List<IndexHotInfo>?) : CommonMoreAdapter<IndexHotInfo, BaseViewHolder>(R.layout.search_tint_item, data) {
 
-    override fun convert(helper: BaseViewHolder?, item: IndexHotInfo?) {
-        helper?.let {
+    override fun convert(helper: BaseViewHolder, item: IndexHotInfo?) {
+
             item?.let {
                 helper.setText(R.id.tv_title, item.search)
                 val position = helper.adapterPosition
             }
-        }
+
 
 
         //        if (position == mData.size() - 1) {

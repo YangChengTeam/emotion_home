@@ -54,7 +54,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
     //播放器组件监听器
     private static VideoPlayerEventListener mOnPlayerEventListeners;
     //内部播放状态
-    private static int mMusicPlayerState = VideoConstants.MUSIC_PLAYER_STOP;
+    public static int mMusicPlayerState = VideoConstants.MUSIC_PLAYER_STOP;
     //息屏下WIFI锁
     private static WifiManager.WifiLock mWifiLock;
     //进度计时器
@@ -62,7 +62,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
     private Timer mTimer;
     //实时播放位置
     private int mPercentIndex;
-    private BaseVideoPlayer mNoimalPlayer, mFullScrrenPlayer, mMiniWindowPlayer, mWindownPlayer;
+    private BaseVideoPlayer mNoimalPlayer, mFullScrrenPlayer, mMiniWindowPlayer, mWindowPlayer;
     //视频宽高
     private int mVideoWidth, mVideoHeight;
     //缓冲进度
@@ -155,7 +155,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
      * @param windownPlayer 播放器实例
      */
     public void setWindownPlayer(BaseVideoPlayer windownPlayer) {
-        mWindownPlayer = windownPlayer;
+        mWindowPlayer = windownPlayer;
     }
 
     /**
@@ -191,7 +191,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
      * @return 播放器实例
      */
     public BaseVideoPlayer getWindownPlayer() {
-        return mWindownPlayer;
+        return mWindowPlayer;
     }
 
     /**
@@ -411,6 +411,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
                     mMediaPlayer.setOnVideoSizeChangedListener(this);
                     mMediaPlayer.setLooping(VideoPlayerManager.getInstance().isLoop());
                     mMediaPlayer.setWakeMode(mContext, PowerManager.PARTIAL_WAKE_LOCK);
+
                     Class<MediaPlayer> clazz = MediaPlayer.class;
                     Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                     Logger.e(TAG, "startVideoPlayer-->" + ",PATH:" + mDataSource);
@@ -476,6 +477,8 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
     public boolean isPlaying() {
         return null != mMediaPlayer && (mMusicPlayerState == VideoConstants.MUSIC_PLAYER_PLAY
                 || mMusicPlayerState == VideoConstants.MUSIC_PLAYER_START);
+
+
     }
 
     /**
@@ -519,17 +522,12 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
     public void playOrPause() {
         switch (getVideoPlayerState()) {
             case VideoConstants.MUSIC_PLAYER_STOP:
+            case VideoConstants.MUSIC_PLAYER_ERROR:
                 startVideoPlayer(mDataSource, null);
                 break;
             case VideoConstants.MUSIC_PLAYER_PREPARE:
-                pause();
-                break;
             case VideoConstants.MUSIC_PLAYER_BUFFER:
-                pause();
-                break;
             case VideoConstants.MUSIC_PLAYER_START:
-                pause();
-                break;
             case VideoConstants.MUSIC_PLAYER_PLAY:
                 pause();
                 break;
@@ -538,9 +536,6 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
                     mAudioFocusManager.requestAudioFocus(null);
                 }
                 play();
-                break;
-            case VideoConstants.MUSIC_PLAYER_ERROR:
-                startVideoPlayer(mDataSource, null);
                 break;
             case VideoConstants.MUSIC_PLAYER_MOBILE:
 
@@ -553,6 +548,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
      */
     @Override
     public void play() {
+        Log.e(TAG, "play: " + mMusicPlayerState);
         if (mMusicPlayerState == VideoConstants.MUSIC_PLAYER_START || mMusicPlayerState ==
                 VideoConstants.MUSIC_PLAYER_PREPARE
                 || mMusicPlayerState == VideoConstants.MUSIC_PLAYER_PLAY) {
@@ -603,9 +599,9 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
         onStop(true);
         //销毁可能存在的悬浮窗
         VideoWindowManager.getInstance().onDestroy();
-        if (null != mWindownPlayer) {
-            mWindownPlayer.onDestroy();
-            mWindownPlayer = null;
+        if (null != mWindowPlayer) {
+            mWindowPlayer.onDestroy();
+            mWindowPlayer = null;
         }
     }
 
@@ -644,9 +640,9 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
                 mOnPlayerEventListeners.onVideoPlayerState(mMusicPlayerState, null);
             }
             VideoWindowManager.getInstance().onDestroy();
-            if (null != mWindownPlayer) {
-                mWindownPlayer.onDestroy();
-                mWindownPlayer = null;
+            if (null != mWindowPlayer) {
+                mWindowPlayer.onDestroy();
+                mWindowPlayer = null;
             }
         }
     }
@@ -843,9 +839,9 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
             mMiniWindowPlayer.onDestroy();
             mMiniWindowPlayer = null;
         }
-        if (null != mWindownPlayer) {
-            mWindownPlayer.onDestroy();
-            mWindownPlayer = null;
+        if (null != mWindowPlayer) {
+            mWindowPlayer.onDestroy();
+            mWindowPlayer = null;
         }
     }
 
@@ -938,7 +934,7 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
     @Override
     public void onCompletion(MediaPlayer mp) {
         Logger.d(TAG, "onCompletion");
-        IMediaPlayer.this.mMusicPlayerState = VideoConstants.MUSIC_PLAYER_STOP;
+        IMediaPlayer.this.mMusicPlayerState = VideoConstants.MUSIC_PLAY_COMPLETE;
         stopTimer();
         if (null != mOnPlayerEventListeners) {
             mOnPlayerEventListeners.onVideoPlayerState(mMusicPlayerState, null);
@@ -996,4 +992,6 @@ public final class IMediaPlayer implements MediaPlayerPresenter, TextureView.Sur
         }
         return false;
     }
+
+
 }

@@ -17,6 +17,7 @@ import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.RegexUtils
 import com.yc.emotion.home.utils.ToastUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_reset_pwd.*
 
 /**
@@ -68,17 +69,17 @@ class ResetPwdActivity : BaseSameActivity(), UserInfoView {
 
 
     private fun initListener() {
-        iv_hide_pwd.setOnClickListener {
+        iv_hide_pwd.clickWithTrigger {
             val phone = et_input_phone.text.toString().trim()
 
             if (TextUtils.isEmpty(phone)) {
 
                 ToastUtils.showCenterToast("请输入手机号")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (!RegexUtils.isMobileSimple(phone)) {
                 ToastUtils.showCenterToast("输入手机号格式不正确，请重新输入")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
 
 
@@ -142,33 +143,33 @@ class ResetPwdActivity : BaseSameActivity(), UserInfoView {
 
         })
 
-        tv_reset_pwd.setOnClickListener {
+        tv_reset_pwd.clickWithTrigger {
             val phone = et_input_phone.text.toString().trim()
 
             val pwd = et_input_pwd.text.toString().trim()
 
             if (TextUtils.isEmpty(phone)) {
                 ToastUtils.showCenterToast("请输入手机号")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (!RegexUtils.isMobileSimple(phone)) {
                 ToastUtils.showCenterToast("输入手机号格式不正确，请重新输入")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (TextUtils.isEmpty(pwd)) {
                 ToastUtils.showCenterToast("请输入密码")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             if (TextUtils.isEmpty(code)) {
                 ToastUtils.showCenterToast("请输入验证码！")
-                return@setOnClickListener
+                return@clickWithTrigger
             }
             resetPwd(phone, code, pwd)
 
 
         }
 
-        tv_get_code.setOnClickListener {
+        tv_get_code.clickWithTrigger {
             //发送验证码
             val phone = et_input_phone.text.toString().trim()
             getCode(phone)

@@ -1,22 +1,16 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import android.view.View
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
-import com.yc.emotion.home.R.id.swipeRefreshLayout
-import com.yc.emotion.home.R.id.top_empty_view
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.TutorCourseModel
 import com.yc.emotion.home.index.view.TutorCourseView
-import com.yc.emotion.home.model.bean.CourseInfo
-import com.yc.emotion.home.model.bean.CourseInfoWrapper
-import com.yc.emotion.home.model.bean.TutorCommentInfoWrapper
-import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
+import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.utils.UserInfoHelper
-import kotlinx.android.synthetic.main.fragment_collect_view.*
-import rx.Subscriber
-import java.util.ArrayList
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.util.LogUtil
+import java.util.*
 
 /**
  *
@@ -41,48 +35,53 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
     fun getCourseInfo(chapter_id: String?) {
         val userId = UserInfoHelper.instance.getUid()
         mView.showLoadingDialog()
-        val subscription = mModel?.getCourseInfo(chapter_id, "$userId")?.subscribe(object : Subscriber<ResultInfo<TutorCourseDetailInfo>>() {
-            override fun onNext(t: ResultInfo<TutorCourseDetailInfo>?) {
-                t?.let {
+        mModel?.getCourseInfo(chapter_id, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<TutorCourseDetailInfo>>() {
+            override fun onNext(t: ResultInfo<TutorCourseDetailInfo>) {
+
+                mView.hideLoadingDialog()
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showCourseDetailInfo(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
+
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
+                mView.hideLoadingDialog()
+
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
     /**
      * 获取课程导师评论
      */
     fun getTutorCommentInfos(tutor_id: String?, page: Int, pageSize: Int) {
-        val subscription = mModel?.getTutorCommentInfos(tutor_id, page, pageSize)?.subscribe(object : Subscriber<ResultInfo<TutorCommentInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<TutorCommentInfoWrapper>?) {
-                t?.let {
+        mModel?.getTutorCommentInfos(tutor_id, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<TutorCommentInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<TutorCommentInfoWrapper>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showTutorCommentInfos(t.data.comment_list)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -92,9 +91,9 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
     fun collectCourse(chapter_id: String?, isCollect: Int) {
         val userId = UserInfoHelper.instance.getUid()
         mView.showLoadingDialog()
-        val subscription = mModel?.collectCourse(chapter_id, "$userId")?.subscribe(object : Subscriber<ResultInfo<List<CourseInfo>>>() {
-            override fun onNext(t: ResultInfo<List<CourseInfo>>?) {
-                t?.let {
+        mModel?.collectCourse(chapter_id, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<List<CourseInfo>>>() {
+            override fun onNext(t: ResultInfo<List<CourseInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         var isCollect = isCollect
                         if (isCollect == 0) isCollect = 1
@@ -104,45 +103,45 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun getCourseCategory() {
-        val subscription = mModel?.getCourseCategory()?.subscribe(object : Subscriber<ResultInfo<ArrayList<CourseInfo>>>() {
-            override fun onNext(t: ResultInfo<ArrayList<CourseInfo>>?) {
-                t?.let {
+        mModel?.getCourseCategory()?.subscribe(object : DisposableObserver<ResultInfo<ArrayList<CourseInfo>>>() {
+            override fun onNext(t: ResultInfo<ArrayList<CourseInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showCourseCategory(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
     fun getCourseList(cat_id: String?) {
         mView.showLoadingDialog()
-        val subscription = mModel?.getCourseList(cat_id)?.subscribe(object : Subscriber<ResultInfo<List<CourseInfo>>>() {
-            override fun onNext(t: ResultInfo<List<CourseInfo>>?) {
-                t?.let {
+        mModel?.getCourseList(cat_id)?.subscribe(object : DisposableObserver<ResultInfo<List<CourseInfo>>>() {
+            override fun onNext(t: ResultInfo<List<CourseInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK) {
                         if (t.data != null && t.data.isNotEmpty()) {
                             mView.showCourseListInfo(t.data)
@@ -154,32 +153,34 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
                 mView.onComplete()
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
 
-        subScriptions?.add(subscription)
+
     }
 
 
     fun getTutorCourseInfos(tutor_id: String?, page: Int, pageSize: Int) {
         if (page == 1)
             mView.showLoadingDialog()
-        val subscription = mModel?.getTutorCourseInfos(tutor_id, page, pageSize)?.subscribe(object : Subscriber<ResultInfo<CourseInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CourseInfoWrapper>?) {
-                t?.let {
+        mModel?.getTutorCourseInfos(tutor_id, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<CourseInfoWrapper>>() {
+            override fun onNext(t: ResultInfo<CourseInfoWrapper>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val data = t.data.lessons
                         data?.let { datas ->
                             if (datas.isNotEmpty()) {
                                 mView.showTutorCourseInfos(datas)
+                            } else {
+                                if (page == 1) mView.onNoData()
                             }
                         }
                     } else {
@@ -190,17 +191,42 @@ class TutorCoursePresenter(context: Context?, view: TutorCourseView) : BasePrese
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
+    }
+
+    fun initOrders(pay_way_name: String, money: String, title: String, goodId: String) {
+        val userId = UserInfoHelper.instance.getUid()
+
+        mView.showLoadingDialog()
+
+        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.subscribe(object : DisposableObserver<ResultInfo<OrdersInitBean>>() {
+            override fun onComplete() {
+                mView.hideLoadingDialog()
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+            override fun onNext(t: ResultInfo<OrdersInitBean>) {
+                t.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
+                        mView.showOrderInfo(t.data, pay_way_name)
+                    }
+                }
+            }
+
+        })
 
     }
 }

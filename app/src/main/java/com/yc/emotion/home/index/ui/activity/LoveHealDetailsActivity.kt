@@ -3,18 +3,25 @@ package com.yc.emotion.home.index.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.util.TypedValue
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.index.adapter.LoveHealDetailsAdapter
 import com.yc.emotion.home.index.presenter.IndexVerbalPresenter
 import com.yc.emotion.home.index.view.IndexVerbalView
 import com.yc.emotion.home.model.bean.LoveHealDetBean
+import com.yc.emotion.home.model.bean.SearchDialogueBean
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
-import com.yc.emotion.home.pay.ui.activity.VipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_love_heal_details.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -31,12 +38,12 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
     private val PAGE_SIZE = 8
     private var PAGE_NUM = 1
     private var mLoveHealDetBeans: List<LoveHealDetBean>? = null
-
+    private var shareTextString: String? = null
+    private var isSearch: Boolean = false
 
     override fun initIntentData() {
-        val intent = intent
-        mTitle = intent.getStringExtra("title")
-        mCategoryId = intent.getStringExtra("category_id")
+        mTitle = intent?.getStringExtra("title")
+        mCategoryId = intent?.getStringExtra("category_id")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,19 +78,60 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
         mPresenter = IndexVerbalPresenter(this, this)
         initData()
 
-
-        love_heal_details_iv_to_wx.setOnClickListener(this)
         initRecyclerView()
+        initSearchView()
         initListener()
     }
 
+
+    private fun initSearchView() {
+        //修改键入的文字字体大小、颜色和hint的字体颜色
+        val editText = share_searchView.findViewById<EditText>(R.id.search_src_text)
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources
+                .getDimension(R.dimen.size_14))
+        //        editText.setTextColor(ContextCompat.getColor(this,R.color.nb_text_primary));
+
+        //监听关闭按钮点击事件
+        val mCloseButton = share_searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
+        val textView = share_searchView.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
+        if (mCloseButton.isClickable) {
+            mCloseButton.setOnClickListener { view ->
+                //清除搜索框并加载默认数据
+                textView.text = null
+            }
+        }
+        share_searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean { //搜索按钮回调
+                PAGE_NUM = 1
+
+                searchKeyWord(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean { //输入变化回调
+                this@LoveHealDetailsActivity.shareTextString = newText
+                return false
+            }
+        })
+    }
+
+    private fun searchKeyWord(keyword: String?) {
+        (mPresenter as IndexVerbalPresenter).searchVerbalTalk(keyword, PAGE_NUM, PAGE_SIZE)
+    }
+
     private fun initListener() {
+        love_heal_details_iv_to_wx.clickWithTrigger {
+            showToWxServiceDialog()
+        }
         love_heal_details_swipe_refresh.setColorSchemeResources(R.color.red_crimson)
         love_heal_details_swipe_refresh.setOnRefreshListener {
 
-
             PAGE_NUM = 1
-            netData()
+            if (isSearch) {
+                searchKeyWord(this.shareTextString)
+            } else {
+                netData()
+            }
         }
         mAdapter?.setOnLoadMoreListener({ this.netData() }, love_heal_details_rl)
 
@@ -92,24 +140,26 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
             if (loveHealDetBean != null && LoveHealDetBean.VIEW_VIP == loveHealDetBean.type)
                 if (!UserInfoHelper.instance.goToLogin(this@LoveHealDetailsActivity))
                 //TODO 购买VIP刷新数据
-                    startActivity(Intent(this@LoveHealDetailsActivity, VipActivity::class.java))
+                    startActivity(Intent(this@LoveHealDetailsActivity, BecomeVipActivity::class.java))
         }
         mAdapter?.setOnItemChildClickListener { adapter, view, position ->
             val loveHealDetBean = mAdapter?.getItem(position)
             if (loveHealDetBean != null && LoveHealDetBean.VIEW_VIP == loveHealDetBean.type)
                 if (!UserInfoHelper.instance.goToLogin(this@LoveHealDetailsActivity))
                 //TODO 购买VIP刷新数据
-                    startActivity(Intent(this@LoveHealDetailsActivity, VipActivity::class.java))
+                    startActivity(Intent(this@LoveHealDetailsActivity, BecomeVipActivity::class.java))
+        }
+
+        tv_search_btn.clickWithTrigger {
+            MobclickAgent.onEvent(this, "verbal_detail_search", "话术详情搜索")
+            if (!UserInfoHelper.instance.goToLogin(this)) {
+                PAGE_NUM = 1
+                searchKeyWord(shareTextString)
+            }
         }
 
     }
 
-    override fun onClick(v: View) {
-        super.onClick(v)
-        when (v.id) {
-            R.id.love_heal_details_iv_to_wx -> showToWxServiceDialog()
-        }
-    }
 
     private fun initRecyclerView() {
 
@@ -162,6 +212,7 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
 
     }
 
+
     override fun onComplete() {
         if (love_heal_details_swipe_refresh.isRefreshing)
             love_heal_details_swipe_refresh.isRefreshing = false
@@ -171,6 +222,20 @@ class LoveHealDetailsActivity : BaseSameActivity(), IndexVerbalView {
     override fun showVerbalDetailInfos(data: List<LoveHealDetBean>?) {
         createNewData(data)
     }
+
+    override fun showSearchResult(searchDialogueBean: SearchDialogueBean?, keyword: String?) {
+        super.showSearchResult(searchDialogueBean, keyword)
+
+        val searchVip = searchDialogueBean?.search_buy_vip
+        if (searchVip == 0) {//直接看
+            isSearch = true
+            val list = searchDialogueBean.list
+            createNewData(list)
+        } else {
+            startActivity(Intent(this, BecomeVipActivity::class.java))
+        }
+    }
+
 
     override fun offerActivityTitle(): String? {
         return mTitle

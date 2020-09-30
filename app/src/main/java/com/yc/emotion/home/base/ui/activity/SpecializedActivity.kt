@@ -7,17 +7,20 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.qq.e.ads.nativ.NativeExpressADView
+import com.bytedance.sdk.openadsdk.TTNativeExpressAd
+
 import com.yc.emotion.home.R
+import com.yc.emotion.home.base.constant.Constant
 import com.yc.emotion.home.base.ui.fragment.common.PrivacyPolicyFragment
-import com.yc.emotion.home.constant.Constant
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.model.util.CheckNetwork
 import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_specialized.*
-import yc.com.tencent_adv.AdvDispatchManager
-import yc.com.tencent_adv.OnAdvStateListener
+import yc.com.toutiao_adv.OnAdvStateListener
+import yc.com.toutiao_adv.TTAdDispatchManager
+import yc.com.toutiao_adv.TTAdType
+
 
 class SpecializedActivity : BaseActivity(), OnAdvStateListener {
 
@@ -39,6 +42,7 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
     }
 
     override fun initViews() {
+        tv_app_name.text = UIUtils.getAppName(this)
         invadeStatusBar()
         // 后台返回时可能启动这个页面 http://blog.csdn.net/jianiuqi/article/details/54091181
         if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0) {
@@ -51,17 +55,19 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
                 privacyFragment.show(supportFragmentManager, "")
                 privacyFragment.setOnClickBtnListener(object : PrivacyPolicyFragment.OnClickBtnListener {
                     override fun onBtnClick() {
-                        switchMain(0)
+//                        switchMain(0)
+                        TTAdDispatchManager.getManager().init(this@SpecializedActivity, TTAdType.SPLASH, splash_container, Constant.TOUTIAO_SPLASH_ADV_ID, 0, null, 0, null, 0, this@SpecializedActivity)
                         isFirstOpen = false
                     }
                 })
             }, 100)
 
         } else {
-            switchMain(100)
+//            switchMain(100)
+            TTAdDispatchManager.getManager().init(this@SpecializedActivity, TTAdType.SPLASH, splash_container, Constant.TOUTIAO_SPLASH_ADV_ID, 0, null, 0, null, 0, this@SpecializedActivity)
         }
 
-//        AdvDispatchManager.getManager().init(this, AdvType.SPLASH, splash_container, skip_view, Constant.TENCENT_ADV_ID, Constant.SPLASH_ADV_ID, this)
+
     }
 
 
@@ -74,7 +80,7 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
 //
 //        }
         startActivity(Intent(this, MainActivity::class.java))
-        //        overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);  //开屏动画
+//                overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);  //开屏动画
         finish()
     }
 
@@ -93,13 +99,15 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
     override fun onResume() {
         super.onResume()
 
-        AdvDispatchManager.getManager().onResume()
+//        AdvDispatchManager.getManager().onResume();
+        TTAdDispatchManager.getManager().onResume()
     }
 
     override fun onPause() {
         super.onPause()
 
-        AdvDispatchManager.getManager().onPause()
+//        AdvDispatchManager.getManager().onPause();
+        TTAdDispatchManager.getManager().onStop()
 
     }
 
@@ -116,37 +124,28 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
     }
 
 
-    override fun onShow() {
-        rl_top_guide.visibility = View.GONE
-        skip_view.visibility = View.VISIBLE
-    }
-
-    override fun onDismiss(delayTime: Long) {
-        switchMain(delayTime)
-    }
-
-    override fun onError() {
-        startNextActivity()
-    }
-
-    override fun onNativeExpressDismiss(view: NativeExpressADView) {}
-
-    override fun onNativeExpressShow(mDatas: Map<NativeExpressADView, Int>) {
-
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        AdvDispatchManager.getManager().onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-    }
-
     //防止用户返回键退出 APP
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME) {
             true
         } else super.onKeyDown(keyCode, event)
+    }
+
+    override fun clickAD() {
+        switchMain(0)
+    }
+
+    override fun loadSuccess() {
+
+        switchMain(0)
+    }
+
+    override fun loadFailed() {
+        switchMain(0)
+    }
+
+    override fun onTTNativeExpressed(ads: MutableList<TTNativeExpressAd>?) {
+
     }
 
 }

@@ -1,20 +1,18 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.IndexSearchInfo
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
  * Created by suns  on 2019/11/19 14:54.
  */
-class EmotionSearchModel(override var context: Context?) : IModel {
+class EmotionSearchModel(override var context: Context?) : IModel(context) {
 
     /**
      * 首页搜索内容
@@ -24,16 +22,9 @@ class EmotionSearchModel(override var context: Context?) : IModel {
      * @return
      */
     fun searchIndexInfo(keyword: String?, type: Int): Observable<ResultInfo<IndexSearchInfo>> {
-//        val params = HashMap<String, String?>()
-//
-//        params["keyword"] = keyword
-//        params["type"] = type.toString() + ""
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.INDEX_SEARCH_URL, object : TypeReference<ResultInfo<IndexSearchInfo>>() {
 
-        }.type, mutableMapOf(
-                "keyword" to keyword,
-                "type" to "$type"
-        ), true, true, true) as Observable<ResultInfo<IndexSearchInfo>>
+        return request.searchIndexInfo(keyword, type).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }

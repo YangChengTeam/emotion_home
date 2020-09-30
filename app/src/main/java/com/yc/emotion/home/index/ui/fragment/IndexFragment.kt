@@ -3,7 +3,6 @@ package com.yc.emotion.home.index.ui.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -21,15 +20,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
-import com.kk.utils.ScreenUtil
 import com.tmall.ultraviewpager.UltraViewPager
 import com.tmall.ultraviewpager.transformer.UltraScaleTransformer
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.YcApplication
+import com.yc.emotion.home.base.EmApplication
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
-import com.yc.emotion.home.base.ui.fragment.common.SuccessFragment
 import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 import com.yc.emotion.home.index.adapter.IndexChoicenessAdapter
 import com.yc.emotion.home.index.adapter.IndexCourseAdapter
@@ -39,12 +36,13 @@ import com.yc.emotion.home.index.presenter.IndexPresenter
 import com.yc.emotion.home.index.ui.activity.*
 import com.yc.emotion.home.index.view.IndexView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import com.yc.emotion.home.mine.domain.bean.LiveVideoInfo
 import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.model.bean.event.IndexRefreshEvent
 import com.yc.emotion.home.model.bean.event.NetWorkChangT1Bean
 import com.yc.emotion.home.model.constant.ConstantKey
-import com.yc.emotion.home.pay.ui.activity.VipActivity
-import com.yc.emotion.home.pay.ui.fragment.PaySuccessFragment
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.skill.ui.activity.PromotionPlanActivity
 import com.yc.emotion.home.utils.*
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
@@ -52,6 +50,7 @@ import kotlinx.android.synthetic.main.fragment_main_index.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import yc.com.rthttplibrary.util.ScreenUtil
 import kotlin.math.abs
 
 /**
@@ -90,7 +89,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
     override fun initViews() {
 
-
         mPresenter = IndexPresenter(activity, this)
         tv_live_title.text = HtmlCompat.fromHtml("热门直播 <font color='#fa4a65'>LIVE</font>", FROM_HTML_MODE_LEGACY)
 
@@ -115,8 +113,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
 //        indexCourseAdapter.setLoadMoreView()
 //        indexCourseAdapter.setAutoLoadMoreSize()
-
-
+        iv_come_ai.visibility = View.GONE
         initListener()
 //        showGuide()
         initToolbar()
@@ -126,6 +123,8 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     }
 
 
+
+
     private fun initMarqueeView() {
         UIUtils.setMarqueList(marqueeView)
 
@@ -133,7 +132,6 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
 
     private fun initListener() {
-
 
         mMainActivity.let { ContextCompat.getColor(it, R.color.app_color) }.let { swipeRefreshLayout.setColorSchemeColors(it) }
         swipeRefreshLayout.setOnRefreshListener {
@@ -151,19 +149,23 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             articleDetailInfo?.let {
                 mMainActivity.let { ArticleDetailActivity.startExampleDetailActivity(it, articleDetailInfo.id, articleDetailInfo.post_title, false) }
             }
+            MobclickAgent.onEvent(mMainActivity, "preferred_article_click", "首页优选案例点击")
         }
 
-        tv_more_tutor.clickWithTrigger { startActivity(Intent(mMainActivity, TutorListActivity::class.java)) }
+        tv_more_tutor.clickWithTrigger {
+            startActivity(Intent(mMainActivity, TutorListActivity::class.java))
+
+        }
         tv_more_test.clickWithTrigger { startActivity(Intent(mMainActivity, EmotionTestMainActivity::class.java)) }
         tv_more_course.clickWithTrigger { startActivity(Intent(mMainActivity, EfficientCourseActivity::class.java)) }
         ll_index_search.clickWithTrigger { switchSearch() }
         iv_vip.clickWithTrigger {
             MobclickAgent.onEvent(mMainActivity, "home_vip_id", "首页vip")
-            startActivity(Intent(mMainActivity, VipActivity::class.java))
+            startActivity(Intent(mMainActivity, BecomeVipActivity::class.java))
         }
         tv_more_article.clickWithTrigger { startActivity(Intent(mMainActivity, MoreArticleActivity::class.java)) }
         iv_index_search.clickWithTrigger { startActivity(Intent(mMainActivity, EmotionSearchActivity::class.java)) }
-        iv_index_vip.clickWithTrigger { startActivity(Intent(mMainActivity, VipActivity::class.java)) }
+        iv_index_vip.clickWithTrigger { startActivity(Intent(mMainActivity, BecomeVipActivity::class.java)) }
         iv_repel.clickWithTrigger {
             MonographActivity.startActivity(mMainActivity, "恋爱脱单", "41")
 
@@ -183,28 +185,36 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             switchSearch()
         }
 
+        iv_come_ai.clickWithTrigger {
+            startActivity(Intent(mMainActivity, AIChatActivity::class.java))
+            MobclickAgent.onEvent(mMainActivity, "ai_verbal_click", "AI话术点击")
+        }
+
         indexLiveAdapter?.setOnItemClickListener { adapter, view, position ->
 
 
             val liveInfo = indexLiveAdapter?.getItem(position)
-            liveInfo?.let {
-                if (!TextUtils.isEmpty(liveInfo.record_url)) {
-                    LiveVideoActivity.startActivity(mMainActivity, liveInfo)
-
-                } else {
-//                    mPresenter?.getOnlineLiveList()
-//                    when (it.status) {
-//                        2 -> {
-
-//                    handler.postDelayed({
-//                        mLiveInfo?.let { myit ->
-                    if (it.status == 1) {
-                        LiveLookActivity.startActivity(mMainActivity, it.roomId, it.start_time, it.end_time)
-                    } else if (it.status == 2) {
-                        LiveNoticeActivity.startActivity(mMainActivity, it)
-                    }
-                    //                            }
-                }
+            LiveWebActivity.startActivity(activity, liveInfo?.jump_url, "", liveInfo?.wx)
+            mPresenter?.statisticsLive("${liveInfo?.id}")
+            MobclickAgent.onEvent(mMainActivity, "hot_live_click", "热门直播点击")
+//            liveInfo?.let {
+//                if (!TextUtils.isEmpty(liveInfo.record_url)) {
+//                    LiveVideoActivity.startActivity(mMainActivity, liveInfo)
+//
+//                } else {
+////                    mPresenter?.getOnlineLiveList()
+////                    when (it.status) {
+////                        2 -> {
+//
+////                    handler.postDelayed({
+////                        mLiveInfo?.let { myit ->
+//                    if (it.status == 1) {
+////                        LiveLookActivity.startActivity(mMainActivity, it.roomId, it.start_time, it.end_time)
+//                    } else if (it.status == 2) {
+//                        LiveNoticeActivity.startActivity(mMainActivity, it)
+//                    }
+//                    //                            }
+//                }
 //                    }, 1000)
 //                        }
 //                        1 -> {
@@ -217,7 +227,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
 //                }
 
-            }
+//            }
 
 
         }
@@ -239,7 +249,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             mMainActivity.changeAlpha(resources.getColor(R.color.white)
                     , abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange).let { rl_index_toolbar_container.setBackgroundColor(it) }
 
-//            Log.e("tag", "offset=$offset")
+
 //            Log.e("tag", "totalScrollRange=${appBarLayout.totalScrollRange / 2}")
             /**
              * 当前最大高度偏移值除以2 在减去已偏移值 获取浮动 先显示在隐藏
@@ -304,6 +314,60 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     }
 
 
+    private fun initActivityBanner() {
+
+        val imgBanners = arrayListOf<Int>()
+
+        imgBanners.add(R.mipmap.index_activity_ac_bg)
+        imgBanners.add(R.mipmap.index_promotion_plan)
+        imgBanners.add(R.mipmap.index_reservation)
+
+
+        imgBanners.let {
+
+
+            activity_banner?.let {
+                //设置banner样式
+                it.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                //设置图片加载器
+                it.setImageLoader(GlideImageLoader())
+                //设置图片集合
+                it.setImages(imgBanners)
+                //设置banner动画效果
+                it.setBannerAnimation(Transformer.ZoomOutSlide)
+
+                //设置自动轮播，默认为true
+                it.isAutoPlay(true)
+                //设置轮播时间
+                it.setDelayTime(2500)
+                //设置指示器位置（当banner模式中有指示器时）
+                it.setIndicatorGravity(BannerConfig.CENTER)
+                //banner设置方法全部调用完毕时最后调用
+                it.setOnBannerListener { pos ->
+                    //todo banner点击事件
+                    when (pos) {
+                        0 -> {
+                            startActivity(Intent(mMainActivity, RewardPlanActivity::class.java))
+                            MobclickAgent.onEvent(activity, "reward_plan_click", "现金奖励活动点击")
+                        }
+                        1 -> {
+                            startActivity(Intent(activity, PromotionPlanActivity::class.java))
+                            MobclickAgent.onEvent(activity, "promotion_plan_click", "情感星动力点击")
+                        }
+                        2 -> {
+                            MobclickAgent.onEvent(mMainActivity, "personal_tailor_id", "私人订制")
+                            startActivity(Intent(mMainActivity, ConsultAppointActivity::class.java))
+                        }
+                    }
+                }
+                it.start()
+            }
+
+        }
+
+    }
+
+
     private fun initTutorData(tutors: List<TutorInfo>?) {
 
         tutors?.let {
@@ -330,7 +394,10 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
 
                 childView.clickWithTrigger {
-                    mMainActivity.let { it1 -> TutorDetailActivity.startActivity(it1, item.tutorId) }
+                    mMainActivity.let { it1 ->
+                        MobclickAgent.onEvent(mMainActivity, "index_tutor_click", "首页导师点击")
+                        TutorDetailActivity.startActivity(it1, item.tutorId)
+                    }
                 }
 
                 ll_scroll_container?.addView(childView)
@@ -343,10 +410,10 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
     private fun initCourseData(lessonChapter: List<CourseInfo>?) {
         lessonChapter?.let {
-            var newLesson = lessonChapter
-            if (lessonChapter.size > 1) {
-                newLesson = lessonChapter.subList(0, 1)
-            }
+            val newLesson = lessonChapter
+//            if (lessonChapter.size > 1) {
+//                newLesson = lessonChapter.subList(0, 1)
+//            }
             indexCourseAdapter?.setNewData(newLesson)
         }
 
@@ -359,21 +426,23 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
     private fun initViewPager(psychtTest: List<EmotionTestInfo>?) {
 
-        index_ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
-        psychtTest?.let {
-            val adapter = IndexTestAdapter(mMainActivity, psychtTest)
-            index_ultraViewPager.adapter = adapter
-            index_ultraViewPager.setMultiScreen(0.45f)
-//        index_ultraViewPager.setItemRatio(1.0)
-//        index_ultraViewPager.setRatio(2.0f)
-//        index_ultraViewPager.setMaxHeight(800)
-            index_ultraViewPager.setAutoMeasureHeight(true)
+        index_ultraViewPager?.let { vw ->
+            vw.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL)
 
-            index_ultraViewPager.setPageTransformer(false, UltraScaleTransformer())
+            psychtTest?.let {
+                val adapter = IndexTestAdapter(mMainActivity, psychtTest)
+                vw.adapter = adapter
+                vw.setMultiScreen(0.45f)
+                //        index_ultraViewPager.setItemRatio(1.0)
+                //        index_ultraViewPager.setRatio(2.0f)
+                //        index_ultraViewPager.setMaxHeight(800)
+                vw.setAutoMeasureHeight(true)
 
-            index_ultraViewPager.currentItem = 1
+                vw.setPageTransformer(false, UltraScaleTransformer())
+
+                vw.currentItem = 1
+            }
         }
-
 
     }
 
@@ -408,30 +477,31 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
     fun onLiveEnd(event: IndexRefreshEvent) {
         val msg = event.message
 //        Log.e("tag", msg)
-        mPresenter?.getOnlineLiveList()
+        mPresenter?.getLiveVideoInfoList()
 
     }
 
 
     override fun onResume() {
         super.onResume()
-        if (YcApplication.isBackToForeground) {
-            YcApplication.isBackToForeground = false
+        if (EmApplication.isBackToForeground) {
+            EmApplication.isBackToForeground = false
 //            Log.e("TAG", "onResume")
-            mPresenter?.getOnlineLiveList()
+            mPresenter?.getLiveVideoInfoList()
         }
 
     }
 
     override fun lazyLoad() {
 //        showGuide2()
+//
     }
 
 
     private fun getIndexData() {
         mPresenter?.getIndexData()
 
-        mPresenter?.getOnlineLiveList()
+        mPresenter?.getLiveVideoInfoList()
     }
 
 
@@ -446,6 +516,7 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
             initViewPager(psychtTest)//初始化测试数据
         }
 
+        initActivityBanner()
 
     }
 
@@ -483,6 +554,9 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         setData(indexInfo)
 
         initCourseData(indexInfo.lesson_chapter)//初始化课程数据
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onComplete() {
@@ -498,12 +572,19 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
 
     private var mLiveInfo: LiveInfo? = null
     override fun showIndexLiveInfos(data: List<LiveInfo>) {
-        var liveInfos = data
-        if (data.size > 2) {
-            liveInfos = data.subList(0, 2)
+//        var liveInfos = data
+//        if (data.size > 2) {
+//            liveInfos = data.subList(0, 2)
+//        }
+//        this.mLiveInfo = liveInfos[0]
+//        indexLiveAdapter?.setNewData(liveInfos)
+    }
+
+    override fun showIndexLiveVideos(list: List<LiveVideoInfo>) {
+        indexLiveAdapter?.setNewData(list)
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
         }
-        this.mLiveInfo = liveInfos[0]
-        indexLiveAdapter?.setNewData(liveInfos)
     }
 
 

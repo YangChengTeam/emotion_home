@@ -9,11 +9,12 @@ import com.yc.emotion.home.base.ui.fragment.BaseDialogFragment
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.mine.presenter.LivePresenter
 import com.yc.emotion.home.mine.view.LiveView
+import com.yc.emotion.home.utils.clickWithTrigger
 
 /**
  * Created by suns  on 2020/6/2 15:52.
  */
-class LivePermissonFragment : BaseDialogFragment(), LiveView {
+class LivePermissionFragment : BaseDialogFragment(), LiveView {
     private lateinit var livePresenter: LivePresenter
 
 
@@ -33,7 +34,7 @@ class LivePermissonFragment : BaseDialogFragment(), LiveView {
         val etAccount = rootView?.findViewById<EditText>(R.id.et_account)
         val etPassword = rootView?.findViewById<EditText>(R.id.et_password)
 
-        rootView?.findViewById<TextView>(R.id.tv_submit)?.setOnClickListener {
+        rootView?.findViewById<TextView>(R.id.tv_submit)?.clickWithTrigger {
             val account = etAccount?.text.toString().trim()
             val password = etPassword?.text.toString().trim()
             livePresenter.liveLogin(account, password)

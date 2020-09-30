@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.YcApplication
+import com.yc.emotion.home.base.EmApplication
 
 object ToastUtils {
     private var sMTv_text: TextView? = null
@@ -17,19 +17,19 @@ object ToastUtils {
     @JvmOverloads
     fun showCenterToast(text: String?, showImg: Boolean = false) {
         if (null == centerToast) {
-            centerToast = Toast(YcApplication.getInstance())
-            centerToast!!.duration = Toast.LENGTH_LONG
-            centerToast!!.setGravity(Gravity.NO_GRAVITY, 0, 0)
-            val view = View.inflate(YcApplication.getInstance(), R.layout.toast_center_layout, null)
+            centerToast = Toast(EmApplication.instance)
+            centerToast?.duration = Toast.LENGTH_SHORT
+            centerToast?.setGravity(Gravity.CENTER, 0, 0)
+            val view = View.inflate(EmApplication.instance, R.layout.toast_center_layout, null)
             ivOk = view.findViewById(R.id.iv_ok)
             sMTv_text = view.findViewById(R.id.tv_text)
-            sMTv_text.setText(if (TextUtils.isEmpty(text)) "null" else text)
-            ivOk.setVisibility(if (showImg) View.VISIBLE else View.GONE)
-            centerToast!!.view = view
+            sMTv_text?.text = if (TextUtils.isEmpty(text)) "null" else text
+            ivOk?.visibility = if (showImg) View.VISIBLE else View.GONE
+            centerToast?.view = view
         } else {
-            sMTv_text!!.text = if (TextUtils.isEmpty(text)) "null" else text
-            ivOk!!.visibility = if (showImg) View.VISIBLE else View.GONE
+            sMTv_text?.text = if (TextUtils.isEmpty(text)) "null" else text
+            ivOk?.visibility = if (showImg) View.VISIBLE else View.GONE
         }
-        centerToast!!.show()
+        centerToast?.show()
     }
 }

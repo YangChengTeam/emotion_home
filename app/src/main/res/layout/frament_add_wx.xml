@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="140dp"
             android:lineSpacingExtra="5dp"
-            android:text="亲爱的用户：\n   我是您的专属情感顾问，点击下方按钮并打开微信添加我为好友，在您迷茫困惑的旅途中，我将帮助您解开谜团，重新找到方向"
+            android:text="添加微信，即可获得每日精致展示面图文，咨询师在线咨询，加入优质资源交流群。"
             android:textColor="@color/gray_222222"
             android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -9,7 +9,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class ShareInfo {
     private String title;
-    @JSONField(name = "content")
+    @JSONField(name = "description")
     private String desp;
 
     private String img;

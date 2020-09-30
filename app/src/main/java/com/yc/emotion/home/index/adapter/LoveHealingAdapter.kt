@@ -10,9 +10,9 @@ import com.yc.emotion.home.model.bean.LoveHealingBean
  * Created by Administrator on 2017/9/12.
  */
 class LoveHealingAdapter(data: List<LoveHealingBean?>?) : BaseMultiItemQuickAdapter<LoveHealingBean?, BaseViewHolder?>(data) {
-    override fun convert(helper: BaseViewHolder?, item: LoveHealingBean?) {
+    override fun convert(helper: BaseViewHolder, item: LoveHealingBean?) {
 
-        helper?.let {
+
             item?.let {
                 when (item.type) {
                     LoveHealingBean.VIEW_TITLE -> {
@@ -22,7 +22,7 @@ class LoveHealingAdapter(data: List<LoveHealingBean?>?) : BaseMultiItemQuickAdap
                     else -> {
                     }
                 }
-            }
+
 
         }
     }

@@ -2,6 +2,7 @@ package com.yc.emotion.home.base.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.utils.clickWithTrigger
@@ -35,10 +36,28 @@ abstract class BaseQuickImproAdapter<T, K : BaseViewHolder?> : BaseQuickAdapter<
         }
         val view = baseViewHolder.itemView
         if (onItemClickListener != null) {
-            view.clickWithTrigger { v -> setOnItemClick(v, baseViewHolder.layoutPosition - headerLayoutCount) }
+            view.clickWithTrigger { v ->
+                run {
+                    var position = baseViewHolder.adapterPosition
+                    if (position == RecyclerView.NO_POSITION) {
+                        return@run
+                    }
+                    position -= headerLayoutCount
+                    setOnItemClick(v, position)
+                }
+            }
         }
         if (onItemLongClickListener != null) {
-            view.setOnLongClickListener { v -> setOnItemLongClick(v, baseViewHolder.layoutPosition - headerLayoutCount) }
+            view.setOnLongClickListener { v ->
+               run {
+                   var position = baseViewHolder.adapterPosition
+                   if (position == RecyclerView.NO_POSITION) {
+                       return@setOnLongClickListener false
+                   }
+                   position -= headerLayoutCount
+                   setOnItemLongClick(v, position) }
+               }
+
         }
     }
 }

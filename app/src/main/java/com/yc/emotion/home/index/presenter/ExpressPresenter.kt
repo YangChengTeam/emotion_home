@@ -9,7 +9,8 @@ import com.yc.emotion.home.model.bean.confession.ConfessionBean
 import com.yc.emotion.home.model.bean.confession.ConfessionDataBean
 import com.yc.emotion.home.utils.CommonInfoHelper
 import com.yc.emotion.home.model.bean.ImageCreateBean
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+
 import java.io.File
 
 /**
@@ -49,9 +50,9 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
     fun getExpressData(page: Int, pageSize: Int) {
         if (page == 1)
             mView.showLoadingDialog()
-        val subscription = mModel?.getExpressData(page)?.subscribe(object : Subscriber<ConfessionBean>() {
-            override fun onNext(t: ConfessionBean?) {
-                t?.let {
+        mModel?.getExpressData(page)?.subscribe(object : DisposableObserver<ConfessionBean>() {
+            override fun onNext(t: ConfessionBean) {
+                t.let {
                     if (t.status) {
                         val confessionDataBeans = t.data
                         createNewData(confessionDataBeans, page, pageSize)
@@ -59,19 +60,19 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
         })
 
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -104,51 +105,49 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
     fun netNormalData(requestMap: Map<String, String?>, requestUrl: String) {
 
         mView.showLoadingDialog()
-        val subscription = mModel?.netNormalData(requestMap, requestUrl)?.subscribe(object : Subscriber<ImageCreateBean>() {
-            override fun onNext(t: ImageCreateBean?) {
-                t?.let {
+        mModel?.netNormalData(requestMap, requestUrl)?.subscribe(object : DisposableObserver<ImageCreateBean>() {
+            override fun onNext(t: ImageCreateBean) {
+                t.let {
                     if (t.status) {
                         mView.showNormalDataSuccess(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-
-        subScriptions?.add(subscription)
 
 
     }
 
     fun netUpFileNet(requestMap: Map<String, String?>, upFile: File, requestUrl: String) {
         mView.showLoadingDialog()
-        val subscription = mModel?.netUpFileNet(requestMap, upFile, requestUrl)?.subscribe(object : Subscriber<ImageCreateBean>() {
-            override fun onNext(t: ImageCreateBean?) {
-                t?.let {
+        mModel?.netUpFileNet(requestMap, upFile, requestUrl)?.subscribe(object : DisposableObserver<ImageCreateBean>() {
+            override fun onNext(t: ImageCreateBean) {
+                t.let {
                     if (t.status) {
                         mView.showNormalDataSuccess(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 }

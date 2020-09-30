@@ -17,7 +17,7 @@ import com.yc.emotion.home.R
 abstract class BaseSameActivity : BaseSlidingActivity(), View.OnClickListener {
 
     protected lateinit var mBaseSameTvSub: TextView
-    public lateinit var mTvTitle: TextView
+    private lateinit var mTvTitle: TextView
     protected lateinit var ivBack: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

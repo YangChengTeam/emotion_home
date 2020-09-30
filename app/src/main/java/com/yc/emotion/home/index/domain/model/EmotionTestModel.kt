@@ -3,23 +3,22 @@ package com.yc.emotion.home.index.domain.model
 import android.content.Context
 import android.text.TextUtils
 import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
 import com.yc.emotion.home.model.bean.CourseInfoWrapper
 import com.yc.emotion.home.model.bean.EmotionTestInfo
 import com.yc.emotion.home.model.bean.EmotionTestTopicInfo
 import com.yc.emotion.home.model.bean.QuestionInfo
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
+import java.util.*
 
 /**
  *
  * Created by suns  on 2019/11/12 14:42.
  */
-class EmotionTestModel(override var context: Context?) : IModel {
+class EmotionTestModel(override var context: Context?) : IModel(context) {
 
     /**
      * 获取情感测试详情
@@ -30,14 +29,8 @@ class EmotionTestModel(override var context: Context?) : IModel {
      */
     fun getTestDetailInfo(user_id: String, test_id: String?): Observable<ResultInfo<EmotionTestTopicInfo>> {
 
-        val params = HashMap<String, String?>()
-        params["user_id"] = user_id
-        params["test_id"] = test_id
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_DETAIL_URL, object : TypeReference<ResultInfo<EmotionTestTopicInfo>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<EmotionTestTopicInfo>>
-
+        return request.getTestDetailInfo(user_id, test_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -62,9 +55,8 @@ class EmotionTestModel(override var context: Context?) : IModel {
             params["option_id"] = option_id
         }
 
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_SUBMIT_ANSWER_URL, object : TypeReference<ResultInfo<EmotionTestInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<EmotionTestInfo>>
+        return request.submitAnswer(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 
     }
 
@@ -74,10 +66,9 @@ class EmotionTestModel(override var context: Context?) : IModel {
      * @return
      */
     fun getTestCategoryInfos(): Observable<ResultInfo<CourseInfoWrapper>> {
-        val params = HashMap<String, String>()
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_CATEGORY_URL, object : TypeReference<ResultInfo<CourseInfoWrapper>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<CourseInfoWrapper>>
+
+        return request.getTestCategoryInfos().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -87,16 +78,9 @@ class EmotionTestModel(override var context: Context?) : IModel {
      * @return
      */
     fun getEmotionTestInfos(catId: String?, page: Int, pageSize: Int): Observable<ResultInfo<List<EmotionTestInfo>>> {
-        val params = HashMap<String, String?>()
 
-        params["page"] = page.toString() + ""
 
-        params["page_size"] = pageSize.toString() + ""
-        params["cat_id"] = catId
-
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_LIST_URL, object : TypeReference<ResultInfo<List<EmotionTestInfo>>>() {
-
-        }.type, params, true, true, true) as Observable<ResultInfo<List<EmotionTestInfo>>>
+        return request.getEmotionTestInfos(catId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -109,13 +93,9 @@ class EmotionTestModel(override var context: Context?) : IModel {
      * @return
      */
     fun getTestRecords(userId: String, page: Int, page_size: Int): Observable<ResultInfo<List<EmotionTestInfo>>> {
-        val params = HashMap<String, String>()
-        params["user_id"] = userId
-        params["page"] = page.toString() + ""
-        params["page_size"] = page_size.toString() + ""
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_RECORDS_URL, object : TypeReference<ResultInfo<List<EmotionTestInfo>>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<List<EmotionTestInfo>>>
+
+        return request.getTestRecords(userId, page, page_size).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -127,11 +107,9 @@ class EmotionTestModel(override var context: Context?) : IModel {
      */
 
     fun getTestRecordDetail(record_id: String?): Observable<ResultInfo<EmotionTestInfo>> {
-        val params = HashMap<String, String?>()
-        params["record_id"] = record_id
-        return HttpCoreEngin.get(context).rxpost(URLConfig.TEST_RECORD_DETAIL_URL, object : TypeReference<ResultInfo<EmotionTestInfo>>() {
 
-        }.type, params, true, true, true) as Observable<ResultInfo<EmotionTestInfo>>
+
+        return request.getTestRecordDetail(record_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 }

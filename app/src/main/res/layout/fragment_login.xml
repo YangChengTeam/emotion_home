@@ -33,11 +33,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
-        android:drawableEnd="@mipmap/icon_phone_arrow"
         android:drawablePadding="5dp"
         android:text="+86"
         android:textColor="@color/gray_222222"
         android:textSize="13sp"
+        app:drawableEndCompat="@mipmap/icon_phone_arrow"
         app:layout_constraintBottom_toBottomOf="@id/iv_phone"
         app:layout_constraintLeft_toRightOf="@id/iv_phone"
         app:layout_constraintTop_toTopOf="@id/iv_phone" />
@@ -86,6 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:paddingBottom="17dp"
         android:src="@mipmap/icon_password"
         app:layout_constraintLeft_toLeftOf="@id/tv_login_tint"
         app:layout_constraintTop_toBottomOf="@id/divider_phone" />
@@ -103,6 +104,7 @@
         android:textColor="@color/gray_bebdbd"
         android:textColorHint="@color/gray_bebdbd"
         android:textSize="13dp"
+        android:paddingBottom="17dp"
         app:layout_constraintBottom_toBottomOf="@id/iv_password"
         app:layout_constraintLeft_toRightOf="@id/iv_password"
         app:layout_constraintRight_toRightOf="parent"
@@ -113,7 +115,7 @@
         android:id="@+id/divider_code"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="17dp"
+
         android:background="@color/gray_edebeb"
         app:layout_constraintLeft_toLeftOf="@id/iv_password"
         app:layout_constraintRight_toRightOf="@id/et_pwd"

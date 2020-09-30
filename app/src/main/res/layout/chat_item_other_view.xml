@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_avtor"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/default_avatar_72"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,10 +31,10 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintLeft_toLeftOf="@id/tv_chat_name"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@id/iv_avtor"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chat_name">
+        app:layout_constraintTop_toTopOf="@id/iv_avtor">
 
         <TextView
             android:id="@+id/tv_chat_message"

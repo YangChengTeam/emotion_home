@@ -5,15 +5,14 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
-import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.EfficientCourseAdapter
 import com.yc.emotion.home.index.presenter.TutorCoursePresenter
 import com.yc.emotion.home.index.ui.activity.TutorCourseDetailActivity
 import com.yc.emotion.home.index.view.TutorCourseView
 import com.yc.emotion.home.model.bean.CourseInfo
+import com.yc.emotion.home.model.bean.OrdersInitBean
 import kotlinx.android.synthetic.main.fragment_collect_view.*
 
 /**
@@ -23,9 +22,9 @@ import kotlinx.android.synthetic.main.fragment_collect_view.*
 class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseView {
 
 
-    var loveEngine: LoveEngine? = null
+
     var efficientCourseAdapter: EfficientCourseAdapter? = null
-    var loadDialog: LoadDialog? = null
+
     var mHandler: Handler? = null
 
     var tutorId: String? = null
@@ -48,8 +47,6 @@ class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseVie
             tutorId = intent.getString("tutor_id")
         }
 
-        loveEngine = LoveEngine(activity)
-        loadDialog = LoadDialog(activity)
         mHandler = Handler()
 //        rv_efficient_course.setPadding(0, 0, 0, 0)
         val layoutManager = LinearLayoutManager(activity)
@@ -96,31 +93,6 @@ class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseVie
 
         mPresenter?.getTutorCourseInfos(tutorId, page, PAGE_SIZE)
 
-//        loadDialog?.showLoadingDialog()
-//
-//
-//        loveEngine?.getTutorCourseInfos(tutorId, page, PAGE_SIZE)?.subscribe(object : Subscriber<ResultInfo<CourseInfoWrapper>>() {
-//            override fun onNext(t: ResultInfo<CourseInfoWrapper>?) {
-//                t?.let {
-//                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.lessons != null && t.data.lessons!!.isNotEmpty()) {
-//                        createNewData(t.data.lessons)
-//                    } else {
-//                        if (page == 1) top_empty_view.visibility = View.VISIBLE
-//                    }
-//                }
-//            }
-//
-//            override fun onCompleted() {
-//                if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
-//                loadDialog?.dismissLoadingDialog()
-//            }
-//
-//            override fun onError(e: Throwable?) {
-//
-//            }
-//        })
-
-
     }
 
     private fun createNewData(lessons: List<CourseInfo>?) {
@@ -142,6 +114,10 @@ class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseVie
 
     override fun showTutorCourseInfos(lessons: List<CourseInfo>?) {
         createNewData(lessons)
+    }
+
+    override fun showOrderInfo(data: OrdersInitBean?, payWayName: String) {
+
     }
 
     override fun onNoData() {

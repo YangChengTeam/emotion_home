@@ -10,15 +10,18 @@ import com.yc.emotion.home.index.adapter.EmotionTestDetailAnswerAdapter
 import com.yc.emotion.home.mine.ui.fragment.ExitPublishFragment
 import com.yc.emotion.home.model.bean.QuestionInfo
 import com.yc.emotion.home.model.bean.event.EventBusEmotionTest
+import com.yc.emotion.home.utils.clickWithTrigger
+import io.reactivex.Observable.interval
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_efficient_course.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import rx.Observable
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
+
 import java.util.*
 import java.util.concurrent.TimeUnit
+import io.reactivex.Observable
 
 /**
  *
@@ -108,7 +111,7 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
             }
         }
 
-        ivBack.setOnClickListener { exitTest() }
+        ivBack.clickWithTrigger { exitTest() }
     }
 
 
@@ -167,7 +170,7 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
     }
 
 
-    private var subscription: Subscription? = null
+    private var subscription: Disposable? = null
 
     @SuppressLint("SetTextI18n")
     fun startTime() {
@@ -177,8 +180,8 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
                     mTimes++
                     val minutes = mTimes / 60
                     if (minutes > 60) {
-                        if (subscription?.isUnsubscribed != true) {
-                            subscription?.unsubscribe()
+                        if (subscription?.isDisposed != true) {
+                            subscription?.dispose()
                         }
                     } else {
                         val seconds = mTimes - minutes * 60
@@ -188,8 +191,8 @@ class EmotionTestSkipDetailActivity : BaseSameActivity() {
     }
 
     private fun stopTime() {
-        if (subscription != null && subscription?.isUnsubscribed == true) {
-            subscription?.unsubscribe()
+        if (subscription != null && subscription?.isDisposed == true) {
+            subscription?.dispose()
         }
     }
 

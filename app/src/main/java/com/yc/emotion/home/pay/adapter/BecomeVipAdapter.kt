@@ -1,61 +1,60 @@
 package com.yc.emotion.home.pay.adapter
 
+import android.graphics.Color
+import android.graphics.Paint
+import android.util.SparseArray
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.chad.library.adapter.base.BaseViewHolder
 import com.yc.emotion.home.R
-import com.yc.emotion.home.model.bean.BecomeVipBean
+import com.yc.emotion.home.base.ui.adapter.BaseQuickImproAdapter
 import com.yc.emotion.home.model.bean.GoodsInfo
+import com.yc.emotion.home.model.util.DoubleToStringUtils
 
-class BecomeVipAdapter(data: List<BecomeVipBean?>?) : BaseMultiItemQuickAdapter<BecomeVipBean?, BaseViewHolder?>(data) {
-    private var mNumber = 0
-    fun setNumber(mNumber: Int) {
-        this.mNumber = mNumber
-        notifyDataSetChanged()
-    }
+class BecomeVipAdapter(data: List<GoodsInfo>?) : BaseQuickImproAdapter<GoodsInfo?, BaseViewHolder?>(R.layout.vip_item_view_new, data) {
 
-    protected override fun convert(helper: BaseViewHolder, item: BecomeVipBean) {
-        if (item != null) {
-            when (item.type) {
-                BecomeVipBean.VIEW_TITLE, BecomeVipBean.VIEW_VIP_TAG -> {
-                }
-                BecomeVipBean.VIEW_ITEM -> {
-                }
-                BecomeVipBean.VIEW_TAIL -> {
-                    val recyclerView = helper.getView<RecyclerView>(R.id.pay_item_recyclerView)
-                    recyclerView.layoutManager = GridLayoutManager(mContext, 2)
-                    val vipItemAdapter = BecomeVipItemAdapter(item.payBeans)
-                    recyclerView.adapter = vipItemAdapter
-                    vipItemAdapter.onItemClickListener = OnItemClickListener { adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int ->
-                        vipItemAdapter.setSelect(position)
-                        val doodsBean = vipItemAdapter.getItem(position)
-                        if (onPayClickListener != null) {
-                            onPayClickListener!!.onPayClick(doodsBean)
-                        }
-                    }
-                    if (mNumber <= 0) {
-                        mNumber = 156592
-                    }
-                    helper.setText(R.id.item_become_vip_tv_pay_num, mNumber.toString())
-                            .addOnClickListener(R.id.item_become_vip_rl_btn_wx)
-                            .addOnClickListener(R.id.item_become_vip_rl_btn_zfb)
-                }
-            }
+    private val constraintLayoutSparseArray: SparseArray<ConstraintLayout> = SparseArray()
+    private val dividerSparseArray: SparseArray<View> = SparseArray()
+    private val paySelSparseArray: SparseArray<ImageView> = SparseArray()
+
+    override fun convert(helper: BaseViewHolder, item: GoodsInfo?) {
+        item?.let {
+
+            helper.setText(R.id.item_become_vip_title, item.name)
+                    .setText(R.id.tv_price, DoubleToStringUtils.doubleStringToString(it.m_price))
+                    .setText(R.id.tv_origin_price, "原价" + DoubleToStringUtils.doubleStringToString(item.price))
+                    .setText(R.id.tv_vip_desc, it.desp)
+            val tvOrigin = helper.getView<TextView>(R.id.tv_origin_price)
+            tvOrigin.paintFlags = tvOrigin.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            val position = helper.adapterPosition
+
+            constraintLayoutSparseArray.put(position, helper.getView(R.id.item_become_vip_root_view))
+            dividerSparseArray.put(position, helper.getView(R.id.view_divider))
+            paySelSparseArray.put(position, helper.getView(R.id.item_become_vip_tail_iv_pay_sel_01))
+            setSelect(0)
+
         }
     }
 
-    private var onPayClickListener: OnPayClickListener? = null
-    fun setOnPayClickListener(onPayClickListener: OnPayClickListener?) {
-        this.onPayClickListener = onPayClickListener
+
+    fun setSelect(position: Int) {
+        resetState()
+        constraintLayoutSparseArray[position].isSelected = true
+        dividerSparseArray[position].setBackgroundColor(Color.parseColor("#ffd2bb8f"))
+        paySelSparseArray[position].visibility = View.VISIBLE
     }
 
-    interface OnPayClickListener {
-        fun onPayClick(doodsBean: GoodsInfo?)
+    private fun resetState() {
+        for (i in 0 until constraintLayoutSparseArray.size()) {
+            constraintLayoutSparseArray[i].isSelected = false
+            dividerSparseArray[i].setBackgroundColor(Color.parseColor("#393939"))
+            paySelSparseArray[i].visibility = View.GONE
+
+        }
     }
+
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -63,10 +62,21 @@ class BecomeVipAdapter(data: List<BecomeVipBean?>?) : BaseMultiItemQuickAdapter<
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    init {
-        addItemType(BecomeVipBean.VIEW_TITLE, R.layout.recycler_view_item_become_vip_title)
-        addItemType(BecomeVipBean.VIEW_ITEM, R.layout.recycler_view_item_become_vip_new)
-        addItemType(BecomeVipBean.VIEW_TAIL, R.layout.recycler_view_item_become_vip_tail)
-        addItemType(BecomeVipBean.VIEW_VIP_TAG, R.layout.recycler_view_item_become_vip_tag)
-    }
+
+
+//    private fun showGuide() {
+//        NewbieGuide.with(activity)
+//                .setLabel("guide1")
+//                .alwaysShow(false)
+//                .addGuidePage(GuidePage.newInstance()
+//                        .setEverywhereCancelable(false)
+//                        .setLayoutRes(R.layout.layout_community_guide)
+//                        .setOnLayoutInflatedListener { view, controller ->
+//                            view.findViewById<ImageView>(R.id.iv_know).setOnClickListener {
+//                                controller.remove()
+//
+//                            }
+//                        })
+//                .show()
+//    }
 }

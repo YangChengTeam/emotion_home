@@ -1,6 +1,6 @@
 package com.yc.emotion.home.base.domain.engine
 
-import com.yc.emotion.home.constant.URLConfig
+import com.yc.emotion.home.base.constant.URLConfig
 import okhttp3.*
 import java.io.File
 

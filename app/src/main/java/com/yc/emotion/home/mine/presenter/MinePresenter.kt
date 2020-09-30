@@ -2,18 +2,17 @@ package com.yc.emotion.home.mine.presenter
 
 import android.content.Context
 import android.text.TextUtils
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
 
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.mine.domain.model.MineModel
 import com.yc.emotion.home.mine.view.MineView
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.UserInterInfo
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -37,9 +36,9 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
     fun userInfo() {
         val userId = UserInfoHelper.instance.getUid()
         mView.showLoadingDialog()
-        val subscription = mModel?.userInfo("$userId")?.subscribe(object : Subscriber<AResultInfo<UserInfo>>() {
-            override fun onNext(t: AResultInfo<UserInfo>?) {
-                t?.let {
+        mModel?.userInfo("$userId")?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
+            override fun onNext(t: ResultInfo<UserInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showUserInfo(t.data)
                     }
@@ -47,17 +46,17 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
 
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 mView.hideLoadingDialog()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
 
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -73,48 +72,48 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
 
         mView.showLoadingDialog()
 
-        val subscription = mModel?.updateUserInfo("$userId", nickName, face, password, birthday, sex, profession, age, signature, interested_id)
-                ?.subscribe(object : Subscriber<ResultInfo<UserInfo>>() {
-                    override fun onNext(t: ResultInfo<UserInfo>?) {
-                        t?.let {
+        mModel?.updateUserInfo("$userId", nickName, face, password, birthday, sex, profession, age, signature, interested_id)
+                ?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
+                    override fun onNext(t: ResultInfo<UserInfo>) {
+                        t.let {
                             if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                                 mView.showUpdateUserInfo(t.data)
                             }
                         }
                     }
 
-                    override fun onCompleted() {
+                    override fun onComplete() {
                         mView.hideLoadingDialog()
                     }
 
-                    override fun onError(e: Throwable?) {
+                    override fun onError(e: Throwable) {
                     }
 
                 })
 
-        subScriptions?.add(subscription)
+
     }
 
 
     fun getUserInterseInfo() {
-        val subscription = mModel?.getUserInterseInfo()?.subscribe(object : Subscriber<ResultInfo<List<UserInterInfo>>>() {
-            override fun onNext(t: ResultInfo<List<UserInterInfo>>?) {
-                t?.let {
+        mModel?.getUserInterseInfo()?.subscribe(object : DisposableObserver<ResultInfo<List<UserInterInfo>>>() {
+            override fun onNext(t: ResultInfo<List<UserInterInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showUserInterseInfo(t.data)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
@@ -127,31 +126,29 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
 
             mView.showLoadingDialog()
 
-            val subscription = mModel?.addSuggestion("$userId", content, qq, wechat, "user.suggestion/add")?.subscribe(object : Subscriber<AResultInfo<String>>() {
-                override fun onNext(t: AResultInfo<String>?) {
-                    t?.let {
+            mModel?.addSuggestion("$userId", content, qq, wechat, "user.suggestion/add")?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
+                override fun onNext(t: ResultInfo<String>) {
+                    t.let {
                         if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                            val message = t.msg
+                            val message = t.message
                             ToastUtils.showCenterToast(message)
                             mView.showSuggestionSuccess()
                         }
                     }
                 }
 
-                override fun onCompleted() {
+                override fun onComplete() {
                     mView.hideLoadingDialog()
 
                 }
 
-                override fun onError(e: Throwable?) {
+                override fun onError(e: Throwable) {
 
                 }
 
             })
 
-            subScriptions?.add(subscription)
         }
-
 
     }
 

@@ -1,15 +1,16 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.bean.UserSeg
 import com.yc.emotion.home.index.domain.model.LiveLookModel
 import com.yc.emotion.home.index.view.LiveLookView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
 import com.yc.emotion.home.utils.ToastUtils
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.config.HttpConfig
+
 
 /**
  *
@@ -29,9 +30,9 @@ class LiveLookPresenter(context: Context?, view: LiveLookView) : BasePresenter<L
     }
 
     fun getLiveLookInfo(roomId: String?) {
-        val subscription = mModel?.getLiveLookInfo(roomId)?.subscribe(object : Subscriber<ResultInfo<LiveInfo>>() {
-            override fun onNext(t: ResultInfo<LiveInfo>?) {
-                t?.let {
+        mModel?.getLiveLookInfo(roomId)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         val data = t.data
                         mView.showLiveInfo(data)
@@ -41,34 +42,34 @@ class LiveLookPresenter(context: Context?, view: LiveLookView) : BasePresenter<L
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
     fun getUserSeg(user_id: String?) {
-        val subscription = mModel?.getUserSeg(user_id)?.subscribe(object : Subscriber<ResultInfo<UserSeg>>() {
-            override fun onNext(t: ResultInfo<UserSeg>?) {
-                t?.let {
-                    if (t.code==HttpConfig.STATUS_OK &&t.data!=null){
+        mModel?.getUserSeg(user_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<UserSeg>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<UserSeg>) {
+                t.let {
+                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
                         mView.showUserSeg(t.data.usersig)
                     }
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
         })
-        subScriptions?.add(subscription)
+
     }
 }

@@ -20,6 +20,7 @@ import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.bean.OpenApkPkgInfo
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.model.util.PackageUtils
+import com.yc.emotion.home.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_collect_view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,10 +34,8 @@ import java.util.*
 class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView {
 
 
-    //    private var mRecyclerView: RecyclerView? = null
-
     private val PAGE_SIZE = 10
-    private var PAGE_NUM = 0
+    private var PAGE_NUM = 1
 
 
     private var loveHealDetailsAdapter: CollectLoveHealDetailAdapter? = null
@@ -134,7 +133,7 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
 
     private fun netData() {
 
-        mPresenter?.getCollectLoveHeals(PAGE_SIZE, PAGE_NUM)
+        mPresenter?.getCollectLoveHeals(PAGE_NUM, PAGE_SIZE)
 
     }
 
@@ -162,8 +161,9 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
         val myClipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", content.content)
         myClipboard.primaryClip = myClip
-        showOpenAkpDialog(content)
+        ToastUtils.showCenterToast("内容已复制", true)
     }
+
 
     private fun showOpenAkpDialog(content: LoveHealDetDetailsBean) {
         val openApkPkgInfos = ArrayList<OpenApkPkgInfo>()

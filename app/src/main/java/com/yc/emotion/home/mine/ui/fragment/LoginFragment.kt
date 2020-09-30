@@ -13,6 +13,7 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.greenrobot.eventbus.EventBus
 
@@ -48,22 +49,22 @@ class LoginFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
     }
 
     private fun initListener() {
-        tv_code_login.setOnClickListener {
+        tv_code_login.clickWithTrigger {
 
             Navigation.findNavController(it).navigate(R.id.action_to_register)
         }
-        tv_user_policy.setOnClickListener {
+        tv_user_policy.clickWithTrigger {
             val userPolicyFragment = UserPolicyFragment()
             userPolicyFragment.show(childFragmentManager, "")
         }
 
-        tv_register.setOnClickListener {
+        tv_register.clickWithTrigger {
             val bundle = Bundle()
             bundle.putBoolean("isCodeLogin", false)
             Navigation.findNavController(it).navigate(R.id.action_to_register, bundle)
         }
 
-        tv_login_btn.setOnClickListener {
+        tv_login_btn.clickWithTrigger {
             val phone = et_phone.text.toString().trim()
             val pwd = et_pwd.text.toString().trim()
             mPresenter?.phoneLogin(phone, pwd, "")

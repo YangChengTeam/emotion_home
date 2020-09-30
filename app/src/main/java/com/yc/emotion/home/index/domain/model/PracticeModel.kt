@@ -1,33 +1,21 @@
 package com.yc.emotion.home.index.domain.model
 
 import android.content.Context
-import com.alibaba.fastjson.TypeReference
-import com.kk.securityhttp.engin.HttpCoreEngin
 import com.yc.emotion.home.base.domain.model.IModel
-import com.yc.emotion.home.constant.URLConfig
-import com.yc.emotion.home.model.bean.AResultInfo
 import com.yc.emotion.home.model.bean.ExampDataBean
-import rx.Observable
-import java.util.HashMap
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
  * Created by suns  on 2019/11/13 17:12.
  */
-class PracticeModel(override var context: Context?) : IModel {
+class PracticeModel(override var context: Context?) : IModel(context) {
 
-    fun getPracticeInfos(userId: String, page: Int, pageSize: Int): Observable<AResultInfo<ExampDataBean>> {
-        val params = HashMap<String, String>()
-        params["page"] = "$page"
-        params["user_id"] = userId
-        params["page_size"] = "$pageSize"
-        //        requestParams(params);
-        val httpCoreEngin = HttpCoreEngin.get(context)
-        return httpCoreEngin.rxpost(URLConfig.PRACTICE_LIS_URL, object : TypeReference<AResultInfo<ExampDataBean>>() {
+    fun getPracticeInfos(userId: String, page: Int, pageSize: Int): Observable<ResultInfo<ExampDataBean>> {
 
-        }.type,
-                params,
-                true,
-                true, true) as Observable<AResultInfo<ExampDataBean>>
+        return request.exampLists(userId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }

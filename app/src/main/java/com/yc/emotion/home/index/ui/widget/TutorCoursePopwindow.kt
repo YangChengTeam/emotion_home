@@ -9,13 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.kk.utils.ScreenUtil
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.domain.engine.LoveEngine
+import com.yc.emotion.home.base.domain.engine.BaseModel
 import com.yc.emotion.home.base.ui.popwindow.BasePopWindow
 import com.yc.emotion.home.index.adapter.TutorCoursePpAdapter
 import com.yc.emotion.home.model.bean.LessonInfo
-import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
+import yc.com.rthttplibrary.util.ScreenUtil
 
 /**
  * Created by suns  on 2019/10/8 17:12.
@@ -23,7 +22,7 @@ import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
  */
 class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
     private var tutorCoursePpAdapter: TutorCoursePpAdapter? = null
-    private var mLoveEngine: LoveEngine? = null
+    private var mLoveEngine: BaseModel? = null
     private var popupHeight = 0
     private var popupWidth = 0
     private lateinit var ivCourseClose: ImageView
@@ -34,7 +33,7 @@ class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
     }
 
     override fun init() {
-        mLoveEngine = LoveEngine(mContext)
+        mLoveEngine = BaseModel(mContext)
         val recyclerView: RecyclerView = rootView.findViewById(R.id.rcv_course_pp)
         tvPPtotal = rootView.findViewById(R.id.tv_course_pp_total)
         ivCourseClose = rootView.findViewById(R.id.iv_course_pp_close)
@@ -48,7 +47,7 @@ class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
         popupHeight = rootView.measuredHeight
         popupWidth = rootView.measuredWidth
 
-//        getData();
+
         initListener()
     }
 
@@ -93,5 +92,9 @@ class TutorCoursePopwindow(context: Activity?) : BasePopWindow(context) {
 
     interface OnTagSelectListener {
         fun onTagSelect(lessonInfo: LessonInfo?, pos: Int)
+    }
+
+    override fun getPopHeight(): Int {
+        return ScreenUtil.getHeight(mContext) * 2 / 3
     }
 }

@@ -18,6 +18,7 @@ import com.yc.emotion.home.index.ui.fragment.ArticleFragment
 import com.yc.emotion.home.index.ui.widget.EfficientCoursePopWindow
 import com.yc.emotion.home.index.view.ArticleView
 import com.yc.emotion.home.model.bean.AticleTagInfo
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_course_efficient.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -58,7 +59,7 @@ class MoreArticleActivity : BaseSameActivity(), ArticleView {
     }
 
     private fun initListener() {
-        tv_efficient.setOnClickListener {
+        tv_efficient.clickWithTrigger {
             setTagArrow(true)
             titleList?.let {
                 val efficientCoursePopwindow = EfficientCoursePopWindow(this)

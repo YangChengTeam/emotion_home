@@ -4,9 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
-import com.kk.utils.ToastUtil
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.mine.domain.model.CollectModel
 import com.yc.emotion.home.mine.view.CollectView
@@ -14,7 +12,10 @@ import com.yc.emotion.home.model.bean.ArticleDetailInfo
 import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.utils.UserInfoHelper
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.util.ToastUtil
 
 /**
  *
@@ -41,9 +42,9 @@ class CollectPresenter(context: Context?, view: CollectView) : BasePresenter<Col
         if (page == 1)
             mView.showLoadingDialog()
 
-        val subscription = mModel?.getCourseCollectList("$userId", page, page_size)?.subscribe(object : Subscriber<ResultInfo<List<CourseInfo>>>() {
-            override fun onNext(t: ResultInfo<List<CourseInfo>>?) {
-                t?.let {
+        mModel?.getCourseCollectList("$userId", page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<List<CourseInfo>>>() {
+            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<List<CourseInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK) {
                         if (t.data != null && t.data.isNotEmpty()) {
                             mView.showCollectCourseList(t.data)
@@ -55,42 +56,69 @@ class CollectPresenter(context: Context?, view: CollectView) : BasePresenter<Col
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun getCollectLoveHeals(limit: Int, offset: Int) {
         mView.showLoadingDialog()
-        handler?.postDelayed({
-            val subscription = mModel?.getCollectLoveHeals(limit, offset)?.subscribe(object : Subscriber<List<LoveHealDetDetailsBean>>() {
-                override fun onNext(t: List<LoveHealDetDetailsBean>?) {
-                    t?.let {
-                        mView.showCollectVerbalList(t)
+
+        mModel?.getVerbalList(limit, offset)?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealDetDetailsBean>>>() {
+
+
+            override fun onComplete() {
+                mView.hideLoadingDialog()
+                mView.onComplete()
+            }
+
+            override fun onError(e: Throwable) {
+                mView.hideLoadingDialog()
+                mView.onError()
+            }
+
+            override fun onNext(t: ResultInfo<List<LoveHealDetDetailsBean>>) {
+                mView.hideLoadingDialog()
+                if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.isNotEmpty()) {
+                    mView.showCollectVerbalList(t.data)
+                } else {
+                    if (limit == 1) {
+                        mView.onNoData()
                     }
                 }
+            }
 
-                override fun onCompleted() {
-                    mView.hideLoadingDialog()
-                    mView.onComplete()
-                }
+        })
 
-                override fun onError(e: Throwable?) {
-                    mView.onError()
-                }
-
-            })
-            subScriptions?.add(subscription)
-        }, 1500)
+//        handler?.postDelayed({
+//            mModel?.getCollectLoveHeals(limit, offset)?.subscribe(object : DisposableObserver<List<LoveHealDetDetailsBean>>() {
+//                override fun onNext(t: List<LoveHealDetDetailsBean>) {
+//                    t.let {
+//                        mView.showCollectVerbalList(t)
+//                    }
+//                }
+//
+//                override fun onComplete() {
+//                    mView.hideLoadingDialog()
+//                    mView.onComplete()
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    mView.onError()
+//                }
+//
+//            })
+//
+//        }, 1500)
     }
 
     fun getArticleCollectList(page: Int, pageSize: Int) {
@@ -98,9 +126,9 @@ class CollectPresenter(context: Context?, view: CollectView) : BasePresenter<Col
         if (page == 1)
             mView.showLoadingDialog()
 
-        val subscription = mModel?.getArticleCollectList("$userId", page, pageSize)?.subscribe(object : Subscriber<ResultInfo<List<ArticleDetailInfo>>>() {
-            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>?) {
-                t?.let {
+        mModel?.getArticleCollectList("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<ArticleDetailInfo>>>() {
+            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK) {
                         val mExampListsBeans = t.data
                         if (mExampListsBeans != null && mExampListsBeans.isNotEmpty()) {
@@ -114,61 +142,61 @@ class CollectPresenter(context: Context?, view: CollectView) : BasePresenter<Col
                 }
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun deleteCollectLoveHeals(detDetailsBean: LoveHealDetDetailsBean?) {
-        val subscription = mModel?.deleteCollectLoveHeals(detDetailsBean)?.subscribe(object : Subscriber<String>() {
-            override fun onNext(t: String?) {
+        mModel?.deleteCollectLoveHeals(detDetailsBean)?.subscribe(object : DisposableObserver<String>() {
+            override fun onNext(t: String) {
                 if (TextUtils.equals("success", t)) {
-                    ToastUtil.toast2(mContext, "已取消收藏！")
+                    ToastUtil.toast(mContext, "已取消收藏！")
                 }
 
                 mView.showDeleteSuccess()
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 
 
     fun collectLoveHeal(detDetailsBean: LoveHealDetDetailsBean?) {
-        val subscription = mModel?.collectLoveHeal(detDetailsBean)?.subscribe(object : Subscriber<String>() {
-            override fun onNext(t: String?) {
+        mModel?.collectLoveHeal(detDetailsBean)?.subscribe(object : DisposableObserver<String>() {
+            override fun onNext(t: String) {
                 if (TextUtils.equals("success", t)) {
-                    ToastUtil.toast2(mContext, "已经收藏成功，快去查看吧！")
+                    ToastUtil.toast(mContext, "已经收藏成功，快去查看吧！")
                 }
                 mView.showCollectSuccess()
             }
 
-            override fun onCompleted() {
+            override fun onComplete() {
 
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
 
             }
 
         })
-        subScriptions?.add(subscription)
+
     }
 }

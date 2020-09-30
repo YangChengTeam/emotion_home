@@ -3,27 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="@color/gray_f2f2f2">
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magicIndicator_order"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/top_empty_view"
+        layout="@layout/recycler_view_item_empty_view"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/swipeRefreshLayout" />
 
     <View
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_edebeb"
-        app:layout_constraintTop_toBottomOf="@id/magicIndicator_order" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager_order"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/view_divider" />
+        app:layout_constraintTop_toBottomOf="@id/view_divider">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

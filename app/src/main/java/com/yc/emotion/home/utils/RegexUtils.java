@@ -1,6 +1,6 @@
 package com.yc.emotion.home.utils;
 
-import com.yc.emotion.home.constant.RegexConstants;
+import com.yc.emotion.home.base.constant.RegexConstants;
 
 import java.util.ArrayList;
 import java.util.List;

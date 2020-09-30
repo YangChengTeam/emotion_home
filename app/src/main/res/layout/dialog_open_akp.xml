@@ -26,70 +26,71 @@
 
 
         <TextView
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/dialog_open_collect"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/star_collect_icon"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:drawablePadding="8dp"
             android:gravity="center_horizontal"
             android:text="@string/collect"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"
+            android:visibility="gone"
+            app:drawableTopCompat="@mipmap/star_collect_icon" />
 
         <TextView
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/dialog_open_akp_tv_qq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_d_qq"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:drawablePadding="8dp"
             android:gravity="center_horizontal"
             android:text="QQ"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"
+            app:drawableTopCompat="@mipmap/icon_d_qq" />
 
         <TextView
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/dialog_open_akp_tv_wx"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_d_wx"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:drawablePadding="8dp"
             android:gravity="center_horizontal"
             android:text="微信"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"
+            app:drawableTopCompat="@mipmap/icon_d_wx" />
 
         <TextView
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/dialog_open_akp_tv_mm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_d_momo"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:drawablePadding="8dp"
             android:gravity="center_horizontal"
             android:text="陌陌"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"
+            app:drawableTopCompat="@mipmap/icon_d_momo" />
 
         <TextView
-            android:visibility="gone"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:id="@+id/dialog_open_akp_tv_tt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:drawableTop="@mipmap/icon_d_tt"
             android:drawablePadding="8dp"
             android:gravity="center_horizontal"
             android:text="探探"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

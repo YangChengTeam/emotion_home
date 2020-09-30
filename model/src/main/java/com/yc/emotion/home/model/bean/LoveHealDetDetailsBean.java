@@ -29,6 +29,7 @@ public class LoveHealDetDetailsBean implements MultiItemEntity {
     public String content;
 
     public String ans_sex;
+    public String s_value;
     public static final int VIEW_TITLE = 0;
     public static final int VIEW_ITEM = 1;
     public static final int VIEW_PROG = 2;
@@ -52,14 +53,15 @@ public class LoveHealDetDetailsBean implements MultiItemEntity {
         this.ans_sex = ans_sex;
     }
 
-    @Generated(hash = 1227311754)
+    @Generated(hash = 1412676814)
     public LoveHealDetDetailsBean(Long id, int love_id, int dialogue_id, String content,
-            String ans_sex, long saveTime, String title, String userId) {
+            String ans_sex, String s_value, long saveTime, String title, String userId) {
         this.id = id;
         this.love_id = love_id;
         this.dialogue_id = dialogue_id;
         this.content = content;
         this.ans_sex = ans_sex;
+        this.s_value = s_value;
         this.saveTime = saveTime;
         this.title = title;
         this.userId = userId;
@@ -142,6 +144,14 @@ public class LoveHealDetDetailsBean implements MultiItemEntity {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getS_value() {
+        return this.s_value;
+    }
+
+    public void setS_value(String s_value) {
+        this.s_value = s_value;
     }
 
     public LoveHealDetDetailsBean(String userId) {

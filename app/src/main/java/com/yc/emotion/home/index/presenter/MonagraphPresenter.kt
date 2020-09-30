@@ -1,13 +1,14 @@
 package com.yc.emotion.home.index.presenter
 
 import android.content.Context
-import com.kk.securityhttp.domain.ResultInfo
-import com.kk.securityhttp.net.contains.HttpConfig
+
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.MonographModel
 import com.yc.emotion.home.index.view.MonagraphView
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
-import rx.Subscriber
+import io.reactivex.observers.DisposableObserver
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.config.HttpConfig
 
 /**
  *
@@ -29,19 +30,19 @@ class MonagraphPresenter(context: Context?, view: MonagraphView) : BasePresenter
     fun getMonographArticles(series: String?, page: Int, page_size: Int) {
         if (page == 1) mView.showLoadingDialog()
 
-        val subscription = mModel?.getMonographArticles(series, page, page_size)?.subscribe(object : Subscriber<ResultInfo<List<ArticleDetailInfo>>>() {
+        mModel?.getMonographArticles(series, page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<List<ArticleDetailInfo>>>() {
 
 
-            override fun onCompleted() {
+            override fun onComplete() {
                 if (page == 1) mView.hideLoadingDialog()
                 mView.onComplete()
             }
 
-            override fun onError(e: Throwable?) {
+            override fun onError(e: Throwable) {
             }
 
-            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>?) {
-                t?.let {
+            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>) {
+                t.let {
                     if (t.code == HttpConfig.STATUS_OK) {
                         if (t.data != null) {
                             val data = t.data
@@ -55,6 +56,6 @@ class MonagraphPresenter(context: Context?, view: MonagraphView) : BasePresenter
             }
         })
 
-        subScriptions?.add(subscription)
+
     }
 }

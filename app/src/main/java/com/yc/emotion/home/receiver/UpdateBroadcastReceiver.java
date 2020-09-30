@@ -13,7 +13,7 @@ import com.yc.emotion.home.utils.InstallApkUtlis;
  * Created by mayn on 2019/5/20.
  */
 
-public class UpdataBroadcastReceiver extends BroadcastReceiver {
+public class UpdateBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         long downLoadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);

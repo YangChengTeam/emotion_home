@@ -149,6 +149,16 @@ public class VideoMiniWindowController extends BaseVideoController {
         }
     }
 
+    @Override
+    public void complete() {
+        Logger.d(TAG,"reset："+mScrrenOrientation);
+        updateVideoControllerUI(View.INVISIBLE,View.VISIBLE);
+        if(null!=mBottomProgressBar){
+            mBottomProgressBar.setSecondaryProgress(0);
+            mBottomProgressBar.setProgress(0);
+        }
+    }
+
     /**
      * 更新控制器
      * @param loading 加载中

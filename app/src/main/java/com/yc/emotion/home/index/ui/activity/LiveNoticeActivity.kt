@@ -1,6 +1,5 @@
 package com.yc.emotion.home.index.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_live_notice.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,7 +50,7 @@ class LiveNoticeActivity : BaseActivity() {
             Glide.with(this).load(it.face).circleCrop().error(R.drawable.default_avatar_72).into(iv_tutor_face)
         }
 
-        rl_back.setOnClickListener { finish() }
+        rl_back.clickWithTrigger { finish() }
     }
 
     private fun convertTime(time: Long): String? {

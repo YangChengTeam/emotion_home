@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.loader.app.LoaderManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -42,6 +43,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
             //        windowParams.width = (int) (ScreenUtil.getWidth(mContext) * 0.98);
             window.attributes = windowParams
             window.setWindowAnimations(R.style.share_anim)
+
         }
 
     }
@@ -102,4 +104,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
         (rootView?.parent as ViewGroup).removeView(rootView)
 
     }
+
+
 }

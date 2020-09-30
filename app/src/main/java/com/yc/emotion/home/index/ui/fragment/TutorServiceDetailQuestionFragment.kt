@@ -9,6 +9,7 @@ import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.utils.UIUtils
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.fragment_tutor_service_detail_question.*
 
 /**
@@ -48,7 +49,7 @@ class TutorServiceDetailQuestionFragment : BaseFragment<BasePresenter<IModel, IV
     private fun clickView(view: View, imageView: ImageView, textView: TextView) {
 
 
-        view.setOnClickListener {
+        view.clickWithTrigger {
 
             var isExtend = view.tag
             isExtend = if (isExtend == "0") "1" else "0"

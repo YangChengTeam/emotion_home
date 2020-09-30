@@ -36,42 +36,42 @@
                 android:id="@+id/comp_main_index"
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:drawableTop="@mipmap/main_icon_tab_01"
                 android:text="@string/index"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:drawableTopCompat="@mipmap/main_icon_tab_01_s" />
 
             <TextView
                 android:id="@+id/comp_main_inVerbal"
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:drawableTop="@mipmap/home_speech_sel"
                 android:text="@string/inVerbal"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                app:drawableTopCompat="@mipmap/home_speech_default" />
 
             <TextView
                 android:id="@+id/comp_main_community"
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:drawableTop="@mipmap/home_community_default"
-                android:text="@string/community"
-                android:textColor="@color/text_gray" />
+                android:text="@string/video"
+                android:textColor="@color/text_gray"
+                app:drawableTopCompat="@mipmap/home_course_default" />
 
             <TextView
                 android:id="@+id/comp_main_message"
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:drawableTop="@mipmap/home_love_default"
                 android:text="@string/study"
-                android:textColor="@color/text_gray" />
+                android:textColor="@color/text_gray"
+                app:drawableTopCompat="@mipmap/home_love_default" />
 
 
             <TextView
                 android:id="@+id/comp_main_my"
                 style="@style/tv_main_icon_bottom"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:drawableTop="@mipmap/main_icon_tab_05"
                 android:text="@string/mine"
-                android:textColor="@color/text_gray" />
+                android:textColor="@color/text_gray"
+                app:drawableTopCompat="@mipmap/main_icon_tab_05" />
 
 
         </LinearLayout>

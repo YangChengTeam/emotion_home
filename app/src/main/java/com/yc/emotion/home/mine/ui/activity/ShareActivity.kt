@@ -12,6 +12,7 @@ import com.yc.emotion.home.model.bean.ShareInfo
 import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UIUtils
 import com.yc.emotion.home.utils.UserInfoHelper
+import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_share.*
 
 /**
@@ -53,7 +54,7 @@ class ShareActivity : BaseSameActivity() {
     }
 
     private fun initListener() {
-        tv_invite_friend.setOnClickListener {
+        tv_invite_friend.clickWithTrigger {
             val shareFragment = ShareAppFragment()
             window.decorView.isDrawingCacheEnabled = true
             val bmp = window.decorView.drawingCache

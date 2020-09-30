@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
+import com.yc.emotion.home.utils.UIUtils
 import kotlinx.android.synthetic.main.activity_about_us.*
 
 class AboutUsActivity : BaseSameActivity() {
@@ -21,6 +22,7 @@ class AboutUsActivity : BaseSameActivity() {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
+        about_us_tv_name.text=UIUtils.getAppName(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

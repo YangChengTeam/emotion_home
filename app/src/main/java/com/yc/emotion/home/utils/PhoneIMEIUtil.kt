@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.core.app.ActivityCompat
+import yc.com.rthttplibrary.config.GoagalInfo
+
 
 /**
  * Created by mayn on 2019/6/11.
@@ -28,7 +30,7 @@ object PhoneIMEIUtil {
             // for ActivityCompat#requestPermissions for more details.
 //            imeiString = "";
         } else {
-            imeiString = tm.deviceId
+            imeiString = GoagalInfo.get().uuid
         }
         if (imeiString == null || "" == imeiString || imeiString.isEmpty()) {
             imeiString = "35" + Build.BOARD.length % 10 + Build.BRAND.length % 10 + Build.CPU_ABI.length % 10 + Build.DEVICE.length % 10 + Build.DISPLAY.length % 10 + Build.HOST.length % 10 + Build.ID.length % 10 + Build.MANUFACTURER.length % 10 + Build.MODEL.length % 10 + Build.PRODUCT.length % 10 + Build.TAGS.length % 10 + Build.TYPE.length % 10 + Build.USER.length % 10

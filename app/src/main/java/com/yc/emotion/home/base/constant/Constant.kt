@@ -1,4 +1,4 @@
-package com.yc.emotion.home.constant
+package com.yc.emotion.home.base.constant
 
 import java.util.*
 
@@ -8,6 +8,9 @@ import java.util.*
 object Constant {
     const val TENCENT_ADV_ID = "1110003968"
     const val SPLASH_ADV_ID = "6070699035577708"
+
+    const val TOUTIAO_AD_ID = "5044643"
+    const val TOUTIAO_SPLASH_ADV_ID="887370211"
 
     @JvmField
     var imageList = ArrayList<String>()

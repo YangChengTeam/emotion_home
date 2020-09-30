@@ -80,9 +80,11 @@ public class DefaultVideoController extends BaseVideoController implements
                 int id = v.getId();
                 if (id == R.id.error_layout) {
                     IMediaPlayer.getInstance().reStartVideoPlayer(mOldPlayProgress);
+//                    PIMediaPlayer.getInstance().reStartVideoPlayer(mOldPlayProgress);
                 }else if(id == R.id.video_btn_reset_play){
                     VideoPlayerManager.getInstance().setMobileWorkEnable(true);
                     IMediaPlayer.getInstance().reStartVideoPlayer(0);
+//                    PIMediaPlayer.getInstance().reStartVideoPlayer(0);
                 }else if(id == R.id.video_btn_back_tiny){
                     if(null!=mOnFuctionListener){
                         mOnFuctionListener.onQuiteMiniWindow();
@@ -418,6 +420,27 @@ public class DefaultVideoController extends BaseVideoController implements
         }
     }
 
+    @Override
+    public void complete() {
+        Logger.d(TAG,"reset："+mScrrenOrientation);
+        removeCallbacks(View.INVISIBLE);
+        updateVideoControllerUI(View.VISIBLE,View.INVISIBLE,View.INVISIBLE,View.INVISIBLE,
+                View.INVISIBLE,View.INVISIBLE,View.GONE,View.VISIBLE);
+        if(null!=mVideoTotal){
+            mVideoTotal.setText("00:00");
+            mVideoCurrent.setText("00:00");
+        }
+        if(null!=mSeekBar){
+            mSeekBar.setSecondaryProgress(0);
+            mSeekBar.setProgress(0);
+        }
+        if(null!=mBottomProgressBar){
+            mBottomProgressBar.setSecondaryProgress(0);
+            mBottomProgressBar.setProgress(0);
+        }
+    }
+
+
     /**
      * 横屏模式开启,默认展开控制器
      */
@@ -661,6 +684,7 @@ public class DefaultVideoController extends BaseVideoController implements
         }
         DefaultVideoController.this.postDelayed(controllerRunnable,5000);
     }
+
 
     @Override
     protected void onDestroy() {

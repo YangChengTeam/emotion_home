@@ -55,6 +55,7 @@ public class LoveHealDateBean implements MultiItemEntity, Serializable {
     public String _level;
     public int id;
     public String name;
+    public String sub_title;
     public int parent_id;
     public List<LoveHealDateBean> children;
 

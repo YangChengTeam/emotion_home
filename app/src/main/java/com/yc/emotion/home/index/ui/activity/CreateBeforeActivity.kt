@@ -33,7 +33,7 @@ import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.statistics.common.DeviceConfig
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
-import com.yc.emotion.home.constant.URLConfig
+import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.index.presenter.ExpressPresenter
 import com.yc.emotion.home.index.view.ExpressView
 import com.yc.emotion.home.model.bean.confession.ConfessionDataBean

@@ -3,7 +3,6 @@ package com.yc.emotion.home.index.ui.fragment
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
@@ -12,7 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.base.ui.widget.ColorFlipPagerTitleView
-import com.yc.emotion.home.constant.Constant
+import com.yc.emotion.home.base.constant.Constant
 import kotlinx.android.synthetic.main.fragment_emotion_search_result_fragment.*
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -22,7 +21,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
-import java.util.*
 
 /**
  *
@@ -70,7 +68,7 @@ class EmotionSearchResultFragment : BaseEmotionSearchFragment() {
         val arrays = resources.getStringArray(R.array.emotion_search_array)
 
 
-        val titleList = Arrays.asList(*arrays)
+        val titleList = listOf(*arrays)
 
         initNavigator(titleList)
 
@@ -173,13 +171,4 @@ class EmotionSearchResultFragment : BaseEmotionSearchFragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e("TAG", "onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e("TAG", "onDestroy")
-    }
 }
