@@ -2,6 +2,7 @@ package com.yc.emotion.home.index.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
@@ -32,6 +34,17 @@ import com.yc.emotion.home.model.bean.TutorDetailInfo
 import com.yc.emotion.home.model.bean.TutorInfo
 import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_tutor_detail.*
+import kotlinx.android.synthetic.main.activity_tutor_detail.iv_tutor_back
+import kotlinx.android.synthetic.main.activity_tutor_detail.iv_tutor_detail
+import kotlinx.android.synthetic.main.activity_tutor_detail.iv_tutor_share
+import kotlinx.android.synthetic.main.activity_tutor_detail.ll_tutor_detail_aptitude
+import kotlinx.android.synthetic.main.activity_tutor_detail.magicIndicator_tutor_detail
+import kotlinx.android.synthetic.main.activity_tutor_detail.rcv_tutor_detail
+import kotlinx.android.synthetic.main.activity_tutor_detail.rl_buy_service
+import kotlinx.android.synthetic.main.activity_tutor_detail.rl_free_consult
+import kotlinx.android.synthetic.main.activity_tutor_detail.tv_tutor_detail_name
+import kotlinx.android.synthetic.main.activity_tutor_detail.tv_tutor_star
+import kotlinx.android.synthetic.main.activity_tutor_detail.viewPager_tutor_detail
 import net.lucode.hackware.magicindicator.ViewPagerHelper
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -40,6 +53,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView
+import kotlin.math.abs
 
 /**
  *
@@ -99,6 +113,29 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
 
     private fun initListener() {
 
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+
+            val fraction =
+                    (abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)
+
+            toolbar.setBackgroundColor(Color.argb((fraction * 255).toInt(), 255, 255, 255))
+            tv_title.setTextColor(Color.argb((fraction * 255).toInt(), 34, 34, 34))
+            tv_title.alpha = fraction
+
+
+            iv_tutor_back.setColorFilter(Color.argb((fraction * 255).toInt(), 255, 255, 255))
+            iv_tutor_share.setColorFilter(Color.argb((fraction * 255).toInt(), 255, 255, 255))
+
+            if (fraction.toInt() == 1) {
+                iv_tutor_back.colorFilter = null
+                iv_tutor_back.setImageResource(R.mipmap.icon_back)
+                iv_tutor_share.colorFilter = null
+                iv_tutor_share.setImageResource(R.mipmap.icon_black_share)
+            } else {
+                iv_tutor_back.setImageResource(R.mipmap.efficient_course_back_icon)
+                iv_tutor_share.setImageResource(R.mipmap.efficient_course_share_icon)
+            }
+        })
 
         iv_tutor_back.clickWithTrigger { finish() }
 //        ll_tutor_buy.setOnClickListener { ToastUtils.showCenterToast("购买课程") }

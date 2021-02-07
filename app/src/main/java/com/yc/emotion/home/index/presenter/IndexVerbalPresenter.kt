@@ -35,98 +35,42 @@ class IndexVerbalPresenter(context: Context?, view: IndexVerbalView) : BasePrese
     }
 
     fun getIndexDropInfos(keyword: String?) {
-        mModel?.getIndexDropInfos(keyword)?.subscribe(object : DisposableObserver<ResultInfo<IndexHotInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<IndexHotInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showDropKeyWords(t.data.list)
-                    }
-                }
+        mModel?.getIndexDropInfos(keyword)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showDropKeyWords(it.list)
             }
+        }, { _, _ -> }, false)
 
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
     fun searchVerbalTalk(keyword: String?, page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
-        mModel?.searchVerbalTalk("$userId", keyword, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<SearchDialogueBean>>() {
-            override fun onNext(t: ResultInfo<SearchDialogueBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val searchDialogueBean = t.data
-                        mView.showSearchResult(searchDialogueBean, keyword)
-                    }
-                }
-            }
 
-            override fun onComplete() {
-                if (page == 1)
-                    mView.hideLoadingDialog()
-                mView.onComplete()
+        mModel?.searchVerbalTalk("$userId", keyword, page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showSearchResult(it, keyword)
             }
-
-            override fun onError(e: Throwable) {
-                mView.onError()
-            }
-
-        })
+        }, { _, _ -> mView.onError() }, page == 1)
 
     }
 
 
     fun searchCount(keyword: String?) {
         val userId = UserInfoHelper.instance.getUid()
-        mModel?.searchCount("$userId", keyword)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-            override fun onNext(stringResultInfo: ResultInfo<String>) {
-
-            }
-        })
+        mModel?.searchCount("$userId", keyword)?.getData(mView, { _, _ -> }, { _, _ -> }, false)
 
     }
 
 
     private fun loveCategory(sence: String) {
 
-        mView.showLoadingDialog()
-        mModel?.loveCategory(sence)?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealDateBean>>>() {
-            override fun onNext(t: ResultInfo<List<LoveHealDateBean>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        createNewData(t.data, sence)
-
-                    }
-                }
+        mModel?.loveCategory(sence)?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(it, sence)
             }
+        }, { _, _ -> mView.onComplete() })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
@@ -181,28 +125,12 @@ class IndexVerbalPresenter(context: Context?, view: IndexVerbalView) : BasePrese
 
     fun loveListCategory(category_id: String?, page: Int, page_size: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
-        mModel?.loveListCategory("$userId", category_id, page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealDetBean>>>() {
-            override fun onNext(t: ResultInfo<List<LoveHealDetBean>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        createNewData(t.data)
-                    }
-                }
-            }
 
-            override fun onComplete() {
-                if (page == 1) {
-                    mView.hideLoadingDialog()
-                }
-                mView.onComplete()
+        mModel?.loveListCategory("$userId", category_id, page, page_size)?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(it)
             }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> mView.onComplete() }, page == 1)
 
     }
 

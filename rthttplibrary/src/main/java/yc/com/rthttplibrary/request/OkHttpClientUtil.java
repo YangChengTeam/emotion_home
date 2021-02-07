@@ -2,6 +2,7 @@ package yc.com.rthttplibrary.request;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import yc.com.rthttplibrary.config.HttpConfig;
 import yc.com.rthttplibrary.converter.LogInterceptor;
@@ -12,21 +13,29 @@ import yc.com.rthttplibrary.converter.LogInterceptor;
 public class OkHttpClientUtil {
 
 
-    private static OkHttpClient defaultClient() {
-        final OkHttpClient.Builder builder = new OkHttpClient.Builder()
+    private static OkHttpClient.Builder defaultClientBuilder() {
+        return new OkHttpClient.Builder()
                 .connectTimeout(HttpConfig.TIMEOUT, TimeUnit.MILLISECONDS)//设置读取超时时间
                 .readTimeout(HttpConfig.TIMEOUT, TimeUnit.MILLISECONDS)//设置请求超时时间
                 .writeTimeout(HttpConfig.TIMEOUT, TimeUnit.MILLISECONDS)//设置写入超时时间
-                .addInterceptor(new LogInterceptor())//添加打印拦截器
-                .retryOnConnectionFailure(true);//设置出现错误进行重新连接。
-        return builder.build();
+
+                .retryOnConnectionFailure(true);
     }
 
-    public static OkHttpClient setClient(OkHttpClient client) {
-        if (client == null) {
-            client = defaultClient();
+    public static OkHttpClient.Builder setClientBuilder(OkHttpClient.Builder builder) {
+        if (builder == null) {
+            builder = defaultClientBuilder();
         }
-        return client;
+        return builder;
+    }
+
+    public static OkHttpClient.Builder addInterceptorBuilder(OkHttpClient.Builder builder, Interceptor interceptor) {
+        builder = setClientBuilder(builder);
+        if (interceptor == null) {
+            interceptor = new LogInterceptor();
+        }
+        builder.addInterceptor(interceptor);  //添加打印拦截器
+        return builder;
     }
 
 

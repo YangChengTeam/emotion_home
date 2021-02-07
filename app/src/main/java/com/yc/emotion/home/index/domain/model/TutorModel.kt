@@ -4,6 +4,7 @@ import android.content.Context
 import com.alibaba.fastjson.JSONArray
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.*
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,9 +24,9 @@ class TutorModel(override var context: Context?) : IModel(context) {
      * @param tutor_id
      * @return
      */
-    fun getTutorDetailInfo(tutor_id: String?): Observable<ResultInfo<TutorDetailInfo>> {
+    fun getTutorDetailInfo(tutor_id: String?): Flowable<ResultInfo<TutorDetailInfo>> {
 
-        return request.getTutorDetailInfo(tutor_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTutorDetailInfo(tutor_id)
 
     }
 
@@ -38,10 +39,10 @@ class TutorModel(override var context: Context?) : IModel(context) {
      * @param page_sie
      * @return
      */
-    fun getTutorServices(tutor_id: String?, page: Int, page_sie: Int): Observable<ResultInfo<List<TutorServiceInfo>>> {
+    fun getTutorServices(tutor_id: String?, page: Int, page_sie: Int): Flowable<ResultInfo<List<TutorServiceInfo>>> {
 
 
-        return request.getTutorServices(tutor_id, page, page_sie).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTutorServices(tutor_id, page, page_sie)
 
 
     }
@@ -53,10 +54,10 @@ class TutorModel(override var context: Context?) : IModel(context) {
      * @param service_id
      * @return
      */
-    fun getTutorServiceDetailInfo(service_id: String?): Observable<ResultInfo<TutorServiceDetailInfo>> {
+    fun getTutorServiceDetailInfo(service_id: String?): Flowable<ResultInfo<TutorServiceDetailInfo>> {
 
 
-        return request.getTutorServiceDetailInfo(service_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTutorServiceDetailInfo(service_id)
     }
 
 
@@ -66,10 +67,10 @@ class TutorModel(override var context: Context?) : IModel(context) {
      * @param tutor_id
      * @return
      */
-    fun getApitudeInfo(tutor_id: String?): Observable<ResultInfo<TutorInfoWrapper>> {
+    fun getApitudeInfo(tutor_id: String?): Flowable<ResultInfo<TutorInfoWrapper>> {
 
 
-        return request.getApitudeInfo(tutor_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getApitudeInfo(tutor_id)
     }
 
     /**
@@ -77,10 +78,10 @@ class TutorModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getTutorCategory(): Observable<ResultInfo<List<CourseInfo>>> {
+    fun getTutorCategory(): Flowable<ResultInfo<List<CourseInfo>>> {
 
 
-        return request.getTutorCategory().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTutorCategory()
     }
 
     /**
@@ -91,12 +92,12 @@ class TutorModel(override var context: Context?) : IModel(context) {
      * @param catid
      * @return
      */
-    fun getTutorListInfo(catid: String?, page: Int, pageSize: Int): Observable<ResultInfo<List<TutorInfo>>> {
+    fun getTutorListInfo(catid: String?, page: Int, pageSize: Int): Flowable<ResultInfo<List<TutorInfo>>> {
 
-        return request.getTutorListInfo(catid, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTutorListInfo(catid, page, pageSize)
     }
 
-    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Observable<ResultInfo<OrdersInitBean>> {
+    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Flowable<ResultInfo<OrdersInitBean>> {
         val params = HashMap<String, String>()
 
 
@@ -122,6 +123,6 @@ class TutorModel(override var context: Context?) : IModel(context) {
         params["goods_list"] = jsonListArray.toJSONString()
 
 
-        return request.initOrders(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.initOrders(params)
     }
 }

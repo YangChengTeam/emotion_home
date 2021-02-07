@@ -11,6 +11,7 @@ import com.yc.emotion.home.model.bean.UserInterInfo
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import io.reactivex.observers.DisposableObserver
+import kotlinx.android.synthetic.main.fragment_main_mine.*
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
 
@@ -18,7 +19,7 @@ import yc.com.rthttplibrary.config.HttpConfig
  *
  * Created by suns  on 2019/11/15 15:04.
  */
-class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel, MineView>(context, view) {
+class MinePresenter(context: Context?, view: MineView) : BasePresenter<MineModel, MineView>(context, view) {
 
     init {
         mModel = MineModel(context)
@@ -35,26 +36,11 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
 
     fun userInfo() {
         val userId = UserInfoHelper.instance.getUid()
-        mView.showLoadingDialog()
-        mModel?.userInfo("$userId")?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showUserInfo(t.data)
-                    }
-                }
-
+        mModel?.userInfo("$userId")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showUserInfo(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
 
     }
@@ -67,52 +53,24 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
             return
         }
 
-
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-
-        mModel?.updateUserInfo("$userId", nickName, face, password, birthday, sex, profession, age, signature, interested_id)
-                ?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-                    override fun onNext(t: ResultInfo<UserInfo>) {
-                        t.let {
-                            if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                                mView.showUpdateUserInfo(t.data)
-                            }
-                        }
-                    }
-
-                    override fun onComplete() {
-                        mView.hideLoadingDialog()
-                    }
-
-                    override fun onError(e: Throwable) {
-                    }
-
-                })
+        mModel?.updateUserInfo("$userId", nickName, face, password, birthday, sex, profession, age, signature, interested_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showUpdateUserInfo(it)
+            }
+        }, { _, _ -> })
 
 
     }
 
 
     fun getUserInterseInfo() {
-        mModel?.getUserInterseInfo()?.subscribe(object : DisposableObserver<ResultInfo<List<UserInterInfo>>>() {
-            override fun onNext(t: ResultInfo<List<UserInterInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showUserInterseInfo(t.data)
-                    }
-                }
+        mModel?.getUserInterseInfo()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showUserInterseInfo(it)
             }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-            }
-
-        })
+        }, { _, _ -> }, false)
 
     }
 
@@ -124,32 +82,23 @@ class MinePresenter(context: Context, view: MineView) : BasePresenter<MineModel,
 
             val userId = UserInfoHelper.instance.getUid()
 
-            mView.showLoadingDialog()
-
-            mModel?.addSuggestion("$userId", content, qq, wechat, "user.suggestion/add")?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-                override fun onNext(t: ResultInfo<String>) {
-                    t.let {
-                        if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                            val message = t.message
-                            ToastUtils.showCenterToast(message)
-                            mView.showSuggestionSuccess()
-                        }
-                    }
+            mModel?.addSuggestion("$userId", content, qq, wechat, "user.suggestion/add")?.getData(mView, { it, message ->
+                it?.let {
+                    ToastUtils.showCenterToast(message)
+                    mView.showSuggestionSuccess()
                 }
-
-                override fun onComplete() {
-                    mView.hideLoadingDialog()
-
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-            })
-
+            }, { _, _ -> })
         }
-
     }
 
+    fun getRewardInfo() {
+        mModel?.getRewardInfo()?.getData(mView, { it, _ ->
+            it?.let {
+
+                if (!TextUtils.isEmpty(it.code))
+                    mView.showInvatationcode(it.code)
+
+            }
+        }, { _, _ -> }, false)
+    }
 }

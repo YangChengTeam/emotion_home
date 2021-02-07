@@ -35,25 +35,11 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
 
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.detailLoveCase(id, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<LoveByStagesDetailsBean>>() {
-            override fun onNext(t: ResultInfo<LoveByStagesDetailsBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showLoveCaseDetail(t.data)
-                    }
-                }
+        mModel?.detailLoveCase(id, "$userId")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showLoveCaseDetail(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
 
     }
@@ -67,31 +53,16 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
             "article.example/collect"
         }
 
-        mView.showLoadingDialog()
+        mModel?.collectLoveCase("$userId", exampleId, url)?.getData(mView, { it, msg ->
+            it?.let {
 
-        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
+                ToastUtils.showCenterToast(msg)
 
-                        var isCollected = isCollected
-                        isCollected = !isCollected
-                        mView.showLoveCaseCollectResult(-1, isCollected)
-                    }
-                }
+                var isCollected = isCollected
+                isCollected = !isCollected
+                mView.showLoveCaseCollectResult(-1, isCollected)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 
 
@@ -107,30 +78,14 @@ class LoveCaseDetailPresenter(context: Context, view: LoveCaseDetailView) : Base
             "article.example/dig"
         }
 
-        mView.showLoadingDialog()
+        mModel?.collectLoveCase("$userId", exampleId, url)?.getData(mView, { it, msg ->
+            it?.let {
+                ToastUtils.showCenterToast(msg)
 
-        mModel?.collectLoveCase("$userId", exampleId, url)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
-
-                        var isDig = isDig
-                        isDig = !isDig
-                        mView.showLoveCaseDigResult(isDig)
-                    }
-                }
+                var isDig = isDig
+                isDig = !isDig
+                mView.showLoveCaseDigResult(isDig)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 }

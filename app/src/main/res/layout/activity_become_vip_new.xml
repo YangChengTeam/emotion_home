@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/become_vip_top_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/become_vip_bg_title" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:contentInsetLeft="0dp"
+                >
+
+                <LinearLayout
+                    android:id="@+id/become_vip_ll_title_con"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:paddingTop="@dimen/statusbar_view_height">
+
+                    <ImageView
+                        android:id="@+id/activity_base_same_iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@mipmap/icon_arr_lift_black" />
+
+                    <TextView
+                        android:id="@+id/activity_base_same_tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="@color/gray_222222"
+                        android:textSize="15sp"
+                        tools:text="中文中文中文中文中文中文中文中文" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/become_vip_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp" />
+
+        <LinearLayout
+            android:id="@+id/item_become_vip_ll_con"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_pay_way">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dp"
+                android:text="已有 "
+                android:textColor="#ddae52"
+                android:textSize="@dimen/size_12" />
+
+            <TextView
+                android:id="@+id/item_become_vip_tv_pay_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dp"
+                android:text="156592"
+                android:textColor="#ddae52"
+                android:textSize="@dimen/size_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dp"
+                android:text=" 位用户成为VIP"
+                android:textColor="#ddae52"
+                android:textSize="@dimen/size_12" />
+        </LinearLayout>
+
+        <include layout="@layout/recycler_view_item_become_vip_tag" />
+
+        <include layout="@layout/recycler_view_item_become_vip_new" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_pay_way"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp">
+
+            <RelativeLayout
+                android:id="@+id/item_become_vip_rl_btn_wx"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selectot_btn_pay_vip_green">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="微信支付"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_16"
+                    app:drawableStartCompat="@mipmap/icon_pay_wx" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/item_become_vip_rl_btn_zfb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selectot_btn_pay_vip_blue">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="支付宝支付"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_16"
+                    app:drawableStartCompat="@mipmap/icon_pay_ali" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/become_vip_iv_to_wx"
+            android:layout_width="71dp"
+            android:layout_height="71dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="62dp"
+            android:src="@mipmap/icon_floating_weixin"
+            android:visibility="gone" />
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

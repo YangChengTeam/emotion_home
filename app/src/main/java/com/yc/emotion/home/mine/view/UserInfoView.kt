@@ -2,9 +2,9 @@ package com.yc.emotion.home.mine.view
 
 import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.ui.activity.BaseActivity
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.model.bean.UserInfo
+import yc.com.rthttplibrary.view.IDialog
 
 /**
  *

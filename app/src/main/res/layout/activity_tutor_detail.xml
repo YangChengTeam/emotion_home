@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -62,22 +65,6 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/iv_tutor_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="40dp"
-                        android:src="@mipmap/efficient_course_back_icon" />
-
-                    <ImageView
-                        android:id="@+id/iv_tutor_share"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="15dp"
-                        android:src="@mipmap/efficient_course_share_icon" />
 
                 </RelativeLayout>
 
@@ -140,32 +127,53 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:background="@android:color/transparent"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:title="">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_tutor_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="40dp"
+                        android:src="@mipmap/efficient_course_back_icon"
+                         />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dp_40"
+                        android:alpha="0"
+                        android:text="导师详情"
+                        android:textColor="@color/gray_222222"
+                        android:textSize="@dimen/sp_16" />
+
+                    <ImageView
+                        android:id="@+id/iv_tutor_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:src="@mipmap/efficient_course_share_icon" />
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:theme="@style/actionBarTheme"
-            android:background="@android:color/transparent"
-            app:contentInsetStart="0dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <net.lucode.hackware.magicindicator.MagicIndicator
-                    android:id="@+id/magicIndicator_tutor_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_edebeb" />
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -179,13 +187,22 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magicIndicator_tutor_detail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="-10dp"
             android:background="@drawable/index_content_bg"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_edebeb" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager_tutor_detail"
@@ -238,11 +255,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableStart="@mipmap/tutor_service_icon_buy"
                         android:drawablePadding="3dp"
                         android:text="@string/buy_service"
                         android:textColor="@color/gray_222222"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@mipmap/tutor_service_icon_buy" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -256,11 +273,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:drawableStart="@mipmap/icon_wechat_white"
                         android:drawablePadding="3dp"
                         android:text="@string/free_consult"
                         android:textColor="@color/white"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:drawableStartCompat="@mipmap/icon_wechat_white" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

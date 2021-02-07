@@ -48,129 +48,60 @@ class TutorPresenter(context: Context?, view: TutorView) : BasePresenter<TutorMo
     }
 
     fun getTutorDetailInfo(tutor_id: String?) {
-        mView.showLoadingDialog()
-        mModel?.getTutorDetailInfo(tutor_id)?.subscribe(object : DisposableObserver<ResultInfo<TutorDetailInfo>>() {
-            override fun onNext(t: ResultInfo<TutorDetailInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTutorDetailInfo(t.data)
-                    }
-                }
 
+        mModel?.getTutorDetailInfo(tutor_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showTutorDetailInfo(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> })
 
     }
 
     fun getTutorServices(tutor_id: String?, page: Int, page_sie: Int) {
-        mView.showLoadingDialog()
-        mModel?.getTutorServices(tutor_id, page, page_sie)?.subscribe(object : DisposableObserver<ResultInfo<List<TutorServiceInfo>>>() {
-            override fun onNext(t: ResultInfo<List<TutorServiceInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        val tutorServices = t.data
-                        if (tutorServices != null && tutorServices.isNotEmpty()) {
-                            mView.showTutorServiceInfos(tutorServices)
-                        } else {
-                            if (page == 1) {
-                                mView.onNoData()
-                            }
-                        }
 
-                    }
+        mModel?.getTutorServices(tutor_id, page, page_sie)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showTutorServiceInfos(it)
+            } else {
+                if (page == 1) {
+                    mView.onNoData()
                 }
             }
+        }, { _, _ -> mView.onComplete() })
 
-            override fun onComplete() {
-                mView.onComplete()
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
 
     fun getTutorServiceDetailInfo(service_id: String?) {
-        mView.showLoadingDialog()
-        mModel?.getTutorServiceDetailInfo(service_id)?.subscribe(object : DisposableObserver<ResultInfo<TutorServiceDetailInfo>>() {
-            override fun onNext(t: ResultInfo<TutorServiceDetailInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTutorServiceDetailInfo(t.data)
-                    }
-                }
+        mModel?.getTutorServiceDetailInfo(service_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showTutorServiceDetailInfo(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
 
     fun initOrders(pay_way_name: String, money: String, title: String, goodId: String) {
         val userId = UserInfoHelper.instance.getUid()
-        mView.showLoadingDialog()
-        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.subscribe(object : DisposableObserver<ResultInfo<OrdersInitBean>>() {
-            override fun onNext(t: ResultInfo<OrdersInitBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTutorServiceOrder(pay_way_name, t.data)
-                    }
-                }
+
+        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showTutorServiceOrder(pay_way_name, it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
     }
 
     fun getApitudeInfo(tutor_id: String?) {
-        mView.showLoadingDialog()
-        mModel?.getApitudeInfo(tutor_id)?.subscribe(object : DisposableObserver<ResultInfo<TutorInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<TutorInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTutorApitude(t.data)
-                    }
-                }
+
+        mModel?.getApitudeInfo(tutor_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showTutorApitude(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
     }
 
@@ -178,60 +109,28 @@ class TutorPresenter(context: Context?, view: TutorView) : BasePresenter<TutorMo
      * 获取导师分类
      */
     fun getTutorCategory() {
-        mModel?.getTutorCategory()?.subscribe(object : DisposableObserver<ResultInfo<List<CourseInfo>>>() {
-            override fun onNext(t: ResultInfo<List<CourseInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTutorCategory(t.data)
-                        CommonInfoHelper.setO(mContext, t.data, "tutor_category_list")
-                    } else {
-                        getCache()
-                    }
-                }
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
+        mModel?.getTutorCategory()?.getData(mView, { it, _ ->
+            if (it != null) {
+                mView.showTutorCategory(it)
+                CommonInfoHelper.setO(mContext, it, "tutor_category_list")
+            } else {
                 getCache()
             }
-
-        })
+        }, { _, _ -> getCache() }, false)
 
     }
 
     fun getTutorListInfo(catid: String?, page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getTutorListInfo(catid, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<TutorInfo>>>() {
-            override fun onNext(t: ResultInfo<List<TutorInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null && t.data.isNotEmpty()) {
-                            val tutorList = t.data
-                            mView.showTutorListInfos(tutorList)
-                        } else {
-                            mView.onNoData()
 
-                        }
-                    } else {
-                        mView.onNoData()
+        mModel?.getTutorListInfo(catid, page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showTutorListInfos(it)
+            } else {
+                mView.onNoData()
 
-                    }
-
-
-                }
             }
+        }, { _, _ -> mView.onNoData() })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-            }
-        })
 
     }
 }

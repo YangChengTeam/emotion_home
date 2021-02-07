@@ -12,7 +12,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.util.*
-
+import io.reactivex.Observable
 /**
  *
  * Created by suns  on 2019/11/20 14:48.
@@ -20,20 +20,20 @@ import java.util.*
 class ExpressModel(override var context: Context?) : IModel(context) {
 
 
-    fun getExpressData(page: Int): io.reactivex.Observable<ConfessionBean> {
+    fun getExpressData(page: Int): Observable<ConfessionBean> {
 
         return request.getExpressData(URLConfig.CATEGORY_LIST_URL, "1", page, isrsa = false, iszip = false).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
-    fun netNormalData(requestMap: Map<String, String?>, requestUrl: String): io.reactivex.Observable<ImageCreateBean> {
+    fun netNormalData(requestMap: Map<String, String?>, requestUrl: String): Observable<ImageCreateBean> {
 
 
         return request.netNormalData(requestMap, requestUrl, isrsa = false, iszip = false).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
 
-    fun netUpFileNet(params: Map<String, String?>, upFile: File, requestUrl: String): io.reactivex.Observable<ImageCreateBean> {
+    fun netUpFileNet(params: Map<String, String?>, upFile: File, requestUrl: String): Observable<ImageCreateBean> {
 
 
         val requestBodyMap: MutableMap<String, RequestBody?> = HashMap()

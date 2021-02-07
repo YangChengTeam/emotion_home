@@ -33,40 +33,23 @@ class OrderPresenter(context: Context, view: OrderView) : BasePresenter<OrderMod
     fun getOrderList(page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
 
-        if (page == 1) {
-            mView.showLoadingDialog()
-        }
-
-        mModel?.getOrderList("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<OrderInfo>>>() {
-            override fun onNext(t: ResultInfo<List<OrderInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null && t.data.isNotEmpty()) {
-                            mView.showOrderList(t.data)
-                        } else {
-                            if (page == 1) mView.onNoData()
-                            else {
-                                mView.onEnd()
-                            }
-                        }
-                    } else {
-                        if (page == 1) mView.onNoData()
-                    }
+        mModel?.getOrderList("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showOrderList(it)
+            } else {
+                if (page == 1) mView.onNoData()
+                else {
+                    mView.onEnd()
                 }
             }
-
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-                if (page == 1) mView.hideLoadingDialog()
-
+        }, { code, _ ->
+            if (code == -1) {
                 mView.onError()
+            } else {
+                mView.onNoData()
             }
+        }, page == 1)
 
-        })
     }
 
 

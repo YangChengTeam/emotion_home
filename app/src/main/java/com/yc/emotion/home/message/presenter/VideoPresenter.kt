@@ -32,44 +32,20 @@ class VideoPresenter(context: Context?, view: VideoView) : BasePresenter<VideoMo
     }
 
     fun getVideoItemInfos(page: Int, page_size: Int) {
-        mView.showLoadingDialog()
-        mModel?.getVideoItemInfos(page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<VideoItemInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<VideoItemInfoWrapper>) {
-                mView.hideLoadingDialog()
-
-                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                    createNewData(page, page_size, t.data)
-                } else {
-                    mView.onError()
-                }
+        mModel?.getVideoItemInfos(page, page_size)?.getData(mView, { it, _ ->
+            if (it != null) {
+                createNewData(page, page_size, it)
+            } else {
+                mView.onError()
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-            }
-        })
 
     }
 
     fun statisticsVideo(id: String) {
-        mModel?.statisticsVideo(id)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
+        mModel?.statisticsVideo(id)?.getData(mView,{it,_->},{_,_->},false)
 
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 

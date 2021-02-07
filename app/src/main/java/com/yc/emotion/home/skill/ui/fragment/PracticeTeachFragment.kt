@@ -1,6 +1,7 @@
 package com.yc.emotion.home.skill.ui.fragment
 
 import android.content.Intent
+import android.util.Log
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,7 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
 
     override fun lazyLoad() {
 
+        mPresenter?.getCache()
     }
 
     private fun initRecyclerView() {
@@ -177,12 +179,13 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
     }
 
 
-    override fun showLoadingDialog() {
-        (activity as? BaseActivity)?.showLoadingDialog()
+    override fun showLoading() {
+        (activity as? BaseActivity)?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        (activity as? BaseActivity)?.hideLoadingDialog()
+    override fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
+
 
 }

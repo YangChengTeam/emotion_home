@@ -37,7 +37,6 @@ public class LogInterceptor implements Interceptor {
 
         LogUtil.msg("客户端请求url->" + request.url().toString());
 
-
         //重点部分----------针对post请求做处理-----------------------
         if ("POST".equals(method)) {//post请求需要拼接
             if (request.body() instanceof FormBody) {
@@ -89,8 +88,8 @@ public class LogInterceptor implements Interceptor {
         long t2 = System.nanoTime();
 
 //
-//        LogUtil.msg("客户端请求头信息->" + String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s",
-//                response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+        LogUtil.msg("客户端请求头信息->" + String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s",
+                response.request().url(), (t2 - t1) / 1e6d, response.headers()));
 
         if (response.body() != null) {// 深坑！打印body后原ResponseBody会被清空，需要重新设置body
 //            LogUtil.msg("服务端返回数据->" + response.body().string());

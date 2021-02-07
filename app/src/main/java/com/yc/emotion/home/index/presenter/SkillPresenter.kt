@@ -51,24 +51,12 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     }
 
     private fun exampleTsCategory() {
-        mView.showLoadingDialog()
-        mModel?.exampleTsCategory()?.subscribe(object : DisposableObserver<ResultInfo<ExampleTsCategory>>() {
-            override fun onNext(t: ResultInfo<ExampleTsCategory>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        createNewData(t.data)
-                    }
-                }
+        mModel?.exampleTsCategory()?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
 
     }
 
@@ -86,30 +74,18 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     }
 
     fun categoryArticle() {
-        mModel?.categoryArticle()?.subscribe(object : DisposableObserver<ResultInfo<List<CategoryArticleBean>>>() {
-            override fun onComplete() {
+        mModel?.categoryArticle()?.getData(mView, { it, _ ->
+            it?.let {
 
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-            override fun onNext(t: ResultInfo<List<CategoryArticleBean>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val data = t.data
-                        if (data == null || data.isEmpty()) {
-                            return
-                        }
-                        mView.showCategoryArticleInfos(data)
-                        //                mCacheWorker.setCache("main1_Article_category", mCategoryArticleBeans);
-                        CommonInfoHelper.setO<List<CategoryArticleBean>>(mContext, data, "main1_Article_category")
-                    }
+                if (it.isEmpty()) {
+                    return@let
                 }
+                mView.showCategoryArticleInfos(it)
+                //                mCacheWorker.setCache("main1_Article_category", mCategoryArticleBeans);
+                CommonInfoHelper.setO<List<CategoryArticleBean>>(mContext, it, "main1_Article_category")
             }
+        }, { _, _ -> }, false)
 
-        })
     }
 
 
@@ -144,80 +120,36 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
     }
 
     fun exampleTsList(id: String?, page: Int, pageSize: Int) {
-        if (page == 1)
-            mView.showLoadingDialog()
-        mModel?.exampleTsList(id, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<ExampDataBean>>() {
-            override fun onNext(t: ResultInfo<ExampDataBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showSkillListInfo(t.data.lists)
-                    }
-                }
+
+        mModel?.exampleTsList(id, page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showSkillListInfo(it.lists)
             }
+        }, { _, _ -> mView.onComplete() }, page == 1)
 
-            override fun onComplete() {
-                if (page == 1)
-                    mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
 
     fun listsArticle(categoryId: String?, page: Int, pageSize: Int) {
-        if (page == 1)
-            mView.showLoadingDialog()
-        mModel?.listsArticle(categoryId, page, pageSize, "article.example/article_lists")?.subscribe(object : DisposableObserver<ResultInfo<List<LoveByStagesBean>>>() {
-            override fun onNext(t: ResultInfo<List<LoveByStagesBean>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showSkillArticleList(t.data)
-                    }
-                }
+
+        mModel?.listsArticle(categoryId, page, pageSize, "article.example/article_lists")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showSkillArticleList(it)
             }
+        }, { _, _ -> mView.onComplete() }, page == 1)
 
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
 
     fun detailArticle(id: String) {
         val userId = UserInfoHelper.instance.getUid()
-        mView.showLoadingDialog()
-        mModel?.detailArticle(id, "$userId", "article.example/detail")?.subscribe(object : DisposableObserver<ResultInfo<LoveByStagesDetailsBean>>() {
-            override fun onNext(t: ResultInfo<LoveByStagesDetailsBean>) {
-                mView.hideLoadingDialog()
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showSkillArticleDetailInfo(t.data)
-                    }
-                }
+        mModel?.detailArticle(id, "$userId", "article.example/detail")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showSkillArticleDetailInfo(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 
 
@@ -228,30 +160,15 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
         } else {
             "article.example/uncollect"
         }
-        mView.showLoadingDialog()
-        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
-                        val isCollectArticle = !isCollectArticle
 
-                        mView.showSkillArticleCollectResult(-1, isCollectArticle)
-
-                    }
-                }
+        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.getData(mView, { it, msg ->
+            it?.let {
+                ToastUtils.showCenterToast(msg)
+                val isCollectArticle = !isCollectArticle
+                mView.showSkillArticleCollectResult(-1, isCollectArticle)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
     }
 
 
@@ -262,29 +179,15 @@ class SkillPresenter(context: Context?, view: SkillView) : BasePresenter<SkillMo
         } else {
             "article.example/dig"
         }
-        mView.showLoadingDialog()
-        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
-                        val isDigArticle = !isDigArticle
+        mModel?.collectSkillArticle("$userId", articleId, mUrl)?.getData(mView, { it, msg ->
+            it?.let {
 
-                        mView.showSkillArticleDigResult(isDigArticle)
+                ToastUtils.showCenterToast(msg)
+                val isDigArticle = !isDigArticle
 
-                    }
-                }
+                mView.showSkillArticleDigResult(isDigArticle)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
     }
 }

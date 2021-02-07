@@ -39,17 +39,19 @@ class RewardDetailFragment : BaseFragment<RewardPresenter>(), RewardView {
         initListener()
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
         activity?.let {
-            (activity as BaseActivity).showLoadingDialog()
+            (activity as BaseActivity).showLoading()
         }
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         activity?.let {
-            (activity as BaseActivity).hideLoadingDialog()
+            (activity as BaseActivity).hideLoading()
         }
     }
+
+
 
     fun initListener() {
         rewardDetailAdapter?.setOnLoadMoreListener({ getData() }, rcv_order)

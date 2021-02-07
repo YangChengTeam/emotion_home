@@ -103,13 +103,6 @@ class ArticleFragment : BaseFragment<ArticlePresenter>(), ArticleView {
         }
     }
 
-    override fun showLoadingDialog() {
-        (activity as? BaseActivity)?.showLoadingDialog()
-    }
-
-    override fun hideLoadingDialog() {
-        (activity as? BaseActivity)?.hideLoadingDialog()
-    }
 
 
     override fun showArticleInfoList(data: List<ArticleDetailInfo>?) {
@@ -118,6 +111,14 @@ class ArticleFragment : BaseFragment<ArticlePresenter>(), ArticleView {
 
     override fun onEnd() {
         indexChoicenessAdapter?.loadMoreEnd()
+    }
+
+    override fun showLoading() {
+        (activity as? BaseActivity)?.showLoading()
+    }
+
+    override fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
 
     override fun onComplete() {

@@ -132,13 +132,15 @@ class EmotionSearchTutorFragment : BaseFragment<EmotionSearchPresenter>(), Emoti
         top_empty_view.visibility = View.VISIBLE
     }
 
-    override fun showLoadingDialog() {
-        (activity as? BaseActivity)?.showLoadingDialog()
+    override fun showLoading() {
+        (activity as? BaseActivity)?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        (activity as? BaseActivity)?.hideLoadingDialog()
+    override fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
+
+
 
 
 }

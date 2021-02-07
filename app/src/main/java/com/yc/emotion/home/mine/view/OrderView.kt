@@ -1,9 +1,9 @@
 package com.yc.emotion.home.mine.view
 
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.base.view.StateDefaultImpl
 import com.yc.emotion.home.model.bean.OrderInfo
+import yc.com.rthttplibrary.view.IDialog
 
 /**
  *

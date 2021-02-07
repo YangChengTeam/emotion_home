@@ -53,6 +53,7 @@ public class GoagalInfo {
 
     public String configPath = "";
 
+    public Object extra;
 
     private static GoagalInfo goagalInfo = new GoagalInfo();
 
@@ -136,7 +137,8 @@ public class GoagalInfo {
 
     private ChannelInfo getChannelInfo() {
         try {
-            return JSON.parseObject(channel, ChannelInfo.class);
+            ChannelInfo channelInfo = JSON.parseObject(channel, ChannelInfo.class);
+            return channelInfo;
         } catch (Exception e) {
             LogUtil.msg("渠道信息解析错误->" + e.getMessage());
         }

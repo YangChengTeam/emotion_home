@@ -124,12 +124,15 @@ class LoveArticleListFragment : BaseFragment<SkillPresenter>(), SkillView {
         mAdapter?.setOnLoadMoreListener({ this.netData() }, fragment_love_by_stages_rv)
     }
 
-    override fun showLoadingDialog() {
-        mLoveByStagesActivity?.showLoadingDialog()
+
+
+
+    override fun showLoading() {
+        mLoveByStagesActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mLoveByStagesActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mLoveByStagesActivity?.hideLoading()
     }
 
     override fun showSkillArticleList(data: List<LoveByStagesBean>?) {

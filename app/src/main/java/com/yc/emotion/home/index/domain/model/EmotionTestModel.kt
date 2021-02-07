@@ -8,6 +8,7 @@ import com.yc.emotion.home.model.bean.CourseInfoWrapper
 import com.yc.emotion.home.model.bean.EmotionTestInfo
 import com.yc.emotion.home.model.bean.EmotionTestTopicInfo
 import com.yc.emotion.home.model.bean.QuestionInfo
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -27,10 +28,10 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      * @param test_id
      * @return
      */
-    fun getTestDetailInfo(user_id: String, test_id: String?): Observable<ResultInfo<EmotionTestTopicInfo>> {
+    fun getTestDetailInfo(user_id: String, test_id: String?): Flowable<ResultInfo<EmotionTestTopicInfo>> {
 
 
-        return request.getTestDetailInfo(user_id, test_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTestDetailInfo(user_id, test_id)
     }
 
 
@@ -42,7 +43,7 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      * @param questionInfos
      * @return
      */
-    fun submitAnswer(userId: String, test_id: String?, questionInfos: List<QuestionInfo>?, aid: String?, option_id: String?): Observable<ResultInfo<EmotionTestInfo>> {
+    fun submitAnswer(userId: String, test_id: String?, questionInfos: List<QuestionInfo>?, aid: String?, option_id: String?): Flowable<ResultInfo<EmotionTestInfo>> {
         val params = HashMap<String, String?>()
         params["test_id"] = test_id
         if (questionInfos != null)
@@ -56,7 +57,7 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
         }
 
 
-        return request.submitAnswer(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.submitAnswer(params)
 
     }
 
@@ -65,10 +66,10 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getTestCategoryInfos(): Observable<ResultInfo<CourseInfoWrapper>> {
+    fun getTestCategoryInfos(): Flowable<ResultInfo<CourseInfoWrapper>> {
 
 
-        return request.getTestCategoryInfos().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTestCategoryInfos()
     }
 
 
@@ -77,10 +78,10 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getEmotionTestInfos(catId: String?, page: Int, pageSize: Int): Observable<ResultInfo<List<EmotionTestInfo>>> {
+    fun getEmotionTestInfos(catId: String?, page: Int, pageSize: Int): Flowable<ResultInfo<List<EmotionTestInfo>>> {
 
 
-        return request.getEmotionTestInfos(catId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getEmotionTestInfos(catId, page, pageSize)
     }
 
 
@@ -92,10 +93,10 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      * @param page_size
      * @return
      */
-    fun getTestRecords(userId: String, page: Int, page_size: Int): Observable<ResultInfo<List<EmotionTestInfo>>> {
+    fun getTestRecords(userId: String, page: Int, page_size: Int): Flowable<ResultInfo<List<EmotionTestInfo>>> {
 
 
-        return request.getTestRecords(userId, page, page_size).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTestRecords(userId, page, page_size)
     }
 
 
@@ -106,10 +107,10 @@ class EmotionTestModel(override var context: Context?) : IModel(context) {
      * @return
      */
 
-    fun getTestRecordDetail(record_id: String?): Observable<ResultInfo<EmotionTestInfo>> {
+    fun getTestRecordDetail(record_id: String?): Flowable<ResultInfo<EmotionTestInfo>> {
 
 
-        return request.getTestRecordDetail(record_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getTestRecordDetail(record_id)
     }
 
 }

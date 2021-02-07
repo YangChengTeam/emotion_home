@@ -49,29 +49,13 @@ class LoveCasePresenter(context: Context, view: LoveCaseView) : BasePresenter<Lo
 
     fun exampLists(page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1) {
-            mView.showLoadingDialog()
-        }
-        mModel?.exampLists("$userId", page, pageSize)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<ExampDataBean>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<ExampDataBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        createNewData(t.data, page, pageSize)
-                    }
-                }
-            }
 
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
+        mModel?.exampLists("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(it, page, pageSize)
             }
+        }, { _, _ -> mView.onError() }, page == 1)
 
-            override fun onError(e: Throwable) {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onError()
-            }
-
-        })
 
     }
 

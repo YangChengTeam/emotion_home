@@ -10,6 +10,8 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.BaseSameActivity
 import com.yc.emotion.home.base.ui.widget.LoadDialog
 import com.yc.emotion.home.index.adapter.LoveHealingAdapter
+import com.yc.emotion.home.index.presenter.LoveUpDownPresenter
+import com.yc.emotion.home.index.view.LoveUpDownView
 import com.yc.emotion.home.model.bean.LoveHealingBean
 import com.yc.emotion.home.model.constant.ConstantKey
 import com.yc.emotion.home.utils.CommonInfoHelper
@@ -25,7 +27,7 @@ import java.util.*
  */
 
 //LoveHealingActivity
-class PracticeLoveActivity : BaseSameActivity() {
+class PracticeLoveActivity : BaseSameActivity(), LoveUpDownView {
 
 
     private var loveHealingBeans: MutableList<LoveHealingBean>? = null
@@ -47,7 +49,7 @@ class PracticeLoveActivity : BaseSameActivity() {
 
     override fun initViews() {
         //        mLoveEngine = new LoveEngine(this);
-
+        mPresenter = LoveUpDownPresenter(this, this)
 
         initRecyclerView()
         lazyLoad()
@@ -99,7 +101,6 @@ class PracticeLoveActivity : BaseSameActivity() {
 
             }.type, object : CommonInfoHelper.OnParseListener<List<LoveHealingBean>> {
 
-
                 override fun onParse(o: List<LoveHealingBean>?) {
                     loveHealingBeans = o as MutableList<LoveHealingBean>?
                     if (loveHealingBeans != null && loveHealingBeans!!.size > 0) {
@@ -109,47 +110,8 @@ class PracticeLoveActivity : BaseSameActivity() {
             })
         }
 
-        if (PAGE_NUM == 1 && !isRefesh) {
-            mLoadingDialog = LoadDialog(this)
-            mLoadingDialog?.showLoadingDialog()
-        }
-        mLoveEngine?.recommendLovewords(UserInfoHelper.instance.getUid().toString(), PAGE_NUM.toString(), PAGE_SIZE.toString(), "lovewords/recommend")
-                ?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealingBean>>>() {
+        (mPresenter as LoveUpDownPresenter).recommendLovewords(UserInfoHelper.instance.getUid().toString(), PAGE_NUM.toString(), PAGE_SIZE.toString(), "lovewords/recommend", isRefesh)
 
-                    override fun onNext(t: ResultInfo<List<LoveHealingBean>>) {
-                        if (PAGE_NUM == 1 && !isRefesh) {
-                            mLoadingDialog?.dismissLoadingDialog()
-                        }
-                        if (swipeRefreshLayout.isRefreshing) {
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                        t.let {
-                            if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                                val loveHealingBeanList = t.data
-                                createNewData(loveHealingBeanList)
-                            }
-                        }
-
-                    }
-
-                    override fun onComplete() {
-                        if (PAGE_NUM == 1 && !isRefesh) {
-                            mLoadingDialog?.dismissLoadingDialog()
-                        }
-                        if (swipeRefreshLayout.isRefreshing) {
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-                        if (PAGE_NUM == 1 && !isRefesh) {
-                            mLoadingDialog?.dismissLoadingDialog()
-                        }
-                        if (swipeRefreshLayout.isRefreshing) {
-                            swipeRefreshLayout.isRefreshing = false
-                        }
-                    }
-                })
     }
 
     private fun createNewData(loveHealingBeanList: List<LoveHealingBean>?) {
@@ -188,4 +150,26 @@ class PracticeLoveActivity : BaseSameActivity() {
     override fun offerActivityTitle(): String {
         return "实战情话"
     }
+
+    override fun showRecommendWords(data: List<LoveHealingBean>?) {
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
+        data?.let {
+
+            createNewData(data)
+        }
+    }
+
+    override fun showCollectSuccess(msg: String?) {
+
+    }
+
+    override fun onError() {
+        super.onError()
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
 }

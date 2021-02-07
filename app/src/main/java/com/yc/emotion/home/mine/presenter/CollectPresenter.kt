@@ -39,119 +39,48 @@ class CollectPresenter(context: Context?, view: CollectView) : BasePresenter<Col
 
     fun getCourseCollectList(page: Int, page_size: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
 
-        mModel?.getCourseCollectList("$userId", page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<List<CourseInfo>>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<List<CourseInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null && t.data.isNotEmpty()) {
-                            mView.showCollectCourseList(t.data)
+        mModel?.getCourseCollectList("$userId", page, page_size)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showCollectCourseList(it)
 
-                        } else {
-                            if (page == 1) mView.onNoData()
-                        }
-                    }
-                }
+            } else {
+                if (page == 1) mView.onNoData()
             }
+        }, { _, _ -> mView.onComplete() }, page == 1)
 
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
 
     fun getCollectLoveHeals(limit: Int, offset: Int) {
-        mView.showLoadingDialog()
 
-        mModel?.getVerbalList(limit, offset)?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealDetDetailsBean>>>() {
-
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-                mView.onError()
-            }
-
-            override fun onNext(t: ResultInfo<List<LoveHealDetDetailsBean>>) {
-                mView.hideLoadingDialog()
-                if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.isNotEmpty()) {
-                    mView.showCollectVerbalList(t.data)
-                } else {
-                    if (limit == 1) {
-                        mView.onNoData()
-                    }
+        mModel?.getVerbalList(limit, offset)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showCollectVerbalList(it)
+            } else {
+                if (limit == 1) {
+                    mView.onNoData()
                 }
             }
+        }, { _, _ -> mView.onError() })
 
-        })
 
-//        handler?.postDelayed({
-//            mModel?.getCollectLoveHeals(limit, offset)?.subscribe(object : DisposableObserver<List<LoveHealDetDetailsBean>>() {
-//                override fun onNext(t: List<LoveHealDetDetailsBean>) {
-//                    t.let {
-//                        mView.showCollectVerbalList(t)
-//                    }
-//                }
-//
-//                override fun onComplete() {
-//                    mView.hideLoadingDialog()
-//                    mView.onComplete()
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    mView.onError()
-//                }
-//
-//            })
-//
-//        }, 1500)
     }
 
     fun getArticleCollectList(page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
 
-        mModel?.getArticleCollectList("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<ArticleDetailInfo>>>() {
-            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        val mExampListsBeans = t.data
-                        if (mExampListsBeans != null && mExampListsBeans.isNotEmpty()) {
-                            mView.showCollectArticleList(mExampListsBeans)
-                        } else {
-                            if (page == 1) {
-                                mView.onNoData()
-                            }
-                        }
-                    }
+        mModel?.getArticleCollectList("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showCollectArticleList(it)
+            } else {
+                if (page == 1) {
+                    mView.onNoData()
                 }
             }
+        }, { _, _ -> mView.onComplete() }, page == 1)
 
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 

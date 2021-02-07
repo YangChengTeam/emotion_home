@@ -55,6 +55,8 @@ class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCours
     }
 
 
+
+
     fun initListener() {
         val activity = activity
         activity?.let {
@@ -107,15 +109,12 @@ class EfficientCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCours
     }
 
 
-    override fun showLoadingDialog() {
-        activity?.let {
-            (activity as BaseActivity).showLoadingDialog()
-        }
+
+    override fun showLoading() {
+        (activity as BaseActivity).showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        activity?.let {
-            (activity as BaseActivity).hideLoadingDialog()
-        }
+    override fun hideLoading() {
+        (activity as BaseActivity).hideLoading()
     }
 }

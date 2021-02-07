@@ -34,87 +34,37 @@ class LivePresenter(context: Context?, view: LiveView) : BasePresenter<LiveModel
             ToastUtils.showCenterToast("密码不能为空")
             return
         }
-        mView.showLoadingDialog()
-        mModel?.liveLogin(username, password)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val data = t.data
-                        mView.showLoginSuccess(data)
-                    } else {
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                }
-            }
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
+        mModel?.liveLogin(username, password)?.getData(mView, { it, msg ->
+            if (it != null) {
+                mView.showLoginSuccess(it)
+            } else {
+                ToastUtils.showCenterToast(msg)
             }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> })
 
 
     }
 
 
     fun createRoom(userId: String?) {
-        mModel?.createRoom(userId)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<LiveInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val data = t.data
-                        mView.showCreateRoomSuccess(data)
-                    } else {
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                }
-
+        mModel?.createRoom(userId)?.getData(mView, { it, msg ->
+            if (it != null) {
+                mView.showCreateRoomSuccess(it)
+            } else {
+                ToastUtils.showCenterToast(msg)
             }
-
-            override fun onComplete() {
-            }
-
-            override fun onError(e: Throwable) {
-            }
-        })
+        }, { _, _ -> }, false)
 
     }
 
     fun liveEnd(roomId: String?) {
-        mModel?.liveEnd(roomId)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<String>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<String>) {
-
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        mModel?.liveEnd(roomId)?.getData(mView, { it, _ -> }, { _, _ -> }, false)
 
     }
 
     fun dismissGroup(group_id: String) {
-        mModel?.dismissGroup(group_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<String>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<String>) {
-
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        mModel?.dismissGroup(group_id)?.getData(mView, { it, _ -> }, { _, _ -> }, false)
 
     }
 }

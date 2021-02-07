@@ -59,6 +59,8 @@ class CollectArticleFragment : BaseFragment<CollectPresenter>(), CollectView {
         initListener()
     }
 
+
+
     private fun initListener() {
 
         mCollectActivity?.let {
@@ -131,12 +133,12 @@ class CollectArticleFragment : BaseFragment<CollectPresenter>(), CollectView {
         top_empty_view.visibility = View.VISIBLE
     }
 
-    override fun showLoadingDialog() {
-        mCollectActivity?.showLoadingDialog()
+
+    override fun showLoading() {
+        mCollectActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mCollectActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mCollectActivity?.hideLoading()
     }
-
 }

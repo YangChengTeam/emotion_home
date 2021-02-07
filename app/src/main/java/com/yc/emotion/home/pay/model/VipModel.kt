@@ -6,6 +6,7 @@ import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +18,7 @@ import java.util.*
  * Created by suns  on 2019/11/13 16:26.
  */
 class VipModel(override var context: Context?) : IModel(context) {
-    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Observable<ResultInfo<OrdersInitBean>> {
+    fun initOrders(userId: String, pay_way_name: String, money: String, title: String, goodId: String): Flowable<ResultInfo<OrdersInitBean>> {
         val params = HashMap<String, String>()
 
 
@@ -42,7 +43,7 @@ class VipModel(override var context: Context?) : IModel(context) {
 
         params["goods_list"] = jsonListArray.toJSONString()
 
-        return request.initOrders(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.initOrders(params)
     }
 
 
@@ -51,9 +52,9 @@ class VipModel(override var context: Context?) : IModel(context) {
      * @param id
      * @return
      */
-    fun getGoodListInfo(): Observable<ResultInfo<List<GoodsInfo>>> {
+    fun getGoodListInfo(): Flowable<ResultInfo<List<GoodsInfo>>> {
 
 
-        return request.getGoodListInfo("${UserInfoHelper.instance.getUid()}").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getGoodListInfo("${UserInfoHelper.instance.getUid()}")
     }
 }

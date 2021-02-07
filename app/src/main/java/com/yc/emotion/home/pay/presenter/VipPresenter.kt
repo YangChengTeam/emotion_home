@@ -42,52 +42,24 @@ class VipPresenter(context: Context, view: VipView) : BasePresenter<VipModel, Vi
     }
 
     private fun getGoodListInfo() {
-        mView.showLoadingDialog()
-        mModel?.getGoodListInfo()?.subscribe(object : DisposableObserver<ResultInfo<List<GoodsInfo>>>() {
-            override fun onNext(t: ResultInfo<List<GoodsInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showGoodInfoList(t.data)
-                        CommonInfoHelper.setO(mContext, t.data, "vip_infos")
-                    }
-                }
+
+        mModel?.getGoodListInfo()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showGoodInfoList(it)
+                CommonInfoHelper.setO(mContext, it, "vip_infos")
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
     }
 
     fun initOrders(pay_way_name: String, money: String, title: String, goodId: String) {
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-
-        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.subscribe(object : DisposableObserver<ResultInfo<OrdersInitBean>>() {
-            override fun onComplete() {
-                mView.hideLoadingDialog()
+        mModel?.initOrders("$userId", pay_way_name, money, title, goodId)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showOrderInfo(it, pay_way_name)
             }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-            override fun onNext(t: ResultInfo<OrdersInitBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showOrderInfo(t.data, pay_way_name)
-                    }
-                }
-            }
-
-        })
+        }, { _, _ -> })
 
 
     }

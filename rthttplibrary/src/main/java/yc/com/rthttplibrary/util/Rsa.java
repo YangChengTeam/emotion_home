@@ -7,25 +7,29 @@
 package yc.com.rthttplibrary.util;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
 
-
-
 public class Rsa {
     private static final String ALGORITHM = "RSA";
+
+    private static final int MAX_ENCRYPT_BLOCK = 117;
+
+
 
     private static PublicKey getPublicKeyFromX509(String algorithm,
                                                   String bysKey) throws NoSuchAlgorithmException, Exception {
         byte[] decodedKey = Base64.decode(bysKey);
+
         X509EncodedKeySpec x509 = new X509EncodedKeySpec(decodedKey);
+//        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decodedKey);
         KeyFactory keyFactory = KeyFactory.getInstance(algorithm);
         return keyFactory.generatePublic(x509);
     }
@@ -38,6 +42,48 @@ public class Rsa {
             byte plaintext[] = content.getBytes("UTF-8");
             byte[] output = cipher.doFinal(plaintext);
             return output;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static String encrypt3(String content, String key) throws Exception {
+        try {
+            PublicKey pubkey = getPublicKeyFromX509(ALGORITHM, key);
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, pubkey);
+            byte plaintext[] = content.getBytes();
+            byte[] output = cipher.doFinal(plaintext);
+            int inputLen = output.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段加密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
+                    cache = cipher.doFinal(output, offSet, MAX_ENCRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(output, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * MAX_ENCRYPT_BLOCK;
+            }
+            byte[] encryptedData = out.toByteArray();
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            Log.e("TAG", "encrypt3: " + EncryptUtil.decryptByPrivateKey(encryptedData, GoagalInfo.get().getPublicKey(privateKey)));
+            String result = Base64.encode(encryptedData);
+//            String result = new String(android.util.Base64.encode(encryptedData, android.util.Base64.NO_WRAP));
+            LogUtil.msg("客户端请求加密数据-> result->" + result);
+
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -58,77 +104,9 @@ public class Rsa {
         }
     }
 
-    public static final String SIGN_ALGORITHMS = "SHA1WithRSA";
 
-    public static String sign(String content, String privateKey) {
-        String charset = "UTF-8";
-        try {
-            PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(
-                    Base64.decode(privateKey));
 
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
-            PrivateKey priKey = keyFactory.generatePrivate(priPKCS8);
 
-            java.security.Signature signature = java.security.Signature
-                    .getInstance(SIGN_ALGORITHMS);
 
-            signature.initSign(priKey);
-            signature.update(content.getBytes(charset));
 
-            byte[] signed = signature.sign();
-
-            return Base64.encode(signed);
-        } catch (Exception e) {
-            LogUtil.msg("RSA sign出错>" + e.getMessage());
-        }
-
-        return null;
-    }
-
-    public static String getMD5(String content) {
-        String s = null;
-        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'};
-        try {
-            java.security.MessageDigest md = java.security.MessageDigest
-                    .getInstance("MD5");
-            md.update(content.getBytes());
-            byte tmp[] = md.digest();
-            char str[] = new char[16 * 2];
-            int k = 0;
-            for (int i = 0; i < 16; i++) {
-                byte byte0 = tmp[i];
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                str[k++] = hexDigits[byte0 & 0xf];
-            }
-            s = new String(str);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
-
-    public static boolean doCheck(String content, String sign, String publicKey) {
-        try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            byte[] encodedKey = Base64.decode(publicKey);
-            PublicKey pubKey = keyFactory
-                    .generatePublic(new X509EncodedKeySpec(encodedKey));
-
-            java.security.Signature signature = java.security.Signature
-                    .getInstance(SIGN_ALGORITHMS);
-            signature.initVerify(pubKey);
-            signature.update(content.getBytes("utf-8"));
-            LogUtil.msg("content :   " + content);
-            LogUtil.msg("sign:   " + sign);
-            boolean bverify = signature.verify(Base64.decode(sign));
-            LogUtil.msg("bverify = " + bverify);
-            return bverify;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 }

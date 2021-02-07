@@ -7,10 +7,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+
+import javax.crypto.Cipher;
 
 
 public class EncryptUtil {
@@ -136,4 +141,60 @@ public class EncryptUtil {
             return null;
         }
     }
+
+
+    /**
+     * 私钥解密
+     *
+     * @param
+     * @param privateKeyStr
+     * @return
+     */
+    public static String decryptByPrivateKey(byte[] data, String privateKeyStr) {
+        try {
+            // 对私钥解密
+            byte[] privateKeyBytes = Base64.decode(privateKeyStr);
+
+            // 获得私钥
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
+
+//            X509EncodedKeySpec x509 = new X509EncodedKeySpec(privateKeyBytes);
+            // 获得待解密数据
+//            byte[] data = Base64.decode(encryptedStr);
+//            byte[] data = android.util.Base64.decode(encryptedStr.getBytes(), android.util.Base64.NO_WRAP);
+            KeyFactory factory = KeyFactory.getInstance("RSA");
+            PrivateKey privateKey = factory.generatePrivate(keySpec);
+            // 对数据解密
+            String algorithm = factory.getAlgorithm();
+//            Log.e("TAG", "decryptByPrivateKey: " + algorithm);
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            // 返回UTF-8编码的解密信息
+            int inputLen = data.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段解密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > 128) {
+                    cache = cipher.doFinal(data, offSet, 128);
+                } else {
+                    cache = cipher.doFinal(data, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * 128;
+            }
+            byte[] decryptedData = out.toByteArray();
+            out.close();
+            return new String(decryptedData, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 }

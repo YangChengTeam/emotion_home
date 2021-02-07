@@ -6,8 +6,11 @@ import android.view.TextureView
 
 import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.base.domain.model.IModel
+import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.UserInterInfo
+import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -25,9 +28,9 @@ class MineModel(override var context: Context?) : IModel(context) {
      * @param userId
      * @return
      */
-    fun userInfo(userId: String): Observable<ResultInfo<UserInfo>> {
+    fun userInfo(userId: String): Flowable<ResultInfo<UserInfo>> {
 
-        return request.userInfo(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.userInfo(userId)
     }
 
 
@@ -46,7 +49,7 @@ class MineModel(override var context: Context?) : IModel(context) {
      * @return
      */
     //nick_name=aaa&face=&password=123456&birthday&sex&user_id=2&profession=1&age=1&signature=1
-    fun updateUserInfo(userId: String, nickName: String?, face: String?, password: String, birthday: String, sex: Int, profession: String?, age: String?, signature: String?, interested_id: String?): Observable<ResultInfo<UserInfo>> {
+    fun updateUserInfo(userId: String, nickName: String?, face: String?, password: String, birthday: String, sex: Int, profession: String?, age: String?, signature: String?, interested_id: String?): Flowable<ResultInfo<UserInfo>> {
         val params = HashMap<String, String?>()
         params["user_id"] = userId
         if (!TextUtils.isEmpty(nickName))
@@ -66,7 +69,7 @@ class MineModel(override var context: Context?) : IModel(context) {
             params["interested_id"] = interested_id
 
 
-        return request.updateUserInfo(params).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.updateUserInfo(params)
     }
 
 
@@ -75,9 +78,9 @@ class MineModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getUserInterseInfo(): Observable<ResultInfo<List<UserInterInfo>>> {
+    fun getUserInterseInfo(): Flowable<ResultInfo<List<UserInterInfo>>> {
 
-        return request.getUserInterseInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getUserInterseInfo()
     }
 
 
@@ -92,7 +95,7 @@ class MineModel(override var context: Context?) : IModel(context) {
      * @return
      */
 
-    fun addSuggestion(userId: String, content: String?, qq: String?, wechat: String?, url: String): Observable<ResultInfo<String>> {
+    fun addSuggestion(userId: String, content: String?, qq: String?, wechat: String?, url: String): Flowable<ResultInfo<String>> {
         val params = HashMap<String, String?>()
         params["user_id"] = userId
         params["content"] = content
@@ -101,6 +104,10 @@ class MineModel(override var context: Context?) : IModel(context) {
             params["wechat"] = wechat
         }
 
-        return request.addSuggestion(params, URLConfig.getBaseUrl() + url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.addSuggestion(params, URLConfig.getBaseUrl() + url)
+    }
+
+    fun getRewardInfo(): Flowable<ResultInfo<RewardInfo>> {
+        return request.getRewardInfo("${UserInfoHelper.instance.getUid()}")
     }
 }

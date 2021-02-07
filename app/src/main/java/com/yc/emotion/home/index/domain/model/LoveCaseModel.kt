@@ -3,8 +3,10 @@ package com.yc.emotion.home.index.domain.model
 import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.ExampDataBean
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import yc.com.rthttplibrary.bean.ResultInfo
 
 /**
  *
@@ -12,9 +14,9 @@ import io.reactivex.schedulers.Schedulers
  */
 class LoveCaseModel(override var context: Context?) : IModel(context) {
 
-    fun exampLists(userId: String, page: Int, pageSize: Int): io.reactivex.Observable<yc.com.rthttplibrary.bean.ResultInfo<ExampDataBean>> {
+    fun exampLists(userId: String, page: Int, pageSize: Int): Flowable<ResultInfo<ExampDataBean>> {
 
 
-        return request.exampLists(userId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.exampLists(userId, page, pageSize)
     }
 }

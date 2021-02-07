@@ -29,29 +29,14 @@ class EmotionSearchPresenter(context: Context?, view: EmotionSearchView) : BaseP
     }
 
     fun searchIndexInfo(keyword: String?, type: Int) {
-        mView.showLoadingDialog()
-        mModel?.searchIndexInfo(keyword, type)?.subscribe(object : DisposableObserver<ResultInfo<IndexSearchInfo>>() {
-            override fun onNext(t: ResultInfo<IndexSearchInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showEmotionSearchResult(t.data)
-                    }else{
-                        mView.onNoData()
-                    }
-                }
+
+        mModel?.searchIndexInfo(keyword, type)?.getData(mView, { it, _ ->
+            if (it != null) {
+                mView.showEmotionSearchResult(it)
+            } else {
+                mView.onNoData()
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
-
+        }, { _, _ -> mView.onComplete() })
 
     }
 }

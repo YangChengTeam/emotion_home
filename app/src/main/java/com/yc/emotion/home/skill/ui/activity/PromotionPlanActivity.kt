@@ -33,7 +33,7 @@ class PromotionPlanActivity : BaseActivity() {
     }
 
     override fun initViews() {
-        showLoadingDialog()
+        showLoading()
         Glide.with(this).asBitmap().load(R.mipmap.promotion_plan_bg).diskCacheStrategy(DiskCacheStrategy.DATA).into(object : SimpleTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                 setBitmapToImg(resource)
@@ -111,7 +111,7 @@ class PromotionPlanActivity : BaseActivity() {
 
             }
             iv_promotion_plan.setImageBitmap(bigbitmap)
-            hideLoadingDialog()
+            hideLoading()
         } catch (e: IOException) {
             e.printStackTrace()
         }

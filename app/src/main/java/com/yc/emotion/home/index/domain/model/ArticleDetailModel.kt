@@ -4,6 +4,7 @@ import android.content.Context
 import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.LoveByStagesDetailsBean
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -16,9 +17,9 @@ import yc.com.rthttplibrary.bean.ResultInfo
 class ArticleDetailModel(override var context: Context?) : IModel(context) {
 
 
-    fun getArticleDetai(id: String, userId: String): Observable<ResultInfo<LoveByStagesDetailsBean>> {
+    fun getArticleDetai(id: String, userId: String): Flowable<ResultInfo<LoveByStagesDetailsBean>> {
 
-        return request.getArticleDetail(id, userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getArticleDetail(id, userId)
     }
 
 
@@ -30,9 +31,8 @@ class ArticleDetailModel(override var context: Context?) : IModel(context) {
      * @param url
      * @return
      */
-    fun articleCollect(userId: String, exampleId: String, url: String): Observable<ResultInfo<String>> {
+    fun articleCollect(userId: String, exampleId: String, url: String): Flowable<ResultInfo<String>> {
 
         return request.articleCollect(userId, exampleId, URLConfig.getBaseUrl() + url)
-                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }

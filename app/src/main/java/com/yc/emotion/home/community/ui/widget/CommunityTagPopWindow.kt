@@ -102,13 +102,15 @@ class CommunityTagPopWindow(context: Activity?) : BasePopWindow(context), Commun
 
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
 
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
 
     }
+
+
 
 
 }

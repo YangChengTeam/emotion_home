@@ -79,6 +79,8 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
 
     }
 
+
+
     private fun initListener() {
         ll_top_notice.setOnClickListener(this)
         iv_add_community.setOnClickListener(this)
@@ -233,11 +235,12 @@ class CommunityMainFragment : BaseFragment<CommunityPresenter>(), View.OnClickLi
         }
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
+
     }
 
-    override fun hideLoadingDialog() {
-    }
+    override fun hideLoading() {
 
+    }
 
 }

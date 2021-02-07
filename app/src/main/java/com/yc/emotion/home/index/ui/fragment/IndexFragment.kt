@@ -587,5 +587,13 @@ class IndexFragment : BaseFragment<IndexPresenter>(), IndexView {
         }
     }
 
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
+    }
+
 
 }

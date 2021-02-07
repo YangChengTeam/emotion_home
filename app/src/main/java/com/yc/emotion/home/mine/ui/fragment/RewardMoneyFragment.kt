@@ -38,6 +38,8 @@ class RewardMoneyFragment : BaseFragment<RewardPresenter>(), RewardView {
 
     }
 
+
+
     private fun initListener() {
         rewardMoneyAdapter?.setOnLoadMoreListener({
             getData()
@@ -49,15 +51,16 @@ class RewardMoneyFragment : BaseFragment<RewardPresenter>(), RewardView {
         }
     }
 
-    override fun showLoadingDialog() {
+
+    override fun showLoading() {
         activity?.let {
-            (activity as BaseActivity).showLoadingDialog()
+            (activity as BaseActivity).showLoading()
         }
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         activity?.let {
-            (activity as BaseActivity).hideLoadingDialog()
+            (activity as BaseActivity).hideLoading()
         }
     }
 

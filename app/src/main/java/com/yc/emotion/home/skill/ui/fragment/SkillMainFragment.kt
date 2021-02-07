@@ -38,7 +38,7 @@ class SkillMainFragment : BaseFragment<BasePresenter<*, *>>() {
 
     override fun initViews() {
 
-        netSwitchPagerData()
+
     }
 
     private fun netSwitchPagerData() {
@@ -136,7 +136,7 @@ class SkillMainFragment : BaseFragment<BasePresenter<*, *>>() {
     }
 
     override fun lazyLoad() {
-
+        netSwitchPagerData()
     }
 
 

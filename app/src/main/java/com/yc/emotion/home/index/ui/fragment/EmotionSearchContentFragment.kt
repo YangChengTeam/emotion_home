@@ -229,13 +229,15 @@ class EmotionSearchContentFragment : BaseFragment<EmotionSearchPresenter>(), Emo
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun showLoadingDialog() {
-        (activity as? BaseActivity)?.showLoadingDialog()
+    override fun showLoading() {
+        (activity as? BaseActivity)?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        (activity as? BaseActivity)?.hideLoadingDialog()
+    override fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
+
+
 
 
 }

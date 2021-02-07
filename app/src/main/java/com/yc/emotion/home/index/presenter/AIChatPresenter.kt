@@ -30,95 +30,58 @@ class AIChatPresenter(context: Context, view: AIChatView) : BasePresenter<AIChat
     }
 
     fun getAIChatContent(key: String) {
-        mModel?.getAIChatContent(key)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                when (t.code) {
-                    HttpConfig.STATUS_OK -> {
-                        mView.showAIContent(t.data)
-                    }
-                    2 -> {
-                        mView.showUseCountUp(t.message)
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                    else -> {
-                        ToastUtils.showCenterToast(t.message)
+        mModel?.getAIChatContent(key)?.getData(mView, { it, _ ->
+            mView.showAIContent(it)
+        }, { code, msg ->
+            when (code) {
+                2 -> {
+                    msg?.let {
+                        mView.showUseCountUp(msg)
+                        ToastUtils.showCenterToast(msg)
                     }
                 }
+                -1 -> {
+                    ToastUtils.showCenterToast(HttpConfig.NET_ERROR)
+                }
+                else -> {
+                    ToastUtils.showCenterToast(msg)
+                }
             }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-                ToastUtils.showCenterToast(HttpConfig.NET_ERROR)
-            }
-        })
+        }, false)
 
     }
 
     fun smartSearchVerbal(keyword: String?, section: Int, refresh: Boolean) {
-        mModel?.smartSearchVerbal(keyword, section)?.subscribe(object : DisposableObserver<ResultInfo<SmartChatItem>>() {
-            override fun onComplete() {
-
+        mModel?.smartSearchVerbal(keyword, section)?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(it, refresh)
             }
-
-            override fun onNext(t: ResultInfo<SmartChatItem>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        createNewData(t.data, refresh)
-                    } else {
-                        if (t.code == 2) {
-                            mView.showUseCountUp(t.message)
-                            ToastUtils.showCenterToast(t.message)
-                        } else {
-                            ToastUtils.showCenterToast(t.message)
-                        }
+        }, { code, msg ->
+            when (code) {
+                2 -> {
+                    msg?.let {
+                        mView.showUseCountUp(msg)
                     }
+                    ToastUtils.showCenterToast(msg)
+                }
+                -1 -> {
+                    ToastUtils.showCenterToast(HttpConfig.NET_ERROR)
+                }
+                else -> {
+                    ToastUtils.showCenterToast(msg)
                 }
             }
+        }, false)
 
-            override fun onError(e: Throwable) {
-                ToastUtils.showCenterToast(HttpConfig.NET_ERROR)
-            }
-        })
     }
 
     fun aiPraise(id: String?) {
-        mModel?.aiPraise(id)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onComplete() {
+        mModel?.aiPraise(id)?.getData(mView, { _, _ -> }, { _, _ -> }, false)
 
-            }
-
-            override fun onNext(t: ResultInfo<String>) {
-                if (t.code == HttpConfig.STATUS_OK) {
-//                    ToastUtils.showCenterToast(t.message)
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
     }
 
     fun aiCollect(id: String?) {
-        mModel?.aiCollect(id)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onComplete() {
-
-            }
-
-            override fun onNext(t: ResultInfo<String>) {
-                if (t.code == HttpConfig.STATUS_OK) {
-//                    ToastUtils.showCenterToast(t.message)
-
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        mModel?.aiCollect(id)?.getData(mView, { _, _ -> }, { _, _ -> }, false)
     }
 
     private fun createNewData(data: SmartChatItem?, refresh: Boolean) {

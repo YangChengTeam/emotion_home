@@ -27,49 +27,22 @@ class LoveUpDownPresenter(context: Context?, view: LoveUpDownView) : BasePresent
 
     }
 
-    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String?) {
-        mView.showLoadingDialog()
-        mModel?.recommendLovewords(userId, page, page_size, url)?.subscribe(object : DisposableObserver<ResultInfo<List<LoveHealingBean>>>() {
-            override fun onNext(t: ResultInfo<List<LoveHealingBean>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val data = t.data
-                        mView.showRecommendWords(data)
-                    }
-                }
-            }
+    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String?, isRefresh: Boolean) {
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
+        mModel?.recommendLovewords(userId, page, page_size, url)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showRecommendWords(it)
             }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> }, page?.toInt() == 1 && !isRefresh)
 
     }
 
 
     fun collectLovewords(userId: String?, lovewordsId: String?, url: String?) {
-        mView.showLoadingDialog()
-        mModel?.collectLovewords(userId, lovewordsId, url)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        mView.showCollectSuccess(t.message)
-                    }
-                }
-            }
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-            }
-        })
-
+        mModel?.collectLovewords(userId, lovewordsId, url)?.getData(mView, { it, msg ->
+            mView.showCollectSuccess(msg)
+        }, { _, _ -> })
 
     }
 

@@ -159,19 +159,21 @@ class OpenAkpDialog(private val mContext: Context?, private val mOpenApkPkgInfos
     }
 
 
-    override fun showLoadingDialog() {
 
-    }
-
-    override fun hideLoadingDialog() {
-
-    }
 
     override fun getLayoutId(): Int {
         return 0
     }
 
     override fun initViews() {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
 
     }
 

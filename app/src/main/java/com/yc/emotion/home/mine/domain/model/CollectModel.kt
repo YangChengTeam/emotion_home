@@ -8,6 +8,7 @@ import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.dao.LoveHealDetDetailsBeanDao
 import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -35,7 +36,7 @@ class CollectModel(override var context: Context?) : IModel(context) {
      * @param page_size
      * @return
      */
-    fun getCourseCollectList(userId: String, page: Int, page_size: Int): Observable<ResultInfo<List<CourseInfo>>> {
+    fun getCourseCollectList(userId: String, page: Int, page_size: Int): Flowable<ResultInfo<List<CourseInfo>>> {
 
 
         return request.getCourseCollectList(userId, page, page_size)
@@ -50,8 +51,8 @@ class CollectModel(override var context: Context?) : IModel(context) {
         return Observable.just("").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map { detailsBeanDao?.queryBuilder()?.where(LoveHealDetDetailsBeanDao.Properties.UserId.eq("$userId"))?.offset(offset * limit)?.limit(limit)?.orderDesc(LoveHealDetDetailsBeanDao.Properties.SaveTime)?.list() }
     }
 
-    fun getVerbalList(page: Int, page_size: Int): Observable<ResultInfo<List<LoveHealDetDetailsBean>>>? {
-        return request.getVerbalList("${UserInfoHelper.instance.getUid()}", page, page_size).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun getVerbalList(page: Int, page_size: Int): Flowable<ResultInfo<List<LoveHealDetDetailsBean>>> {
+        return request.getVerbalList("${UserInfoHelper.instance.getUid()}", page, page_size)
     }
 
 
@@ -61,10 +62,10 @@ class CollectModel(override var context: Context?) : IModel(context) {
      * @param userId
      * @return
      */
-    fun getArticleCollectList(userId: String, page: Int, pageSize: Int): Observable<ResultInfo<List<ArticleDetailInfo>>> {
+    fun getArticleCollectList(userId: String, page: Int, pageSize: Int): Flowable<ResultInfo<List<ArticleDetailInfo>>> {
 
 
-        return request.getArticleCollectList(userId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getArticleCollectList(userId, page, pageSize)
     }
 
 

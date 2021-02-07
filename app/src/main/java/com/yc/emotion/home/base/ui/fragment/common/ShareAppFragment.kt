@@ -1,5 +1,6 @@
 package com.yc.emotion.home.base.ui.fragment.common
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -39,7 +40,10 @@ import com.yc.emotion.home.utils.ShareInfoHelper
 import com.yc.emotion.home.utils.UIUtils
 import com.yc.emotion.home.utils.UserInfoHelper.Companion.instance
 import com.yc.emotion.home.utils.clickWithTrigger
+import io.reactivex.FlowableSubscriber
+import io.reactivex.FlowableTransformer
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.subscribers.ResourceSubscriber
 import org.greenrobot.eventbus.EventBus
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
@@ -278,19 +282,23 @@ class ShareAppFragment : BottomSheetDialogFragment() {
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun shareReward() {
         val id = instance.getUid()
         if (id < 0) {
             return
         }
-        baseModel.shareReward("$id").subscribe(object : DisposableObserver<ResultInfo<String>?>() {
-            override fun onComplete() {}
-            override fun onError(e: Throwable) {}
-            override fun onNext(stringResultInfo: ResultInfo<String>) {
-                if (stringResultInfo.code == HttpConfig.STATUS_OK) {
-                    //分享成功
-//                    EventBus.getDefault().post(EventBusWxPayResult(0, "分享成功"))
-                }
+        baseModel.shareReward("$id").subscribeWith(object : ResourceSubscriber<ResultInfo<String>?>() {
+            override fun onNext(t: ResultInfo<String>?) {
+
+            }
+
+            override fun onError(t: Throwable?) {
+
+            }
+
+            override fun onComplete() {
+
             }
         })
     }
@@ -306,7 +314,7 @@ class ShareAppFragment : BottomSheetDialogFragment() {
                     val shareInfo = t.data
 
                     mShareInfo = shareInfo
-                    ShareInfoHelper.shareInfo= shareInfo
+                    ShareInfoHelper.shareInfo = shareInfo
                 }
             }
 

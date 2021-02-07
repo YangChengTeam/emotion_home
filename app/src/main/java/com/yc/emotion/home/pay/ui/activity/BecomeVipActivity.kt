@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.material.appbar.AppBarLayout
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.ui.activity.PayActivity
@@ -31,10 +32,17 @@ import com.yc.emotion.home.utils.UserInfoHelper
 import com.yc.emotion.home.utils.clickWithTrigger
 
 import kotlinx.android.synthetic.main.activity_become_vip.*
+import kotlinx.android.synthetic.main.activity_become_vip.become_vip_iv_to_wx
+import kotlinx.android.synthetic.main.activity_become_vip.become_vip_rv
+import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_rl_btn_wx
+import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_rl_btn_zfb
+import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_tv_pay_num
+import kotlinx.android.synthetic.main.activity_become_vip_new.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
+import kotlin.math.abs
 import kotlin.random.Random
 
 class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
@@ -72,18 +80,16 @@ class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
     }
 
     private fun initTitleView() {
-        val viewBar = findViewById<View>(R.id.activity_base_same_view_bar)
-        val rlTitleCon = findViewById<RelativeLayout>(R.id.activity_base_same_rl_title_con)
+
         val ivBack = findViewById<ImageView>(R.id.activity_base_same_iv_back)
         val tvTitle = findViewById<TextView>(R.id.activity_base_same_tv_title)
-        viewBar.setBackgroundColor(Color.TRANSPARENT)
-        rlTitleCon.setBackgroundColor(Color.TRANSPARENT)
+
         ivBack.setOnClickListener(this)
         ivBack.setImageDrawable(ContextCompat.getDrawable(this, R.mipmap.icon_arr_lift_white))
         tvTitle.setTextColor(Color.WHITE)
         //        tvTitle.setText("开通VIP");
         tvTitle.text = ""
-        setStateBarHeight(viewBar, 25)
+//        setStateBarHeight(viewBar, 25)
     }
 
     fun initRecyclerView() {
@@ -102,6 +108,20 @@ class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
     }
 
     private fun initListener() {
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val fraction =
+                    (abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)
+
+            toolbar.setBackgroundColor(Color.argb((fraction * 255).toInt(), 255, 255, 255))
+            activity_base_same_iv_back.setColorFilter(Color.argb((fraction * 255).toInt(), 34, 34, 34))
+            activity_base_same_tv_title.setTextColor(Color.argb((fraction * 255).toInt(), 34, 34, 34))
+            if (fraction == 1.0f) {
+                activity_base_same_tv_title.text = "开通VIP"
+            } else {
+                activity_base_same_tv_title.text = ""
+            }
+
+        })
         becomeVipAdapter?.setOnItemClickListener { adapter: BaseQuickAdapter<*, *>?, view: View, position: Int ->
             mGoodsInfo = becomeVipAdapter?.getItem(position)
             becomeVipAdapter?.setSelect(position)
@@ -234,7 +254,7 @@ class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_become_vip
+        return R.layout.activity_become_vip_new
     }
 
     companion object {

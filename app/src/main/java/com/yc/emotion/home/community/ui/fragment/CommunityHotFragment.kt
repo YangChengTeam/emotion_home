@@ -57,6 +57,7 @@ class CommunityHotFragment : BaseFragment<CommunityPresenter>(), View.OnClickLis
 
     }
 
+
     private fun initRecyclerView() {
         rv_hot_community.layoutManager = LinearLayoutManager(mMainActivity)
         communityAdapter = CommunityAdapter(null, false)
@@ -191,14 +192,13 @@ class CommunityHotFragment : BaseFragment<CommunityPresenter>(), View.OnClickLis
     }
 
 
-    override fun showLoadingDialog() {
-        mMainActivity?.showLoadingDialog()
+    override fun showLoading() {
+        mMainActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mMainActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mMainActivity?.hideLoading()
     }
-
 
     override fun onComplete() {
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false

@@ -49,7 +49,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
 
     fun getExpressData(page: Int, pageSize: Int) {
         if (page == 1)
-            mView.showLoadingDialog()
+            mView.showLoading()
         mModel?.getExpressData(page)?.subscribe(object : DisposableObserver<ConfessionBean>() {
             override fun onNext(t: ConfessionBean) {
                 t.let {
@@ -61,12 +61,12 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
             }
 
             override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
+                if (page == 1) mView.hideLoading()
                 mView.onComplete()
             }
 
             override fun onError(e: Throwable) {
-                if (page == 1) mView.hideLoadingDialog()
+                if (page == 1) mView.hideLoading()
                 mView.onComplete()
             }
 
@@ -104,7 +104,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
 
     fun netNormalData(requestMap: Map<String, String?>, requestUrl: String) {
 
-        mView.showLoadingDialog()
+        mView.showLoading()
         mModel?.netNormalData(requestMap, requestUrl)?.subscribe(object : DisposableObserver<ImageCreateBean>() {
             override fun onNext(t: ImageCreateBean) {
                 t.let {
@@ -115,7 +115,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
             }
 
             override fun onComplete() {
-                mView.hideLoadingDialog()
+                mView.hideLoading()
 
             }
 
@@ -128,7 +128,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
     }
 
     fun netUpFileNet(requestMap: Map<String, String?>, upFile: File, requestUrl: String) {
-        mView.showLoadingDialog()
+        mView.showLoading()
         mModel?.netUpFileNet(requestMap, upFile, requestUrl)?.subscribe(object : DisposableObserver<ImageCreateBean>() {
             override fun onNext(t: ImageCreateBean) {
                 t.let {
@@ -139,7 +139,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
             }
 
             override fun onComplete() {
-                mView.hideLoadingDialog()
+                mView.hideLoading()
             }
 
             override fun onError(e: Throwable) {

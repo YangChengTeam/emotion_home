@@ -36,23 +36,12 @@ class RewardPresenter(context: Context?, view: RewardView) : BasePresenter<Rewar
     }
 
     fun getRewardInfo() {
-        mModel?.getRewardInfo()?.subscribe(object : DisposableObserver<ResultInfo<RewardInfo>>() {
-            override fun onComplete() {
-
+        mModel?.getRewardInfo()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showRewardInfo(it)
             }
+        }, { _, _ -> }, false)
 
-            override fun onNext(t: ResultInfo<RewardInfo>) {
-                t.let {
-                    if (it.code == HttpConfig.STATUS_OK && it.data != null) {
-                        mView.showRewardInfo(it.data)
-                    }
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
     }
 
     fun bindInvitationCode(code: String) {
@@ -60,175 +49,92 @@ class RewardPresenter(context: Context?, view: RewardView) : BasePresenter<Rewar
             ToastUtils.showCenterToast("邀请码不能为空")
             return
         }
-        mView.showLoadingDialog()
-        mModel?.bindInvitationCode(code)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onComplete() {
+        mModel?.bindInvitationCode(code)?.getData(mView, { it, msg ->
+            mView.showBindSuccess()
+            msg?.let {
 
+                ToastUtils.showCenterToast(msg)
             }
+        }, { _, msg -> ToastUtils.showCenterToast(msg) })
 
-            override fun onNext(t: ResultInfo<String>) {
-                mView.hideLoadingDialog()
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        mView.showBindSuccess()
-                        ToastUtils.showCenterToast(t.message)
-                    } else {
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-            }
-        })
     }
 
     fun getRewardDetailInfoList(page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getRewardDetailInfoList(page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<RewardDetailInfo>>>() {
-            override fun onComplete() {
 
-            }
-
-            override fun onNext(t: ResultInfo<List<RewardDetailInfo>>) {
-                mView.hideLoadingDialog()
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.isNotEmpty()) {
-                        mView.showRewardDetailList(t.data)
-                    } else {
-                        if (page == 1) {
-                            mView.onNoData()
-                        }
-                    }
+        mModel?.getRewardDetailInfoList(page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showRewardDetailList(it)
+            } else {
+                if (page == 1) {
+                    mView.onNoData()
                 }
             }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-                if (page == 1)
-                    mView.onError()
-            }
+        }, { _, _ ->
+            if (page == 1)
+                mView.onError()
         })
+
     }
 
 
     fun applyDispose(amount: String, alipay_number: String, truename: String) {
 
-        mView.showLoadingDialog()
+        mModel?.applyDispose(amount, alipay_number, truename)?.getData(mView, { _, msg ->
+            mView.showDisposeApplySuccess()
+            ToastUtils.showCenterToast(msg)
+        }, { _, msg -> ToastUtils.showCenterToast(msg) })
 
-        mModel?.applyDispose(amount, alipay_number, truename)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onComplete() {
-
-            }
-
-            override fun onNext(t: ResultInfo<String>) {
-                mView.hideLoadingDialog()
-                if (t.code == HttpConfig.STATUS_OK) {
-                    mView.showDisposeApplySuccess()
-                    ToastUtils.showCenterToast(t.message)
-                } else {
-                    ToastUtils.showCenterToast(t.message)
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-            }
-        })
     }
 
     fun getDisposeDetailInfoList(page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getDisposeDetailInfoList(page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<DisposeDetailInfo>>>() {
-            override fun onComplete() {
 
+        mModel?.getDisposeDetailInfoList(page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showDisposeDetailInfoList(it)
+            } else {
+                if (page == 1)
+                    mView.onNoData()
             }
+        }, { _, _ -> })
 
-            override fun onNext(t: ResultInfo<List<DisposeDetailInfo>>) {
-                mView.hideLoadingDialog()
-                if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.isNotEmpty()) {
-                    mView.showDisposeDetailInfoList(t.data)
-                } else {
-                    if (page == 1)
-                        mView.onNoData()
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-            }
-        })
     }
 
     fun getRewardMoneyList(page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getRewardMoneyList(page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<RewardDetailInfo>>>() {
-            override fun onComplete() {
 
-            }
-
-            override fun onNext(t: ResultInfo<List<RewardDetailInfo>>) {
-                mView.hideLoadingDialog()
-                if (t.code == HttpConfig.STATUS_OK) {
-                    if (t.data != null && t.data.isNotEmpty()) {
-                        mView.showRewardMoneyList(t.data)
-                    }
-                } else {
-                    if (page == 1) {
-                        mView.onNoData()
-                    } else {
-                        mView.onError()
-                    }
+        mModel?.getRewardMoneyList(page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showRewardMoneyList(it)
+            } else {
+                if (page == 1) {
+                    mView.onNoData()
                 }
             }
+        }, { _, _ -> mView.onError() })
 
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-                mView.onError()
-            }
-        })
     }
 
     fun getRankingList(page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getRankingList(page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<List<RewardDetailInfo>>>() {
-            override fun onComplete() {
 
-            }
-
-            override fun onNext(t: ResultInfo<List<RewardDetailInfo>>) {
-                mView.hideLoadingDialog()
-                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                    mView.showRankingList(t.data)
-                } else {
-                    if (page == 1) {
-                        mView.onNoData()
-                    }
+        mModel?.getRankingList(page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null) {
+                mView.showRankingList(it)
+            } else {
+                if (page == 1) {
+                    mView.onNoData()
                 }
             }
+        }, { _, _ ->
+            if (page == 1)
+                mView.onError()
+        }, page == 1)
 
-            override fun onError(e: Throwable) {
-                if (page == 1)
-                    mView.onError()
-            }
-        })
     }
-    fun isBindInvitation(){
-        mModel?.isBindInvitation()?.subscribe(object :DisposableObserver<ResultInfo<RewardInfo>>(){
-            override fun onComplete() {
 
+    fun isBindInvitation() {
+        mModel?.isBindInvitation()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showBindInvitation(it)
             }
-
-            override fun onNext(t: ResultInfo<RewardInfo>) {
-                if (t.code==HttpConfig.STATUS_OK&&t.data!=null){
-                    mView.showBindInvitation(t.data)
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> }, false)
     }
 }

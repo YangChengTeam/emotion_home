@@ -55,17 +55,17 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
                 }); //范型已被擦除 --！
             }
 
-//            if (resultInfo instanceof ResultInfo) {
-//                //自定义解析实体类，只解析数据最外层，如code message
-//                ResultInfo re = (ResultInfo) resultInfo;
-//                //关注的重点，自定义响应码中非1的情况，一律抛出ApiException异常。
-//                //这样，我们就成功的将该异常交给onError()去处理了。
+            if (resultInfo instanceof ResultInfo) {
+                //自定义解析实体类，只解析数据最外层，如code message
+                ResultInfo re = (ResultInfo) resultInfo;
+                //关注的重点，自定义响应码中非1的情况，一律抛出ApiException异常。
+                //这样，我们就成功的将该异常交给onError()去处理了。
 //                if (re.code != HttpConfig.STATUS_OK) {
 //                    value.close();
 ////            Log.e(TAG, "convert: errCode:" + re.code + "  errMsg:" + re.message);
 //                    throw new ApiException(re.code, re.message);
 //                }
-//            }
+            }
             return resultInfo;
 
         } finally {

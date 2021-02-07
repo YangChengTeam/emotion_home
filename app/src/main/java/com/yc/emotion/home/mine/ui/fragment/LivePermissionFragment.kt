@@ -56,15 +56,17 @@ class LivePermissionFragment : BaseDialogFragment(), LiveView {
         init()
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
         activity?.let {
-            (it as BaseActivity).showLoadingDialog()
+            (it as BaseActivity).showLoading()
         }
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         activity?.let {
-            (it as BaseActivity).hideLoadingDialog()
+            (it as BaseActivity).hideLoading()
         }
     }
+
+
 }

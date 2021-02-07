@@ -9,6 +9,7 @@ import com.yc.emotion.home.base.constant.URLConfig
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.*
 import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import yc.com.rthttplibrary.bean.ResultInfo
@@ -21,22 +22,9 @@ import io.reactivex.Observable
  * Created by mayn on 2019/5/9.
  */
 class BaseModel(context: Context?) : IModel(context) {
-    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String): Observable<ResultInfo<List<LoveHealingBean>>> {
+    fun recommendLovewords(userId: String?, page: String?, page_size: String?, url: String): Flowable<ResultInfo<List<LoveHealingBean>>> {
 
-        return request.recommendLovewords(userId, page, page_size, URLConfig.debugBaseUrl + url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-    }
-
-
-    fun menuadvInfo(url: String?): Observable<ResultInfo<MenuadvInfoBean>> {
-
-
-        return request.menuadvInfo(URLConfig.getUrlV1(url)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-    }
-
-
-    fun getShareInfo(): Observable<ResultInfo<List<ShareInfo>>> {
-
-        return request.getShareInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.recommendLovewords(userId, page, page_size, URLConfig.debugBaseUrl + url)
     }
 
 
@@ -46,9 +34,9 @@ class BaseModel(context: Context?) : IModel(context) {
      * @param userId
      * @return
      */
-    fun shareReward(userId: String?): Observable<ResultInfo<String>> {
+    fun shareReward(userId: String?): Flowable<ResultInfo<String>> {
 
-        return request.shareReward(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.shareReward(userId)
     }
 
     /**

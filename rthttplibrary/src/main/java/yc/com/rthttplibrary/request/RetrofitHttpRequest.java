@@ -3,6 +3,7 @@ package yc.com.rthttplibrary.request;
 import android.content.Context;
 import android.text.TextUtils;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -42,18 +43,19 @@ public class RetrofitHttpRequest {
     }
 
 
-
     public static final class Builder {
         private static String url;
-        private static OkHttpClient client;
+        private static OkHttpClient.Builder builder;
         private static Converter.Factory convertFactory;
         private static CallAdapter.Factory adapterFactory;
+
+        private static Interceptor interceptor;
 
         public Builder() {
         }
 
-        public Builder(String url){
-            Builder.url=url;
+        public Builder(String url) {
+            Builder.url = url;
         }
 
         public Builder url(String url) {
@@ -61,8 +63,8 @@ public class RetrofitHttpRequest {
             return this;
         }
 
-        public Builder client(OkHttpClient client) {
-            Builder.client = client;
+        public Builder client(OkHttpClient.Builder client) {
+            Builder.builder = client;
             return this;
         }
 
@@ -73,6 +75,11 @@ public class RetrofitHttpRequest {
 
         public Builder adapter(CallAdapter.Factory adapterFactory) {
             Builder.adapterFactory = adapterFactory;
+            return this;
+        }
+
+        public Builder interceptor(Interceptor interceptor) {
+            Builder.interceptor = interceptor;
             return this;
         }
 
@@ -89,7 +96,7 @@ public class RetrofitHttpRequest {
             //创建Retrofit的实例
             return new Retrofit.Builder()
                     .baseUrl(url)
-                    .client(OkHttpClientUtil.setClient(client))
+                    .client(OkHttpClientUtil.addInterceptorBuilder(builder, interceptor).build())
                     //设置网络请求的Url地址
                     .addConverterFactory(convertFactory) //设置数据解析器
                     .addCallAdapterFactory(adapterFactory)

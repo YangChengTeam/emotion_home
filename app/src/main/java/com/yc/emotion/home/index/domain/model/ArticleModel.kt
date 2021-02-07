@@ -4,6 +4,7 @@ import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.ArticleDetailInfo
 import com.yc.emotion.home.model.bean.AticleTagInfo
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,10 +19,10 @@ class ArticleModel(override var context: Context?) : IModel(context) {
     /**
      * 更多文章分类类别
      */
-    fun getArticleTagInfos(): Observable<ResultInfo<List<AticleTagInfo>>> {
+    fun getArticleTagInfos(): Flowable<ResultInfo<List<AticleTagInfo>>> {
 
 
-        return request.getArticleTagInfos().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getArticleTagInfos()
     }
 
 
@@ -31,10 +32,9 @@ class ArticleModel(override var context: Context?) : IModel(context) {
      * @param cat_id
      * @return
      */
-    fun getArticleInfoList(cat_id: Int?, sex: Int, page: Int, page_size: Int): Observable<ResultInfo<List<ArticleDetailInfo>>> {
+    fun getArticleInfoList(cat_id: Int?, sex: Int, page: Int, page_size: Int): Flowable<ResultInfo<List<ArticleDetailInfo>>> {
 
 
-        return request.getArticleInfoList(cat_id, sex, page, page_size).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        return request.getArticleInfoList(cat_id, sex, page, page_size)
     }
 }

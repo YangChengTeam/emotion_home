@@ -3,6 +3,7 @@ package com.yc.emotion.home.message.domain.model
 import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.MessageInfo
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,10 +21,10 @@ class MessageModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getMessageInfoList(): Observable<ResultInfo<List<MessageInfo>>> {
+    fun getMessageInfoList(): Flowable<ResultInfo<List<MessageInfo>>> {
 
 
-        return request.getMessageInfoList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getMessageInfoList()
     }
 
 
@@ -33,9 +34,9 @@ class MessageModel(override var context: Context?) : IModel(context) {
      * @param id
      * @return
      */
-    fun getNotificationDetail(id: String): Observable<ResultInfo<MessageInfo>> {
+    fun getNotificationDetail(id: String): Flowable<ResultInfo<MessageInfo>> {
 
 
-        return request.getNotificationDetail(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getNotificationDetail(id)
     }
 }

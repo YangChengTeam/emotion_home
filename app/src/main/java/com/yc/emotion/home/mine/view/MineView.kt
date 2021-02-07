@@ -1,9 +1,9 @@
 package com.yc.emotion.home.mine.view
 
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.UserInterInfo
+import yc.com.rthttplibrary.view.IDialog
 
 /**
  *
@@ -14,4 +14,5 @@ interface MineView : IView, IDialog {
     fun showUpdateUserInfo(data: UserInfo?) {}
     fun showUserInterseInfo(data: List<UserInterInfo>?) {}
     fun showSuggestionSuccess() {}
+    fun showInvatationcode(code: String){}
 }

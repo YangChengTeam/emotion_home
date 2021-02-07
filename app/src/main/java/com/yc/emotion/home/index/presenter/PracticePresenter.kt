@@ -46,40 +46,19 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
 
     }
 
+    override fun isLoadingCache(): Boolean {
+        return false
+    }
+
     fun getPracticeInfos(page: Int, pageSize: Int, isRefresh: Boolean) {
         val userId = UserInfoHelper.instance.getUid()
 
-        if (page == 1 && !isRefresh) {
-            mView.showLoadingDialog()
-        }
-
-        mModel?.getPracticeInfos("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<ExampDataBean>>() {
-            override fun onNext(t: ResultInfo<ExampDataBean>) {
-                if (page == 1 && !isRefresh) {
-                    mView.hideLoadingDialog()
-                }
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val exampDataBean = t.data
-                        createNewData(page, pageSize, exampDataBean)
-                    }
-                }
+        mModel?.getPracticeInfos("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                createNewData(page, pageSize, it)
             }
+        }, { _, _ -> mView.onError() }, page == 1 && !isRefresh)
 
-            override fun onComplete() {
-                if (page == 1 && !isRefresh) {
-                    mView.hideLoadingDialog()
-                }
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-                if (page == 1 && !isRefresh) {
-                    mView.hideLoadingDialog()
-                }
-                mView.onError()
-            }
-        })
     }
 
 
@@ -94,7 +73,6 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
         val mMainT2Beans = arrayListOf<MainT2Bean>()
         if (page == 1) mMainT2Beans.add(MainT2Bean("tit", MainT2Bean.VIEW_TITLE))
         if (exampListsBeans != null && exampListsBeans.size > 0) {
-
 
 
             for (exampListsBean in exampListsBeans) {
@@ -119,7 +97,7 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
             CommonInfoHelper.setO<List<MainT2Bean>>(mContext, mMainT2Beans, "main2_example_lists")
         }
         mView.showPracticeInfoList(mMainT2Beans)
-//        Log.e("TAG",)
+
         if (exampListsBeans != null && exampListsBeans.size == pageSize) {
             mView.loadMoreComplete()
         } else {

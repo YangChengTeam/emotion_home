@@ -54,6 +54,7 @@ class CommunityFragment : BaseFragment<CommunityPresenter>(), View.OnClickListen
         initRecyclerView()
     }
 
+
     private fun initRecyclerView() {
         rv_community.layoutManager = LinearLayoutManager(mMainActivity)
         communityAdapter = CommunityAdapter(null, false)
@@ -174,12 +175,13 @@ class CommunityFragment : BaseFragment<CommunityPresenter>(), View.OnClickListen
 
     override fun onClick(v: View) = Unit
 
-    override fun showLoadingDialog() {
-        mMainActivity?.showLoadingDialog()
+
+    override fun showLoading() {
+        mMainActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mMainActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mMainActivity?.hideLoading()
     }
 
     private var isFromNet = false//是否从网络中获取了数据

@@ -1,8 +1,8 @@
 package com.yc.emotion.home.mine.view
 
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.domain.bean.LiveInfo
+import yc.com.rthttplibrary.view.IDialog
 
 /**
  *

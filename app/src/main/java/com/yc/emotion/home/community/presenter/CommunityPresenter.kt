@@ -34,20 +34,11 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
 
     fun getCommunityTagInfos() {
-        val subscription = mModel?.getCommunityTagInfos()?.subscribe(object : DisposableObserver<ResultInfo<CommunityTagInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CommunityTagInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showCommunityTagInfos(t.data.list)
-                    }
-                }
+        mModel?.getCommunityTagInfos()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showCommunityTagInfos(it.list)
             }
-
-            override fun onComplete() = Unit
-
-            override fun onError(e: Throwable) = Unit
-
-        })
+        }, { _, _ -> }, false)
 
 
     }
@@ -71,63 +62,27 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
     fun getCommunityNewstInfos(page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1) {
-            mView.showLoadingDialog()
-        }
 
-        mModel?.getCommunityNewstInfos("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<CommunityInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CommunityInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        if (page == 1) {
-                            CommonInfoHelper.setO<List<CommunityInfo>>(mContext, t.data.list, "emotion_community_newst_data")
-                        }
-                        mView.shoCommunityNewestInfos(t.data.list)
-                    }
-                }
-            }
-
-            override fun onComplete() {
+        mModel?.getCommunityNewstInfos("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
                 if (page == 1) {
-                    mView.hideLoadingDialog()
+                    CommonInfoHelper.setO<List<CommunityInfo>>(mContext, it.list, "emotion_community_newst_data")
                 }
-                mView.onComplete()
-
+                mView.shoCommunityNewestInfos(it.list)
             }
+        }, { _, _ -> mView.onError() }, page == 1)
 
-            override fun onError(e: Throwable) {
-                if (page == 1) {
-                    mView.hideLoadingDialog()
-                }
-                mView.onError()
-            }
-
-        })
 
     }
 
     fun likeTopic(communityInfo: CommunityInfo, position: Int) {
         if (!UserInfoHelper.instance.goToLogin(mContext)) {
             val userId = UserInfoHelper.instance.getUid()
-            mView.showLoadingDialog()
-           mModel?.likeTopic("$userId", communityInfo.topicId)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-                override fun onNext(t: ResultInfo<String>) {
-                    t.let {
-                        if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                            mView.showLikeTopicSuccess(communityInfo, position)
-                        }
-                    }
+            mModel?.likeTopic("$userId", communityInfo.topicId)?.getData(mView, { it, _ ->
+                it?.let {
+                    mView.showLikeTopicSuccess(communityInfo, position)
                 }
-
-                override fun onComplete() {
-                    mView.hideLoadingDialog()
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-            })
+            }, { _, _ -> })
 
         }
 
@@ -138,26 +93,11 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.getCommunityTagListInfo("$userId", catId, page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<CommunityInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CommunityInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.shoCommunityNewestInfos(t.data.list)
-                    }
-                }
+        mModel?.getCommunityTagListInfo("$userId", catId, page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.shoCommunityNewestInfos(it.list)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
-
+        }, { _, _ -> })
 
     }
 
@@ -179,31 +119,15 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
     fun getCommunityHotList(page: Int, pageSize: Int) {
 
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
-        val subscription = mModel?.getCommunityHotList("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<CommunityInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CommunityInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showCommunityHotList(t.data.list)
-                        if (page == 1) {
-                            CommonInfoHelper.setO<List<CommunityInfo>>(mContext, t.data.list, "emotion_community_hot_info")
-                        }
-                    }
+
+        mModel?.getCommunityHotList("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showCommunityHotList(it.list)
+                if (page == 1) {
+                    CommonInfoHelper.setO<List<CommunityInfo>>(mContext, it.list, "emotion_community_hot_info")
                 }
             }
-
-            override fun onComplete() {
-                if (page == 1)
-                    mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-                mView.onError()
-            }
-
-        })
+        }, { _, _ -> mView.onError() }, page == 1)
 
     }
 
@@ -226,63 +150,33 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
     fun getMyCommunityInfos(page: Int, pageSize: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1)
-            mView.showLoadingDialog()
 
-        mModel?.getMyCommunityInfos("$userId", page, pageSize)?.subscribe(object : DisposableObserver<ResultInfo<CommunityInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<CommunityInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null && t.data.list != null
-                                && t.data.list.size > 0) {
-                            val list = t.data.list
-                            mView.showCommunityMyList(list)
-                            if (page == 1)
-                                CommonInfoHelper.setO<List<CommunityInfo>>(mContext, list, "${userId}_emotion_community_my_info")
 
-                        } else {
-                            if (page == 1)
-                                mView.onNoData()
-                        }
-                    }
-                }
+        mModel?.getMyCommunityInfos("$userId", page, pageSize)?.getData(mView, { it, _ ->
+            if (it?.list != null
+                    && it.list.size > 0) {
+                val list = it.list
+                mView.showCommunityMyList(list)
+                if (page == 1)
+                    CommonInfoHelper.setO<List<CommunityInfo>>(mContext, list, "${userId}_emotion_community_my_info")
+
+            } else {
+                if (page == 1)
+                    mView.onNoData()
             }
+        }, { _, _ -> }, page == 1)
 
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
     fun deleteTopic(communityInfo: CommunityInfo?, position: Int) {
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        val subscription = mModel?.deleteTopic(communityInfo?.topicId, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showDeleteTopicSuccess(communityInfo, position)
-                    }
-                }
+        mModel?.deleteTopic(communityInfo?.topicId, "$userId")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showDeleteTopicSuccess(communityInfo, position)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
     }
 
@@ -290,54 +184,24 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
     fun getCommunityDetailInfo(topicId: String?) {
 
         val userId = UserInfoHelper.instance.getUid()
-        mView.showLoadingDialog()
-        val subscription = mModel?.getCommunityDetailInfo("$userId", topicId)?.subscribe(object : DisposableObserver<ResultInfo<CommunityDetailInfo>>() {
-            override fun onNext(t: ResultInfo<CommunityDetailInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val detailInfo = t.data
 
-                        mView.showCommunityDetailInfo(detailInfo)
-                        //                        initData(detailInfo)
-                    }
-                }
+        mModel?.getCommunityDetailInfo("$userId", topicId)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showCommunityDetailInfo(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 
 
     fun commentLike(communityInfo: CommunityInfo, position: Int) {
         if (!UserInfoHelper.instance.goToLogin(mContext)) {
             val userId = UserInfoHelper.instance.getUid()
-            mView.showLoadingDialog()
-            mModel?.commentLike("$userId", communityInfo.comment_id)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-                override fun onNext(t: ResultInfo<String>) {
-                    t.let {
-                        if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                            mView.showCommunityDetailSuccess(communityInfo, position)
-                        }
-                    }
+
+            mModel?.commentLike("$userId", communityInfo.comment_id)?.getData(mView, { it, _ ->
+                it?.let {
+                    mView.showCommunityDetailSuccess(communityInfo, position)
                 }
-
-                override fun onComplete() {
-                    mView.hideLoadingDialog()
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-            })
-
+            }, { _, _ -> })
         }
     }
 
@@ -345,50 +209,28 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
     fun createComment(topicId: String?, content: String?) {
         if (!UserInfoHelper.instance.goToLogin(mContext)) {
 
+            val userId = UserInfoHelper.instance.getUid()
 
-            val user_id = UserInfoHelper.instance.getUid()
-            mView.showLoadingDialog()
-            mModel?.createComment("$user_id", topicId, content)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-                override fun onNext(t: ResultInfo<String>) {
-                    t.let {
-                        mView.createCommunityResult(t, content)
-                    }
-                }
-
-                override fun onComplete() {
-                    mView.hideLoadingDialog()
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
+            mModel?.createComment("$userId", topicId, content)?.getData(mView, { _, _ ->
+                val resultInfo = ResultInfo<String>()
+                resultInfo.code = HttpConfig.STATUS_OK
+                mView.createCommunityResult(resultInfo, content)
+            }, { code, _ ->
+                val resultInfo = ResultInfo<String>()
+                resultInfo.code = code
+                mView.createCommunityResult(resultInfo, content)
             })
 
         }
     }
 
-
     fun getTopTopicInfos() {
-        mView.showLoadingDialog()
-        mModel?.getTopTopicInfos()?.subscribe(object : DisposableObserver<ResultInfo<TopTopicInfo>>() {
-            override fun onNext(t: ResultInfo<TopTopicInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showCommunityNoticeInfo(t.data)
-                    }
-                }
+        mModel?.getTopTopicInfos()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showCommunityNoticeInfo(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
@@ -397,28 +239,11 @@ class CommunityPresenter(context: Context?, view: CommunityView) : BasePresenter
 
         if (!UserInfoHelper.instance.goToLogin(mContext)) {
             val userId = UserInfoHelper.instance.getUid()
-            mView.showLoadingDialog()
-            mModel?.publishCommunityInfo("$userId", cat_id, content)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-                override fun onNext(t: ResultInfo<String>) {
-                    t.let {
-                        if (t.code == HttpConfig.STATUS_OK) {
-
-                            mView.publishCommunitySuccess(t.message)
-
-                        }
-                    }
+            mModel?.publishCommunityInfo("$userId", cat_id, content)?.getData(mView, { it, msg ->
+                msg?.let {
+                    mView.publishCommunitySuccess(msg)
                 }
-
-                override fun onComplete() {
-                    mView.hideLoadingDialog()
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-
-            })
-
+            }, { _, _ -> })
         }
     }
 }

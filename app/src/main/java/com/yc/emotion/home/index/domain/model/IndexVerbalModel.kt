@@ -6,6 +6,7 @@ import com.yc.emotion.home.model.bean.IndexHotInfoWrapper
 import com.yc.emotion.home.model.bean.LoveHealDateBean
 import com.yc.emotion.home.model.bean.LoveHealDetBean
 import com.yc.emotion.home.model.bean.SearchDialogueBean
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,10 +24,10 @@ class IndexVerbalModel(override var context: Context?) : IModel(context) {
      * @return
      */
 
-    fun getIndexDropInfos(keyword: String?): Observable<ResultInfo<IndexHotInfoWrapper>> {
+    fun getIndexDropInfos(keyword: String?): Flowable<ResultInfo<IndexHotInfoWrapper>> {
 
 
-        return request.getIndexDropInfos(keyword).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getIndexDropInfos(keyword)
     }
 
 
@@ -40,9 +41,9 @@ class IndexVerbalModel(override var context: Context?) : IModel(context) {
      * @param url
      * @return
      */
-    fun searchVerbalTalk(userId: String, keyword: String?, page: Int, pageSize: Int): Observable<ResultInfo<SearchDialogueBean>> {
+    fun searchVerbalTalk(userId: String, keyword: String?, page: Int, pageSize: Int): Flowable<ResultInfo<SearchDialogueBean>> {
 
-        return request.searchVerbalTalk(userId, keyword, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.searchVerbalTalk(userId, keyword, page, pageSize)
     }
 
 
@@ -53,26 +54,26 @@ class IndexVerbalModel(override var context: Context?) : IModel(context) {
      * @param keyword
      * @return
      */
-    fun searchCount(userId: String, keyword: String?): Observable<ResultInfo<String>> {
+    fun searchCount(userId: String, keyword: String?): Flowable<ResultInfo<String>> {
 
-        return request.searchCount(userId, keyword).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.searchCount(userId, keyword)
     }
 
     /**
      * 场景话术和应用话术
      */
-    fun loveCategory(sence: String): Observable<ResultInfo<List<LoveHealDateBean>>> {
+    fun loveCategory(sence: String): Flowable<ResultInfo<List<LoveHealDateBean>>> {
 
-        return request.loveCategory(sence).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.loveCategory(sence)
     }
 
 
     /**
      * 话术详情
      */
-    fun loveListCategory(userId: String, category_id: String?, page: Int, page_size: Int): Observable<ResultInfo<List<LoveHealDetBean>>> {
+    fun loveListCategory(userId: String, category_id: String?, page: Int, page_size: Int): Flowable<ResultInfo<List<LoveHealDetBean>>> {
 
 
-        return request.loveListCategory(userId, category_id, page, page_size).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.loveListCategory(userId, category_id, page, page_size)
     }
 }

@@ -3,6 +3,7 @@ package com.yc.emotion.home.mine.domain.model
 import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.OrderInfo
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,10 +24,10 @@ class OrderModel(override var context: Context?) : IModel(context) {
      * @param pageSize
      * @return
      */
-    fun getOrderList(userId: String, page: Int, pageSize: Int): Observable<ResultInfo<List<OrderInfo>>> {
+    fun getOrderList(userId: String, page: Int, pageSize: Int): Flowable<ResultInfo<List<OrderInfo>>> {
 
 
-        return request.getOrderList(userId, page, pageSize).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getOrderList(userId, page, pageSize)
 
     }
 }

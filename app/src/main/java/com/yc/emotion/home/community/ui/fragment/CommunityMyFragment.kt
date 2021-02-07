@@ -64,6 +64,8 @@ class CommunityMyFragment : BaseFragment<CommunityPresenter>(), View.OnClickList
         tv_login_tint.text = Html.fromHtml("未登录？<font color='#FF2D55'>点击登录</font>")
     }
 
+
+
     private fun initRecyclerView() {
         rv_community.layoutManager = LinearLayoutManager(mMainActivity)
         communityAdapter = CommunityAdapter(null, true)
@@ -223,12 +225,14 @@ class CommunityMyFragment : BaseFragment<CommunityPresenter>(), View.OnClickList
         top_empty_view.visibility = View.VISIBLE
     }
 
-    override fun showLoadingDialog() {
-        mMainActivity?.showLoadingDialog()
+
+
+    override fun showLoading() {
+        mMainActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mMainActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mMainActivity?.hideLoading()
     }
 
     override fun showDeleteTopicSuccess(communityInfo: CommunityInfo?, position: Int) {

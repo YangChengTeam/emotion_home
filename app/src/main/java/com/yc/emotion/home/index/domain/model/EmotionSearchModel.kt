@@ -3,6 +3,7 @@ package com.yc.emotion.home.index.domain.model
 import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.model.bean.IndexSearchInfo
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,10 +22,9 @@ class EmotionSearchModel(override var context: Context?) : IModel(context) {
      * @param type    1搜索内容   2搜索导师
      * @return
      */
-    fun searchIndexInfo(keyword: String?, type: Int): Observable<ResultInfo<IndexSearchInfo>> {
+    fun searchIndexInfo(keyword: String?, type: Int): Flowable<ResultInfo<IndexSearchInfo>> {
 
 
-        return request.searchIndexInfo(keyword, type).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        return request.searchIndexInfo(keyword, type)
     }
 }

@@ -53,35 +53,20 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
             return
         }
 
-        mView.showLoadingDialog()
-        mModel?.phoneLogin(mobile, pwd, code)?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val userInfo = t.data
-                        userInfo?.let {
-                            if (!TextUtils.isEmpty(pwd)) it.pwd = pwd
-                        }
+        mModel?.phoneLogin(mobile, pwd, code)?.getData(mView, { it, msg ->
+            if (it != null) {
 
-                        UserInfoHelper.instance.saveUserInfo(userInfo)
+                if (!TextUtils.isEmpty(pwd)) it.pwd = pwd
 
-                        mView.showPhoneLoginSuccess(userInfo)
 
-                    } else {
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                }
+                UserInfoHelper.instance.saveUserInfo(it)
+
+                mView.showPhoneLoginSuccess(it)
+
+            } else {
+                ToastUtils.showCenterToast(msg)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
 
     }
@@ -98,24 +83,10 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
             return
         }
 
-        mModel?.sendCode(mobile)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        mView.sendCodeSuccess()
-                    }
-                    ToastUtils.showCenterToast(t.message)
-
-                }
-            }
-
-            override fun onComplete() {
-            }
-
-            override fun onError(e: Throwable) {
-            }
-
-        })
+        mModel?.sendCode(mobile)?.getData(mView, { it, msg ->
+            mView.sendCodeSuccess()
+            ToastUtils.showCenterToast(msg)
+        }, { _, msg -> ToastUtils.showCenterToast(msg) }, false)
 
     }
 
@@ -135,110 +106,57 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
             return
         }
 
-        mView.showLoadingDialog()
-        mModel?.phoneRegister(mobile, password, code, relation_code)?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val userInfo = t.data
-                        userInfo?.let {
-                            if (!TextUtils.isEmpty(password)) it.pwd = password
-                        }
-                        UserInfoHelper.instance.saveUserInfo(userInfo)
-                        mView.showPhoneRegisterSuccess(userInfo)
+        mModel?.phoneRegister(mobile, password, code, relation_code)?.getData(mView, { it, msg ->
+            if (it != null) {
+                if (!TextUtils.isEmpty(password)) it.pwd = password
+                UserInfoHelper.instance.saveUserInfo(it)
+                mView.showPhoneRegisterSuccess(it)
+            } else {
+                msg?.let {
+                    if (!TextUtils.isEmpty(msg) && msg.contains("已经注册")) {
+                        phoneLogin(mobile, "", code)
                     } else {
-                        val msg = t.message
-                        if (!TextUtils.isEmpty(msg) && msg.contains("已经注册")) {
-                            phoneLogin(mobile, "", code)
-                            //
-                        } else {
-                            ToastUtils.showCenterToast(t.message)
-                        }
-
+                        ToastUtils.showCenterToast(msg)
                     }
                 }
-            }
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
 
             }
+        }, { _, _ -> })
 
-        })
     }
 
 
     fun resetPwd(mobile: String?, code: String?, pwd: String?) {
-        mView.showLoadingDialog()
-        mModel?.resetPwd(mobile, code, pwd)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        ToastUtils.showCenterToast("重置密码成功")
-                        mView.showResetPwdSuccess()
-                    }
-                }
 
-            }
+        mModel?.resetPwd(mobile, code, pwd)?.getData(mView, { _, _ ->
+            ToastUtils.showCenterToast("重置密码成功")
+            mView.showResetPwdSuccess()
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-            }
-
-        })
 
     }
 
 
     fun consultAppoint(phone: String?, wx: String?, code: String?) {
-        mView.showLoadingDialog()
-        mModel?.consultAppoint(phone, wx, code)?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        ToastUtils.showCenterToast("预约成功,请保持电话畅通！")
-                    }
-                }
+
+        mModel?.consultAppoint(phone, wx, code)?.getData(mView, { it, _ ->
+            it?.let {
+                ToastUtils.showCenterToast("预约成功,请保持电话畅通！")
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
 
     }
 
     fun thirdLogin(access_token: String?, account_type: Int, face: String?, sex: String?, nick_name: String?, finish: Boolean?) {
-        mModel?.thridLogin(access_token, account_type, face, sex, nick_name)?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                    UserInfoHelper.instance.saveUserInfo(t.data)
-                    mView.thirdLoginSuccess(t.data, finish)
-                } else {
-                    ToastUtils.showCenterToast(t.message)
-                }
+        mModel?.thridLogin(access_token, account_type, face, sex, nick_name)?.getData(mView, { userInfo, s ->
+            if (userInfo != null) {
+                UserInfoHelper.instance.saveUserInfo(userInfo)
+                mView.thirdLoginSuccess(userInfo, finish)
+            } else {
+                ToastUtils.showCenterToast(s)
             }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-                ToastUtils.showCenterToast(HttpConfig.NET_ERROR)
-            }
-
-        })
+        }, { _, _ -> ToastUtils.showCenterToast(HttpConfig.NET_ERROR) }, false)
 
 
     }
@@ -249,31 +167,20 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
         if (userId <= 0) {
             return
         }
-        mModel?.userInfo("$userId")?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val userInfo = t.data
-                        val info = UserInfoHelper.instance.getUserInfo()
-                        userInfo?.let {
-                            info?.let {
-                                if (!TextUtils.isEmpty(info.pwd)) userInfo.pwd = info.pwd
-                            }
-                        }
-                        UserInfoHelper.instance.saveUserInfo(userInfo)
-                        mView.getUserInfoSuccess(userInfo, listener)
-                    }
+        mModel?.userInfo("$userId")?.getData(mView, { it, _ ->
+            it?.let { userInfo ->
+
+                val info = UserInfoHelper.instance.getUserInfo()
+
+                info?.let {
+                    if (!TextUtils.isEmpty(info.pwd)) userInfo.pwd = info.pwd
                 }
+
+                UserInfoHelper.instance.saveUserInfo(userInfo)
+                mView.getUserInfoSuccess(userInfo, listener)
             }
+        }, { _, _ -> }, false)
 
-            override fun onComplete() {
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
@@ -283,31 +190,13 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
             ToastUtils.showCenterToast("密码不能为空")
             return
         }
-        mView.showLoadingDialog()
-        val subscription = mModel?.setPwd(pwd)?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
+        mModel?.setPwd(pwd)?.getData(mView, { _, _ ->
+            val info = UserInfoHelper.instance.getUserInfo()
+            info?.pwd = pwd
 
-                        val info = UserInfoHelper.instance.getUserInfo()
-                        info?.pwd = pwd
-
-                        UserInfoHelper.instance.saveUserInfo(info)
-                        mView.setPwdSuccess()
-                    } else {
-                        ToastUtils.showCenterToast(t.message)
-                    }
-                }
-            }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+            UserInfoHelper.instance.saveUserInfo(info)
+            mView.setPwdSuccess()
+        }, { _, msg -> ToastUtils.showCenterToast(msg) })
 
     }
 
@@ -321,28 +210,13 @@ class UserInfoPresenter(context: Context?, view: UserInfoView) : BasePresenter<U
             ToastUtils.showCenterToast("新密码不能为空")
         }
 
-        mView.showLoadingDialog()
 
-        mModel?.modifyPwd(pwd, new_pwd)?.subscribe(object : DisposableObserver<ResultInfo<UserInfo>>() {
-            override fun onNext(t: ResultInfo<UserInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        val userInfo = UserInfoHelper.instance.getUserInfo()
-                        userInfo?.pwd = new_pwd
-                        UserInfoHelper.instance.saveUserInfo(userInfo)
-                        mView.setPwdSuccess()
-                    }
-                }
-            }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        mModel?.modifyPwd(pwd, new_pwd)?.getData(mView, { _, _ ->
+            val userInfo = UserInfoHelper.instance.getUserInfo()
+            userInfo?.pwd = new_pwd
+            UserInfoHelper.instance.saveUserInfo(userInfo)
+            mView.setPwdSuccess()
+        }, { _, _ -> })
 
 
     }

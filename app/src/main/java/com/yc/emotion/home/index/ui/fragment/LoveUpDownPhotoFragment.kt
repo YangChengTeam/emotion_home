@@ -61,14 +61,14 @@ class LoveUpDownPhotoFragment : BaseFragment<LoveUpDownPresenter>(), View.OnClic
         netIdData()
     }
 
-    override fun showLoadingDialog() {
-        mLoveUpDownPhotoActivity.showLoadingDialog()
-
+    override fun showLoading() {
+        mLoveUpDownPhotoActivity.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mLoveUpDownPhotoActivity.hideLoadingDialog()
+    override fun hideLoading() {
+        mLoveUpDownPhotoActivity.hideLoading()
     }
+
 
     private fun initTitle() {
 
@@ -116,7 +116,7 @@ class LoveUpDownPhotoFragment : BaseFragment<LoveUpDownPresenter>(), View.OnClic
 
     private fun netIdData() {
 
-        mPresenter?.recommendLovewords("${instance.getUid()}", "${mPosition + 1}", "1", mChildUrl)
+        mPresenter?.recommendLovewords("${instance.getUid()}", "${mPosition + 1}", "1", mChildUrl, false)
 
     }
 

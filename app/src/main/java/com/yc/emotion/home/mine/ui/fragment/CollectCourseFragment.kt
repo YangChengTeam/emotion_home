@@ -54,6 +54,8 @@ class CollectCourseFragment : BaseFragment<CollectPresenter>(), CollectView {
         initListener()
     }
 
+
+
     fun initListener() {
 
         mCollectActivity?.let {
@@ -116,11 +118,13 @@ class CollectCourseFragment : BaseFragment<CollectPresenter>(), CollectView {
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun showLoadingDialog() {
-        mCollectActivity?.showLoadingDialog()
+
+
+    override fun showLoading() {
+        mCollectActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mCollectActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mCollectActivity?.hideLoading()
     }
 }

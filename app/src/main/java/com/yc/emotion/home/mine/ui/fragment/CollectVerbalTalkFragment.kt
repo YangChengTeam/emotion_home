@@ -73,6 +73,7 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
         initRecyclerView()
     }
 
+
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
@@ -227,12 +228,12 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
 
     }
 
-
-    override fun showLoadingDialog() {
-        mCollectActivity?.showLoadingDialog()
+    override fun showLoading() {
+        mCollectActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mCollectActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mCollectActivity?.hideLoading()
     }
+
 }

@@ -2,6 +2,7 @@ package com.yc.emotion.home.index.presenter
 
 
 import android.content.Context
+import android.util.Log
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.index.domain.model.ArticleDetailModel
 import com.yc.emotion.home.index.view.ArticleDetailView
@@ -11,6 +12,7 @@ import com.yc.emotion.home.utils.UserInfoHelper
 import io.reactivex.observers.DisposableObserver
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.util.LogUtil
 
 /**
  *
@@ -33,24 +35,13 @@ class ArticleDetailPresenter(context: Context, view: ArticleDetailView) : BasePr
 
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.getArticleDetai(id, "$userId")?.subscribe(object : DisposableObserver<ResultInfo<LoveByStagesDetailsBean>>() {
-            override fun onNext(t: ResultInfo<LoveByStagesDetailsBean>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showArticleDetailInfo(t.data)
-                    }
-                }
+        mModel?.getArticleDetai(id, "$userId")?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showArticleDetailInfo(it)
             }
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
+        }, { _, _ -> })
 
-            override fun onError(e: Throwable) {
-            }
-
-        })
     }
 
 
@@ -63,30 +54,16 @@ class ArticleDetailPresenter(context: Context, view: ArticleDetailView) : BasePr
 
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.articleCollect("$userId", exampleId, "article.article/collect")?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
-                        var isCollected = isCollected
-                        isCollected = !isCollected
-                        mView.collectArticle(-1, isCollected)
 
-                    }
-                }
+        mModel?.articleCollect("$userId", exampleId, "article.article/collect")?.getData(mView, { it, msg ->
+            it?.let {
+
+                ToastUtils.showCenterToast(msg)
+                var isCollected = isCollected
+                isCollected = !isCollected
+                mView.collectArticle(-1, isCollected)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 
 
@@ -99,29 +76,16 @@ class ArticleDetailPresenter(context: Context, view: ArticleDetailView) : BasePr
 
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.articleCollect("$userId", exampleId, "article.article/dig")?.subscribe(object : DisposableObserver<ResultInfo<String>>() {
-            override fun onNext(t: ResultInfo<String>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val msg = t.message
-                        ToastUtils.showCenterToast(msg)
-                        var isDigArticle = isDigArticle
-                        isDigArticle = !isDigArticle
 
-                        mView.digArticle(isDigArticle)
-                    }
-                }
+        mModel?.articleCollect("$userId", exampleId, "article.article/dig")?.getData(mView, { it, msg ->
+            it?.let {
+
+                ToastUtils.showCenterToast(msg)
+                var isDigArticle = isDigArticle
+                isDigArticle = !isDigArticle
+
+                mView.digArticle(isDigArticle)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        }, { _, _ -> })
     }
 }

@@ -3,6 +3,13 @@ package com.yc.emotion.home.base.presenter
 import android.content.Context
 import com.yc.emotion.home.base.domain.model.IModel
 import com.yc.emotion.home.base.view.IView
+import com.yc.emotion.home.utils.RxUtils
+import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import yc.com.rthttplibrary.bean.ResultInfo
+import yc.com.rthttplibrary.converter.BaseObserver
+import yc.com.rthttplibrary.view.IDialog
 
 
 /**
@@ -13,7 +20,6 @@ import com.yc.emotion.home.base.view.IView
  * P
  */
 abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) : IPresenter {
-
 
 
     var mModel: M? = null
@@ -29,6 +35,7 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
     protected var isFirstLoad = true
 
 
+    private var mDisposables: CompositeDisposable? = null
 
 
     fun loadData(isForceUI: Boolean) {
@@ -54,8 +61,37 @@ abstract class BasePresenter<M : IModel, V : IView>(context: Context?, view: V) 
     }
 
     override fun unSubscribe() {
+        mDisposables?.dispose()
+    }
+
+    protected open fun addSubscribe(disposable: Disposable?) {
+        if (mDisposables == null) {
+            mDisposables = CompositeDisposable()
+        }
+        disposable?.let { mDisposables?.add(it) }
 
     }
 
 
+    protected inline fun <T, R : Flowable<ResultInfo<T>>, V : IDialog> R.getData(
+            v: V?,
+            crossinline block1: (T?,String?) -> Unit,
+            crossinline block2: (Int, String?) -> Unit,
+            isShowLoading: Boolean = true,
+    ) {
+        addSubscribe(compose(RxUtils.rxSchedulerHelper()).subscribeWith(object : BaseObserver<T, V>(v) {
+            override fun onSuccess(data: T, message: String?) {
+                block1(data, message)
+            }
+
+            override fun onFailure(code: Int, errorMsg: String?) {
+                block2(code, errorMsg)
+            }
+
+            override fun isShow(): Boolean {
+                return isShowLoading
+            }
+
+        }))
+    }
 }

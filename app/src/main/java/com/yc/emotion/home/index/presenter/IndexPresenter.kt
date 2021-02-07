@@ -15,6 +15,7 @@ import com.yc.emotion.home.utils.Preference
 import io.reactivex.observers.DisposableObserver
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
+import java.util.zip.Inflater
 
 
 /**
@@ -66,30 +67,14 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
      */
     fun getIndexData() {
 
+        mModel?.getIndexInfo()?.getData(mView, { indexInfo, _ ->
+            indexInfo?.let {
+                mView.showIndexInfo(indexInfo)
 
-        mModel?.getIndexInfo()?.subscribe(object : DisposableObserver<ResultInfo<IndexInfo>>() {
-            override fun onNext(t: ResultInfo<IndexInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val indexInfo = t.data
-
-                        mView.showIndexInfo(indexInfo)
-
-                        CommonInfoHelper.setO(mContext, indexInfo, "index_emotion_choiceness_info")
-                    }
-                }
+                CommonInfoHelper.setO(mContext, indexInfo, "index_emotion_choiceness_info")
             }
 
-
-            override fun onError(e: Throwable) {
-            }
-
-            override fun onComplete() {
-
-            }
-
-
-        })
+        }, { _, _ -> }, false)
 
     }
 
@@ -106,29 +91,18 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
             }
         })
 
-        mModel?.getOnlineLiveList()?.subscribe(object : DisposableObserver<ResultInfo<LiveInfoWrapper>>() {
-            override fun onNext(t: ResultInfo<LiveInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null && t.data.list != null && t.data.list.size > 0) {
-                        val list = ArrayList<LiveInfo>()
-                        list.addAll(t.data.list)
-                        list.addAll(t.data.recording)
-                        mView.showIndexLiveInfos(list)
-                        CommonInfoHelper.setO(mContext, list, "index_live_info_list")
-                    }
+        mModel?.getOnlineLiveList()?.getData(mView, { it, _ ->
+            it?.let {
+                if (it.list != null && it.list.size > 0) {
+                    val list = ArrayList<LiveInfo>()
+                    list.addAll(it.list)
+                    list.addAll(it.recording)
+                    mView.showIndexLiveInfos(list)
+                    CommonInfoHelper.setO(mContext, list, "index_live_info_list")
                 }
             }
+        }, { _, _ -> }, false)
 
-
-            override fun onError(e: Throwable) {
-
-            }
-
-
-            override fun onComplete() {
-
-            }
-        })
 
     }
 
@@ -145,66 +119,28 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
             }
         })
 
-        mModel?.getLiveVideoInfoList()?.subscribe(object : DisposableObserver<ResultInfo<LiveVideoInfoWrapper>?>() {
-            override fun onNext(t: ResultInfo<LiveVideoInfoWrapper>) {
-                if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                    val data = t.data
-                    mView.showIndexLiveVideos(data.list)
-                    CommonInfoHelper.setO(mContext, data.list, "index_live_video_list")
-                }
+        mModel?.getLiveVideoInfoList()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showIndexLiveVideos(it.list)
+                CommonInfoHelper.setO(mContext, it.list, "index_live_video_list")
             }
+        }, { _, _ -> }, false)
 
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-
-        })
 
     }
 
     fun statisticsLive(id: String?) {
-        mModel?.statisticsLive(id)?.subscribe(object : DisposableObserver<ResultInfo<String>?>() {
-            override fun onNext(t: ResultInfo<String>) {
-
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
+        mModel?.statisticsLive(id)?.getData(mView, { _, _ -> }, { _, _ -> }, false)
 
     }
 
 
     fun getRewardInfo() {
-        mModel?.getRewardInfo()?.subscribe(object : DisposableObserver<ResultInfo<RewardInfo>>() {
-            override fun onComplete() {
-
+        mModel?.getRewardInfo()?.getData(mView, { it, _ ->
+            it?.let {
+                if (!TextUtils.isEmpty(it.code))
+                    invatationcode = it.code
             }
-
-            override fun onNext(t: ResultInfo<RewardInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val data = t.data
-                        if (!TextUtils.isEmpty(data.code))
-                            invatationcode = data.code
-                    }
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> }, false)
     }
 }

@@ -1,12 +1,12 @@
 package com.yc.emotion.home.index.view
 
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.base.view.StateDefaultImpl
 import com.yc.emotion.home.model.bean.CourseInfo
 import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.model.bean.TutorCommentInfo
 import com.yc.emotion.home.model.bean.TutorCourseDetailInfo
+import yc.com.rthttplibrary.view.IDialog
 import java.util.ArrayList
 
 /**

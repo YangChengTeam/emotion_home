@@ -37,135 +37,60 @@ class EmotionTestPresenter(context: Context?, view: EmotionTestView) : BasePrese
     fun getTestDetailInfo(test_id: String?) {
         val userId = UserInfoHelper.instance.getUid()
 
-        mView.showLoadingDialog()
-        mModel?.getTestDetailInfo("$userId", test_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<EmotionTestTopicInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<EmotionTestTopicInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val emotionTestTopicInfo = t.data
-                        mView.showEmotionTestInfo(emotionTestTopicInfo)
 
-                    }
-                }
+        mModel?.getTestDetailInfo("$userId", test_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showEmotionTestInfo(it)
             }
-
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> })
 
     }
 
 
     fun submitAnswer(test_id: String?, questionInfos: List<QuestionInfo>?, aid: String?, option_id: String?) {
         val userId = UserInfoHelper.instance.getUid()
-        mView.showLoadingDialog()
-        mModel?.submitAnswer("$userId", test_id, questionInfos, aid, option_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<EmotionTestInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<EmotionTestInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        val emotionTestInfo = t.data
-                        mView.showEmotionTestResult(emotionTestInfo)
+        mModel?.submitAnswer("$userId", test_id, questionInfos, aid, option_id)?.getData(mView, { it, _ ->
+            it?.let {
 
-                    }
-                }
-
+                mView.showEmotionTestResult(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
     }
 
     fun getTestCategoryInfos() {
-        mModel?.getTestCategoryInfos()?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<CourseInfoWrapper>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<CourseInfoWrapper>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showEmotionCategorys(t.data.list)
-                    }
-                }
+        mModel?.getTestCategoryInfos()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showEmotionCategorys(it.list)
             }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
+        }, { _, _ -> }, false)
     }
 
     fun getEmotionTestInfos(catId: String?, page: Int, pageSize: Int) {
-        mView.showLoadingDialog()
-        mModel?.getEmotionTestInfos(catId, page, pageSize)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<List<EmotionTestInfo>>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<List<EmotionTestInfo>>) {
-                mView.hideLoadingDialog()
-                t.let {
 
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showEmotionTestListInfo(t.data)
-                    } else {
-                        if (page == 1) mView.onNoData()
-                    }
-                }
+        mModel?.getEmotionTestInfos(catId, page, pageSize)?.getData(mView, { it, _ ->
+            if (it != null) {
+                mView.showEmotionTestListInfo(it)
+            } else {
+                if (page == 1) mView.onNoData()
             }
-
-            override fun onComplete() {
-            }
-
-            override fun onError(e: Throwable) {
-                mView.hideLoadingDialog()
-                mView.onError()
-            }
-        })
+        }, { _, _ -> mView.onError() }, page == 1)
     }
 
 
     fun getTestRecords(page: Int, page_size: Int) {
         val userId = UserInfoHelper.instance.getUid()
-        if (page == 1) {
-            mView.showLoadingDialog()
-        }
 
-        mModel?.getTestRecords("$userId", page, page_size)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<List<EmotionTestInfo>>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<List<EmotionTestInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null && t.data.isNotEmpty()) {
-                            mView.showTestRecords(t.data)
-                            if (page == 1) {
-                                CommonInfoHelper.setO(mContext, t.data, "${userId}test_reports")
-                            }
-                        } else {
-                            if (page == 1) mView.onNoData()
-                        }
-                    }
+        mModel?.getTestRecords("$userId", page, page_size)?.getData(mView, { it, _ ->
+            if (it != null && it.isNotEmpty()) {
+                mView.showTestRecords(it)
+                if (page == 1) {
+                    CommonInfoHelper.setO(mContext, it, "${userId}test_reports")
                 }
+            } else {
+                if (page == 1) mView.onNoData()
             }
-
-            override fun onComplete() {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-                if (page == 1) mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-        })
+        }, { _, _ -> mView.onComplete() }, page == 1)
     }
 
     fun getTestRecordsCache() {
@@ -183,25 +108,13 @@ class EmotionTestPresenter(context: Context?, view: EmotionTestView) : BasePrese
     }
 
     fun getTestRecordDetail(record_id: String?) {
-        mView.showLoadingDialog()
-        mModel?.getTestRecordDetail(record_id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<EmotionTestInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<EmotionTestInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showTestRecordDetail(t.data)
-                    }
-                }
+
+        mModel?.getTestRecordDetail(record_id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showTestRecordDetail(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
     }
 
 

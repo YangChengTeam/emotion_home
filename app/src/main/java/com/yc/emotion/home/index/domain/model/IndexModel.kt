@@ -7,6 +7,7 @@ import com.yc.emotion.home.mine.domain.bean.LiveVideoInfoWrapper
 import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.model.bean.IndexInfo
 import com.yc.emotion.home.utils.UserInfoHelper
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -24,36 +25,36 @@ class IndexModel(override var context: Context?) : IModel(context) {
      *
      * @return
      */
-    fun getIndexInfo(): Observable<ResultInfo<IndexInfo>> {
+    fun getIndexInfo(): Flowable<ResultInfo<IndexInfo>> {
 
-        return request.getIndexInfo().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getIndexInfo()
     }
 
     /**
      * 获取在线直播列表
      */
-    fun getOnlineLiveList(): Observable<ResultInfo<LiveInfoWrapper>> {
+    fun getOnlineLiveList(): Flowable<ResultInfo<LiveInfoWrapper>> {
 
-        return request.getOnlineLiveList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getOnlineLiveList()
     }
 
 
     /**
      * 获取视频直播列表
      */
-    fun getLiveVideoInfoList(): Observable<ResultInfo<LiveVideoInfoWrapper>?> {
+    fun getLiveVideoInfoList(): Flowable<ResultInfo<LiveVideoInfoWrapper>> {
 
-        return request.getLiveVideoInfoList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.getLiveVideoInfoList()
     }
 
-    fun statisticsLive(id: String?): Observable<ResultInfo<String>?> {
+    fun statisticsLive(id: String?): Flowable<ResultInfo<String>> {
 
-        return request.statisticsLive(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return request.statisticsLive(id)
     }
 
 
-    fun getRewardInfo(): Observable<ResultInfo<RewardInfo>>? {
-        return request.getRewardInfo("${UserInfoHelper.instance.getUid()}").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    fun getRewardInfo(): Flowable<ResultInfo<RewardInfo>> {
+        return request.getRewardInfo("${UserInfoHelper.instance.getUid()}")
     }
 
 }

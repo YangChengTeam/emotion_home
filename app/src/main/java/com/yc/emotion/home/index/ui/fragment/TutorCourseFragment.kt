@@ -58,6 +58,8 @@ class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseVie
     }
 
 
+
+
     fun initListener() {
         val activity = activity
         activity?.let {
@@ -128,11 +130,12 @@ class TutorCourseFragment : BaseFragment<TutorCoursePresenter>(), TutorCourseVie
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun showLoadingDialog() {
-        (activity as? BaseActivity)?.showLoadingDialog()
+
+    override fun showLoading() {
+        (activity as? BaseActivity)?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        (activity as? BaseActivity)?.hideLoadingDialog()
+    override fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
 }

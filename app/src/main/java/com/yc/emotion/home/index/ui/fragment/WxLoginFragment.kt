@@ -50,12 +50,15 @@ class WxLoginFragment : BaseBottomSheetDialogFragment(), UserInfoView {
 
     }
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
 
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
+
     }
+
+
 
     override fun initView() {
         super.initView()

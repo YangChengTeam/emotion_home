@@ -46,51 +46,23 @@ class MessagePresenter(context: Context?, view: MessageView) : BasePresenter<Mes
 
     fun getMessageInfoList() {
 
-        mView.showLoadingDialog()
-        mModel?.getMessageInfoList()?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<List<MessageInfo>>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<List<MessageInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        //                        createNewData(t.data)
-                        mView.showMessageInfos(t.data)
-                        CommonInfoHelper.setO(mContext, t.data, "main_message_info")
-                    }
-                }
+        mModel?.getMessageInfoList()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showMessageInfos(it)
+                CommonInfoHelper.setO(mContext, it, "main_message_info")
             }
+        }, { _, _ -> mView.onComplete() })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-                mView.onComplete()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
 
     }
 
     fun getNotificationDetail(id: String) {
-        mView.showLoadingDialog()
 
-        mModel?.getNotificationDetail(id)?.subscribe(object : DisposableObserver<yc.com.rthttplibrary.bean.ResultInfo<MessageInfo>>() {
-            override fun onNext(t: yc.com.rthttplibrary.bean.ResultInfo<MessageInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showNotificationDetail(t.data)
-                    }
-                }
+        mModel?.getNotificationDetail(id)?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showNotificationDetail(it)
             }
+        }, { _, _ -> })
 
-            override fun onComplete() {
-                mView.hideLoadingDialog()
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        })
     }
 }

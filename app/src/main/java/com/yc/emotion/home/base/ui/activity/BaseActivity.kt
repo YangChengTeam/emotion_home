@@ -25,7 +25,6 @@ import com.yc.emotion.home.base.listener.OnUserInfoListener
 import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.fragment.common.AddWxFragment
 import com.yc.emotion.home.base.ui.widget.LoadDialog
-import com.yc.emotion.home.base.view.IDialog
 import com.yc.emotion.home.base.view.IView
 import com.yc.emotion.home.mine.presenter.UserInfoPresenter
 import com.yc.emotion.home.mine.view.UserInfoView
@@ -38,6 +37,7 @@ import org.jetbrains.annotations.NotNull
 
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.view.IDialog
 
 /**
  * Created by mayn on 2019/4/25.
@@ -364,11 +364,11 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     }
 
 
-    override fun showLoadingDialog() {
+    override fun showLoading() {
         mLoadingDialog?.showLoadingDialog()
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         mLoadingDialog?.dismissLoadingDialog()
     }
 

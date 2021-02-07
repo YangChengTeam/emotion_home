@@ -21,7 +21,9 @@ import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment
 import com.yc.emotion.home.message.ui.activity.MessageActivity
 import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.mine.domain.model.UserInfoModel
+import com.yc.emotion.home.mine.presenter.MinePresenter
 import com.yc.emotion.home.mine.ui.activity.*
+import com.yc.emotion.home.mine.view.MineView
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
@@ -30,19 +32,22 @@ import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
 import com.yc.emotion.home.utils.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.ResourceObserver
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subscribers.ResourceSubscriber
 import kotlinx.android.synthetic.main.fragment_main_mine.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import yc.com.rthttplibrary.bean.ResultInfo
 import yc.com.rthttplibrary.config.HttpConfig
+import yc.com.rthttplibrary.converter.BaseObserver
 
 /**
  * Created by mayn on 2019/4/23.
  */
 
-class MineFragment : BaseFragment<BasePresenter<*, *>>() {
+class MineFragment : BaseFragment<MinePresenter>(), MineView {
 
     private var mMainActivity: MainActivity? = null
 
@@ -54,6 +59,8 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
             mMainActivity = context
         }
     }
+
+
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_mine
@@ -71,7 +78,7 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
     }
 
     override fun initViews() {
-
+        mPresenter= MinePresenter(activity,this)
 
         tv_business.text = HtmlCompat.fromHtml("商务微信号 ：<font color='#FF2D55'>qgzj0001</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
 
@@ -148,6 +155,14 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
         }
     }
 
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
+    }
+
     override fun lazyLoad() {
         MobclickAgent.onEvent(mMainActivity, ConstantKey.UM_PERSONAL_ID)
         initData()
@@ -176,29 +191,14 @@ class MineFragment : BaseFragment<BasePresenter<*, *>>() {
     }
 
     private fun getInvitationCode() {
+        mPresenter?.getRewardInfo()
 
-        val userInfoModel = UserInfoModel(mMainActivity)
-        userInfoModel.getRewardInfo()?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())?.subscribe(object : DisposableObserver<ResultInfo<RewardInfo>>() {
-            override fun onComplete() {
+    }
 
-            }
+    override fun showInvatationcode(code: String) {
 
-            override fun onNext(t: ResultInfo<RewardInfo>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        if (!TextUtils.isEmpty(t.data.code))
-                            invatationcode = t.data.code
-                        tv_invitation.text = "邀请码：$invatationcode"
-                    }
-
-                }
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
-
+        invatationcode = code
+        tv_invitation.text = "邀请码：$invatationcode"
     }
 
     private fun netIsVipData() {

@@ -52,60 +52,25 @@ class ArticlePresenter(context: Context?, view: ArticleView) : BasePresenter<Art
      * 更多文章分类类别
      */
     fun getArticleTagInfos() {
-        mModel?.getArticleTagInfos()?.subscribe(object : DisposableObserver<ResultInfo<List<AticleTagInfo>>>() {
-            override fun onNext(t: ResultInfo<List<AticleTagInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK && t.data != null) {
-                        mView.showArticleCategory(t.data)
-                        CommonInfoHelper.setO(mContext, t.data, "more_article_infos")
-                    } else {
-                        getCache()
-                    }
-                }
+        mModel?.getArticleTagInfos()?.getData(mView, { it, _ ->
+            it?.let {
+                mView.showArticleCategory(it)
+                CommonInfoHelper.setO(mContext, it, "more_article_infos")
             }
+        }, { _, _ -> getCache() }, false)
 
-            override fun onComplete() {
-
-            }
-
-            override fun onError(e: Throwable) {
-                getCache()
-            }
-
-        })
     }
 
 
     fun getArticleInfoList(cat_id: Int?, page: Int, page_size: Int) {
-        if (page == 1)
-            mView.showLoadingDialog()
-        mModel?.getArticleInfoList(cat_id, 0, page, page_size)?.subscribe(object : DisposableObserver<ResultInfo<List<ArticleDetailInfo>>>() {
-            override fun onNext(t: ResultInfo<List<ArticleDetailInfo>>) {
-                t.let {
-                    if (t.code == HttpConfig.STATUS_OK) {
-                        if (t.data != null) {
-                            mView.showArticleInfoList(t.data)
 
-                        } else {
-                            mView.onEnd()
-                        }
-                    }
-                }
-
+        mModel?.getArticleInfoList(cat_id, 0, page, page_size)?.getData(mView, { it, msg ->
+            if (it != null) {
+                mView.showArticleInfoList(it)
+            } else {
+                mView.onEnd()
             }
-
-            override fun onComplete() {
-                if (page == 1)
-                    mView.hideLoadingDialog()
-                mView.onComplete()
-
-
-            }
-
-            override fun onError(e: Throwable) {
-            }
-
-        })
+        }, { _, _ -> mView.onComplete() }, page == 1)
     }
 
 

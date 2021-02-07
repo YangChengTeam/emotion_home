@@ -54,13 +54,15 @@ class RegisterFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
 
     }
 
-    override fun showLoadingDialog() {
-        (activity as BaseActivity).showLoadingDialog()
+    override fun showLoading() {
+        (activity as BaseActivity).showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        (activity as BaseActivity).hideLoadingDialog()
+    override fun hideLoading() {
+        (activity as BaseActivity).hideLoading()
     }
+
+
 
     private fun initListener() {
         tv_register_btn.clickWithTrigger { Navigation.findNavController(it).navigate(R.id.action_to_setPwd) }

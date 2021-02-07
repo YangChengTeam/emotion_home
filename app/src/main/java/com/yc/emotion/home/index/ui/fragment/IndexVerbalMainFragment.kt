@@ -151,6 +151,8 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
     }
 
 
+
+
     private fun initSearchView() {
         val searchView: SearchView = rootView.findViewById(R.id.verbal_search_view)
         val ivIconShare: ImageView = rootView.findViewById(R.id.search_iv_icon_share)
@@ -430,14 +432,15 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
         tintAdapter?.setNewData(list)
     }
 
-    override fun showLoadingDialog() {
-        mMainActivity.showLoadingDialog()
+
+
+    override fun showLoading() {
+        mMainActivity.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mMainActivity.hideLoadingDialog()
+    override fun hideLoading() {
+        mMainActivity.hideLoading()
     }
-
 
     override fun showSearchResult(searchDialogueBean: SearchDialogueBean?, keyword: String?) {
         searchDialogueBean?.let {

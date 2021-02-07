@@ -36,7 +36,7 @@ class VerbalVbsAdapter(datas: List<LoveHealDetBean>?) : BaseQuickImproAdapter<Lo
             }
 
             if (details == null || details.isEmpty()) {
-                details = item.detailbe
+                details = item.detail
             }
 
             val verbalVbItemAdapter = VerbalVbItemAdapter(details)

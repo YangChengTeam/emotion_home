@@ -76,6 +76,8 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
     }
 
 
+
+
     private fun initListener() {
         base_share_swipe_refresh.setColorSchemeResources(R.color.red_crimson)
         base_share_swipe_refresh.setOnRefreshListener {
@@ -248,12 +250,14 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
         return loveHealDetBeans
     }
 
-    override fun showLoadingDialog() {
-        mShareActivity?.showLoadingDialog()
+
+
+    override fun showLoading() {
+        mShareActivity?.showLoading()
     }
 
-    override fun hideLoadingDialog() {
-        mShareActivity?.hideLoadingDialog()
+    override fun hideLoading() {
+        mShareActivity?.hideLoading()
     }
 
     override fun showSearchResult(searchDialogueBean: SearchDialogueBean?, keyword: String?) {

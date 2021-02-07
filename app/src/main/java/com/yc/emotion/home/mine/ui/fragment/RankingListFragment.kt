@@ -45,6 +45,8 @@ class RankingListFragment : BaseFragment<RewardPresenter>(), RewardView {
         initListener()
     }
 
+
+
     fun initListener() {
         rankingListAdapter?.setOnLoadMoreListener({ getData() }, rcv_reward)
         activity?.let { ContextCompat.getColor(it, R.color.app_color) }?.let { swipeRefreshLayout.setColorSchemeColors(it) }
@@ -58,15 +60,17 @@ class RankingListFragment : BaseFragment<RewardPresenter>(), RewardView {
         mPresenter?.getRankingList(page, pageSize)
     }
 
-    override fun showLoadingDialog() {
+
+
+    override fun showLoading() {
         activity?.let {
-            (activity as BaseActivity).showLoadingDialog()
+            (activity as BaseActivity).showLoading()
         }
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         activity?.let {
-            (activity as BaseActivity).hideLoadingDialog()
+            (activity as BaseActivity).hideLoading()
         }
     }
 

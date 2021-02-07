@@ -53,20 +53,22 @@ class VideoFragment : BaseFragment<VideoPresenter>(), VideoView {
     }
 
 
+
+
     fun loadData() {
         mPresenter?.getVideoItemInfos(page, pageSize)
     }
 
-    override fun showLoadingDialog() {
-        activity?.let {
-            (activity as BaseActivity).showLoadingDialog()
-        }
 
+    override fun showLoading() {
+        activity?.let {
+            (activity as BaseActivity).showLoading()
+        }
     }
 
-    override fun hideLoadingDialog() {
+    override fun hideLoading() {
         activity?.let {
-            (it as BaseActivity).hideLoadingDialog()
+            (it as BaseActivity).hideLoading()
         }
     }
 
