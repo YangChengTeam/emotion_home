@@ -2,6 +2,7 @@ package com.yc.emotion.home.index.presenter
 
 import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import com.alibaba.fastjson.TypeReference
 
 import com.yc.emotion.home.base.presenter.BasePresenter
@@ -74,7 +75,9 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
                 CommonInfoHelper.setO(mContext, indexInfo, "index_emotion_choiceness_info")
             }
 
-        }, { _, _ -> }, false)
+        }, { _, _ ->
+
+        }, false)
 
     }
 
@@ -142,5 +145,11 @@ class IndexPresenter(context: Context?, view: IndexView) : BasePresenter<IndexMo
                     invatationcode = it.code
             }
         }, { _, _ -> }, false)
+    }
+
+    fun dailyCount(message_id: Int) {
+        mModel?.dailyCount(message_id)?.getData(mView, { it, _ ->
+
+        }, { _, _ -> })
     }
 }

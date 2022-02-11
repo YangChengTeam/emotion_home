@@ -123,7 +123,7 @@ class AIChatActivity : BaseActivity(), AIChatView {
     private fun copyText(text: String?) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", text)
-        myClipboard.primaryClip = myClip
+        myClipboard.setPrimaryClip( myClip)
         ToastUtils.showCenterToast("内容已复制", true)
     }
 

@@ -40,14 +40,23 @@
                     tools:ignore="RtlSymmetry">
 
                     <TextView
+                        android:id="@+id/tv_left_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="让幸福更简单"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:layout_centerVertical="true"
+                        android:text="@string/app_name"
+                        android:textColor="@color/gray_222222"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="-10dp"
+                        android:layout_toEndOf="@id/tv_left_title"
+                        android:src="@mipmap/slogan" />
 
                     <ImageView
                         android:id="@+id/iv_vip"
@@ -187,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:text="网络连接不可用"
-                        android:textSize="@dimen/size_12" />
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
 
@@ -242,26 +251,169 @@
                             android:id="@+id/iv_come_ai"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/index_ai_bg"
-                            />
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/home_top_bg" />
 
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/tutor_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-50dp"
+                            android:layout_marginBottom="@dimen/dp_10">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="0dp"
+                                android:layout_height="93dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:background="@drawable/white_shade_bg"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/tv_first"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="7.5dp"
+                                    android:drawablePadding="5dp"
+                                    android:gravity="center"
+                                    android:text="情感之家\n首席导师"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/sp_12"
+                                    app:drawableTopCompat="@mipmap/icon_chief"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toLeftOf="@id/tv_second"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_second"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="7.5dp"
+                                    android:layout_marginEnd="7.5dp"
+                                    android:drawablePadding="5dp"
+                                    android:gravity="center"
+                                    android:text="国家二级\n心理咨询师"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/sp_12"
+                                    app:drawableTopCompat="@mipmap/icon_psychological"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toRightOf="@id/tv_first"
+                                    app:layout_constraintRight_toLeftOf="@id/tv_third"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <TextView
+                                    android:id="@+id/tv_third"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="7.5dp"
+                                    android:drawablePadding="5dp"
+                                    android:gravity="center"
+                                    android:text="解决上千起\n情感问题"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/sp_12"
+                                    app:drawableTopCompat="@mipmap/icon_solve"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintLeft_toRightOf="@id/tv_second"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <!--                        android:background="@color/gray_f2f2f2"-->
                         <com.youth.banner.Banner
                             android:id="@+id/activity_banner"
                             android:layout_width="match_parent"
-                            android:layout_height="130dp"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginBottom="10dp" />
-
-                        <ImageView
-                            android:id="@+id/ll_advise"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="7dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@mipmap/index_reservation"
+                            android:layout_height="104dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="14dp"
                             android:visibility="gone" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <ImageView
+                                android:id="@+id/iv_daily_sentence"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="14dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="14dp"
+                                android:scaleType="fitXY"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_daily_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_10"
+                                tools:text="2021/12/01"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_16"
+                                app:layout_constraintStart_toStartOf="@id/iv_daily_sentence"
+                                app:layout_constraintTop_toTopOf="@id/iv_daily_sentence" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:background="@drawable/daily_sentence_bg"
+                                android:gravity="center"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="今日心语"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_10"
+                                app:layout_constraintEnd_toEndOf="@id/iv_daily_sentence"
+                                app:layout_constraintTop_toTopOf="@id/iv_daily_sentence" />
+
+                            <TextView
+                                android:id="@+id/tv_daily_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:layout_marginBottom="@dimen/dp_10"
+                                android:lineSpacingExtra="2dp"
+                                tools:text="做人的境界不是一味低调，也不是一味张扬，而是做豁达通透的人，始终如一的不卑不亢"
+                                android:textColor="#efefef"
+                                android:textSize="@dimen/sp_12"
+                                app:layout_constraintBottom_toBottomOf="@id/iv_daily_sentence"
+                                app:layout_constraintEnd_toEndOf="@id/iv_daily_sentence"
+                                app:layout_constraintStart_toStartOf="@id/iv_daily_sentence" />
+
+                            <TextView
+                                android:id="@+id/tv_daily_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="点击今日心语跳转公众号，可查看更多心语"
+                                android:textSize="@dimen/sp_10"
+                                app:layout_constraintStart_toStartOf="@id/iv_daily_sentence"
+                                app:layout_constraintTop_toBottomOf="@id/iv_daily_sentence" />
+
+                            <TextView
+                                android:id="@+id/tv_daily_read"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="2343浏览"
+                                android:textSize="@dimen/sp_10"
+                                app:layout_constraintEnd_toEndOf="@id/iv_daily_sentence"
+                                app:layout_constraintTop_toTopOf="@id/tv_daily_desc" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                         <!--热门直播-->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -290,11 +442,11 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentBottom="true"
-                                    android:drawableRight="@mipmap/more_right_arrow_icon"
                                     android:drawablePadding="3dp"
                                     android:text="更多直播"
                                     android:textColor="@color/gray_bebdbd"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    app:drawableEndCompat="@mipmap/more_right_arrow_icon" />
                             </RelativeLayout>
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -382,14 +534,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="@color/gray_f2f2f2" />
+                        android:layout_height="10dp" />
 
-
+                    <!--                    android:background="@color/gray_f2f2f2"-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -412,11 +564,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:drawableEnd="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多导师"
                                 android:textColor="@color/gray_aaa"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                app:drawableEndCompat="@mipmap/more_right_arrow_icon" />
                         </RelativeLayout>
 
 
@@ -439,7 +591,8 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
-                        android:background="@color/gray_f2f2f2" />
+                        android:background="@color/gray_f2f2f2"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -465,28 +618,23 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentBottom="true"
-                                android:drawableEnd="@mipmap/more_right_arrow_icon"
                                 android:drawablePadding="3dp"
                                 android:text="更多测试"
                                 android:textColor="@color/gray_aaa"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                app:drawableEndCompat="@mipmap/more_right_arrow_icon" />
                         </RelativeLayout>
-
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/index_viewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="188dp"
-                            android:layout_marginTop="10dp"
-                            android:clipToPadding="false"
-                            android:paddingStart="48dp"
-                            android:paddingLeft="48dp"
-                            android:paddingEnd="48dp"
-                            android:paddingRight="48dp"
-                            android:visibility="gone" />
 
 
                         <com.tmall.ultraviewpager.UltraViewPager
                             android:id="@+id/index_ultraViewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView_test"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp" />

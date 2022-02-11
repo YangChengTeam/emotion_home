@@ -56,6 +56,7 @@ class SpecializedActivity : BaseActivity(), OnAdvStateListener {
                 privacyFragment.setOnClickBtnListener(object : PrivacyPolicyFragment.OnClickBtnListener {
                     override fun onBtnClick() {
 //                        switchMain(0)
+
                         TTAdDispatchManager.getManager().init(this@SpecializedActivity, TTAdType.SPLASH, splash_container, Constant.TOUTIAO_SPLASH_ADV_ID, 0, null, 0, null, 0, this@SpecializedActivity)
                         isFirstOpen = false
                     }

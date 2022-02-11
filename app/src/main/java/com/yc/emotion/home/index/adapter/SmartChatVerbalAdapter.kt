@@ -28,6 +28,7 @@ class SmartChatVerbalAdapter(mDatas: List<SmartChatItem>?) : BaseMultiItemQuickA
     init {
         addItemType(SmartChatItem.CHAT_ITEM_SELF, R.layout.chat_item_my_view)
         addItemType(SmartChatItem.CHAT_ITEM_VERBAL, R.layout.chat_item_verbal_view)
+        addItemType(SmartChatItem.CHAT_ITEM_VIP, R.layout.chat_item_vip_view)
         face = UserInfoHelper.instance.getUserInfo()?.face
     }
 
@@ -82,6 +83,9 @@ class SmartChatVerbalAdapter(mDatas: List<SmartChatItem>?) : BaseMultiItemQuickA
                     helper.addOnClickListener(R.id.ll_ai_change)
                             .addOnClickListener(R.id.ll_verbal_change)
                 }
+                SmartChatItem.CHAT_ITEM_VIP -> {
+                    helper.addOnClickListener(R.id.tv_open_vip)
+                }
                 else -> {
                 }
             }
@@ -104,7 +108,7 @@ class SmartChatVerbalAdapter(mDatas: List<SmartChatItem>?) : BaseMultiItemQuickA
     private fun copyText(text: String?) {
         val myClipboard = mContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", text)
-        myClipboard.primaryClip = myClip
+        myClipboard.setPrimaryClip(myClip)
         ToastUtils.showCenterToast("内容已复制", true)
     }
 }

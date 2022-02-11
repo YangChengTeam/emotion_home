@@ -73,7 +73,7 @@ class VerbalVbsAdapter(datas: List<LoveHealDetBean>?) : BaseQuickImproAdapter<Lo
     private fun copyText(text: String?) {
         val myClipboard = mContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", text)
-        myClipboard.primaryClip = myClip
+        myClipboard.setPrimaryClip(myClip)
         ToastUtils.showCenterToast("内容已复制", true)
     }
 }

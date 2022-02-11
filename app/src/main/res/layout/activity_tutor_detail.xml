@@ -35,13 +35,25 @@
                         android:scaleType="fitXY" />
 
 
+                    <TextView
+                        android:id="@+id/tv_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="迅速脱单 | 亲密关系 | 矛盾化解 | 情感挽回"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_10" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcv_tutor_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_above="@id/tv_field"
                         android:layout_marginStart="15dp"
-                        android:layout_marginBottom="15dp" />
+                        android:layout_marginBottom="8dp" />
 
                     <ImageView
                         android:id="@+id/tv_tutor_star"
@@ -147,8 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="40dp"
-                        android:src="@mipmap/efficient_course_back_icon"
-                         />
+                        android:src="@mipmap/efficient_course_back_icon" />
 
                     <TextView
                         android:id="@+id/tv_title"
@@ -168,7 +179,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="40dp"
                         android:layout_marginEnd="15dp"
-                        android:src="@mipmap/efficient_course_share_icon" />
+                        android:src="@mipmap/efficient_course_share_icon"
+                        android:visibility="gone" />
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -190,7 +202,8 @@
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/magicIndicator_tutor_detail"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            android:visibility="gone" />
 
 
         <LinearLayout
@@ -202,9 +215,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray_edebeb" />
+                android:background="@color/gray_edebeb"
+                android:visibility="gone" />
 
-            <androidx.viewpager.widget.ViewPager
+            <com.yc.emotion.home.base.ui.widget.ControlScrollViewPager
                 android:id="@+id/viewPager_tutor_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

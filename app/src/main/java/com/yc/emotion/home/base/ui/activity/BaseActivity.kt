@@ -286,7 +286,8 @@ abstract class BaseActivity : AppCompatActivity(), IView, IDialog, UserInfoView 
     private fun showService(wechat: String) {
         val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", wechat)
-        myClipboard.primaryClip = myClip
+
+        myClipboard.setPrimaryClip(myClip)
 
         val addWxFragment = AddWxFragment()
         addWxFragment.setWX(wechat)

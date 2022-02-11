@@ -26,6 +26,8 @@ import com.yc.emotion.home.R
 import com.yc.emotion.home.base.constant.Constant
 import com.yc.emotion.home.base.constant.URLConfig.getBaseUrl
 import com.yc.emotion.home.model.ModelApp
+import com.yc.emotion.home.model.util.SPUtils
+import com.yc.emotion.home.utils.Preference
 import com.yc.emotion.home.utils.ShareInfoHelper.getNetShareInfo
 import com.yc.emotion.home.utils.UIUtils.getAppName
 import com.yc.emotion.home.utils.UserInfoHelper
@@ -55,6 +57,7 @@ class EmApplication : MultiDexApplication() {
      */
     private var activityCount = 0
     private var isPaused = false
+    private var isFirstOpen = true
 
     @SuppressLint("CheckResult")
     override fun onCreate() {
@@ -79,10 +82,15 @@ class EmApplication : MultiDexApplication() {
     private fun init() {
         //        Bugly.init(getApplicationContext(), "注册时申请的APPID", false);  //腾迅自动更新
         Bugly.init(applicationContext, "dc88d75f55", false) //腾迅自动更新
-        UMConfigure.init(applicationContext, "5da983e44ca357602b00046d", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null)
+//        UMConfigure.setLogEnabled(true)
+        //预初始化友盟SDK
+        UMConfigure.preInit(applicationContext, "5da983e44ca357602b00046d", "Umeng")
+        isFirstOpen = SPUtils.get(this, Constant.first_open, true) as Boolean
+        if (!isFirstOpen) {
+            //初始化友盟SDK
+            UMConfigure.init(applicationContext, "5da983e44ca357602b00046d", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, null)
+        }
 
-
-        //初始化友盟SDK
         UMShareAPI.get(this) //初始化sdk
 
         //开启debug模式，方便定位错误，具体错误检查方式可以查看

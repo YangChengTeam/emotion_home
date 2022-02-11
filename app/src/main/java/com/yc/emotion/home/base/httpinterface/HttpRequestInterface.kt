@@ -442,4 +442,8 @@ interface HttpRequestInterface {
     @FormUrlEncoded
     @POST("relation.relation/cat")
     fun isBindInvitation(@Field("user_id") user_id: String): Flowable<ResultInfo<RewardInfo>>
+
+    @FormUrlEncoded
+    @POST("index/addRead")
+    fun dailyCount(@Field("message_id") message_id: Int): Flowable<ResultInfo<String>>
 }

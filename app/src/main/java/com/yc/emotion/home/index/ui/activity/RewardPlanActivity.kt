@@ -12,7 +12,7 @@ import com.yc.emotion.home.mine.domain.bean.RewardInfo
 import com.yc.emotion.home.mine.presenter.RewardPresenter
 import com.yc.emotion.home.mine.ui.activity.WithdrawalApplyActivity
 import com.yc.emotion.home.mine.view.RewardView
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_reward_plan.*
 
@@ -66,7 +66,7 @@ class RewardPlanActivity : BaseSameActivity(), RewardView {
                 MobclickAgent.onEvent(this, "dispose_click", "提现点击")
             } else {
 //                startActivity(Intent(this, BecomeVipActivity::class.java))
-                BecomeVipActivity.startActivity(this, true)
+                BecomeVipActivityNew.startActivity(this, true)
                 MobclickAgent.onEvent(this, "reward_vip_click", "赚现金VIP点击")
             }
         }

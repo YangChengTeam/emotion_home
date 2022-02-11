@@ -29,7 +29,7 @@ import com.yc.emotion.home.mine.ui.fragment.RewardMoneyFragment
 import com.yc.emotion.home.mine.ui.fragment.StrategyFragment
 import com.yc.emotion.home.mine.view.RewardView
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.UserInfoHelper
 import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_reward.*
@@ -202,7 +202,7 @@ class RewardActivity : BaseActivity(), RewardView {
                 MobclickAgent.onEvent(this, "dispose_click", "提现点击")
                 WithdrawalApplyActivity.startActivity(this, money)
             } else {
-                BecomeVipActivity.startActivity(this, true)
+                BecomeVipActivityNew.startActivity(this, true)
                 MobclickAgent.onEvent(this, "reward_vip_click", "赚现金VIP点击")
             }
         }

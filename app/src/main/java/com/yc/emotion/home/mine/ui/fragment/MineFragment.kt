@@ -14,13 +14,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
 import com.yc.emotion.home.base.listener.OnUserInfoListener
-import com.yc.emotion.home.base.presenter.BasePresenter
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
 import com.yc.emotion.home.base.ui.fragment.common.ShareAppFragment
 import com.yc.emotion.home.message.ui.activity.MessageActivity
-import com.yc.emotion.home.mine.domain.bean.RewardInfo
-import com.yc.emotion.home.mine.domain.model.UserInfoModel
 import com.yc.emotion.home.mine.presenter.MinePresenter
 import com.yc.emotion.home.mine.ui.activity.*
 import com.yc.emotion.home.mine.view.MineView
@@ -28,20 +25,12 @@ import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.observers.ResourceObserver
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subscribers.ResourceSubscriber
 import kotlinx.android.synthetic.main.fragment_main_mine.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import yc.com.rthttplibrary.bean.ResultInfo
-import yc.com.rthttplibrary.config.HttpConfig
-import yc.com.rthttplibrary.converter.BaseObserver
 
 /**
  * Created by mayn on 2019/4/23.
@@ -61,7 +50,6 @@ class MineFragment : BaseFragment<MinePresenter>(), MineView {
     }
 
 
-
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_mine
     }
@@ -78,7 +66,7 @@ class MineFragment : BaseFragment<MinePresenter>(), MineView {
     }
 
     override fun initViews() {
-        mPresenter= MinePresenter(activity,this)
+        mPresenter = MinePresenter(activity, this)
 
         tv_business.text = HtmlCompat.fromHtml("商务微信号 ：<font color='#FF2D55'>qgzj0001</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
 
@@ -124,7 +112,7 @@ class MineFragment : BaseFragment<MinePresenter>(), MineView {
             MobclickAgent.onEvent(mMainActivity, "vip_pay_id", "VIP特权卡点击")
             mMainActivity?.let {
                 if (!UserInfoHelper.instance.goToLogin(mMainActivity)) {
-                    startActivity(Intent(mMainActivity, BecomeVipActivity::class.java))
+                    startActivity(Intent(mMainActivity, BecomeVipActivityNew::class.java))
                 }
             }
         }
@@ -330,7 +318,7 @@ class MineFragment : BaseFragment<MinePresenter>(), MineView {
     private fun copyBusiness(wx: String, mess: String) {
         val myClipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", wx)
-        myClipboard.primaryClip = myClip
+        myClipboard.setPrimaryClip(myClip)
         ToastUtils.showCenterToast(mess)
         mMainActivity?.openWeiXin()
     }

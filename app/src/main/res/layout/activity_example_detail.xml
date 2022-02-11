@@ -64,7 +64,7 @@
                     android:layout_marginBottom="25dp"
                     android:text="@string/web_liability_exemption"
                     android:textColor="@color/text_gray_dark"
-                    android:textSize="@dimen/size_14" />
+                    android:textSize="@dimen/sp_14" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                             android:gravity="center_horizontal"
                             android:text="觉得有用"
                             android:textColor="@color/text_gray"
-                            android:textSize="@dimen/size_14" />
+                            android:textSize="@dimen/sp_14" />
                     </FrameLayout>
 
                     <ImageView
@@ -110,7 +110,7 @@
                             android:gravity="center_horizontal"
                             android:text="不妨点个赞"
                             android:textColor="@color/text_gray"
-                            android:textSize="@dimen/size_14" />
+                            android:textSize="@dimen/sp_14" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

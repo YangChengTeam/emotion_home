@@ -22,7 +22,7 @@ import com.yc.emotion.home.model.bean.EmotionTestInfo
 class IndexTestAdapter(private val mContext: Context, private val emotionTestInfos: List<EmotionTestInfo>) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val emotionTestInfo = emotionTestInfos[position % emotionTestInfos.size]
-        val view = LayoutInflater.from(mContext).inflate(R.layout.fragment_index_test, null)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.fragment_index_test, container, false)
         val imageView = view.findViewById<ImageView>(R.id.image)
         val tvTestTitle = view.findViewById<TextView>(R.id.tv_test_title)
         val tvTestCount = view.findViewById<TextView>(R.id.tv_test_count)

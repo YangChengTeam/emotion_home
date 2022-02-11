@@ -22,7 +22,7 @@
         android:padding="@dimen/dp_10"
         android:text="55555"
         android:textColor="@color/app_color"
-        android:textSize="@dimen/size_14"
+        android:textSize="@dimen/sp_14"
         android:lineSpacingExtra="5dp"
         android:textStyle="bold" />
     <TextView
@@ -32,7 +32,7 @@
         android:padding="@dimen/dp_10"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="@dimen/size_10"
+        android:textSize="@dimen/sp_10"
         android:lineSpacingExtra="5dp" />
 </LinearLayout>
 

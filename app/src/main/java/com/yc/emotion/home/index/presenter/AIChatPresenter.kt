@@ -62,7 +62,7 @@ class AIChatPresenter(context: Context, view: AIChatView) : BasePresenter<AIChat
                     msg?.let {
                         mView.showUseCountUp(msg)
                     }
-                    ToastUtils.showCenterToast(msg)
+//                    ToastUtils.showCenterToast(msg)
                 }
                 -1 -> {
                     ToastUtils.showCenterToast(HttpConfig.NET_ERROR)

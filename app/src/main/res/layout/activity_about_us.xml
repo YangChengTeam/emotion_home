@@ -23,7 +23,7 @@
         android:paddingTop="18dp"
 
         android:textColor="@color/black"
-        android:textSize="@dimen/size_18"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_us_iv_icon" />
@@ -35,7 +35,7 @@
         android:paddingTop="4dp"
         android:text="1.0"
         android:textColor="@color/black"
-        android:textSize="@dimen/size_18"
+        android:textSize="@dimen/sp_18"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_us_tv_name" />

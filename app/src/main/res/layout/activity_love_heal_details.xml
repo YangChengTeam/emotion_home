@@ -1,71 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".index.ui.activity.LoveHealDetailsActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/activity_base_same_view_bar"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/white" />
+
     <LinearLayout
-        android:id="@+id/ll_search_container"
+        android:id="@+id/activity_base_same_rl_title_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:focusableInTouchMode="true"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:src="@mipmap/icon_arr_lift_black" />
+
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/share_searchView"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:layout_weight="10"
-            android:background="@color/love_background"
+            android:background="@drawable/shape_et_login_gray"
             app:iconifiedByDefault="false"
             app:queryBackground="@null"
             app:queryHint="@string/share_des_short"
+            app:searchIcon="@mipmap/index_search_icon"
             app:showDividers="none"
-            app:submitBackground="@null" />
 
+            app:submitBackground="@null" />
 
         <TextView
             android:id="@+id/tv_search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:background="@drawable/selectot_btn_brim_red_crimson_brim"
             android:gravity="center_horizontal"
             android:paddingLeft="8dp"
             android:paddingTop="4dp"
             android:paddingRight="8dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="4dp"
             android:text="搜索"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_16" />
+            android:textColor="#FF2D55"
+            android:textSize="@dimen/sp_13" />
+
     </LinearLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/love_heal_details_swipe_refresh"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@id/ll_search_container"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:context=".index.ui.activity.LoveHealDetailsActivity">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/love_heal_details_rl"
+        <TextView
+            android:id="@+id/tv_ai_tint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#F9E1E1"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="温馨提示：点击对话框文字即可复制"
+            android:textColor="#FA4A65"
+            android:textSize="10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/love_heal_details_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ai_tint">
 
-    <ImageView
-        android:id="@+id/love_heal_details_iv_to_wx"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="62dp"
-        android:src="@mipmap/icon_floating_weixin" />
-</RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/love_heal_details_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/love_heal_details_iv_to_wx"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="62dp"
+            android:src="@mipmap/icon_floating_weixin" />
+    </RelativeLayout>
+</LinearLayout>

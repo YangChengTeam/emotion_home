@@ -99,7 +99,7 @@ class LiveWebActivity : BaseSameActivity() {
                 override fun onToWx() {
                     val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val myClip = ClipData.newPlainText("text", wx)
-                    myClipboard.primaryClip = myClip
+                    myClipboard.setPrimaryClip(myClip)
                     openWeiXin()
                 }
 

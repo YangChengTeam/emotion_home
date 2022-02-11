@@ -12,17 +12,29 @@ import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
  * Created by suns  on 2020/9/1 14:02.
  */
 class VerbalVbItemAdapter(mDatas: List<LoveHealDetDetailsBean>?) : BaseQuickImproAdapter<LoveHealDetDetailsBean, BaseViewHolder>(R.layout.verbal_vb_item_view, mDatas) {
+
+
     override fun convert(helper: BaseViewHolder, item: LoveHealDetDetailsBean?) {
         item?.let {
-            helper.setText(R.id.item_details_bean_tv_name, item.content)
+//            helper.setText(R.id.item_details_bean_tv_name, item.content)
 
             val ansSex = item.ans_sex
             if (!TextUtils.isEmpty(ansSex)) {
 
                 when (ansSex) {
-                    "1" -> //1男2女0bi'a
-                        helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_men))
-                    "2" -> helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_women))
+                    in "0", "1" -> {//1男2女0bi'a
+                        helper.setGone(R.id.ll_right_container, true)
+                                .setGone(R.id.ll_left_container, false)
+                                .setText(R.id.tv_details_content, item.content)
+
+//                        helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_men))
+                    }
+                    "2" -> {
+                        helper.setGone(R.id.ll_right_container, false)
+                                .setGone(R.id.ll_left_container, true)
+                                .setText(R.id.item_details_bean_tv_name, item.content)
+//                        helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_women))
+                    }
                     else -> {
                         helper.setImageDrawable(R.id.item_details_bean_iv_sex, ContextCompat.getDrawable(mContext, R.mipmap.icon_dialogue_nothing))
                     }

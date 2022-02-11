@@ -14,7 +14,7 @@ import com.yc.emotion.home.base.ui.widget.RoundCornerImg
 /**
  * Created by suns  on 2019/9/26 17:48.
  */
-class IndexActivityFragment : BaseDialogFragment() {
+open class IndexActivityFragment : BaseDialogFragment() {
 
 
     private var tvWx: TextView? = null
@@ -44,7 +44,7 @@ class IndexActivityFragment : BaseDialogFragment() {
     }
 
     override val width: Float
-        protected get() = 0.7f
+        get() = 0.7f
 
     override val height: Int
         get() = ViewGroup.LayoutParams.WRAP_CONTENT

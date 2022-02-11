@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/chat_right"
             android:lineSpacingExtra="3dp"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -109,7 +109,7 @@ class FeedbackActivity : BaseSameActivity(), MineView {
                 val trimQqNum = feedback_tv_qq_num.text.toString().trim { it <= ' ' }
                 val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val myClip = ClipData.newPlainText("text", trimQqNum)
-                myClipboard.primaryClip = myClip
+                myClipboard.setPrimaryClip(myClip)
                 showToast("复制客服QQ号成功")
             }
             R.id.feedback_tv_next -> if (checkInput()) {

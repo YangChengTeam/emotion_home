@@ -28,7 +28,7 @@
         android:lines="1"
         android:maxLength="18"
         android:textColorHint="@color/gray_et_text"
-        android:textSize="@dimen/size_16" />
+        android:textSize="@dimen/sp_16" />
 
     <!-- android:background="?attr/selectableItemBackgroundBorderless"-->
 
@@ -39,7 +39,7 @@
         android:layout_marginLeft="6dp"
         android:text="验证码"
         android:textColor="@color/select_color_red_crimson"
-        android:textSize="@dimen/size_14" />
+        android:textSize="@dimen/sp_14" />
 
     <TextView
         android:id="@+id/login_et_lin_tv_code_await"
@@ -48,6 +48,6 @@
         android:layout_marginLeft="6dp"
         android:text="验证码"
         android:textColor="@color/red_crimson"
-        android:textSize="@dimen/size_14"
+        android:textSize="@dimen/sp_14"
         android:visibility="gone" />
 </LinearLayout>

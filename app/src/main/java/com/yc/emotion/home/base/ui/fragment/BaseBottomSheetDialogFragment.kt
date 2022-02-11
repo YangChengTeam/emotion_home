@@ -57,14 +57,17 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mContext?.let {
+        mContext?.let { it ->
             dialog = BottomSheetDialog(it, theme)
             if (rootView == null) {
                 //缓存下来的 View 当为空时才需要初始化 并缓存
                 rootView = LayoutInflater.from(mContext).inflate(getLayoutId(), null)
 
             }
-            dialog.setContentView(rootView)
+            rootView?.let {view->
+                dialog.setContentView(view)
+            }
+
 
             mBehavior = BottomSheetBehavior.from(rootView?.parent as View)
             (rootView?.parent as View).setBackgroundColor(Color.TRANSPARENT)

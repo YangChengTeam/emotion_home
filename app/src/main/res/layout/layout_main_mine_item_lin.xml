@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:text="中文"
             android:textColor="@color/gray_222222"
-            android:textSize="@dimen/size_14"
+            android:textSize="@dimen/sp_14"
             android:textStyle="bold" />
 
 

@@ -193,6 +193,7 @@ class TutorDetailActivity : BaseSameActivity(), TutorView {
 
         val efficientCourseMainAdapter = CommonMainPageAdapter(supportFragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, titleList, fragments)
         viewPager_tutor_detail.adapter = efficientCourseMainAdapter
+
 //        mViewPager.setOffscreenPageLimit(2)
         viewPager_tutor_detail.currentItem = 0
     }

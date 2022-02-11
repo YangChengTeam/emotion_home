@@ -44,6 +44,7 @@ public class GoodsInfo implements Serializable {
     public String unit;
     public int use_time_limit;
     public String vip_price;
+    public boolean isSelect;//是否被选中
 
 
     @Override

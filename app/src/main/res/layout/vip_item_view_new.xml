@@ -1,131 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_become_vip_root_view"
-    android:layout_width="match_parent"
+    android:id="@+id/item_become_vip_tail_cl_con_01"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_10"
 
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="@dimen/dp_10"
     android:background="@drawable/vip_item_selector_new"
     android:orientation="vertical">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="14dp"
+        android:src="@mipmap/vip" />
 
     <TextView
         android:id="@+id/tv_expire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:background="@mipmap/vip_exipre_bg"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="2019.10.16到期"
         android:textColor="#DCAF76"
         android:textSize="10sp"
         android:visibility="invisible"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="2019.10.16到期" />
 
-    <LinearLayout
-        android:id="@+id/ll_vip_title"
+    <TextView
+        android:id="@+id/tv_vip_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/vip_color_selector"
+        android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_expire">
-
-        <ImageView
-            android:id="@+id/iv_vip_crown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/vip_crown_icon" />
-
-
-        <TextView
-            android:id="@+id/item_become_vip_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:gravity="center_horizontal"
-            android:text="VIP特权季卡"
-            android:textColor="@color/gray_302d2f"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="VIP特权季卡" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:id="@+id/ll_vip_price"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_vip_title">
+        app:layout_constraintTop_toBottomOf="@+id/item_become_vip_tail_tv_pay_tit_01">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:text="￥"
+            android:textColor="@color/gold_835429"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_vip_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gold_835429"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            tools:text="56" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="￥"
-                    android:textColor="@color/app_color"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="299"
-                    android:textColor="@color/app_color"
-                    android:textSize="27sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_origin_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="原价399"
-                android:textColor="#ff755b3e"
-                android:textSize="10sp" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/view_divider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#ffd2bb8f" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingStart="10dp"
-            android:gravity="center"
-            tools:ignore="RtlSymmetry">
-
-            <TextView
-                android:id="@+id/tv_vip_desc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="永久不限次数使用AI话术功能\n资深导师微课免费看\n获得分销资格赚取高额佣金"
-                android:textColor="#805226"
-                android:textSize="13sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/item_become_vip_tail_tv_original_price_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:text="555"
+            android:textColor="#755B3E"
+            android:textSize="@dimen/sp_10"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_vip_origin_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="14dp"
+        android:textColor="@color/gray_999"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintTop_toBottomOf="@+id/item_become_vip_tail_ll_pay_con_01"
+        tools:text="原价299" />
 
     <ImageView
         android:id="@+id/item_become_vip_tail_iv_pay_sel_01"
@@ -135,4 +105,4 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

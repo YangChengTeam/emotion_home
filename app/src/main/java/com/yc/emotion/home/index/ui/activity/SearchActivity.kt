@@ -18,7 +18,7 @@ import com.yc.emotion.home.index.ui.fragment.SearchFragment
 import com.yc.emotion.home.index.view.IndexVerbalView
 import com.yc.emotion.home.model.util.SPUtils
 import com.yc.emotion.home.model.util.TimeUtils
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
@@ -70,7 +70,7 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
         //修改键入的文字字体大小、颜色和hint的字体颜色
         val editText = share_searview.findViewById<EditText>(R.id.search_src_text)
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources
-                .getDimension(R.dimen.size_16))
+                .getDimension(R.dimen.sp_16))
         //        editText.setTextColor(ContextCompat.getColor(this,R.color.nb_text_primary));
 
         //监听关闭按钮点击事件
@@ -142,18 +142,18 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
         }
 
 //        if (!UserInfoHelper.instance.goToLogin(this)) {
-            query = query?.trim { it <= ' ' }
-            if (TextUtils.isEmpty(query) || share_view_pager == null) {
-                return
-            }
+        query = query?.trim { it <= ' ' }
+        if (TextUtils.isEmpty(query) || share_view_pager == null) {
+            return
+        }
 
-            changHistoryFluidLayout(query)
+        changHistoryFluidLayout(query)
 
-            hindKeyboard(share_view_pager)
+        hindKeyboard(share_view_pager)
 
-            //        netPagerOneData(query); //为了解决Fragment切换白屏的问题，第一页数据在Activity中请求
+        //        netPagerOneData(query); //为了解决Fragment切换白屏的问题，第一页数据在Activity中请求
 
-            replaceFragment(query)
+        replaceFragment(query)
 //        }
 
 
@@ -213,7 +213,7 @@ class SearchActivity : BaseSameActivity(), IndexVerbalView {
             }
             R.id.share_iv_to_vip ->
                 //TODO 购买VIP刷新数据
-                startActivity(Intent(this@SearchActivity, BecomeVipActivity::class.java))
+                startActivity(Intent(this@SearchActivity, BecomeVipActivityNew::class.java))
             R.id.share_tv_to_help -> {
             }
         }

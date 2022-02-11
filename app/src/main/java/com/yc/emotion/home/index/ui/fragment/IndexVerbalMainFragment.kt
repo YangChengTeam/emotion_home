@@ -29,7 +29,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
 import com.umeng.analytics.MobclickAgent
 import com.yc.emotion.home.R
-import com.yc.emotion.home.base.ui.activity.BaseActivity
 import com.yc.emotion.home.base.ui.activity.MainActivity
 import com.yc.emotion.home.base.ui.adapter.CommonMainPageAdapter
 import com.yc.emotion.home.base.ui.fragment.BaseFragment
@@ -41,7 +40,7 @@ import com.yc.emotion.home.index.ui.activity.SmartChatVerbalActivity
 import com.yc.emotion.home.index.view.IndexVerbalView
 import com.yc.emotion.home.model.bean.IndexHotInfo
 import com.yc.emotion.home.model.bean.SearchDialogueBean
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.clickWithTrigger
 import kotlinx.android.synthetic.main.activity_index_verbal.*
@@ -72,8 +71,7 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
     private var mHandler: Handler? = null
 
     private lateinit var mMainActivity: MainActivity
-    private val page = 1
-    private val PAGE_SIZE = 10
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -90,11 +88,11 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
 
     override fun lazyLoad() {
         getData()
-        mMainActivity.showToWxServiceDialog(position = "homewx", listener = object : BaseActivity.OnWxListener {
-            override fun onWx(wx: String) {
-                showService(wx)
-            }
-        })
+//        mMainActivity.showToWxServiceDialog(position = "homewx", listener = object : BaseActivity.OnWxListener {
+//            override fun onWx(wx: String) {
+//                showService(wx)
+//            }
+//        })
     }
 
 
@@ -151,8 +149,6 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
     }
 
 
-
-
     private fun initSearchView() {
         val searchView: SearchView = rootView.findViewById(R.id.verbal_search_view)
         val ivIconShare: ImageView = rootView.findViewById(R.id.search_iv_icon_share)
@@ -176,7 +172,7 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
         //修改键入的文字字体大小、颜色和hint的字体颜色
         val editText = searchView.findViewById<EditText>(R.id.search_src_text)
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources
-                .getDimension(R.dimen.size_14))
+                .getDimension(R.dimen.sp_14))
         //        editText.setTextColor(ContextCompat.getColor(this,R.color.nb_text_primary));
 
         //监听关闭按钮点击事件
@@ -320,8 +316,7 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
             //verticalOffset  当前偏移量 appBarLayout.getTotalScrollRange() 最大高度 便宜值
             val offset = abs(verticalOffset) //目的是将负数转换为绝对正数；
             //标题栏的渐变
-            mMainActivity.changeAlpha(ContextCompat.getColor(mMainActivity, R.color.white)
-                    , abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange).let { ll_top_container.setBackgroundColor(it) }
+            mMainActivity.changeAlpha(ContextCompat.getColor(mMainActivity, R.color.white), abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange).let { ll_top_container.setBackgroundColor(it) }
 
             /**
              * 当前最大高度偏移值除以2 在减去已偏移值 获取浮动 先显示在隐藏
@@ -433,7 +428,6 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
     }
 
 
-
     override fun showLoading() {
         mMainActivity.showLoading()
     }
@@ -446,7 +440,7 @@ class IndexVerbalMainFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerba
         searchDialogueBean?.let {
             val searchBuyVip = searchDialogueBean.search_buy_vip
             if (1 == searchBuyVip) { //1 弹窗付费 0不弹
-                startActivity(Intent(activity, BecomeVipActivity::class.java))
+                startActivity(Intent(activity, BecomeVipActivityNew::class.java))
             } else {
                 SearchActivity.startSearchActivity(activity, keyword)
             }

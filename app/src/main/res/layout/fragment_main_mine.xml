@@ -164,7 +164,8 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="-30dp"
         android:layout_marginRight="15dp"
-        android:background="@mipmap/personal_bg_two">
+        android:background="@mipmap/personal_bg_two"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/ll_vip"
@@ -337,6 +338,7 @@
                 android:id="@+id/mineItemView_invite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:item_title="分享赚钱" />
 
             <com.yc.emotion.home.mine.ui.widget.MineItemView
@@ -365,23 +367,26 @@
                 app:is_show_divider="false"
                 app:item_title="系统设置" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/gray_f2f2f2"
-                android:padding="15dp">
 
-                <TextView
-                    android:id="@+id/tv_business"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="商务合作微信号 ：qgzj0001"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/gray_f2f2f2"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="商务合作微信号 ：qgzj0001"
+            android:textSize="13sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

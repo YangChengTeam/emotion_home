@@ -1,5 +1,6 @@
 package com.yc.emotion.home.pay.ui.activity
 
+
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -24,20 +25,15 @@ import com.yc.emotion.home.model.bean.OrdersInitBean
 import com.yc.emotion.home.model.bean.event.EventBusWxPayResult
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
 import com.yc.emotion.home.model.constant.ConstantKey
+import com.yc.emotion.home.model.util.SizeUtils
 import com.yc.emotion.home.pay.adapter.BecomeVipAdapter
 import com.yc.emotion.home.pay.presenter.VipPresenter
 import com.yc.emotion.home.pay.view.VipView
 import com.yc.emotion.home.utils.Preference
+import com.yc.emotion.home.utils.StatusBarUtil
 import com.yc.emotion.home.utils.UserInfoHelper
 import com.yc.emotion.home.utils.clickWithTrigger
-
 import kotlinx.android.synthetic.main.activity_become_vip.*
-import kotlinx.android.synthetic.main.activity_become_vip.become_vip_iv_to_wx
-import kotlinx.android.synthetic.main.activity_become_vip.become_vip_rv
-import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_rl_btn_wx
-import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_rl_btn_zfb
-import kotlinx.android.synthetic.main.activity_become_vip.item_become_vip_tv_pay_num
-import kotlinx.android.synthetic.main.activity_become_vip_new.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -68,6 +64,10 @@ class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
         mPresenter = VipPresenter(this, this)
         MobclickAgent.onEvent(this, "vip_ui_statistics", "跳转vip付费界面统计")
 
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_become_vip
     }
 
     override fun initViews() {
@@ -253,8 +253,21 @@ class BecomeVipActivity : PayActivity(), View.OnClickListener, VipView {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_become_vip_new
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        val layoutParams = ll_pay_way.layoutParams as RelativeLayout.LayoutParams
+
+        val bottom = if (StatusBarUtil.isNavigationBarExist(this)) {
+            StatusBarUtil.getNavigationBarHeight(this) + SizeUtils.dp2px(this, 15f)
+
+        } else {
+            SizeUtils.dp2px(this, 15f)
+        }
+        layoutParams.bottomMargin = bottom
+        ll_pay_way.layoutParams = layoutParams
+
+
     }
 
     companion object {

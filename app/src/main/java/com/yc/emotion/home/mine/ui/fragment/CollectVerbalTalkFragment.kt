@@ -161,7 +161,7 @@ class CollectVerbalTalkFragment : BaseFragment<CollectPresenter>(), CollectView 
         MobclickAgent.onEvent(activity, ConstantKey.UM_COPY_DIALOGUE_HEAL)
         val myClipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val myClip = ClipData.newPlainText("text", content.content)
-        myClipboard.primaryClip = myClip
+        myClipboard.setPrimaryClip(myClip)
         ToastUtils.showCenterToast("内容已复制", true)
     }
 

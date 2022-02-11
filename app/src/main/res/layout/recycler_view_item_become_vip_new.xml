@@ -22,7 +22,7 @@
             android:paddingEnd="2dp"
             android:text="低成本高回报\n恋爱成功100%"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12"
+            android:textSize="@dimen/sp_12"
             app:drawableTopCompat="@mipmap/become_vip_icon_05"
             tools:ignore="RtlSymmetry" />
 
@@ -35,7 +35,7 @@
             android:paddingRight="2dp"
             android:text="20w+精彩话术\n一键搜索复制"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12"
+            android:textSize="@dimen/sp_12"
             app:drawableTopCompat="@mipmap/become_vip_icon_01" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:paddingRight="2dp"
             android:text=" 学员群导师指导"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12"
+            android:textSize="@dimen/sp_12"
             app:drawableTopCompat="@mipmap/become_vip_icon_02" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:paddingStart="2dp"
             android:text="贴心服务\n诚信经营"
             android:textColor="@color/text_gray_dark"
-            android:textSize="@dimen/size_12"
+            android:textSize="@dimen/sp_12"
             app:drawableTopCompat="@mipmap/become_vip_icon_03"
             tools:ignore="RtlSymmetry" />
 

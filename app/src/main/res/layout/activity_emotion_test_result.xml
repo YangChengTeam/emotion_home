@@ -42,7 +42,7 @@
                 android:paddingRight="58dp"
                 android:text="测试结果"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_20" />
+                android:textSize="@dimen/sp_20" />
 
             <TextView
                 android:id="@+id/tv_test_again"

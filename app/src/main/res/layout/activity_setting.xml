@@ -93,7 +93,7 @@
             android:padding="10dp"
             android:text="退出登录"
             android:textColor="@color/red_crimson"
-            android:textSize="@dimen/size_18" />
+            android:textSize="@dimen/sp_18" />
     </FrameLayout>
 
 

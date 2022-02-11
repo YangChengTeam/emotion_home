@@ -71,7 +71,7 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
         val exampListsBeans = exampDataBean.lists
 
         val mMainT2Beans = arrayListOf<MainT2Bean>()
-        if (page == 1) mMainT2Beans.add(MainT2Bean("tit", MainT2Bean.VIEW_TITLE))
+//        if (page == 1) mMainT2Beans.add(MainT2Bean("tit", MainT2Bean.VIEW_TITLE))
         if (exampListsBeans != null && exampListsBeans.size > 0) {
 
 
@@ -82,16 +82,17 @@ class PracticePresenter(context: Context?, view: PracticeView) : BasePresenter<P
 //                }
 
 
-                val type = if (exampListsBean.is_vip > 0) MainT2Bean.VIEW_ITEM else MainT2Bean.VIEW_TO_PAY_VIP
+//                val type = if (exampListsBean.is_vip > 0) MainT2Bean.VIEW_ITEM else MainT2Bean.VIEW_TO_PAY_VIP
+                val type =  MainT2Bean.VIEW_ITEM
 
 
                 mMainT2Beans.add(MainT2Bean(type, exampListsBean.create_time, exampListsBean.id, exampListsBean.image, exampListsBean.post_title))
             }
 
         }
-        if (!mUserIsVip && mMainT2Beans.size > 6 && page == 1) {
-            mMainT2Beans.add(6, MainT2Bean("vip", MainT2Bean.VIEW_VIP))
-        }
+//        if (!mUserIsVip && mMainT2Beans.size > 6 && page == 1) {
+//            mMainT2Beans.add(6, MainT2Bean("vip", MainT2Bean.VIEW_VIP))
+//        }
 
         if (page == 1) {
             CommonInfoHelper.setO<List<MainT2Bean>>(mContext, mMainT2Beans, "main2_example_lists")

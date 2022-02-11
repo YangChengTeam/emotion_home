@@ -139,6 +139,7 @@ public class UltraViewPagerView extends ViewPager implements UltraViewPagerAdapt
 
         childWidth = itemMarginLeft + child.getMeasuredWidth() + itemMarginRight;
         childHeight = itemMarginTop + child.getMeasuredHeight() + itemMarginBottom;
+//        childHeight = child.getMeasuredHeight();
 
         if (!Float.isNaN(ratio)) {
             heightMeasureSpec = MeasureSpec.makeMeasureSpec((int) (getMeasuredWidth() / ratio), MeasureSpec.EXACTLY);

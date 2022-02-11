@@ -39,7 +39,7 @@ class Preference<T>(val context: Context, val string: String, private val defaul
     }
 
     private fun <U> findPreference(name: String, default: U): U = with(prefs) {
-        val res: Any = when (default) {
+        val res = when (default) {
             is Long -> getLong(name, default)
             is String -> getString(name, default)
             is Int -> getInt(name, default)

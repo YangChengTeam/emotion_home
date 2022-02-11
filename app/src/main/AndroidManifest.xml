@@ -278,6 +278,9 @@
         <activity android:name=".mine.ui.activity.RewardActivity" />
         <activity android:name=".index.ui.activity.SmartChatVerbalActivity" />
         <activity android:name=".mine.ui.activity.EarningsDetailActivity" />
+        <activity android:name=".pay.ui.activity.BecomeVipActivityNew" />
+        <activity android:name=".base.ui.activity.WebActivity"
+            android:theme="@style/customTheme"/>
 
 
         <!--android:windowSoftInputMode="adjustPan|stateHidden"-->

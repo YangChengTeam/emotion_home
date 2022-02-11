@@ -34,7 +34,7 @@
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:background="@drawable/ai_chat_bg"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -45,26 +45,27 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/iv_fly"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:layout_toStartOf="@id/tv_send"
             android:fillViewport="true"
             android:scrollbars="none">
 
             <EditText
                 android:id="@+id/et_content"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
+                android:layout_height="30dp"
+                android:background="@drawable/input_gray_bg"
                 android:hint="猜你想问“趣味开场”"
                 android:inputType="none"
                 android:lineSpacingExtra="9.0sp"
-                android:maxHeight="120.0dip"
-                android:minHeight="50.0dip"
-                android:paddingStart="10.0dip"
+
+                android:paddingStart="14.0dip"
                 android:paddingTop="5.0dip"
                 android:paddingBottom="5.0dip"
                 android:textColor="#ff303030"
                 android:textColorHint="@color/gray_999"
-                android:textSize="14.0sp"
+                android:textSize="13.0sp"
                 tools:ignore="RtlSymmetry" />
         </HorizontalScrollView>
 
@@ -77,19 +78,33 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:src="@mipmap/fly"
+            android:visibility="gone"
             app:tint="@color/app_color" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_red_bg"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="@string/send"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_ai_tint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#D5E0F4"
+        android:background="#F9E1E1"
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="温馨提示：点击对话框文字即可复制"
-        android:textColor="#446CE5"
+        android:textColor="#FA4A65"
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@id/rl_bottom"
         app:layout_constraintLeft_toLeftOf="parent"

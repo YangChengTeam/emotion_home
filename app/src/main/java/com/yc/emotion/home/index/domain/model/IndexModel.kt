@@ -11,6 +11,7 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.http.Field
 import yc.com.rthttplibrary.bean.ResultInfo
 
 
@@ -57,4 +58,8 @@ class IndexModel(override var context: Context?) : IModel(context) {
         return request.getRewardInfo("${UserInfoHelper.instance.getUid()}")
     }
 
+    fun dailyCount(message_id: Int): Flowable<ResultInfo<String>> {
+
+        return request.dailyCount(message_id)
+    }
 }

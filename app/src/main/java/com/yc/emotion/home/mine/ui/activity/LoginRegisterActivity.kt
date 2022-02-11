@@ -25,7 +25,7 @@ class LoginRegisterActivity : BaseSameActivity() {
 
     override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 
-    override fun offerActivityTitle(): String? {
+    override fun offerActivityTitle(): String {
         return ""
     }
 

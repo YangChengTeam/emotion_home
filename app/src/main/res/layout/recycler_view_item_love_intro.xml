@@ -26,7 +26,7 @@
                 android:maxLines="1"
                 android:text="中文"
                 android:textColor="@color/black"
-                android:textSize="@dimen/size_16" />
+                android:textSize="@dimen/sp_16" />
 
             <View
                 android:layout_width="1dp"
@@ -39,7 +39,7 @@
                 android:maxLines="1"
                 android:text="155"
                 android:textColor="@color/text_gray"
-                android:textSize="@dimen/size_14" />
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 

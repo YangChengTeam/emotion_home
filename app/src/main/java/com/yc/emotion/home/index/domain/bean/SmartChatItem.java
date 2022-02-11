@@ -17,13 +17,12 @@ public class SmartChatItem implements MultiItemEntity {
 
     public static final int CHAT_ITEM_SELF = 0;
     public static final int CHAT_ITEM_VERBAL = 1;
+    public static final int CHAT_ITEM_VIP = 2;
     private String content;
     @JSONField(name = "ai")
     private List<AIItem> aiItems;
     @JSONField(name = "dialogue")
     private List<LoveHealDetBean> loveHealDetBeans;
-
-
 
 
     public SmartChatItem() {

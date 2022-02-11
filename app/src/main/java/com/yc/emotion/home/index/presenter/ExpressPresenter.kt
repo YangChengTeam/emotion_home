@@ -87,7 +87,7 @@ class ExpressPresenter(context: Context?, view: ExpressView) : BasePresenter<Exp
         }
 
         if (page == 1) {
-            mConfessionDataBeans.add(0, ConfessionDataBean(ConfessionDataBean.VIEW_TITLE, "data_title"))
+//            mConfessionDataBeans.add(0, ConfessionDataBean(ConfessionDataBean.VIEW_TITLE, "data_title"))
 
             CommonInfoHelper.setO<List<ConfessionDataBean>>(mContext, mConfessionDataBeans, "main3_new")
         }

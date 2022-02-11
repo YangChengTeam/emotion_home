@@ -19,7 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/iv_praise"
+
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -32,7 +33,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/praise_select_selector"
-            app:layout_constraintBottom_toBottomOf="@id/item_love_heal_rv"
+            app:layout_constraintBottom_toBottomOf="@id/iv_collect"
             app:layout_constraintRight_toLeftOf="@id/iv_collect" />
 
         <ImageView
@@ -41,11 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/dp_10"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/collect_select_selector"
-            app:layout_constraintBottom_toBottomOf="@id/item_love_heal_rv"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_love_heal_rv" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

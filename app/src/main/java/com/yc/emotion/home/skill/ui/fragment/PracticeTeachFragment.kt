@@ -1,7 +1,6 @@
 package com.yc.emotion.home.skill.ui.fragment
 
 import android.content.Intent
-import android.util.Log
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,7 @@ import com.yc.emotion.home.index.ui.activity.LoveCaseDetailActivity
 import com.yc.emotion.home.index.view.PracticeView
 import com.yc.emotion.home.model.bean.MainT2Bean
 import com.yc.emotion.home.model.bean.event.EventPayVipSuccess
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.skill.ui.activity.PromotionPlanActivity
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.activity_practice_teach.*
@@ -92,7 +91,7 @@ class PracticeTeachFragment : BaseFragment<PracticePresenter>(), PracticeView {
                     if (!UserInfoHelper.instance.goToLogin(activity)) {
                         if (MainT2Bean.VIEW_TO_PAY_VIP == mainT2Bean.type || MainT2Bean.VIEW_VIP == mainT2Bean.type) {
                             MobclickAgent.onEvent(activity, "practice_pay_click", "实战教学付费点击")
-                            startActivity(Intent(activity, BecomeVipActivity::class.java))
+                            startActivity(Intent(activity, BecomeVipActivityNew::class.java))
                         }
                     }
                 }

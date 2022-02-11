@@ -350,7 +350,7 @@
                         android:maxLines="1"
                         android:text="导师详情"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/size_18" />
+                        android:textSize="@dimen/sp_18" />
 
                 </androidx.appcompat.widget.Toolbar>
 

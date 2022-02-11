@@ -61,19 +61,19 @@ class VideoPresenter(context: Context?, view: VideoView) : BasePresenter<VideoMo
             videoItemInfo.banners = banners
             videoItemInfoList.add(videoItemInfo)
 
-            videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_TITLE)
-            videoItemInfo.title = "高效课程"
-            videoItemInfoList.add(videoItemInfo)
+//            videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_TITLE)
+//            videoItemInfo.title = "高效课程"
+//            videoItemInfoList.add(videoItemInfo)
+//
+//            for (lesson in lessons) {
+//                videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_COURSE)
+//                videoItemInfo.courseInfo = lesson
+//                videoItemInfoList.add(videoItemInfo)
+//
+//            }
+//            videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_DIVIDER)
 
-            for (lesson in lessons) {
-                videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_COURSE)
-                videoItemInfo.courseInfo = lesson
-                videoItemInfoList.add(videoItemInfo)
-
-            }
-            videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_DIVIDER)
-
-            videoItemInfoList.add(videoItemInfo)
+//            videoItemInfoList.add(videoItemInfo)
 
             videoItemInfo = VideoItemInfo(VideoItemInfo.ITEM_TITLE)
             videoItemInfo.title = "小视频"

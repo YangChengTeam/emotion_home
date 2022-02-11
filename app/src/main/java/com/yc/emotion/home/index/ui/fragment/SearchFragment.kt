@@ -16,7 +16,7 @@ import com.yc.emotion.home.model.bean.LoveHealDetDetailsBean
 import com.yc.emotion.home.model.bean.SearchDialogueBean
 import com.yc.emotion.home.model.bean.UserInfo
 import com.yc.emotion.home.model.bean.event.EventLoginState
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.UserInfoHelper
 import kotlinx.android.synthetic.main.fragment_base_share.*
 import org.greenrobot.eventbus.EventBus
@@ -76,8 +76,6 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
     }
 
 
-
-
     private fun initListener() {
         base_share_swipe_refresh.setColorSchemeResources(R.color.red_crimson)
         base_share_swipe_refresh.setOnRefreshListener {
@@ -94,7 +92,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
                 when (it.type) {
                     LoveHealDetBean.VIEW_VIP ->
                         if (!UserInfoHelper.instance.goToLogin(mShareActivity)) {
-                            startActivity(Intent(mShareActivity, BecomeVipActivity::class.java))
+                            startActivity(Intent(mShareActivity, BecomeVipActivityNew::class.java))
                         }
 
                     else -> {
@@ -109,7 +107,7 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
                     LoveHealDetBean.VIEW_VIP -> {
                         if (view.id == R.id.tv_look) {
                             if (!UserInfoHelper.instance.goToLogin(mShareActivity)) {
-                                startActivity(Intent(mShareActivity, BecomeVipActivity::class.java))
+                                startActivity(Intent(mShareActivity, BecomeVipActivityNew::class.java))
                             }
                         }
                     }
@@ -249,7 +247,6 @@ class SearchFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalView {
         }
         return loveHealDetBeans
     }
-
 
 
     override fun showLoading() {

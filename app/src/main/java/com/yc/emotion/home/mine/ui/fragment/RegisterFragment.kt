@@ -44,9 +44,13 @@ class RegisterFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
         if (!TextUtils.isEmpty(phone)) {
             et_phone.setText(phone)
             et_phone.setSelection(phone.length)
+            tv_login_tint.text = "欢迎登录"
+            tv_register_btn.text = getString(R.string.login)
+            tv_user_policy.text = HtmlCompat.fromHtml("登录即代表同意<font color='#ff2d55'>《用户协议》</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
+        } else {
+            tv_user_policy.text = HtmlCompat.fromHtml("注册即代表同意<font color='#ff2d55'>《用户协议》</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
         mPresenter = UserInfoPresenter(activity, this)
-        tv_user_policy.text = HtmlCompat.fromHtml("注册即代表同意<font color='#ff2d55'>《用户协议》</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
         pwd_group.visibility = if (isCodeLogin) View.GONE else View.VISIBLE
 
         initListener()
@@ -61,7 +65,6 @@ class RegisterFragment : BaseFragment<UserInfoPresenter>(), UserInfoView {
     override fun hideLoading() {
         (activity as BaseActivity).hideLoading()
     }
-
 
 
     private fun initListener() {

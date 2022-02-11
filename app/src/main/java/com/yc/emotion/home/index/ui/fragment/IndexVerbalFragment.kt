@@ -51,7 +51,6 @@ class IndexVerbalFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalVie
     }
 
 
-
     override fun lazyLoad() {
         netDialogueData(mSence)
     }
@@ -97,6 +96,9 @@ class IndexVerbalFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalVie
 
         indexVerbalAdapter?.setNewData(loveHealDateBeans)
 
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun showVerbalSenceInfo(data: List<LoveHealDateBean>) {
@@ -106,7 +108,6 @@ class IndexVerbalFragment : BaseFragment<IndexVerbalPresenter>(), IndexVerbalVie
     override fun onComplete() {
         if (swipeRefreshLayout.isRefreshing) swipeRefreshLayout.isRefreshing = false
     }
-
 
 
     override fun showLoading() {

@@ -13,7 +13,7 @@ import com.yc.emotion.home.base.ui.adapter.BaseQuickImproAdapter
 import com.yc.emotion.home.model.bean.GoodsInfo
 import com.yc.emotion.home.model.util.DoubleToStringUtils
 
-class BecomeVipAdapter(data: List<GoodsInfo>?) : BaseQuickImproAdapter<GoodsInfo?, BaseViewHolder?>(R.layout.vip_item_view_new, data) {
+class BecomeVipAdapter(data: List<GoodsInfo>?) : BaseQuickImproAdapter<GoodsInfo?, BaseViewHolder?>(R.layout.vip_item_view, data) {
 
     private val constraintLayoutSparseArray: SparseArray<ConstraintLayout> = SparseArray()
     private val dividerSparseArray: SparseArray<View> = SparseArray()

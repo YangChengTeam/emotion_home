@@ -1,6 +1,7 @@
 package com.yc.emotion.home.pay.ui.activity
 
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -65,6 +66,7 @@ class VipActivity : PayActivity(), VipView {
         initListener()
         countDownTime()
     }
+
 
 
     private fun countDownTime() {

@@ -82,7 +82,7 @@
         android:layout_marginTop="10dp"
         android:text="请仔细核对以上信息是否准确无误，若填写错误，可能导致提现失败!"
         android:textColor="@color/app_color"
-        android:textSize="@dimen/size_12"
+        android:textSize="@dimen/sp_12"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_dispose_money_title" />

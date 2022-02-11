@@ -20,6 +20,6 @@
         android:lineSpacingExtra="5dp"
         android:text="55555"
         android:textColor="@color/select_color_text_gray_dark"
-        android:textSize="@dimen/size_14" />
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

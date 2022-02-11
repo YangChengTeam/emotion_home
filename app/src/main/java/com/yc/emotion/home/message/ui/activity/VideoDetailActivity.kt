@@ -147,7 +147,7 @@ class VideoDetailActivity : BaseActivity() {
             override fun onToWx() {
                 val myClipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val myClip = ClipData.newPlainText("text", videoItem?.tutor_weixin)
-                myClipboard.primaryClip = myClip
+                myClipboard.setPrimaryClip(myClip)
                 openWeiXin()
             }
 

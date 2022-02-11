@@ -1,6 +1,6 @@
 package com.yc.emotion.home.base.ui.widget
 
-import android.R
+
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.JsResult
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -33,7 +32,7 @@ class CommonWebView : WebView {
 
     private fun init(context: Context) {
         val webSettings = settings
-        setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
+        setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
         webSettings.allowUniversalAccessFromFileURLs = true
         webSettings.javaScriptEnabled = true
         webSettings.domStorageEnabled = true // 解决对某些标签的不支持出现白屏

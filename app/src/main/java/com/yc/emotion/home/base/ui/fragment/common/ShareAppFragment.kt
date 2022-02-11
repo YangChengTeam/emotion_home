@@ -100,7 +100,10 @@ class ShareAppFragment : BottomSheetDialogFragment() {
             llMiniProgram = rootView?.findViewById(R.id.ll_mini_program)
             tvCancelShare = rootView?.findViewById(R.id.tv_cancel_share)
         }
-        dialog.setContentView(rootView)
+        rootView?.let {
+            dialog.setContentView(it)
+        }
+
         mBehavior = BottomSheetBehavior.from(rootView?.parent as View)
         (rootView?.parent as View).setBackgroundColor(Color.TRANSPARENT)
         rootView?.post {

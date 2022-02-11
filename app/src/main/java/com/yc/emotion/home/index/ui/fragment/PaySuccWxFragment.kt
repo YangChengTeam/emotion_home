@@ -48,7 +48,7 @@ class PaySuccWxFragment : BaseDialogFragment() {
         tvCopyWx.clickWithTrigger { v: View? ->
             val myClipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val myClip = ClipData.newPlainText("text", mWx)
-            myClipboard.primaryClip = myClip
+            myClipboard.setPrimaryClip(myClip)
             ToastUtils.showCenterToast("微信复制成功")
             if (activity is BaseActivity) {
                 (activity as BaseActivity).openWeiXin()

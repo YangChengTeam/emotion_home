@@ -23,7 +23,8 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/white_solid_bg_8"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
         app:layout_constraintLeft_toRightOf="@id/iv_avtor"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_avtor">
@@ -31,12 +32,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_ai"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.33dp"
+            android:background="#E1E1E1" />
 
         <LinearLayout
             android:id="@+id/ll_ai_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical">
 
@@ -50,13 +59,23 @@
                 android:id="@+id/tv_ai_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginStart="5dp"
                 android:text="@string/refresh_verbal"
-                android:textColor="@color/gray_999999"
+                android:textColor="@color/blue_3674c9"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_recommend_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="相似话术推荐"
+        android:textColor="@color/gray_222222"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_ai_container" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +84,7 @@
         android:background="@drawable/white_solid_bg_8"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_ai_container">
+        app:layout_constraintTop_toBottomOf="@id/tv_recommend_title">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,14 +92,6 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="推荐话术"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_verbal"
@@ -114,7 +125,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="都不喜欢，换一换"
-                android:textColor="@color/gray_999999"
+                android:textColor="@color/blue_3674c9"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

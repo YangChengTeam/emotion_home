@@ -22,7 +22,7 @@
             android:hint="请填写意见反馈内容"
             android:maxLength="200"
             android:padding="8dp"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/sp_14" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textColor="@color/text_gray"
-                android:textSize="@dimen/size_12" />
+                android:textSize="@dimen/sp_12" />
 
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="/200"
                 android:textColor="@color/text_gray"
-                android:textSize="@dimen/size_12" />
+                android:textSize="@dimen/sp_12" />
         </LinearLayout>
     </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:text="客服QQ: "
             android:textColor="@color/text_gray_deep"
-            android:textSize="@dimen/size_16" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/feedback_tv_qq_num"
@@ -78,7 +78,7 @@
             android:layout_weight="10"
             android:text="18508609"
             android:textColor="@color/text_gray_deep"
-            android:textSize="@dimen/size_16" />
+            android:textSize="@dimen/sp_16" />
 
         <TextView
             android:id="@+id/feedback_tv_cope"
@@ -91,7 +91,7 @@
             android:paddingBottom="1dp"
             android:text="复制QQ"
             android:textColor="@color/select_color_blue"
-            android:textSize="@dimen/size_12" />
+            android:textSize="@dimen/sp_12" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:text="QQ(必填)"
             android:textColor="@color/black"
-            android:textSize="@dimen/size_16" />
+            android:textSize="@dimen/sp_16" />
 
         <EditText
             android:id="@+id/feedback_et_qq"
@@ -120,7 +120,7 @@
             android:lines="1"
             android:maxLength="18"
             android:textColorHint="@color/gray_et_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <LinearLayout
@@ -137,7 +137,7 @@
             android:layout_weight="1"
             android:text="微信号"
             android:textColor="@color/black"
-            android:textSize="@dimen/size_16" />
+            android:textSize="@dimen/sp_16" />
 
         <EditText
             android:id="@+id/feedback_et_wx"
@@ -149,7 +149,7 @@
             android:lines="1"
             android:maxLength="18"
             android:textColorHint="@color/gray_et_text"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <TextView

@@ -3,6 +3,7 @@ package com.yc.emotion.home.index.adapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +35,7 @@ import java.util.*
  * @param data A new list is created out of this one to avoid mutable list
  */
 
-class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: String?) : BaseMultiItemQuickAdapter<LoveHealDetBean, BaseViewHolder>(data) {
+class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private var mTitle: String?) : BaseMultiItemQuickAdapter<LoveHealDetBean, BaseViewHolder>(data) {
 
 
     init {
@@ -43,11 +44,30 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
         setLoadMoreView(CustomLoadMoreView())
     }
 
+    fun setTitle(tilte: String?) {
+        this.mTitle = tilte
+    }
+
 
     override fun convert(helper: BaseViewHolder, item: LoveHealDetBean?) {
         item?.let {
             var details: List<LoveHealDetDetailsBean>? = item.details
             if (item.type == LoveHealDetBean.VIEW_ITEM) {
+
+
+                val adapterPosition = helper.adapterPosition
+
+
+                helper.setGone(R.id.rl_sense_container, adapterPosition == 0)
+
+
+                mTitle?.let {
+                    helper.setText(R.id.tv_sense, mTitle)
+//                    helper.setGone(R.id.rl_sense_container, true)
+                } ?: run {
+//                    helper.setGone(R.id.rl_sense_container, false)
+                }
+
 
                 val recyclerView = helper.getView<RecyclerView>(R.id.item_love_heal_rv)
                 val layoutManager = LinearLayoutManager(mContext)
@@ -61,7 +81,8 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
 
                 if (details != null && details.isNotEmpty()) {
                     helper.itemView.visibility = View.VISIBLE
-                    val loveHealDetAdapterNew = LoveHealDetAdapter(details)
+//                    val loveHealDetAdapterNew = LoveHealDetAdapter(details)
+                    val loveHealDetAdapterNew = VerbalVbItemAdapter(details)
 
                     recyclerView.adapter = loveHealDetAdapterNew
                     loveHealDetAdapterNew.setOnItemChildClickListener { adapter, view, position ->
@@ -92,13 +113,13 @@ class LoveHealDetailsAdapter(data: List<LoveHealDetBean>?, private val mTitle: S
                 if (details != null && details.isNotEmpty()) {
                     if (details.size > 1) {
                         val detailsBean = details[0]
-                        helper.setText(R.id.item_love_heal_det_vip_tv_name, detailsBean.content)
-                    } else {
-                        helper.setText(R.id.item_love_heal_det_vip_tv_name, "*************")
+                        helper.setText(R.id.item_details_bean_tv_name, detailsBean.content)
                     }
+                    helper.setText(R.id.tv_details_content, "*************")
+
                     //                        String ansSex = detailsBean.ans_sex;
                     //                        if (!TextUtils.isEmpty(ansSex)) {
-                    helper.setImageDrawable(R.id.item_love_heal_det_vip_iv_sex, mContext.resources.getDrawable(R.mipmap.icon_dialogue_women))
+//                    helper.setImageDrawable(R.id.item_love_heal_det_vip_iv_sex, mContext.resources.getDrawable(R.mipmap.icon_dialogue_women))
                     //                        }
                 }
                 helper.addOnClickListener(R.id.tv_look)
@@ -111,7 +132,7 @@ private fun toCopy(context: Context, content: LoveHealDetDetailsBean) {
     MobclickAgent.onEvent(context, ConstantKey.UM_COPY_DIALOGUE_HEAL)
     val myClipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     val myClip = ClipData.newPlainText("text", content.content)
-    myClipboard.primaryClip = myClip
+    myClipboard.setPrimaryClip(myClip)
     showOpenAkpDialog(context, content)
 }
 

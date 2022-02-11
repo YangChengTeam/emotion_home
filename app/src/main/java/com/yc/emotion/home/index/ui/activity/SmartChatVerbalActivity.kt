@@ -15,7 +15,7 @@ import com.yc.emotion.home.index.domain.bean.AIItem
 import com.yc.emotion.home.index.domain.bean.SmartChatItem
 import com.yc.emotion.home.index.presenter.AIChatPresenter
 import com.yc.emotion.home.index.view.AIChatView
-import com.yc.emotion.home.pay.ui.activity.BecomeVipActivity
+import com.yc.emotion.home.pay.ui.activity.BecomeVipActivityNew
 import com.yc.emotion.home.utils.ToastUtils
 import com.yc.emotion.home.utils.UserInfoHelper
 import com.yc.emotion.home.utils.clickWithTrigger
@@ -90,6 +90,11 @@ class SmartChatVerbalActivity : BaseActivity(), AIChatView {
 
                     }
                 }
+                SmartChatItem.CHAT_ITEM_VIP -> {
+                    if (view.id == R.id.tv_open_vip) {
+                        BecomeVipActivityNew.startActivity(this, false)
+                    }
+                }
             }
         }
 
@@ -103,7 +108,7 @@ class SmartChatVerbalActivity : BaseActivity(), AIChatView {
             }
         })
 
-        iv_fly.clickWithTrigger {
+        tv_send.clickWithTrigger {
             val content = et_content.text.toString().trim()
             if (TextUtils.isEmpty(content)) {
                 ToastUtils.showCenterToast("发送内容不能为空")
@@ -134,8 +139,10 @@ class SmartChatVerbalActivity : BaseActivity(), AIChatView {
     override fun showUseCountUp(message: String) {
 
         if (!UserInfoHelper.instance.goToLogin(this@SmartChatVerbalActivity)) {
-            val intent = Intent(this@SmartChatVerbalActivity, BecomeVipActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this@SmartChatVerbalActivity, BecomeVipActivityNew::class.java)
+//            startActivity(intent)
+
+            createNewData(SmartChatItem(SmartChatItem.CHAT_ITEM_VIP, ""), SmartChatItem.CHAT_ITEM_VIP, false)
         }
 //        val exitPublishFragment = ExitPublishFragment.newInstance(message, isCancel = true)
 //
@@ -211,7 +218,6 @@ class SmartChatVerbalActivity : BaseActivity(), AIChatView {
             if (refresh) {
                 if (section == 0) {
                     contentList.addAll(smartChatVerbalAdapter.data)
-
                 } else {
                     contentList.add(SmartChatItem(SmartChatItem.CHAT_ITEM_SELF, kewword))
                 }

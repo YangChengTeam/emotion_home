@@ -12,7 +12,7 @@ import com.youth.banner.loader.ImageLoader
 /**
  * Created by suns  on 2019/9/4 15:08.
  */
-class GlideImageLoader : ImageLoader() {
+class GlideImageLoader(private val corner: Int=20) : ImageLoader() {
     override fun displayImage(context: Context, path: Any, imageView: ImageView) {
         //Glide 加载图片简单用法
         //设置图片圆角角度
@@ -24,7 +24,7 @@ class GlideImageLoader : ImageLoader() {
 
     override fun createImageView(context: Context): ImageView {
         val roundCornerImg = RoundCornerImg(context, null)
-        roundCornerImg.setCorner(20)
+        roundCornerImg.setCorner(corner)
         return roundCornerImg
     }
 }

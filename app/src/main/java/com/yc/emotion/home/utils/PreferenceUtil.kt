@@ -17,7 +17,7 @@ class PreferenceUtil private constructor() {
         editor.apply()
     }
 
-    fun getStringValue(key: String?, defaultValue: String?): String {
+    fun getStringValue(key: String?, defaultValue: String?): String? {
         return mSharedPreferences.getString(key, defaultValue)
     }
 

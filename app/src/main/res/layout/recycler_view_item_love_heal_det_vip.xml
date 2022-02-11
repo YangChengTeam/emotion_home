@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
@@ -8,15 +9,17 @@
     android:layout_marginRight="10dp"
     android:layout_marginBottom="4dp"
     android:background="@drawable/shape_bg_white_gray_brim_det"
+    android:paddingLeft="10dp"
     android:paddingTop="12dp"
+    android:paddingRight="10dp"
     android:paddingBottom="1dp">
 
     <LinearLayout
-        android:id="@+id/item_love_heal_det_vip_ll_tit_con"
+        android:id="@+id/ll_left_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="4dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- <TextView
@@ -33,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:src="@mipmap/icon_dialogue_men" />
+            android:src="@mipmap/icon_dialogue_men"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/item_love_heal_det_vip_tv_name"
@@ -46,9 +50,63 @@
             android:text="中文"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/item_details_bean_iv_sex"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="3dp"
+            android:src="@mipmap/verbal_service" />
+
+        <TextView
+            android:id="@+id/item_details_bean_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/chat_left"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            tools:text="中文" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_right_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/ll_left_container">
+
+
+        <ImageView
+            android:id="@+id/iv_right_sex"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/verbal_men_service" />
+
+        <TextView
+            android:id="@+id/tv_details_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginRight="4dp"
+            android:layout_toStartOf="@id/iv_right_sex"
+            android:background="@drawable/chat_right"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="中文" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/item_love_heal_det_vip_tv_des"
@@ -60,19 +118,28 @@
         android:text="*************\n********请点击查看********"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@+id/item_love_heal_det_vip_ll_tit_con" />
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/ll_left_container" />
 
     <TextView
         android:id="@+id/tv_look"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="2dp"
-        android:text="查看"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="开通VIP点击查看无限话术"
         android:textColor="@color/red_crimson"
+        android:textSize="@dimen/sp_13"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_love_heal_det_vip_tv_des" />
+        app:layout_constraintTop_toBottomOf="@+id/barrier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="ll_left_container,ll_right_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
